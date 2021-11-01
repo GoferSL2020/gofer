@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "660334537235",
+    "firebase_url": "https://iadvancedscout-default-rtdb.firebaseio.com",
+    "project_id": "iadvancedscout",
+    "storage_bucket": "iadvancedscout.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660334537235:android:7d5ba618ff7cfe90cfede6",
+        "android_client_info": {
+          "package_name": "com.iadvanced.iadvancedscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660334537235-tc8bgv8rp4aubvkgjm0llt0bj3vl10un.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGkf8NFPwwf9TxaRGshXWj-TjW6rQ5OSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660334537235-tc8bgv8rp4aubvkgjm0llt0bj3vl10un.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "660334537235-r0h9vk91317kkask2frnecojp49e9vi3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iadvanced.iadvancedscout"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
