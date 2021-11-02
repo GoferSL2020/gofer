@@ -114,7 +114,8 @@ class MyAppState extends State<MyApp> {
     super.initState();
   }
   void inicio() async{
-
+    JugadorDao jug= JugadorDao();
+    List<Jugador> listEquipo2 = await jug.getTodosJugadores();
     //subirPais();
     //temporadas/2021-2022/paises/ESPA%C3%91A/categorias/Segunda%20B%20Grupo%20I/equipos/Burgos/jugadore
    // eliminar();
@@ -198,20 +199,21 @@ class MyAppState extends State<MyApp> {
   temporadas() async {
    JugadorDao jug= JugadorDao();
       EquipoDao equ=EquipoDao();
-  /*    String nodeName = "temporadas/2021-2022/paises";
+     String nodeName = "temporadas/2021-2022/paises";
+  /* FirebaseDatabase.instance.reference().child(nodeName+"/ESPAÑA").remove();
 
-   DatabaseReference dbRef =  FirebaseDatabase.instance.reference().child("temporadas/2021-2022");
+  /* DatabaseReference dbRef =  FirebaseDatabase.instance.reference().child("temporadas/2021-2022");
      dbRef.set({
       "temporada": "2021-2022",
-    });
+    });*/
     //jug.eliminarTodoTemporadas();
-     dbRef =
+   DatabaseReference dbRef =
     FirebaseDatabase.instance.reference().child(nodeName+"/ESPAÑA");
 
-  dbRef.set({
+    dbRef.set({
       "pais": "ESPAÑA",
     });
-     dbRef =
+    dbRef =
         FirebaseDatabase.instance.reference().child(nodeName+"/ESPAÑA/categorias/2ª División RFEF Grupo 1");
     //print(dbRef.toString());
     dbRef.set({
@@ -278,6 +280,7 @@ class MyAppState extends State<MyApp> {
 
 
    }*/
+    //FirebaseDatabase.instance.reference().child("jugadores2021-2022").remove();
    BBDDService().getUserScout().temporada="2021-2022";
      String json="";
       List<Jugador> list2 = await jug.getTodosJugadores();
@@ -286,8 +289,8 @@ class MyAppState extends State<MyApp> {
             .categoria}");
         list2[i].nivel = "Sin nivel";
         list2[i].jugador;
-        jug.updateJugadorIAScoutDorsal(list2[i], false);
-        //jug.addJugadorIAScout(list2[i],true,i);
+        //jug.updateJugadorIAScoutDorsal(list2[i], false);
+        jug.addJugadorIAScout(list2[i],false,i);
 
       }
   }
