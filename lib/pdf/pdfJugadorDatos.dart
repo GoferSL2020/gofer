@@ -323,8 +323,8 @@ class PdfJugadorDatos {
     page.graphics.drawString(
         _jugador.equipo, PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.white,
-        bounds: Rect.fromLTWH(0, 60, 150, 30),
-        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.center));
+        bounds: Rect.fromLTWH(15, 60, 200, 30),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.left));
     page.graphics.drawRectangle(
         bounds: Rect.fromLTWH(400, 0,pageSize.width - 400, 90),
         brush: PdfSolidBrush(PdfColor(0, 0, 0)));
@@ -370,7 +370,7 @@ class PdfJugadorDatos {
             lineAlignment: PdfVerticalAlignment.bottom));
     page.graphics.drawString('Posición alternativa: ${_jugador.posicionalternativa}', contentFont,
         brush: PdfBrushes.black,
-        bounds: Rect.fromLTWH(100, 140, 200, 33),
+        bounds: Rect.fromLTWH(100, 140, 300, 33),
         format: PdfStringFormat(
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
