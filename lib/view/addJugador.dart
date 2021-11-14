@@ -6,6 +6,7 @@ import 'package:iadvancedscout/dao/jugadorDao.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/sheets/gsheets.dart';
+import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -13,7 +14,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 class AddJugador extends StatefulWidget {
@@ -328,6 +329,7 @@ class _AddJugadorState extends State<AddJugador> {
       jugadorService.addJugadorIAScout(jugador,true,0);
       jugadorService.addJugadorIAScout(jugador,false,0);
       ProductManager().insert(jugador);
+      ProductManagerEXCELSCOUT().insert(jugador);
     }
   }
 

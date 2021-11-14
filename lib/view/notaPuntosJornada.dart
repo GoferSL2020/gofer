@@ -8,6 +8,7 @@ import 'package:iadvancedscout/model/jugadorJornada.dart';
 import 'package:iadvancedscout/model/jugadorJornadaColumna.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/sheets/gsheets.dart';
+import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
 import 'package:iadvancedscout/view/jugadoresJornada.dart';
 
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -265,12 +266,17 @@ class _NotaPuntosJornada extends State<NotaPuntosJornada> {
             widget._jugador.equipo, 0,0,0,0,0,0);
 
         await  ProductManager().insertJugadorHojaJornadaEquipo(jugadorJornada);
+        await  ProductManagerEXCELSCOUT().insertJugadorHojaJornadaEquipo(jugadorJornada);
         int fila=0;
         await ProductManager().filaById(jugadorJornadaColumna.id).then((value) {
-               fila=value;
-            });
+          fila=value;
+        });
+        await ProductManagerEXCELSCOUT().filaById(jugadorJornadaColumna.id).then((value) {
+          fila=value;
+        });
         await ProductManager().insertJugadorHojaPuntuacionesJornada(jugadorJornadaColumna,fila);
-    }
+        await ProductManagerEXCELSCOUT().insertJugadorHojaPuntuacionesJornada(jugadorJornadaColumna,fila);
+  }
 
 
    _showAlert(BuildContext context)  {

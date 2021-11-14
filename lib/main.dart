@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:csv/csv.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:iadvancedscout/dao/equipoDao.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
@@ -121,10 +121,10 @@ class MyAppState extends State<MyApp> {
    // eliminar();
     //paises();
     //
-   // temporadas();
+  // temporadas();
    // jugadores();
     //temporadas2DIVISION();
-    //jugadores();
+   // jugadores();
   // updatejugadores2();
     //addjugadores2B();
     //addjugadores2B();
@@ -279,7 +279,9 @@ class MyAppState extends State<MyApp> {
      });
 
 
-   }*/
+   }
+
+   */
     //FirebaseDatabase.instance.reference().child("jugadores2021-2022").remove();
    BBDDService().getUserScout().temporada="2021-2022";
      String json="";
@@ -618,13 +620,13 @@ class MyAppState extends State<MyApp> {
       // }
     }
     //store file in documents folder
-    final Directory directory = await getApplicationDocumentsDirectory();
-    File f = new File('/Users/borch/Documents/2ab.csv');
+    //final Directory directory = await getApplicationDocumentsDirectory();
+    //File f = new File('/Users/borch/Documents/2ab.csv');
 
 // convert rows to String and write as csv file
 
-    String csv = const ListToCsvConverter().convert(rows,fieldDelimiter: ",");
-    await f.writeAsString(csv);
+    //String csv = const ListToCsvConverter().convert(rows,fieldDelimiter: ",");
+   // await f.writeAsString(csv);
 
     /*final csvFile = new File('/Users/borch/Documents/2ab.csv').openRead();
     await csvFile
@@ -979,7 +981,7 @@ class MyAppState extends State<MyApp> {
     List<Jugador> list2 = await jug.getTodosJugadores();
     for (var i=0;i<list2.length;i++) {
       ////print("${i}:${list2[i].jugador},${list2[i].equipo},${list2[i].categoria}");
-      jug.addJugadorIAScout(list2[i],true,i);
+      jug.addJugadorIAScout(list2[i],false,i);
       //jug.addJugadorIAScout(list2[i],true,i);
       //print(i);
     }

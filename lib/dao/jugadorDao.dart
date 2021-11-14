@@ -6,6 +6,7 @@ import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/service/LogoService.dart';
 import 'package:iadvancedscout/service/db.dart';
 import 'package:iadvancedscout/sheets/gsheets.dart';
+import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
 import 'package:iadvancedscout/userScout.dart';
 import 'package:iadvancedscout/view/jugadoresList.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -129,6 +130,7 @@ class JugadorDao {
     updateJugadorIAScout(jugador,true);
     updateJugadorIAScout(jugador,false);
     ProductManager().insert(jugador);
+    ProductManagerEXCELSCOUT().insert(jugador);
     // return res;
   }
 
@@ -175,7 +177,7 @@ class JugadorDao {
      "_veredicto" : _jugador.veredicto,
      "_prestamo" : _jugador.prestamo,
      "_lateral" : _jugador.lateral,
-
+     "ccaa" : _jugador.ccaa,
      "_ofe_niveltecnico" : _jugador.ofe_niveltecnico,
      "_ofe_profundidad" : _jugador.ofe_profundidad,
      "_ofe_capacidaddegenerarbuenoscentrosalarea" : _jugador.ofe_capacidaddegenerarbuenoscentrosalarea,
