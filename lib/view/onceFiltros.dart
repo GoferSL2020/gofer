@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/categoriaDao.dart';
 import 'package:iadvancedscout/dao/equipoDao.dart';
@@ -19,6 +20,7 @@ import 'package:iadvancedscout/view/editJugador.dart';
 
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
+import 'package:iadvancedscout/wigdet/imagen.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -27,6 +29,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 
+import '../custom_icon_icons.dart';
 import 'jugadoresList.dart';
 
 class OnceFiltroPage extends StatefulWidget {
@@ -42,6 +45,8 @@ class OnceFiltroPage extends StatefulWidget {
 class _OnceFiltroPageState extends State<OnceFiltroPage> {
   FirebaseDatabase _database = FirebaseDatabase.instance;
   String nodeName = "";
+
+
   List<JugadorJornada> jugadoresList=new List<JugadorJornada>();
 
 // no need of the file extension, the name will do fine.
@@ -63,48 +68,6 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
     //  _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
     // _database.reference().child(nodeName).onChildChanged.listen(_childChanged);
   }
-
-  /*getJugadores() async {
-    List<JugadorJornada> jugadoresListAux = new List<JugadorJornada>();
-
-    FirebaseDatabase _database = FirebaseDatabase.instance;
-    String nodeName = "jornadas/2021-2022";
-     _database.reference()
-        .child('jornadas/2021-2022')
-        .once()
-        .then((DataSnapshot snapshotResult) {
-     // print("DSDDDD:${snapshotResult.value}");
-      if (snapshotResult == null || snapshotResult.value == null) return;
-      Map<dynamic, dynamic> auxMap = snapshotResult.value;
-      //print("MAP:${auxMap}");
-      //print("MAPKEY:${auxMap.keys}");
-      auxMap.forEach((key, value) async {
-        _database.reference()
-            .child('jornadas/2021-2022/${key}')
-            .once()
-            .then((DataSnapshot snapshotResult2) {
-          //print("aaaaaDD:${snapshotResult2.value}");
-          if (snapshotResult2 == null || snapshotResult2.value == null) return;
-          Map<dynamic, dynamic> auxMap2 = snapshotResult2.value;
-          //print("MAPKEY:${auxMap2.keys}");
-         // print("MAP222:${auxMap2}");
-          auxMap2.forEach((key, value) {
-            Map<dynamic, dynamic>  auxMap3 = value[1];
-            //print("VALUE2${auxMap3}");
-            jugadoresListAux.add(JugadorJornada.fromJson(key, auxMap3));
-            //print(jugadoresListAux.length);
-          });
-        });
-        //rootRef.child('users').orderByChild('email').equalTo('alice@email.com')
-      });
-    });
-    setState(() {
-      jugadoresList=jugadoresListAux;
-      print(jugadoresListAux.length);
-      //print(jugadoresList.length);
-    });
-
-  }*/
 
     @override
   Widget build(BuildContext context) {
@@ -159,19 +122,41 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
                         children: <Widget>[
                           Texto(Colors.white, "${widget._categoria==null?"":widget._categoria} - Jornada: ${widget._jornada==null?"":widget._jornada} (${jugadoresList.length})",
                               14, Colors.black, false),
-                          IconButton(
-                              icon: new Icon(MyFlutterApp.file_pdf,size: 20,),
-                              color: Colors.red[900],
-                              onPressed: ()
-                              async {
 
-                                await pdfJugador(context);
-
-                              }),
                         ]))
             ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          RaisedButton.icon(
+              onPressed: () async {
+                Fluttertoast.showToast(
+                    msg: "Por favor, espere...",
 
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 20,
+                    backgroundColor: Colors.green.shade900,
+                    textColor: Colors.white,
+                    fontSize: 14.0);
+                PDFPartido pdf= PDFPartido(jugadores: jugadoresList);
+                String file=await pdf.generateInvoice();
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Imagen(file,"Los mejores","${widget._categoria} - Jornada: ${widget._jornada}")));
 
+              },
+              label: Text(
+                "Archivos",
+                style: TextStyle(color: Colors.white, fontSize: 12),
+              ),
+              icon: Icon(
+                CustomIcon.file,
+                size: 20,
+                color: Colors.white,
+              ),
+              textColor: Colors.white,
+              splashColor: Colors.black,
+              color: Colors.blue),
+            ]),
             Visibility(
               visible: jugadoresList.isNotEmpty,
               child: Flexible(
@@ -216,7 +201,7 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
                                     mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                     children: [
                                       Text(
-                                        jugadoresList[index].posicion,
+                                         jugadoresList[index].posicion,
                                         style: TextStyle(
                                             fontSize: 10.0, color: Colors.blue[900]),
                                       ),
@@ -253,10 +238,6 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
 
 
 
-  void pdfJugador(BuildContext context) {
-      PDFPartido pdf= PDFPartido(jugadores: jugadoresList);
-      pdf.generateInvoice();
-  }
 
   _childAdded(Event event) {
     List<JugadorJornada> jugadoresListAux = new List<JugadorJornada>();

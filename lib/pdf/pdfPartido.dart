@@ -137,7 +137,7 @@ class PDFPartido {
 
 
 
-  Future<void> generateInvoice() async {
+  Future<String> generateInvoice() async {
     //Create a PDF document.
     final PdfDocument document = PdfDocument();
     //Set the page size
@@ -204,10 +204,12 @@ class PDFPartido {
     final Directory directory =
     await path_provider.getApplicationDocumentsDirectory();
     final String path = directory.path;
-    final File file = File('$path/output.pdf');
+    final File file = File('$path/jugadores.pdf');
     await file.writeAsBytes(bytes);
     //Launch the file (used open_file package)
-    await open_file.OpenFile.open('$path/output.pdf');
+
+    return '$path/jugadores.pdf';
+    //await open_file.OpenFile.open('$path/output.pdf');
   }
 
   Future header(PdfPage page, Size pageSize, String titulo) async {

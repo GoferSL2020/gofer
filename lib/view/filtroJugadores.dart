@@ -740,41 +740,49 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                 EdgeInsets.only(top: 0.0, left: 20, right: 20, bottom: 5),
                 child: isLoading
                     ? CircularProgressIndicator()
-                    : RaisedButton(
-                    color: Colors.black,
-                    shape: Border.all(color: Colors.black, width: 1.0),
-                    child: Text("Aceptar",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.white,
-                        )),
-                    onPressed: () {
-                      try {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        setState(() {
-                          jugadorFiltro.jugador=_nombre.text;
-                          jugadorFiltro.paisNacimiento=_lugar.text;
-                          print(jugadorFiltro.paisNacimiento);
-                           Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro),
-                          ));
+                    :
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  RaisedButton.icon(
+                      onPressed: () async {
 
-                        });
-                        setState(() {
-                          isLoading = false;
-                        });
+                        try {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          setState(() {
+                            jugadorFiltro.jugador=_nombre.text;
+                            jugadorFiltro.paisNacimiento=_lugar.text;
+                            print(jugadorFiltro.paisNacimiento);
+                            Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro),
+                            ));
 
-                      }catch(e){
-                        setState(() {
-                          isLoading=false;
-                        });
-                        e.toString();
-                      }
-                    }
-                ),
+                          });
+                          setState(() {
+                            isLoading = false;
+                          });
+
+                        }catch(e){
+                          setState(() {
+                            isLoading=false;
+                          });
+                          e.toString();
+                        }
+                      },
+                      label: Text(
+                        "Buscar jugadores",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      icon: Icon(
+                        CustomIcon.search,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.black,
+                      splashColor: Colors.black,
+                      color: Colors.blue),
+                ]),
+
               ),
                     Container(
                       height: 50,color:Colors.white,),

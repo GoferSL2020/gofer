@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
@@ -250,36 +251,43 @@ class _AddJugadorState extends State<AddJugador> {
                 EdgeInsets.only(top: 0.0, left: 20, right: 20, bottom: 5),
                 child: isLoading
                     ? CircularProgressIndicator()
-                    : RaisedButton(
-                    color: Colors.black,
-                    shape: Border.all(color: Colors.black, width: 1.0),
-                    child: Text("Aceptar",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.white,
-                        )),
-                    onPressed: () {
-                      try {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        setState(() {
-                          insertJugador();
-                        });
-                        setState(() {
-                          isLoading = false;
-                        });
+                    :
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  RaisedButton.icon(
+                      onPressed: () async {
 
-                      }catch(e){
-                        setState(() {
-                          isLoading=false;
-                        });
-                        e.toString();
-                      }
-                    }
+                        try {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          setState(() {
+                            insertJugador();
+                          });
+                          setState(() {
+                            isLoading = false;
+                          });
+
+                        }catch(e){
+                          setState(() {
+                            isLoading=false;
+                          });
+                          e.toString();
+                        }
+                      },
+                      label: Text(
+                        "Guardar",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      icon: Icon(
+                        CustomIcon.save,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.black,
+                      splashColor: Colors.black,
+                      color: Colors.blue),
+                ]),
                 ),
-              ),
             ],
           )),
       floatingActionButton: Column(

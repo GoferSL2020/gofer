@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
@@ -298,41 +299,46 @@ class _FiltroOnceJugadoresState extends State<FiltroOnceJugadores> {
                 EdgeInsets.only(top: 0.0, left: 20, right: 20, bottom: 5),
                 child: isLoading
                     ? CircularProgressIndicator()
-                    : RaisedButton(
-                    color: Colors.black,
-                    shape: Border.all(color: Colors.black, width: 1.0),
-                    child: Text("Aceptar",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.white,
-                        )),
-                    onPressed: () {
-                      try {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        setState(() {
-                           Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) => OnceFiltroPage(categoriaAux,jornadas,temporadaAux),
-                          ));
+                    :
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                    RaisedButton.icon(
+                    onPressed: () async {
 
-                        });
-                        setState(() {
-                          isLoading = false;
-                        });
+                  try {
+                  setState(() {
+                  isLoading = true;
+                  });
+                  setState(() {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => OnceFiltroPage(categoriaAux,jornadas,temporadaAux),
+                  ));
 
-                      }catch(e){
-                        setState(() {
-                          isLoading=false;
-                        });
-                        e.toString();
-                      }
-                    }
-                ),
-              ),
-            ],
-          )),
+                  });
+                  setState(() {
+                  isLoading = false;
+                  });
+
+                  }catch(e){
+                  setState(() {
+                  isLoading=false;
+                  });
+                  e.toString();
+                  }
+                  },
+                  label: Text(
+                    "Mejores de la jornada ",
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  icon: Icon(
+                    CustomIcon.futbolista_4,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                  textColor: Colors.black,
+                  splashColor: Colors.black,
+                  color: Colors.blue),
+              ]),
+          )])),
     );
   }
 

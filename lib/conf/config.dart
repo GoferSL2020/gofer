@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:iadvancedscout/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/model/jugador.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:open_file/open_file.dart' as open_file;
+
 class Config{
 
 
@@ -315,5 +320,25 @@ class Config{
           .replaceAll("í", "i%CC%81")
           .replaceAll("ó", "o%CC%81")
           .replaceAll("ú", "u%CC%81")}.png?alt=media";
+  }
+
+
+  static Future<bool> saveImage(Uint8List image,Uint8List image2) async {
+    try {
+      var result = await
+      ImageGallerySaver.saveImage(image,
+          quality: 60, name:
+          "${DateTime.now().toIso8601String()}");
+      ImageGallerySaver.saveImage(image2,
+      quality: 60, name:
+      "2${DateTime.now().toIso8601String()}");
+      print(result);
+      await open_file.OpenFile.open('${DateTime.now().toIso8601String()}');
+      return true;
+
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }

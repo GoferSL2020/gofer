@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/widgets/font.dart';
+
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:open_file/open_file.dart' as open_file;
@@ -327,7 +327,7 @@ class PdfJugadorDatos {
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.left));
     page.graphics.drawRectangle(
         bounds: Rect.fromLTWH(400, 0,pageSize.width - 400, 90),
-        brush: PdfSolidBrush(PdfColor(0, 0, 0)));
+        brush: PdfSolidBrush(PdfColor(0, 0, 0 )));
     page.graphics.drawString(
         _jugador.veredicto==""?"Sin veredicto":_jugador.veredicto.toUpperCase(), PdfStandardFont(PdfFontFamily.helvetica, 15),
         brush: PdfBrushes.red,
