@@ -1,24 +1,38 @@
-import 'package:iadvancedscout/conf/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iadvancedscout/view/equipos/equiposView.dart';
 
-class abajo extends StatelessWidget {
-  const abajo({
-    Key key,
-  }) : super(key: key);
+class Abajo extends StatelessWidget {
 
+  final Temporada temporada;
+
+  const Abajo({Key key, this.temporada}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        canvasColor: Config.colorMenu,
-        primaryColor: Config.fondo,
+    return BottomAppBar(
+      color: Colors.black,
+      shape: CircularNotchedRectangle(),
+      notchMargin: 4.0,
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => EquiposView(temporada: temporada),
+              ));
+            },
+          ),
+        ],
       ),
-      child: Container(
-        height: 50,
-        decoration: new BoxDecoration(
-          image: new DecorationImage(image: new AssetImage("assets/img/bottom2.png"), fit: BoxFit.cover,),
-        ),),
     );
   }
 }
