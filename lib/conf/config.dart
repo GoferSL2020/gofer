@@ -2,12 +2,19 @@ import 'dart:typed_data';
 
 import 'package:iadvancedscout/locale/app_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/modelo/entrenador.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:open_file/open_file.dart' as open_file;
+import 'package:intl/intl.dart';
 
 class Config{
 
+  static Color colorCardLetra=Colors.black;
+  static Color colorCardLetra2=Colors.grey.shade600;
+  static Color color=Colors.black;
+  static Color colorCard=Colors.white;
 
  static double volume = 1.0;
  static double pitch = 1.0;
@@ -16,8 +23,8 @@ class Config{
  static int intcolor =900;//500 ->0
  static Color tabColor =Colors.white;
  //cambiar
- static Color color=Colors.black;
- static Color colorAPP = Colors.black;
+
+ static Color colorAPP = Colors.blue;
  static Color border = Colors.red;
  static Color colorMenu = Colors.red;
  static Color mail  =Colors.red;//[900]
@@ -27,7 +34,7 @@ class Config{
  [ 'Altura reseñable para su posición','Bajo para su posición'];
 
  static List<String> envergaduraFisica = <String>
- ['Alta', 'Media', 'Baja'];
+ ['Baja', 'Media', 'Alta'];
 
 
 
@@ -42,6 +49,8 @@ class Config{
 
  static List<String> extranjero = <String>
  ['Español', 'Extranjero'];
+ static List<String> extranjeroArgentino = <String>
+ ['Argentina', 'Extranjero'];
 
  static List<String> gestostecnicos = <String>
  ['Muy buenos', 'Normal','Malo Tecnicamente'];
@@ -69,10 +78,13 @@ class Config{
    if (aux==null) return 0;
    if (aux=="null") return 0;
    if (aux=="Altura reseñable para su posición") return 0;
-   if (aux=="Alta") return 0;
+   if (aux=="Baja") return 0;
    if (aux=="Español") return 0;
    if (aux=="Gran velocidad en distancia larga") return 0;
    if (aux=="Gana los cuerpo a cuerpo") return 0;
+   if (aux=="Nativo") return 0;
+   if (aux=="Argentina") return 0;
+   if (aux=="Activo") return 0;
 
    if (aux=="derecho") return 0;
    if (aux=="Muy buenos") return 0;
@@ -87,6 +99,7 @@ class Config{
    if (aux=="Lento") return 1;
    if (aux=="Pierde los duelos") return 1;
    if (aux=="Extranjero") return 1;
+   if (aux=="Inactivo") return 1;
 
    if (aux=="izquierdo") return 1;
    if (aux=="Normal") return 1;
@@ -96,7 +109,7 @@ class Config{
    if (aux=="Malos controles para superar") return 1;
    if (aux=="No") return 1;
 
-   if (aux=="Baja") return 2;
+   if (aux=="Alta") return 2;
    if (aux=="Velocidad normal") return 2;
    if (aux=="No entra") return 2;
 
@@ -111,15 +124,18 @@ class Config{
  }
 
  static String edad(String fechaNacimiento){
+   String sub="";
    if (fechaNacimiento==null)return "Sin fecha";
    if (fechaNacimiento=="")return "Sin fecha";
    if (fechaNacimiento=="-")return "Sin fecha";
-   var edad;
-   var anioNacimiento = int.parse(fechaNacimiento.split("/")[2].toString());
+   int edad;
    var fechaDeHoy = DateTime.now();
-   int anioActual = fechaDeHoy.year;
-   edad = anioActual - anioNacimiento;
-   return edad.toString();
+   DateFormat format = DateFormat("dd/MM/yyyy");
+   var fechaNac = format.parse(fechaNacimiento);
+   var anio = fechaDeHoy.difference(fechaNac);
+   edad=(anio.inDays/365).truncate();
+   sub = edad.toString();
+   return sub;
  }
 
 
@@ -129,15 +145,15 @@ class Config{
    if (fechaNacimiento==null)return "Sin fecha";
    if (fechaNacimiento=="")return "Sin fecha";
    if (fechaNacimiento=="-")return "Sin fecha";
-   var edad;
-   var anioNacimiento = int.parse(fechaNacimiento.split("/")[2].toString());
+   int edad;
    var fechaDeHoy = DateTime.now();
-   var anioActual = fechaDeHoy.year;
-   int mesActual = fechaDeHoy.month;
-   if(mesActual<9)
-     anioActual=anioActual-1;
-   edad = anioActual - anioNacimiento;
-
+   DateFormat format = DateFormat("dd/MM/yyyy");
+   var fechaNac = format.parse(fechaNacimiento);
+   var anio = fechaDeHoy.difference(fechaNac);
+   print(fechaNacimiento);
+   print(anio.inDays/365);
+   edad=(anio.inDays/365).truncate();
+   print(edad);
    if(edad<20) {
      sub = edad.toString()+" (Sub-20"+")";
    }else if(edad<23) {
@@ -172,6 +188,132 @@ class Config{
    return sub;
  }
 
+
+
+ static String imagenJugador(Equipo equipo, Player jugador) {
+   return
+     "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
+         "jugadores"
+         "%2F${jugador.idjugador
+         .replaceAll("à", "a%CC%80")
+         .replaceAll("è", "e%CC%80")
+         .replaceAll("ì", "i%CC%80")
+         .replaceAll("ò", "o%CC%80")
+         .replaceAll("ù", "u%CC%80")
+         .replaceAll("Á", "A%CC%81")
+         .replaceAll("É", "E%CC%81")
+         .replaceAll("Í", "I%CC%81")
+         .replaceAll("Ó", "O%CC%81")
+         .replaceAll("Ú", "U%CC%81")
+         .replaceAll("ñ", "n%CC%83")
+         .replaceAll("á", "a%CC%81")
+         .replaceAll("é", "e%CC%81")
+         .replaceAll("í", "i%CC%81")
+         .replaceAll("ó", "o%CC%81")
+         .replaceAll("ú", "u%CC%81")}?alt=media";
+ }
+
+
+
+  static String imagenEntrenador(Entrenador entrenador) {
+    return
+      "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
+          "entrenadores"
+          "%2F${entrenador.entrenador
+          .replaceAll("à", "a%CC%80")
+          .replaceAll("è", "e%CC%80")
+          .replaceAll("ì", "i%CC%80")
+          .replaceAll("ò", "o%CC%80")
+          .replaceAll("ù", "u%CC%80")
+          .replaceAll("Á", "A%CC%81")
+          .replaceAll("É", "E%CC%81")
+          .replaceAll("Í", "I%CC%81")
+          .replaceAll("Ó", "O%CC%81")
+          .replaceAll("Ú", "U%CC%81")
+          .replaceAll("ñ", "n%CC%83")
+          .replaceAll("á", "a%CC%81")
+          .replaceAll("é", "e%CC%81")
+          .replaceAll("í", "i%CC%81")
+          .replaceAll("ó", "o%CC%81")
+          .replaceAll("ú", "u%CC%81")}?alt=media";
+  }
+
+
+  static String imagenJugador2(String equipo,String jugador) {
+    return
+      "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
+          "%2F${equipo.replaceAll(" ", "")}"
+          "%2Fjugadores"
+          "%2F${jugador
+          .replaceAll("à", "a%CC%80")
+          .replaceAll("è", "e%CC%80")
+          .replaceAll("ì", "i%CC%80")
+          .replaceAll("ò", "o%CC%80")
+          .replaceAll("ù", "u%CC%80")
+          .replaceAll("Á", "A%CC%81")
+          .replaceAll("É", "E%CC%81")
+          .replaceAll("Í", "I%CC%81")
+          .replaceAll("Ó", "O%CC%81")
+          .replaceAll("Ú", "U%CC%81")
+          .replaceAll("ñ", "n%CC%83")
+          .replaceAll("á", "a%CC%81")
+          .replaceAll("é", "e%CC%81")
+          .replaceAll("í", "i%CC%81")
+          .replaceAll("ó", "o%CC%81")
+          .replaceAll("ú", "u%CC%81")}?alt=media";
+  }
+
+
+  static String escudoCategoria(String imagen) {
+   String s=
+       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/categorias%2F${imagen
+       .replaceAll(" ", "%20")
+       .replaceAll("2ª", "2%C2%AA")
+       .replaceAll("1ª", "1%C2%AA")
+       .replaceAll("à", "a%CC%80")
+       .replaceAll("è", "e%CC%80")
+       .replaceAll("ì", "i%CC%80")
+       .replaceAll("ò", "o%CC%80")
+       .replaceAll("ù", "u%CC%80")
+       .replaceAll("Á", "A%CC%81")
+       .replaceAll("É", "E%CC%81")
+       .replaceAll("Í", "I%CC%81")
+       .replaceAll("Ó", "O%CC%81")
+       .replaceAll("Ú", "U%CC%81")
+       .replaceAll("ñ", "n%CC%83")
+       .replaceAll("á", "a%CC%81")
+       .replaceAll("é", "e%CC%81")
+       .replaceAll("í", "i%CC%81")
+       .replaceAll("ó", "o%CC%81")
+       .replaceAll("ú", "u%CC%81")}.png?alt=media";
+
+   return s;
+ }
+
+
+ static String escudoClubes(String imagen) {
+   String s=
+       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2F${imagen
+       .replaceAll("2ª", "2%C2%AA")
+       .replaceAll("1ª", "1%C2%AA")
+       .replaceAll("à", "a%CC%80")
+       .replaceAll("è", "e%CC%80")
+       .replaceAll("ì", "i%CC%80")
+       .replaceAll("ò", "o%CC%80")
+       .replaceAll("ù", "u%CC%80")
+       .replaceAll("Á", "A%CC%81")
+       .replaceAll("É", "E%CC%81")
+       .replaceAll("Í", "I%CC%81")
+       .replaceAll("Ó", "O%CC%81")
+       .replaceAll("Ú", "U%CC%81")
+       .replaceAll("ñ", "n%CC%83")
+       .replaceAll("á", "a%CC%81")
+       .replaceAll("é", "e%CC%81")
+       .replaceAll("í", "i%CC%81")
+       .replaceAll("ó", "o%CC%81")
+       .replaceAll("ú", "u%CC%81")}.png?alt=media";
+   return s;
+ }
 
  static Color edadColorSub(String sub){
 
@@ -233,6 +375,7 @@ class Config{
   return MaterialColor(color.value, {
    50: color,
    100: color,
+   200: color,
    200: color,
    300: color,
    400: color,
@@ -301,27 +444,6 @@ class Config{
             .replaceAll("ú", "u%CC%81")}.png?alt=media";
     }
 
-  static String imagenJugador(Jugador jugador) {
-    return
-      "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/jugadores%2F${jugador.id
-          .replaceAll("à", "a%CC%80")
-          .replaceAll("è", "e%CC%80")
-          .replaceAll("ì", "i%CC%80")
-          .replaceAll("ò", "o%CC%80")
-          .replaceAll("ù", "u%CC%80")
-          .replaceAll("Á", "A%CC%81")
-          .replaceAll("É", "E%CC%81")
-          .replaceAll("Í", "I%CC%81")
-          .replaceAll("Ó", "O%CC%81")
-          .replaceAll("Ú", "U%CC%81")
-          .replaceAll("ñ", "n%CC%83")
-          .replaceAll("á", "a%CC%81")
-          .replaceAll("é", "e%CC%81")
-          .replaceAll("í", "i%CC%81")
-          .replaceAll("ó", "o%CC%81")
-          .replaceAll("ú", "u%CC%81")}.png?alt=media";
-  }
-
 
   static Future<bool> saveImage(Uint8List image,Uint8List image2) async {
     try {
@@ -332,7 +454,7 @@ class Config{
       ImageGallerySaver.saveImage(image2,
       quality: 60, name:
       "2${DateTime.now().toIso8601String()}");
-      print(result);
+
       await open_file.OpenFile.open('${DateTime.now().toIso8601String()}');
       return true;
 
