@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
@@ -12,6 +13,7 @@ import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
+import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/editJugador.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
@@ -66,7 +68,7 @@ class _JugadoresViewState extends State<JugadoresView> {
               )),
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Jugadores",
+        title: Text("IAScout -Jugadores",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,
@@ -140,7 +142,7 @@ class _JugadoresViewState extends State<JugadoresView> {
                                   jugador[index].jugador.toUpperCase(),
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 11.0,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ]),
@@ -169,6 +171,9 @@ class _JugadoresViewState extends State<JugadoresView> {
                                                   builder: (BuildContext
                                                           context) =>
                                                       EditJugador(
+                                                        temporada: widget.temporada,
+                                                        categoria: widget.categoria,
+                                                        pais: widget.pais,
                                                         jugador: jugador[index],
                                                         equipo: widget.equipo,
                                                       )));
@@ -226,26 +231,29 @@ class _JugadoresViewState extends State<JugadoresView> {
           )
         ]),
       ),
-      /*  floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Jugador jugador = new Jugador();
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => EditJugador(
-                      jugador: jugador,
-                      temporada: widget.temporada,
-                      equipo: widget.equipo)));
+          Player jugador=new Player();
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+              EditJugador(
+                temporada: widget.temporada,
+                categoria: widget.categoria,
+                pais: widget.pais,
+                jugador: jugador,
+                equipo: widget.equipo,
+              )));
         },
-      ),*/
+        child: Icon(
+          Icons.add_circle_outline,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
+        tooltip: "Añadir un jugador",
+      ),
     );
   }
 
   void paginaJugador(BuildContext context, Player jugador) {
-    print("VOUYYYY");
-    print(jugador.key);
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) => TabCaracteristicas(widget.equipo,widget.temporada,widget.categoria,widget.pais,jugador),
     ));
@@ -311,9 +319,16 @@ class _JugadoresViewState extends State<JugadoresView> {
   }
 
   void pdfJugador(BuildContext context, Player jugador) {
-    print(jugador.nacionalidad);
-    PdfJugadorDatos pdf =
-        PdfJugadorDatos(widget.temporada, widget.equipo, jugador);
+    Fluttertoast.showToast(
+        msg: "Espera...\nEstamos haciendo el \ndocumento del jugador:\n${jugador.jugador}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 30,
+        backgroundColor: Colors.red.shade900,
+        textColor: Colors.white,
+        fontSize: 12.0);
+    PdfJugadorDatosScout2 pdf =
+        PdfJugadorDatosScout2(widget.temporada, widget.equipo, jugador,widget.pais,widget.categoria,);
     pdf.generateInvoice();
   }
 

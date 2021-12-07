@@ -4,8 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
+import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
+import 'package:iadvancedscout/dao/jugadorDao.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
@@ -39,7 +42,6 @@ class PartidosJornadaView extends StatefulWidget {
 class _PartidosJornadaViewState extends State<PartidosJornadaView> {
   CRUDEquipo dao = CRUDEquipo();
 
-  Future<List<Partido>> partidosDAO;
 
   @override
   void initState() {
@@ -52,24 +54,10 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
     }
   }
 
-  Future<List<String>> _getData() async {
-    var values = new List<String>();
-    values.add("Horses");
-    values.add("Goats");
-    values.add("Chickens");
-
-    //throw new Exception("Danger Will Robinson!!!");
-
-    await new Future.delayed(new Duration(seconds: 5));
-
-    return values;
-  }
 
   Future<List<Partido>> partidosJornada() async {
     var partidos = dao.getEquipoPartidos(
         widget.temporada, widget.pais, widget.categoria, widget.equipo);
-
-
     await new Future.delayed(new Duration(seconds: 2));
     return partidos;
   }
@@ -94,7 +82,7 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
           ])
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Partidos",
+        title: Text("IAScout -Partidos",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12,
@@ -159,6 +147,8 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
     );
   }
 
+
+
   Widget jornadasPartidos() {
     return FutureBuilder<List<Partido>>(
         future: partidosJornada(),
@@ -175,7 +165,7 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
           }
           List<Partido> values = snapshot.data;
           values.sort((a, b) => a.jornada.compareTo(b.jornada));
-          return ListView.builder(
+           return ListView.builder(
               itemCount: values.length,
               itemBuilder: (context, index) {
                 return ListTile(
@@ -236,132 +226,21 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
                             ]),
                           ]),
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                            width: 80,
-                            height: 30, // match_parent
-                            child:
-                        RaisedButton.icon(
-                          onPressed: () {
-                            CRUDPartido dao = new CRUDPartido();
-                            try {
-                              Fluttertoast.showToast(
-                                  msg: "Se ha grabado",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.green.shade900,
-                                  textColor: Colors.white,
-                                  fontSize: 12.0);
-                            } catch (e) {
-                              Fluttertoast.showToast(
-                                  msg: "No se ha grabado",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red.shade900,
-                                  textColor: Colors.white,
-                                  fontSize: 12.0);
-                            }
-                          },
-                          label: Text(
-                            "SIM",
-                            style: TextStyle(color: Colors.white, fontSize: 10),
-                          ),
-                          icon: Icon(
-                            Icons.videocam_off,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          textColor: Colors.white,
-                          splashColor: Colors.black,
-                          color: Colors.grey.shade900,
-                        ),),
-                        Container(width: 5,),
-                        SizedBox(
-                          width: 70,
-                          height: 30, // match_parent
-                          child:
-                          RaisedButton.icon(
-                            onPressed: () {
-                              CRUDPartido dao = new CRUDPartido();
-                              try {
-                                Fluttertoast.showToast(
-                                    msg: "Se ha grabado",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 2,
-                                    backgroundColor: Colors.green.shade900,
-                                    textColor: Colors.white,
-                                    fontSize: 12.0);
-                              } catch (e) {
-                                Fluttertoast.showToast(
-                                    msg: "No se ha grabado",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 2,
-                                    backgroundColor: Colors.red.shade900,
-                                    textColor: Colors.white,
-                                    fontSize: 12.0);
-                              }
-                            },
-                            label: Text(
-                              "SV",
-                              style: TextStyle(color: Colors.white, fontSize: 10),
-                            ),
-                            icon: Icon(
-                              Icons.remove_red_eye,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            textColor: Colors.white,
-                            splashColor: Colors.black,
-                            color: Colors.purple.shade700,
-                          ),),
-                        Container(width: 5,),
-                        SizedBox(
-                          width: 70,
-                          height: 30, // match_parent
-                          child:
-                        RaisedButton.icon(
-                          onPressed: () {
-                            CRUDPartido dao = new CRUDPartido();
-                            try {
-                              Fluttertoast.showToast(
-                                  msg: "Se ha grabado",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.green.shade900,
-                                  textColor: Colors.white,
-                                  fontSize: 12.0);
-                            } catch (e) {
-                              Fluttertoast.showToast(
-                                  msg: "No se ha grabado",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red.shade900,
-                                  textColor: Colors.white,
-                                  fontSize: 12.0);
-                            }
-                          },
-                          label: Text(
-                            "A",
-                            style: TextStyle(color: Colors.white, fontSize: 10),
-                          ),
-                          icon: Icon(
-                            Icons.calendar_today_outlined,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          textColor: Colors.white,
-                          splashColor: Colors.black,
-                          color: Colors.red.shade900,
-                        ),),
-                        Container(width: 5,)
-                      ],),
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                          color: values[index].accion== "Sin imágenes" ? Colors.grey.shade700 : values[index].accion== "Sin visualizar"?Colors.purpleAccent:values[index].accion== "Aplazado" ? Colors.red :Colors.white,
+                          padding: EdgeInsets.all(4.0),
+                          width: 180,
+                          height: 20,
+                          child: Center(
+                              child:
+                              Text(values[index].accion.toUpperCase()!=""?"Visionado, ${values[index].accion.toUpperCase()}":"",
+                                  style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold)))),
+
+
                       Container(height: 5,)
                     ]),
                   ),

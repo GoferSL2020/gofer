@@ -9,6 +9,7 @@ import 'package:iadvancedscout/model/pais.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/pdf/PdfPreviewScreen.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
+import 'package:iadvancedscout/pdf/pdfJugadorDatosAnt.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 
 import 'package:iadvancedscout/view/addJugador.dart';
@@ -436,7 +437,7 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
   }
 
   void pdfJugador(BuildContext context, Jugador jugador) {
-      PdfJugadorDatos pdf= PdfJugadorDatos(jugador);
+      PdfJugadorDatosAnt pdf= PdfJugadorDatosAnt(jugador);
       pdf.generateInvoice();
 
   }

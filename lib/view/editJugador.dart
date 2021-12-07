@@ -248,7 +248,7 @@ Carrilero izquierdo
                     //https://firebasestorage.googleapis.com/v0/b/iaclub.appspot.com/o/
                         ? Image.file(File(_imageFile.path), fit: BoxFit.fill)
                         : Image.network(
-                            Config.imagenJugador(widget.jugador)
+                            Config.imagenJugador2(widget.jugador.equipo,widget.jugador.id)
                        ,
                       fit: BoxFit.fitHeight,
                     )),
@@ -682,9 +682,11 @@ Carrilero izquierdo
                         inactiveBgColor: Colors.grey[300],
                         inactiveFgColor: Colors.black,
                         fontSize: 12,
-                        labels: ['Español', 'Extranjero'],
+                        labels: widget.jugador.categoria.contains("Argentina")?['Argentina', 'Extranjero']:['Español', 'Extranjero'],
                         onToggle: (index) {
-                          _extranjero=Config.extranjero[index];
+                          _extranjero=widget.jugador.categoria.contains("Argentina")?
+                          Config.extranjeroArgentino[index]
+                          :Config.extranjero[index];
                         },
                       )),
                 ],
@@ -761,7 +763,7 @@ Carrilero izquierdo
             )
           ],
           backgroundColor: Colors.black,
-          title: Text("IAClub - Jugador",
+          title: Text("IAScout -Jugador",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

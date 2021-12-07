@@ -7,6 +7,7 @@ import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iadvancedscout/my_flutter_app_icons.dart';
 
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
 
@@ -114,7 +115,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                 )
               ],
                   backgroundColor: Colors.black,
-                  title: Text("IAClub - Puntuaciones",
+                  title: Text("IAScout -Puntuaciones",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -127,7 +128,6 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                   onTap: (index) {
                     _controller.index=index;
 
-                    print(index);
                   },
                   labelStyle: TextStyle(fontSize: 12.0), //For Selected tab
                   controller: _controller,
@@ -174,11 +174,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           for(var d in _jugadoresFUERA){
                             setState(() {
                               d.accion="SIM";
+                              d.puntuacion=0;
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
                               d.accion="SIM";
+                              d.puntuacion=0;
                             });
                           }
                           setState(() {
@@ -191,6 +193,9 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                             dao.updateJugadorPuntuaciones(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
+                            dao.updatePartidoAccion(
+                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
+                                widget.partido,"SIM");
                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
@@ -232,11 +237,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           setState(() {
                           for(var d in _jugadoresFUERA){
                               d.accion="SV";
+                              d.puntuacion=0;
                           }
                           });
                           setState(() {
                             for(var d in _jugadoresCASA){
                               d.accion="SV";
+                              d.puntuacion=0;
                           }
                           });
                           setState(() {
@@ -249,6 +256,9 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                             dao.updateJugadorPuntuaciones(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
+                            dao.updatePartidoAccion(
+                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
+                                widget.partido,"SV");
                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
@@ -273,8 +283,8 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           style: TextStyle(color: Colors.white, fontSize: 9),
                         ),
                         icon: Icon(
-                          Icons.calendar_today_outlined,
-                          size: 20,
+                          MyFlutterApp.eye_slash,
+                          size: 15,
                           color: Colors.white,
                         ),
                         textColor: Colors.white,
@@ -290,11 +300,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           for(var d in _jugadoresFUERA){
                             setState(() {
                               d.accion="A";
+                              d.puntuacion=0;
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
                               d.accion="A";
+                              d.puntuacion=0;
                             });
                           }
                           setState(() {
@@ -307,6 +319,9 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                             dao.updateJugadorPuntuaciones(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
+                            dao.updatePartidoAccion(
+                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
+                                widget.partido,"A");
                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
@@ -445,6 +460,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                 con.updateJugadorPuntuaciones(
                     widget.temporada,widget.pais,widget.categoria,widget.jornada,
                     widget.partido,_jugadoresCASA,_jugadoresFUERA);
+
                 return true; // showDialog() returns true
               },
             ),

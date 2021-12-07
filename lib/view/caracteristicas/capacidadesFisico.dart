@@ -61,7 +61,7 @@ class _CapacidadesFisico extends State<CapacidadesFisico> {
                       inactiveBgColor: Colors.grey[300],
                       inactiveFgColor: Colors.black,
                       fontSize: 10,
-                      labels: ['Bajo', 'Media', 'Alta'],
+                      labels: ['Baja', 'Media', 'Alta'],
                       onToggle: (index) {
                         widget._jugador.fis_envergadura =
                         Config.envergaduraFisica[index];

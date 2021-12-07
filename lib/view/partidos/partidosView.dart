@@ -89,7 +89,7 @@ class _PartidosViewState extends State<PartidosView> {
           )
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Partidos",
+        title: Text("IAScout -Partidos",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

@@ -95,7 +95,6 @@ class _EditPartidoState extends State<EditPartido> {
     _observadores.clear();
     _observadoresAUX =
     await dao2.fetchScouting(widget.temporada, widget.pais, widget.categoria);
-    print(_observadoresAUX.length);
     _observadores.add("");
     for (var d in _observadoresAUX) {
       setState(() {
@@ -240,7 +239,7 @@ class _EditPartidoState extends State<EditPartido> {
             )
           ],
           backgroundColor: Colors.black,
-          title: Text("IAClub - Jornada",
+          title: Text("IAScout -Jornada",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

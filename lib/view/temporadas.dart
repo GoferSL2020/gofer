@@ -20,6 +20,7 @@ import 'package:iadvancedscout/view/filtroJugadores.dart';
 import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/jugadoresFiltros.dart';
 import 'package:iadvancedscout/view/paises.dart';
+import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 import 'package:iadvancedscout/wigdet/politica.dart';
 import 'package:iadvancedscout/wigdet/termino.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -50,6 +51,7 @@ class _TemporadasPageState extends State<TemporadasPage> {
     nodeName = "temporadas";
     //name();
     _database.reference().child(nodeName).orderByChild("temporada").onChildAdded.listen(_childAdded);
+   //_database.reference().child(nodeName).orderByChild("temporada").once().then((value) => _childAdded);
 
 
   }
@@ -86,7 +88,7 @@ class _TemporadasPageState extends State<TemporadasPage> {
         elevation: 0,
         centerTitle: true,
       ),
-      drawer: MenuLateral(BBDDService().getUserScout()),
+      drawer: MenuLateral(),
       body: Container(
         color: Colors.white,
         child: Column(
@@ -208,7 +210,7 @@ class _TemporadasPageState extends State<TemporadasPage> {
   _childAdded(Event event) {
     setState(() {
       if(BBDDService().getUserScout().categoria=="Todas"){
-        print("DENTRO1"+event.snapshot.value['temporada']);
+        print(event.snapshot.value);
         print(BBDDService().getUserScout().categoria);
         temporadaList.add(Temporada.fromSnapshot(event.snapshot));
       }
@@ -247,9 +249,8 @@ class _TemporadasPageState extends State<TemporadasPage> {
 
 
 class MenuLateral extends StatelessWidget {
-  final UserScout user;
 
-  MenuLateral(this.user);
+  MenuLateral();
 
   @override
   Widget build(BuildContext context) {
@@ -265,6 +266,42 @@ class MenuLateral extends StatelessWidget {
                     color: Colors.black
                 ),
               ),
+              BBDDService().getUserScout().categoria=="Todas"?
+              Ink(
+                color: Colors.white,
+                child: ListTile(
+                  title: Text("ANTIGUA",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                TemporadasPage()));
+                  },
+                  leading: const Icon(Icons.person, color: Colors.white),
+                ),
+
+              ):null,
+              BBDDService().getUserScout().categoria=="Todas"?
+              Ink(
+                color: Colors.white,
+                child: ListTile(
+                  title: Text("NUEVA",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                TemporadaView()));
+                  },
+                  leading: const Icon(Icons.person, color: Colors.white),
+                ),
+
+              ):null,
               Container(height: 1,color: Colors.white,),
               Ink(
                 color: Colors.white,

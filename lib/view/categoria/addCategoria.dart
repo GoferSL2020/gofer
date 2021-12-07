@@ -72,7 +72,7 @@ class _AddCategoriaState extends State<AddCategoria> {
             )
         ],
           backgroundColor:Colors.black,
-          title: Text("IAClub - Añadir temporada",
+          title: Text("IAScout -Añadir temporada",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

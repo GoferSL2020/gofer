@@ -49,7 +49,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
             Container(
@@ -95,7 +95,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -142,7 +142,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -180,7 +180,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
 
@@ -248,7 +248,6 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
       rows.add(TableRow(children: [
         new Text(caract[i],
             style: TextStyle(
-              fontWeight: FontWeight.bold,
               fontSize: 11,
             )),
         Switch(

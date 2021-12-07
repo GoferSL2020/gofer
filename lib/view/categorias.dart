@@ -139,7 +139,6 @@ class _CategoriasPageState extends State<CategoriasPage> {
                   return
                     ListTile(
                       onTap: () {
-
                           Categoria categoria=new Categoria(categoriasList[index].categoria, widget._pais.pais,null);
                           Navigator.of(context).push(new MaterialPageRoute(
                             builder: (BuildContext context) => EquiposPage(categoria),
@@ -148,6 +147,8 @@ class _CategoriasPageState extends State<CategoriasPage> {
                       title: Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                           children: [
+                            categoriasList[index].categoria.contains("1ª División Liga Argentina")?
+                            Image.network("https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/categorias%2F1_DivisionLigaArgentina.png?alt=media",width: 25):
                             categoriasList[index].categoria.contains("División A")?
                             Image.network("https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/categorias%2F2_Division.png?alt=media",width: 25):
                             categoriasList[index].categoria.contains("1ª División")?

@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
@@ -16,10 +18,51 @@ class ComponenteFormal extends StatefulWidget {
 }
 
 class _ComponenteFormal extends State<ComponenteFormal> {
+  final _varianteOfensiva = TextEditingController();
+  final _varianteDefensiva = TextEditingController();
+
+  @override
+  void initState() {
+    _varianteOfensiva.text = widget._entrenador.for_variante_ofensiva;
+    _varianteDefensiva.text = widget._entrenador.for_variante_defensiva;
+
+  }
   @override
   double _crossAxisSpacing = 8, _mainAxisSpacing = 2, _aspectRatio = 4;
   int _crossAxisCount = 2;
   Widget build(BuildContext context) {
+
+    TextFormField varianteDefensiva = TextFormField(
+      controller:_varianteDefensiva,
+      style: TextStyle(fontSize:14),
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(50),
+      ],
+      onChanged: (String value) {
+        widget._entrenador.for_variante_defensiva=value;
+      },
+
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        labelText: 'Variante Defensiva',
+        icon: Icon(CustomIcon.futbolista, color: Colors.black,),
+      ),
+    );
+    TextFormField varianteOfensiva = TextFormField(
+      style: TextStyle(fontSize: 14),
+      controller:_varianteOfensiva,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(50),
+      ],
+      onChanged: (String value) {
+        widget._entrenador.for_variante_ofensiva=value;
+      },
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        labelText: 'Variante Ofensiva',
+        icon: Icon(CustomIcon.futbolista_4, color: Colors.black,),
+      ),
+    );
     // TODO: implement build
     return Scaffold(
       body: new SingleChildScrollView(
@@ -47,7 +90,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -86,7 +129,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -133,7 +176,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -175,12 +218,12 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5.0),
-                  child:Text("Asentamiento espacio",
+                  child:Text("Espacios de intervención",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -198,7 +241,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoEspacion, 0, 1),
+                          children: ponerFila2col(Entrenador.espaciosdeintervencion, 0, 1),
                         ),
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
@@ -206,11 +249,11 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoEspacion, 1,2),
+                          children: ponerFila2col(Entrenador.espaciosdeintervencion, 1,2),
                         ),
                       ],)
                 ),
-                Container(
+             /*   Container(
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5.0),
@@ -219,7 +262,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -247,7 +290,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                           children: ponerFila2col(Entrenador.estructuracionJuegoColectivo, 1,2),
                         ),
                       ],)
-                ),
+                ),*/
                 Container(
                   width: double.infinity,
                   color:Colors.grey.shade800,
@@ -257,7 +300,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -288,6 +331,16 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                       ],)
                 ),
                 Container(
+                  padding: EdgeInsets.only(left:10,right: 15),
+                  child:varianteDefensiva,
+                ),
+                Container(
+                  padding: EdgeInsets.only(left:10,right: 15),
+                  child:  varianteOfensiva,
+                ),
+
+
+                Container(
                   height: 100,
                 ),
               ])),
@@ -303,8 +356,8 @@ class _ComponenteFormal extends State<ComponenteFormal> {
       rows.add(TableRow(children: [
         new Text(doc,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+
+              fontSize: 11,
             )),
         Switch(
           value: false,
@@ -313,8 +366,8 @@ class _ComponenteFormal extends State<ComponenteFormal> {
               Entrenador.poneElValor(doc, newValue, widget._entrenador);
             });
           },
-          activeTrackColor: Colors.blue.shade900,
-          activeColor:Colors.blue.shade900,
+          activeTrackColor: Colors.blue,
+          activeColor:Colors.blue,
         ),
       ]));
     }
@@ -328,7 +381,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
       rows.add(TableRow(children: [
         new Text(caract[i],
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+
               fontSize: 11,
             )),
         Switch(
@@ -338,8 +391,8 @@ class _ComponenteFormal extends State<ComponenteFormal> {
               Entrenador.poneElValor(caract[i], newValue, widget._entrenador);
             });
           },
-          activeTrackColor: Colors.blue.shade900,
-          activeColor:Colors.blue.shade900,
+          activeTrackColor: Colors.blue,
+          activeColor:Colors.blue,
         ),
       ]));
     }

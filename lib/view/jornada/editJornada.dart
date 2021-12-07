@@ -241,7 +241,7 @@ class _EditJornadaState extends State<EditJornada> {
             ),
           ],
           backgroundColor: Colors.black,
-          title: Text("IAClub - Añadir Partido",
+          title: Text("IAScout -Añadir Partido",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,

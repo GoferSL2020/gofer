@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,9 +29,11 @@ class PdfJugadorDatos {
   final PdfFont contentFontCelda7 = PdfStandardFont(PdfFontFamily.helvetica, 7);
   final PdfFont contentFontCelda6= PdfStandardFont(PdfFontFamily.helvetica, 5);
 
-  final Jugador _jugador;
+  final Player _jugador;
+  final Equipo _equipo;
+  final Temporada _temporada;
 
-  PdfJugadorDatos(this._jugador);
+  PdfJugadorDatos(this._temporada,this._equipo, this._jugador);
 
   Future<void> generateInvoice() async {
     //Create a PDF document.
@@ -62,7 +67,7 @@ class PdfJugadorDatos {
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,
           ));
 
-    page2.graphics.drawString(_jugador.observaciones_1,
+    page2.graphics.drawString(_jugador.observaciones,
     PdfStandardFont(PdfFontFamily.helvetica, 12, ),
     brush: PdfBrushes.black,
     bounds: Rect.fromLTWH(15, 230, page2.size.width-100, page2.size.width-50),
@@ -74,75 +79,75 @@ class PdfJugadorDatos {
     List<String> caractOfensiva;
     List<String> caractPsicologia;
     if (_jugador.posicion.toUpperCase().contains("PORTERO")){
-      caractFisico = Jugador.porteroFisico;
-      caractDefensiva = Jugador.porteroDefensa;
-      caractOfensiva = Jugador.porteroOfensivas;
-      caractPsicologia = Jugador.porteroPsicologia;
+      caractFisico = Player.porteroFisico;
+      caractDefensiva = Player.porteroDefensa;
+      caractOfensiva = Player.porteroOfensivas;
+      caractPsicologia = Player.porteroPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("LATERAL")){
-      caractFisico = Jugador.lateralFisico;
-      caractDefensiva = Jugador.lateralDefensa;
-      caractOfensiva = Jugador.lateralOfensivas;
-      caractPsicologia = Jugador.lateralPsicologia;
+      caractFisico = Player.lateralFisico;
+      caractDefensiva = Player.lateralDefensa;
+      caractOfensiva = Player.lateralOfensivas;
+      caractPsicologia = Player.lateralPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("CARRILERO")){
-      caractFisico = Jugador.carrileroFisico;
-      caractDefensiva = Jugador.carrileroDefensa;
-      caractOfensiva = Jugador.carrileroOfensivas;
-      caractPsicologia = Jugador.carrileroPsicologia;
+      caractFisico = Player.carrileroFisico;
+      caractDefensiva = Player.carrileroDefensa;
+      caractOfensiva = Player.carrileroOfensivas;
+      caractPsicologia = Player.carrileroPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("DEFENSA")){
-      caractFisico = Jugador.centralFisico;
-      caractDefensiva = Jugador.centralDefensa;
-      caractOfensiva = Jugador.carrileroOfensivas;
-      caractPsicologia = Jugador.centralPsicologia;
+      caractFisico = Player.centralFisico;
+      caractDefensiva = Player.centralDefensa;
+      caractOfensiva = Player.carrileroOfensivas;
+      caractPsicologia = Player.centralPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("CENTRAL")){
-      caractFisico = Jugador.centralFisico;
-      caractDefensiva = Jugador.centralDefensa;
-      caractOfensiva = Jugador.carrileroOfensivas;
-      caractPsicologia = Jugador.centralPsicologia;
+      caractFisico = Player.centralFisico;
+      caractDefensiva = Player.centralDefensa;
+      caractOfensiva = Player.carrileroOfensivas;
+      caractPsicologia = Player.centralPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("MEDIO")){
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("INTERIOR")){
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("CENTROCAMPISTA")){
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("PIVOTE")){
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else  if(_jugador.posicion.toUpperCase().contains("VOLANTE")){
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("DELANTERO")){
-      caractFisico = Jugador.delanteroFisico;
-      caractDefensiva = Jugador.delanteroDefensa;
-      caractOfensiva = Jugador.delanteroOfensivas;
-      caractPsicologia = Jugador.delanteroPsicologia;
+      caractFisico = Player.delanteroFisico;
+      caractDefensiva = Player.delanteroDefensa;
+      caractOfensiva = Player.delanteroOfensivas;
+      caractPsicologia = Player.delanteroPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("PUNTA")) {
-      caractFisico = Jugador.medioFisico;
-      caractDefensiva = Jugador.medioDefensa;
-      caractOfensiva = Jugador.medioOfensivas;
-      caractPsicologia = Jugador.medioPsicologia;
+      caractFisico = Player.medioFisico;
+      caractDefensiva = Player.medioDefensa;
+      caractOfensiva = Player.medioOfensivas;
+      caractPsicologia = Player.medioPsicologia;
     }else if (_jugador.posicion.toUpperCase().contains("EXTREMO")) {
-      caractFisico = Jugador.extremoFisico;
-      caractDefensiva = Jugador.extremoDefensa;
-      caractOfensiva = Jugador.extremoOfensivas;
-      caractPsicologia = Jugador.extremoPsicologia;
+      caractFisico = Player.extremoFisico;
+      caractDefensiva = Player.extremoDefensa;
+      caractOfensiva = Player.extremoOfensivas;
+      caractPsicologia = Player.extremoPsicologia;
     }else {
-      caractFisico = Jugador.porteroFisico;
-      caractDefensiva = Jugador.porteroDefensa;
-      caractOfensiva = Jugador.porteroOfensivas;
-      caractPsicologia = Jugador.porteroPsicologia;
+      caractFisico = Player.porteroFisico;
+      caractDefensiva = Player.porteroDefensa;
+      caractOfensiva = Player.porteroOfensivas;
+      caractPsicologia = Player.porteroPsicologia;
     }
     final PdfGrid gridFisico = getGrid("Fisico",caractFisico);
     final PdfGrid gridDefensiva= getGrid("Defensiva",caractDefensiva);
@@ -172,7 +177,7 @@ class PdfJugadorDatos {
     //Get image bytes and set into PDF grid cell as PDF bitmap object
 
 
-    var imgjugador = await get(Uri.parse(Config.imagenJugador(_jugador)));
+    var imgjugador = await get(Uri.parse(Config.imagenJugador(_equipo, _jugador)));
 
     var imgequipo = await get(Uri.parse(
     Config.escudo(_jugador.equipo)));
@@ -381,31 +386,31 @@ class PdfJugadorDatos {
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
 
-    page.graphics.drawString('Ciclo 1: ${_jugador.nivel==null?"Sin nivel":_jugador.nivel}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
+    page.graphics.drawString('Ciclo 1: ${_jugador.nivel=="null"?"Sin nivel":_jugador.nivel}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.darkSlateBlue,
         bounds: Rect.fromLTWH(400, 100, 200, 33),
         format: PdfStringFormat(
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
-    page.graphics.drawString('Ciclo 2: ${_jugador.nivel2==null?"Sin nivel":_jugador.nivel2}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
+    page.graphics.drawString('Ciclo 2: ${_jugador.nivel2=="null"?"Sin nivel":_jugador.nivel2}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.darkSlateBlue,
         bounds: Rect.fromLTWH(400, 115, 200, 33),
         format: PdfStringFormat(
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
-    page.graphics.drawString('Ciclo 3: ${_jugador.nivel3==null?"Sin nivel":_jugador.nivel3}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
+    page.graphics.drawString('Ciclo 3: ${_jugador.nivel3=="null"?"Sin nivel":_jugador.nivel3}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.darkSlateBlue,
         bounds: Rect.fromLTWH(400, 130, 200, 33),
         format: PdfStringFormat(
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
-    page.graphics.drawString('Ciclo 4: ${_jugador.nivel4==null?"Sin nivel":_jugador.nivel4}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
+    page.graphics.drawString('Ciclo 4: ${_jugador.nivel4=="null"?"Sin nivel":_jugador.nivel4}',  PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.darkSlateBlue,
         bounds: Rect.fromLTWH(400, 145, 200, 33),
         format: PdfStringFormat(
             alignment: PdfTextAlignment.left,
             lineAlignment: PdfVerticalAlignment.bottom));
-    page.graphics.drawString('${Jugador.tipoJugador(_jugador.posicion,_jugador.tipo)}',  PdfStandardFont(PdfFontFamily.helvetica, 9),
+    page.graphics.drawString('${Player.tipoJugador(_jugador.posicion,_jugador.tipo)}',  PdfStandardFont(PdfFontFamily.helvetica, 9),
         brush: PdfBrushes.green,
         bounds: Rect.fromLTWH(100, 170, 400, 33),
         format: PdfStringFormat(
@@ -426,7 +431,6 @@ class PdfJugadorDatos {
     //Draw the Unicode text
    // page.Graphics.DrawString("€ $ ¥", font, PdfBrushes.Black, new PointF(10, 10));
      String valorAux=_jugador.valor.replaceAll("€", "");
-    print(valorAux);
     page.graphics.drawString('Valor: ${valorAux}', contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(255, 95, 200, 33),
@@ -493,10 +497,10 @@ class PdfJugadorDatos {
         row.cells[0].value = caract[i];
         row.cells[1].value="SI";
         row.cells[2].value="NO";
-        row.cells[1].style.backgroundBrush=Jugador.dameElValor(caract[i], _jugador)==true?PdfSolidBrush(colorAzul):PdfSolidBrush(colorBlanco);
-        row.cells[1].style.textBrush=Jugador.dameElValor(caract[i], _jugador)==true?PdfSolidBrush(colorBlanco):PdfSolidBrush(colorNegro);
-        row.cells[2].style.backgroundBrush=Jugador.dameElValor(caract[i], _jugador)==false?PdfSolidBrush(colorAzul):PdfSolidBrush(colorBlanco);
-        row.cells[2].style.textBrush=Jugador.dameElValor(caract[i], _jugador)==false?PdfSolidBrush(colorBlanco):PdfSolidBrush(colorNegro);
+        row.cells[1].style.backgroundBrush=Player.dameElValor(caract[i], _jugador)==true?PdfSolidBrush(colorAzul):PdfSolidBrush(colorBlanco);
+        row.cells[1].style.textBrush=Player.dameElValor(caract[i], _jugador)==true?PdfSolidBrush(colorBlanco):PdfSolidBrush(colorNegro);
+        row.cells[2].style.backgroundBrush=Player.dameElValor(caract[i], _jugador)==false?PdfSolidBrush(colorAzul):PdfSolidBrush(colorBlanco);
+        row.cells[2].style.textBrush=Player.dameElValor(caract[i], _jugador)==false?PdfSolidBrush(colorBlanco):PdfSolidBrush(colorNegro);
 
 
     }

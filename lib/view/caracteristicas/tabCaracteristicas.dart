@@ -293,7 +293,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
             ),
             FlatButton(
               child: Text('Cancelar',
-                style: TextStyle(fontSize: 16, color: Config.colorClub),),
+                style: TextStyle(fontSize: 16, color: Config.colorAPP),),
               onPressed: () {
                 Navigator.pop(context, false);
                 return false; // showDialog() returns false

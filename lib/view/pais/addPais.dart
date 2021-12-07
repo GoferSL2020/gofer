@@ -72,7 +72,7 @@ class _AddPaisState extends State<AddPais> {
             )
         ],
           backgroundColor:Colors.black,
-          title: Text("IAClub - Añadir temporada",
+          title: Text("IAScout -Añadir temporada",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

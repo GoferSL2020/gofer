@@ -3,14 +3,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class Observaciones extends StatefulWidget {
-  Observaciones(this._jugador);
-  final Player _jugador;
+  Observaciones(this._entrenador);
+  final Entrenador _entrenador;
   @override
   _Observaciones createState() => _Observaciones();
 }
@@ -43,7 +44,7 @@ class _Observaciones extends State<Observaciones> {
           ],
           backgroundColor: Colors.black,
           title: Text(
-              "${widget._jugador.jugador.toUpperCase()} (${widget._jugador.posicion})",
+              "${widget._entrenador.entrenador.toUpperCase()} (${widget._entrenador.equipo})",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,
@@ -86,7 +87,7 @@ class _Observaciones extends State<Observaciones> {
                 padding: EdgeInsets.only(top: 0.0, left: 25.0, right: 25.0),
                 child: TextField(
                   enabled:  true,
-                  controller: TextEditingController(text: widget._jugador.observaciones),
+                  controller: TextEditingController(text: widget._entrenador.observaciones),
                   maxLines:15,maxLength: 1000,
                   decoration: InputDecoration(
                       fillColor: Colors.white38,
@@ -103,9 +104,7 @@ class _Observaciones extends State<Observaciones> {
 
                   ),
                   onChanged: (String value) {
-                    widget._jugador.observaciones=value;
-                   
-                   
+                    widget._entrenador.observaciones=value;
                     //_onChange(value);
                   },
                 )),

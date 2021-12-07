@@ -20,6 +20,7 @@ import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/observaciones.dart';
 
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/puntuacionesPartidos.dart';
 
 import 'capacidadesFisico.dart';
 
@@ -106,6 +107,9 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                     new Tab(
                         icon: new Icon(CustomIcon.star),
                         text: 'Nivel'),
+                    /*new Tab(
+                        icon: new Icon(CustomIcon.hand_point_up),
+                        text: 'Puntos'),*/
                   ]),
             ),
             floatingActionButtonLocation:
@@ -178,6 +182,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                 Ofensivas(widget.jugador),
                 CualidadesPsicologia(widget.jugador),
                 Nivel(widget.jugador),
+                //PuntuacionesPartidos(widget.equipo, widget.temporada, widget.categoria, widget.pais, widget.jugador)
               ],
             ),
           )),

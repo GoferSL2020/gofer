@@ -86,9 +86,6 @@ class _PaisViewState extends State<PaisView> {
                     stream:  paisProvider.getDataCollectionPaises(widget.temporada),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        print("111");
-                        print(snapshot.data.docs);
-                        print("222");
                         paises = snapshot.data.docs
                             .map((doc) => Pais.fromMap(doc.data(), doc.id))
                             .toList();

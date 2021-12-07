@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/categoriaDao.dart';
 import 'package:iadvancedscout/dao/equipoDao.dart';
@@ -36,7 +37,7 @@ class _EquiposPageState extends State<EquiposPage> {
   FirebaseDatabase _database = FirebaseDatabase.instance;
   String nodeName = "jugadores";
   List<Equipo> equiposList = <Equipo>[];
-
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   getEquipo() {
     equiposList.clear();
@@ -51,19 +52,36 @@ class _EquiposPageState extends State<EquiposPage> {
         //print("KEY:${key}");
 
         equiposList.add(Equipo.fromJson(key, value));
+        /*
+        var map = new Map<String, dynamic>();
+        map["equipo"] = value["equipo"];
+        print(map);
+           _db.collection(""
+            "/temporadas/BuJNv17ghCPGnq37P2ev/"
+            "paises/QqjzloEo6PI7sHfsffk2/"
+            "categorias/rAeKFLQSry7l1x0WVW01/"
+            "equipos").add(map);
+
+*/
       });
     });
+
   }
 
 
 
   @override
   void initState() {
+    //*************************
+    //getEquipo();
+    //*************************
+
+
     nodeName = "temporadas/${BBDDService().getUserScout().temporada}/paises/${widget._categoria.pais}/categorias/${widget._categoria.categoria}/equipos";
     //print(nodeName);
    /* setState(() {
       getEquipo();
-
+getEquipo
     });*/
     _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
  //   _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
@@ -72,6 +90,7 @@ class _EquiposPageState extends State<EquiposPage> {
 
   @override
   Widget build(BuildContext context) {
+    // getEquipo();
     return Scaffold(
       appBar:
       AppBar(actions: <Widget>[
@@ -277,6 +296,8 @@ class _EquiposPageState extends State<EquiposPage> {
     setState(() {
       equiposList.add(Equipo.fromSnapshot(event.snapshot));
     });
+
+
   }
 
   void _childRemoves(Event event) {

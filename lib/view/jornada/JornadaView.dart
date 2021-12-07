@@ -79,7 +79,7 @@ class _JornadasViewState extends State<JornadasView> {
           )
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Jornada",
+        title: Text("IAScout -Jornada",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

@@ -19,10 +19,9 @@ String key;
  //     this._imagen);
 
   Equipo.fromMap(dynamic obj) {
-    this._equipo = obj['EQUIPO'];
-    this._categoria = obj['CATEGORIA'];
-    this._pais = obj['PAIS'];
-    this._imagen = obj['IMAGEN'];
+    this._equipo = obj['equipo'];
+    this._categoria = obj['categoria'];
+    this._pais = obj['pais'];
   }
   Equipo.fromJson(this.key, Map data){
     this._equipo = data['equipo'];
@@ -92,4 +91,9 @@ String key;
 
 
 
+}
+
+class EquipoCloud{
+  String key="";
+  String nombre="";
 }

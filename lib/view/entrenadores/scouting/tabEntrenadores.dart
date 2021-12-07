@@ -3,6 +3,7 @@ import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDEntrenador.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
+import 'package:iadvancedscout/futbol_mio_icons.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 
 import 'package:iadvancedscout/modelo/equipo.dart';
@@ -10,19 +11,13 @@ import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteConceptual.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFormal.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFuncional.dart';
+import 'package:iadvancedscout/view/entrenadores/scouting/observaciones.dart';
 
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/cualidadesPsicologia.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/defensivas.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/nivel.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/ofensivas.dart';
-
 
 import 'package:iadvancedscout/modelo/categoria.dart';
-
-import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/observaciones.dart';
+
 
 import 'package:flutter/material.dart';
 
@@ -97,13 +92,13 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
                   tabs: [
                     new Tab(
                         icon: new Icon(
-                          CustomIcon.levantamiento_de_pesas,
+                          FutbolMio.tactica_2,size:30,
                         ),
                         text: 'Conceptual'),
                     new Tab(
-                        icon: new Icon(CustomIcon.futbolista_2, size:25), text: 'Formal'),
+                        icon: new Icon( FutbolMio.tactica, size:30), text: 'Formal'),
                     new Tab(
-                        icon: new Icon(CustomIcon.futbolista_4, size:25),
+                        icon: new Icon(FutbolMio.tactica_3, size:30),
                         text: 'Funcional '),
                   ]),
             ),
@@ -136,6 +131,15 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
                     onPressed: () {
                       Navigator.of(context).push(new MaterialPageRoute(
                         builder: (BuildContext context) => EquiposView(pais: widget.pais, temporada: widget.temporada, categoria: widget.categoria),
+                      ));
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.message, color: Colors.white),
+                    onPressed: () {
+                      Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            Observaciones(widget.entrenador),
                       ));
                     },
                   ),

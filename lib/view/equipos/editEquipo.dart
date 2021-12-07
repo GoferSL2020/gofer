@@ -118,7 +118,7 @@ class _EditEquipoState extends State<EditEquipo> {
 
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Añadir Equipo",
+        title: Text("IAScout -Añadir Equipo",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

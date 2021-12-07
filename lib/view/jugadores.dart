@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:iadvancedscout/conf/config.dart';
 
 import 'package:iadvancedscout/dao/jugadorDao.dart';
 
-import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/model/equipo.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 
 import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
+import 'package:iadvancedscout/pdf/pdfJugadorDatosAnt.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 
 import 'package:iadvancedscout/view/addJugador.dart';
@@ -43,16 +46,62 @@ class _JugadoresPageState extends State<JugadoresPage> {
   List<Jugador> jugadoresList = <Jugador>[];
 
 // no need of the file extension, the name will do fine.
-
+  List<EquipoCloud> equipos=List();
   @override
   void setState(fn) {
+
     //print("setStateFN");
     if (mounted) {
       super.setState(fn);
     }
   }
+
+
+  getMigrarJugadores()  async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+
+    List<Player> lista = new List();
+    print("getJugadores");
+    for(var equiposBASEDATOS in equipos) {
+        print("${equiposBASEDATOS.nombre}");
+        String path2 =
+            "temporadas/2021-2022/paises/ARGENTINA/categorias/1ª División Liga Argentina/equipos/${equiposBASEDATOS
+            .nombre}/jugadores";
+        print(path2);
+        await FirebaseDatabase.instance.reference().child(
+            path2).once().then((snapshot) {
+          Map<dynamic, dynamic> values = snapshot.value;
+          //print(values.toString());
+          values.forEach((k, v) {
+            print("${v["jugador"]}:${equiposBASEDATOS.nombre}:${equiposBASEDATOS.key}");
+            Jugador jugador = Jugador.fromJson(k, v);
+            //print(jugador.jugador);
+            //print(jugador.equipo);
+            Player player=Player.fromJsonJugador(jugador);
+            lista.add(player);
+            _db.collection(""
+                "/temporadas/BuJNv17ghCPGnq37P2ev/"
+                "paises/FmUmyJV68ACrLHozX3oa/"
+                "categorias/UtbfJN6CWzY0xnXzcMve/"
+                "equipos/${equiposBASEDATOS.key}/jugadores")
+                .add(player.toMap());
+          });
+        });
+    }
+    return lista;
+  }
+
+  cogerEquipos()async{
+    equipos= await JugadorDao().getDataCollectionEquipos("UtbfJN6CWzY0xnXzcMve");
+
+  }
+
   @override
   void initState() {
+    cogerEquipos();
+
+
     nodeName = "temporadas/${BBDDService().getUserScout().temporada}/paises/${widget._equipo.pais}"
         "/categorias/${widget._equipo.categoria}/"
         "equipos/${widget._equipo.equipo}/jugadores";
@@ -67,6 +116,8 @@ class _JugadoresPageState extends State<JugadoresPage> {
 
   @override
   Widget build(BuildContext context) {
+ //  cogerEquipos();
+ //  getMigrarJugadores();
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -419,8 +470,10 @@ class _JugadoresPageState extends State<JugadoresPage> {
 
   }
 
-  void pdfJugador(BuildContext context, Jugador jugador) {
-      PdfJugadorDatos pdf= PdfJugadorDatos(jugador);
+  void pdfJugador(BuildContext context,Jugador jugador) {
+
+
+      PdfJugadorDatosAnt pdf= PdfJugadorDatosAnt(jugador);
       pdf.generateInvoice();
     /*if (jugador.posicion.toUpperCase().contains("MEDIO CENTRO")) {
       PivoteCreatePdf pdf= PivoteCreatePdf(jugador);

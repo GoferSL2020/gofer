@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/dao/entredadorDao.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
+import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/partido.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 
 import 'package:iadvancedscout/view/equipos/equipoCardAux.dart';
@@ -67,9 +71,39 @@ class _EquiposViewState extends State<EquiposView> {
     }
   }
 
+  getMigrarJORNADAS()  async {
+    print("getMigrarJORNADAS");
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    EntrenadorDao dao=new EntrenadorDao();
+    List<Partido> jornadas =await dao.getTodosJORNADAS(widget.categoria);
+    for (var i = 0; i < jornadas.length; i++) {
+      print("${i}:${jornadas[i].jornada},${jornadas[i].fecha},${jornadas[i].equipoCASA},${jornadas[i].equipoFUERA},${equipo[0].equipo}");
+      print("/temporadas/${widget.temporada.id}/"
+          "paises/${widget.pais.id}/"
+          "categorias/${widget.categoria.id}/jornadas");
+      //ponemos las jornadas
+      var result  =await _db.collection(""
+          "/temporadas/${widget.temporada.id}/"
+          "paises/${widget.pais.id}/"
+          "categorias/${widget.categoria.id}/jornadas")
+          .add(jornadas[i].toMapJornada());
+      List<Partido> partidos =await dao.getTodosPartidosJORNADAS(widget.categoria, jornadas[i].jornada);
+      for (var i = 0; i < partidos.length; i++) {
+        await _db.collection(""
+            "/temporadas/${widget.temporada.id}/"
+            "paises/${widget.pais.id}/"
+            "categorias/${widget.categoria.id}/jornadas").doc(result.id).collection("partidos")
+            .add(partidos[i].toMapPartido());
+        }
+
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
-   // getMigrarEntrenador();
+    //getMigrarEntrenador();
+    //getJugaodes();
+    //getMigrarJORNADAS();
     final productProvider = new CRUDEquipo();
     return new Scaffold(
       appBar: new AppBar(
@@ -90,7 +124,7 @@ class _EquiposViewState extends State<EquiposView> {
               )),
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Equipos",
+        title: Text("IAScout -Equipos",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

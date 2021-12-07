@@ -30,7 +30,16 @@ class Config{
  static Color mail  =Colors.red;//[900]
  static Color botones  =Colors.red;//[900]
 
- static  List<String> altura = <String>
+  static List<ImagenStorage> _imagenesClubes=[];
+
+
+  static List<ImagenStorage> get imagenesClubes => _imagenesClubes;
+
+  static set imagenesClubes(List<ImagenStorage> value) {
+    _imagenesClubes = value;
+  }
+
+  static  List<String> altura = <String>
  [ 'Altura reseñable para su posición','Bajo para su posición'];
 
  static List<String> envergaduraFisica = <String>
@@ -150,10 +159,7 @@ class Config{
    DateFormat format = DateFormat("dd/MM/yyyy");
    var fechaNac = format.parse(fechaNacimiento);
    var anio = fechaDeHoy.difference(fechaNac);
-   print(fechaNacimiento);
-   print(anio.inDays/365);
    edad=(anio.inDays/365).truncate();
-   print(edad);
    if(edad<20) {
      sub = edad.toString()+" (Sub-20"+")";
    }else if(edad<23) {
@@ -194,23 +200,7 @@ class Config{
    return
      "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
          "jugadores"
-         "%2F${jugador.idjugador
-         .replaceAll("à", "a%CC%80")
-         .replaceAll("è", "e%CC%80")
-         .replaceAll("ì", "i%CC%80")
-         .replaceAll("ò", "o%CC%80")
-         .replaceAll("ù", "u%CC%80")
-         .replaceAll("Á", "A%CC%81")
-         .replaceAll("É", "E%CC%81")
-         .replaceAll("Í", "I%CC%81")
-         .replaceAll("Ó", "O%CC%81")
-         .replaceAll("Ú", "U%CC%81")
-         .replaceAll("ñ", "n%CC%83")
-         .replaceAll("á", "a%CC%81")
-         .replaceAll("é", "e%CC%81")
-         .replaceAll("í", "i%CC%81")
-         .replaceAll("ó", "o%CC%81")
-         .replaceAll("ú", "u%CC%81")}?alt=media";
+         "%2F${jugador.foto()}?alt=media";
  }
 
 
@@ -219,26 +209,11 @@ class Config{
     return
       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
           "entrenadores"
-          "%2F${entrenador.entrenador
-          .replaceAll("à", "a%CC%80")
-          .replaceAll("è", "e%CC%80")
-          .replaceAll("ì", "i%CC%80")
-          .replaceAll("ò", "o%CC%80")
-          .replaceAll("ù", "u%CC%80")
-          .replaceAll("Á", "A%CC%81")
-          .replaceAll("É", "E%CC%81")
-          .replaceAll("Í", "I%CC%81")
-          .replaceAll("Ó", "O%CC%81")
-          .replaceAll("Ú", "U%CC%81")
-          .replaceAll("ñ", "n%CC%83")
-          .replaceAll("á", "a%CC%81")
-          .replaceAll("é", "e%CC%81")
-          .replaceAll("í", "i%CC%81")
-          .replaceAll("ó", "o%CC%81")
-          .replaceAll("ú", "u%CC%81")}?alt=media";
+          "%2F${entrenador.foto()}?alt=media";
   }
-
-
+///https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/entrenadores%2FBorja%20Jiménez?alt=media
+  ///https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/entrenadores%2FBorja%20Jim%C3%A9nez?alt=media&token=30f2cc35-c348-490a-817c-912761bf1d96
+//  https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/entrenadores%2FGuillermo%20Fern%C3%A1ndez?alt=media&token=c1363d66-7799-4693-9eea-ac0058ca519e
   static String imagenJugador2(String equipo,String jugador) {
     return
       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/"
@@ -248,6 +223,8 @@ class Config{
           .replaceAll("à", "a%CC%80")
           .replaceAll("è", "e%CC%80")
           .replaceAll("ì", "i%CC%80")
+          .replaceAll("ñ", "n%CC%83")
+          .replaceAll("Ñ", "N%CC%83")
           .replaceAll("ò", "o%CC%80")
           .replaceAll("ù", "u%CC%80")
           .replaceAll("Á", "A%CC%81")
@@ -293,11 +270,12 @@ class Config{
 
  static String escudoClubes(String imagen) {
    String s=
-       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2F${imagen
-       .replaceAll("2ª", "2%C2%AA")
+       "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2F${imagen.replaceAll("2ª", "2%C2%AA")
        .replaceAll("1ª", "1%C2%AA")
        .replaceAll("à", "a%CC%80")
        .replaceAll("è", "e%CC%80")
+       .replaceAll("ñ", "n%CC%83")
+       .replaceAll("Ñ", "N%CC%83")
        .replaceAll("ì", "i%CC%80")
        .replaceAll("ò", "o%CC%80")
        .replaceAll("ù", "u%CC%80")
@@ -312,6 +290,7 @@ class Config{
        .replaceAll("í", "i%CC%81")
        .replaceAll("ó", "o%CC%81")
        .replaceAll("ú", "u%CC%81")}.png?alt=media";
+
    return s;
  }
 
@@ -443,7 +422,7 @@ class Config{
             .replaceAll("ó", "o%CC%81")
             .replaceAll("ú", "u%CC%81")}.png?alt=media";
     }
-
+ // https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2FReal%20Unio%CC%81n.png?alt=media&token=2be46971-8013-4fb3-bcfa-897939b0cb29
 
   static Future<bool> saveImage(Uint8List image,Uint8List image2) async {
     try {
@@ -463,4 +442,11 @@ class Config{
       return false;
     }
   }
+
+
+}
+
+class ImagenStorage{
+  String club;
+  dynamic imagen;
 }

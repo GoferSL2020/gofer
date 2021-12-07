@@ -603,14 +603,14 @@ class _EditEntrenadorState extends State<EditEntrenador> {
                       //jugadorService.updateJugadorIAScout(widget.entrenador,false);
                       //ProductManager().insert(widget.entrenador);
                       if(_imageFile!=null)
-                        await uploadFile(widget.entrenador.entrenador);
+                        await uploadFile(widget.entrenador.foto());
                       _showGrabar(context);
                     }
                   }),
             )
           ],
           backgroundColor: Colors.black,
-          title: Text("IAClub - Jugador",
+          title: Text("IAScout -Jugador",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

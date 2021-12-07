@@ -58,10 +58,23 @@ class PartidoCard extends StatelessWidget {
           color: Config.colorCard,
           elevation: 5,
           child: Container(
-            height: 120,
+            height: 130,
             width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: <Widget>[
+                Container(
+                  width: double.infinity,height: 20,
+                  color: Colors.blue.shade900,
+                  child:Center(
+                  child:Text(
+                    'Scouter: ${partido.observador}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        color: Colors.white),
+                  )),
+                ),
+             Container(height: 5,),
              new Table(
             columnWidths: {
             0: FlexColumnWidth(2),
@@ -117,20 +130,13 @@ class PartidoCard extends StatelessWidget {
                       ]),
                     ]),
                 Padding(
-                  padding: EdgeInsets.only(left: 20, top: 0),
+                  padding: EdgeInsets.only(left: 20, top: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                    Container(
-                    child:Text(
-                      'Scouter: ${partido.observador} (${partido.accion})',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                            color: Colors.black),
-                      ),
-                    ),
-            RaisedButton.icon(
+            SizedBox(
+                height: 30,width: 100,
+                child: RaisedButton.icon(
               onPressed: () {
                 Navigator.push(
                     context,
@@ -143,11 +149,11 @@ class PartidoCard extends StatelessWidget {
                     )));
               },
               label: Text("Editar",
-                style: TextStyle(color: Colors.white, fontSize: 11),),
-              icon: Icon(CustomIcon.soccer_ball, size: 20, color: Colors.white,),
+                style: TextStyle(color: Colors.black, fontSize: 11),),
+              icon: Icon(CustomIcon.marcador, size: 20, color: Colors.black,),
               textColor: Colors.white,
-              splashColor: Colors.black,
-              color: Colors.grey.shade700,),Container(width: 5,)
+              splashColor: Colors.blue,
+              color: Colors.white,)),Container(width: 5,)
                     ],
                   ),
                 ),

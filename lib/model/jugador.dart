@@ -30,11 +30,11 @@ class Jugador {
   String _nivel4;
   String _tipo;
   int _dorsal;
-  String _fechaContrato;
+  String _fechaContrato="";
   String _peso;
   String _altura;
   String _valor;
-  String _paisNacimiento;
+  String _paisNacimiento="";
   String _contrato;
   String _ccaa="";
   String _nacionalidad="";
@@ -758,6 +758,7 @@ class Jugador {
     map['_def_coberturadelineadefensiva'] = _def_coberturadelineadefensiva;
     map['_def_abps'] = _def_abps;
     map['_def_penaltis'] = _def_penaltis;
+
     return map;
   }
 
@@ -777,7 +778,6 @@ class Jugador {
   }
 
   Jugador.fromJson(this.key, Map obj) {
-    //print("fromSnapshot:${obj['jugador']}");
     this._categoria = obj['categoria'];
     this._equipo = obj['equipo'];
     this._imagen = obj['imagen'];
@@ -812,192 +812,189 @@ class Jugador {
     this._pais = obj['pais'];
     this._posicion = obj['posicion'];
     this._posicion2 = obj['posicion2'];
-    this._ofe_niveltecnico = obj['_ofe_niveltecnico'] == 1 ? true : false;
-    this._ofe_profundidad = obj['_ofe_profundidad'] == 1 ? true : false;
+    this._ofe_niveltecnico = obj['_ofe_niveltecnico'];
+    this._ofe_profundidad = obj['_ofe_profundidad'];
     this._ofe_capacidaddegenerarbuenoscentrosalarea =
-    obj['_ofe_capacidaddegenerarbuenoscentrosalarea'] == 1 ? true : false;
+    obj['_ofe_capacidaddegenerarbuenoscentrosalarea'];
     this._ofe_capacidaddeasociacion =
-    obj['_ofe_capacidaddeasociacion'] == 1 ? true : false;
-    this._ofe_desborde = obj['_ofe_desborde'] == 1 ? true : false;
+    obj['_ofe_capacidaddeasociacion'];
+    this._ofe_desborde = obj['_ofe_desborde'];
     this._ofe_superioridadpordentro =
-    obj['_ofe_superioridadpordentro'] == 1 ? true : false;
-    this._ofe_finalizacion = obj['_ofe_finalizacion'] == 1 ? true : false;
+    obj['_ofe_superioridadpordentro'];
+    this._ofe_finalizacion = obj['_ofe_finalizacion'];
     this._ofe_saquedebanda_longitud =
-    obj['_ofe_saquedebanda_longitud'] == 1 ? true : false;
-    this._ofe_lanzadordeabps = obj['_ofe_lanzadordeabps'] == 1 ? true : false;
-    this._ofe_salidadebalon = obj['_ofe_salidadebalon'] == 1 ? true : false;
-    this._ofe_paselargo_medio = obj['_ofe_paselargo_medio'] == 1 ? true : false;
+    obj['_ofe_saquedebanda_longitud'];
+    this._ofe_lanzadordeabps = obj['_ofe_lanzadordeabps'];
+    this._ofe_salidadebalon = obj['_ofe_salidadebalon'];
+    this._ofe_paselargo_medio = obj['_ofe_paselargo_medio'];
     this._ofe_cambiosdeorientacion =
-    obj['_ofe_cambiosdeorientacion'] == 1 ? true : false;
+    obj['_ofe_cambiosdeorientacion'];
     this._ofe_batelineasconpaseinterior =
-    obj['_ofe_batelineasconpaseinterior'] == 1 ? true : false;
+    obj['_ofe_batelineasconpaseinterior'];
     this._ofe_conduccionparadividir =
-    obj['_ofe_conduccionparadividir'] == 1 ? true : false;
+    obj['_ofe_conduccionparadividir'];
     this._ofe_primerpasetrasrecuperacion =
-    obj['_ofe_primerpasetrasrecuperacion'] == 1 ? true : false;
+    obj['_ofe_primerpasetrasrecuperacion'];
     this._ofe_intervieneenabps =
-    obj['_ofe_intervieneenabps'] == 1 ? true : false;
+    obj['_ofe_intervieneenabps'];
     this._ofe_velocidadeneljuego =
-    obj['_ofe_velocidadeneljuego'] == 1 ? true : false;
+    obj['_ofe_velocidadeneljuego'];
     this._ofe_incorporacionazonasderemate =
-    obj['_ofe_incorporacionazonasderemate'] == 1 ? true : false;
-    this._ofe_amplitud = obj['_ofe_amplitud'] == 1 ? true : false;
+    obj['_ofe_incorporacionazonasderemate'];
+    this._ofe_amplitud = obj['_ofe_amplitud'];
     this._ofe_desmarquesdeapoyo =
-    obj['_ofe_desmarquesdeapoyo'] == 1 ? true : false;
+    obj['_ofe_desmarquesdeapoyo'];
     this._ofe_desmarquesderuptura =
-    obj['_ofe_desmarquesderuptura'] == 1 ? true : false;
+    obj['_ofe_desmarquesderuptura'];
     this._ofe_capacidaddegenerarbuenoscentroslateralesalarea =
-    obj['_ofe_capacidaddegenerarbuenoscentroslateralesalarea'] == 1
-        ? true
-        : false;
-    this._ofe_habilidad1vs1 = obj['_ofe_habilidad1vs1'] == 1 ? true : false;
+    obj['_ofe_capacidaddegenerarbuenoscentroslateralesalarea'];
+    this._ofe_habilidad1vs1 = obj['_ofe_habilidad1vs1'];
     this._ofe_realizaciondelultimopase =
-    obj['_ofe_realizaciondelultimopase'] == 1 ? true : false;
-    this._ofe_goleador = obj['_ofe_goleador'] == 1 ? true : false;
+    obj['_ofe_realizaciondelultimopase'];
+    this._ofe_goleador = obj['_ofe_goleador'];
     this._ofe_explotaciondeespacios =
-    obj['_ofe_explotaciondeespacios'] == 1 ? true : false;
-    this._ofe_duelosaereos = obj['_ofe_duelosaereos'] == 1 ? true : false;
+    obj['_ofe_explotaciondeespacios'];
+    this._ofe_duelosaereos = obj['_ofe_duelosaereos'];
     this._ofe_desbordeporvelocidad =
-    obj['_ofe_desbordeporvelocidad'] == 1 ? true : false;
+    obj['_ofe_desbordeporvelocidad'];
     this._ofe_dominiode2vs1_pared =
-    obj['_ofe_dominiode2vs1_pared'] == 1 ? true : false;
-    this._ofe_ambidextro = obj['_ofe_ambidextro'] == 1 ? true : false;
-    this._ofe_juegodecara = obj['_ofe_juegodecara'] == 1 ? true : false;
+    obj['_ofe_dominiode2vs1_pared'];
+    this._ofe_ambidextro = obj['_ofe_ambidextro'];
+    this._ofe_juegodecara = obj['_ofe_juegodecara'];
     this._ofe_protecciondelbalon =
-    obj['_ofe_protecciondelbalon'] == 1 ? true : false;
-    this._ofe_caidasabanda = obj['_ofe_caidasabanda'] == 1 ? true : false;
+    obj['_ofe_protecciondelbalon'];
+    this._ofe_caidasabanda = obj['_ofe_caidasabanda'];
     this._ofe_prolongacionesaereas =
-    obj['_ofe_prolongacionesaereas'] == 1 ? true : false;
-    this._ofe_dominiodelarea = obj['_ofe_dominiodelarea'] == 1 ? true : false;
+    obj['_ofe_prolongacionesaereas'];
+    this._ofe_dominiodelarea = obj['_ofe_dominiodelarea'];
     this._ofe_llegadaaposicionesderemate =
-    obj['_ofe_llegadaaposicionesderemate'] == 1 ? true : false;
+    obj['_ofe_llegadaaposicionesderemate'];
     this._ofe_juegoesespacioreducido =
-    obj['_ofe_juegoesespacioreducido'] == 1 ? true : false;
+    obj['_ofe_juegoesespacioreducido'];
     this._ofe_definidor_anteelportero =
-    obj['_ofe_definidor_anteelportero'] == 1 ? true : false;
+    obj['_ofe_definidor_anteelportero'];
     this._ofe_rematador_finalizador =
-    obj['_ofe_rematador_finalizador'] == 1 ? true : false;
+    obj['_ofe_rematador_finalizador'];
     this._ofe_capacidadasociativa_apoyosalalineadefensiva =
-    obj['_ofe_capacidadasociativa_apoyosalalineadefensiva'] == 1 ? true : false;
+    obj['_ofe_capacidadasociativa_apoyosalalineadefensiva'];
     this._ofe_desplazamientoenlargo =
-    obj['_ofe_desplazamientoenlargo'] == 1 ? true : false;
+    obj['_ofe_desplazamientoenlargo'];
     this._fis_velocidaddereaccion =
-    obj['_fis_velocidaddereaccion'] == 1 ? true : false;
+    obj['_fis_velocidaddereaccion'];
     this._fis_velocidaddedesplazamiento =
-    obj['_fis_velocidaddedesplazamiento'] == 1 ? true : false;
-    this._fis_agilidad = obj['_fis_agilidad'] == 1 ? true : false;
+    obj['_fis_velocidaddedesplazamiento'];
+    this._fis_agilidad = obj['_fis_agilidad'];
     this._fis_velocidaddereaccion =
-    obj['_fis_velocidaddereaccion'] == 1 ? true : false;
-    this._fis_fuerza_potencia = obj['_fis_fuerza_potencia'] == 1 ? true : false;
-    this._fis_cuerpoacuerpo = obj['_fis_cuerpoacuerpo'] == 1 ? true : false;
+    obj['_fis_velocidaddereaccion'];
+    this._fis_fuerza_potencia = obj['_fis_fuerza_potencia'];
+    this._fis_cuerpoacuerpo = obj['_fis_cuerpoacuerpo'];
     this._fis_capacidaddesalto =
-    obj['_fis_capacidaddesalto'] == 1 ? true : false;
-    this._fis_explosividad = obj['_fis_explosividad'] == 1 ? true : false;
+    obj['_fis_capacidaddesalto'];
+    this._fis_explosividad = obj['_fis_explosividad'];
     this._fis_potenciadesaltolateralyvertical =
-    obj['_fis_potenciadesaltolateralyvertical'] == 1 ? true : false;
+    obj['_fis_potenciadesaltolateralyvertical'];
     this._fis_resistencia_idayvuelta =
-    obj['_fis_resistencia_idayvuelta'] == 1 ? true : false;
-    this._fis_cambioderitmo = obj['_fis_cambioderitmo'] == 1 ? true : false;
-    this._fis_envergadura = obj['_fis_envergadura'];
-    this._psic_liderazgo = obj['_psic_liderazgo'] == 1 ? true : false;
-    this._psic_comunicacion = obj['_psic_comunicacion'] == 1 ? true : false;
-    this._psic_seguridad = obj['_psic_seguridad'] == 1 ? true : false;
+    obj['_fis_resistencia_idayvuelta'];
+    this._fis_cambioderitmo = obj['_fis_cambioderitmo'];
+    this._fis_envergadura = obj['_fis_envergadura']==null?"":obj['_fis_envergadura'];
+    this._psic_liderazgo = obj['_psic_liderazgo'];
+    this._psic_comunicacion = obj['_psic_comunicacion'];
+    this._psic_seguridad = obj['_psic_seguridad'];
     this._psic_tomadedecisiones =
-    obj['_psic_tomadedecisiones'] == 1 ? true : false;
-    this._psic_agresividad = obj['_psic_agresividad'] == 1 ? true : false;
-    this._psic_polivalencia = obj['_psic_polivalencia'] == 1 ? true : false;
-    this._psic_competitividad = obj['_psic_competitividad'] == 1 ? true : false;
+    obj['_psic_tomadedecisiones'];
+    this._psic_agresividad = obj['_psic_agresividad'];
+    this._psic_polivalencia = obj['_psic_polivalencia'];
+    this._psic_competitividad = obj['_psic_competitividad'];
     this._psic_agresividad_contundencia =
-    obj['_psic_agresividad_contundencia'] == 1 ? true : false;
+    obj['_psic_agresividad_contundencia'];
     this._psic_noasumeriesgosextremos =
-    obj['_psic_noasumeriesgosextremos'] == 1 ? true : false;
+    obj['_psic_noasumeriesgosextremos'];
     this._psic_entendimientodeljuego_inteligencia =
-    obj['_psic_entendimientodeljuego_inteligencia'] == 1 ? true : false;
-    this._psic_creatividad = obj['_psic_creatividad'] == 1 ? true : false;
-    this._psic_confianza = obj['_psic_confianza'] == 1 ? true : false;
-    this._psic_compromiso = obj['_psic_compromiso'] == 1 ? true : false;
-    this._psic_valentia = obj['_psic_valentia'] == 1 ? true : false;
-    this._psic_oportunismo = obj['_psic_oportunismo'] == 1 ? true : false;
+    obj['_psic_entendimientodeljuego_inteligencia'];
+    this._psic_creatividad = obj['_psic_creatividad'];
+    this._psic_confianza = obj['_psic_confianza'];
+    this._psic_compromiso = obj['_psic_compromiso'];
+    this._psic_valentia = obj['_psic_valentia'];
+    this._psic_oportunismo = obj['_psic_oportunismo'];
     this._def_acoso_presionsobreeloponente =
-    obj['_def_acoso_presionsobreeloponente'] == 1 ? true : false;
+    obj['_def_acoso_presionsobreeloponente'];
     this._def_actituddefensiva =
-    obj['_def_actituddefensiva'] == 1 ? true : false;
+    obj['_def_actituddefensiva'];
     this._def_activaciondelosmecanismosdepresion =
-    obj['_def_activaciondelosmecanismosdepresion'] == 1 ? true : false;
-    this._def_anticipacion = obj['_def_anticipacion'] == 1 ? true : false;
+    obj['_def_activaciondelosmecanismosdepresion'];
+    this._def_anticipacion = obj['_def_anticipacion'];
     this._def_ayudaspermanentesallateral =
-    obj['_def_ayudaspermanentesallateral'] == 1 ? true : false;
+    obj['_def_ayudaspermanentesallateral'];
     this._def_capacidaddemarcaje =
-    obj['_def_capacidaddemarcaje'] == 1 ? true : false;
+    obj['_def_capacidaddemarcaje'];
     this._def_capacidadparataparcentros =
-    obj['_def_capacidadparataparcentros'] == 1 ? true : false;
+    obj['_def_capacidadparataparcentros'];
     this._def_cerrarelladodebil_basculaciones =
-    obj['_def_cerrarelladodebil_basculaciones'] == 1 ? true : false;
+    obj['_def_cerrarelladodebil_basculaciones'];
     this._def_cierralineasdepase =
-    obj['_def_cierralineasdepase'] == 1 ? true : false;
+    obj['_def_cierralineasdepase'];
     this._def_coberturadecentrales =
-    obj['_def_coberturadecentrales'] == 1 ? true : false;
-    this._def_coberturas = obj['_def_coberturas'] == 1 ? true : false;
-    this._def_colocacion = obj['_def_colocacion'] == 1 ? true : false;
+    obj['_def_coberturadecentrales'];
+    this._def_coberturas = obj['_def_coberturas'];
+    this._def_colocacion = obj['_def_colocacion'];
     this._def_comportamientofueradezona =
-    obj['_def_comportamientofueradezona'] == 1 ? true : false;
+    obj['_def_comportamientofueradezona'];
     this._def_correctabasculacion =
-    obj['_def_correctabasculacion'] == 1 ? true : false;
+    obj['_def_correctabasculacion'];
     this._def_correctabasculacion_distanciadeintervalos =
-    obj['_def_correctabasculacion_distanciadeintervalos'] == 1 ? true : false;
+    obj['_def_correctabasculacion_distanciadeintervalos'];
     this._def_correctoperfilamiento =
-    obj['_def_correctoperfilamiento'] == 1 ? true : false;
-    this._def_cruces = obj['_def_cruces'] == 1 ? true : false;
+    obj['_def_correctoperfilamiento'];
+    this._def_cruces = obj['_def_cruces'];
     this._def_destrezaantecentroslaterales =
-    obj['_def_destrezaantecentroslaterales'] == 1 ? true : false;
+    obj['_def_destrezaantecentroslaterales'];
     this._def_dificildesuperarenel1vs1 =
-    obj['_def_dificildesuperarenel1vs1'] == 1 ? true : false;
+    obj['_def_dificildesuperarenel1vs1'];
     this._def_dominiodelaszonasderechace =
-    obj['_def_dominiodelaszonasderechace'] == 1 ? true : false;
-    this._def_duelosaereos = obj['_def_duelosaereos'] == 1 ? true : false;
+    obj['_def_dominiodelaszonasderechace'];
+    this._def_duelosaereos = obj['_def_duelosaereos'];
     this._def_duelosdefensivos =
-    obj['_def_duelosdefensivos'] == 1 ? true : false;
+    obj['_def_duelosdefensivos'];
     this._def_evitarecepcionesentrelineas =
-    obj['_def_evitarecepcionesentrelineas'] == 1 ? true : false;
+    obj['_def_evitarecepcionesentrelineas'];
     this._def_evitaserdesbordado =
-    obj['_def_evitaserdesbordado'] == 1 ? true : false;
+    obj['_def_evitaserdesbordado'];
     this._def_interceptaciondetiro =
-    obj['_def_interceptaciondetiro'] == 1 ? true : false;
+    obj['_def_interceptaciondetiro'];
     this._def_mantenerlalineadefensiva =
-    obj['_def_mantenerlalineadefensiva'] == 1 ? true : false;
+    obj['_def_mantenerlalineadefensiva'];
     this._def_marcajeproximoaoponentedirecto =
-    obj['_def_marcajeproximoaoponentedirecto'] == 1 ? true : false;
+    obj['_def_marcajeproximoaoponentedirecto'];
     this._def_ocupaespaciosdecompanerossuperados =
-    obj['_def_ocupaespaciosdecompanerossuperados'] == 1 ? true : false;
-    this._def_perfilamientos = obj['_def_perfilamientos'] == 1 ? true : false;
-    this._def_permiteelgiro = obj['_def_permiteelgiro'] == 1 ? true : false;
+    obj['_def_ocupaespaciosdecompanerossuperados'];
+    this._def_perfilamientos = obj['_def_perfilamientos'];
+    this._def_permiteelgiro = obj['_def_permiteelgiro'];
     this._def_presiontrasperdida =
-    obj['_def_presiontrasperdida'] == 1 ? true : false;
+    obj['_def_presiontrasperdida'];
     this._def_resolucionanteparedesrivales =
-    obj['_def_resolucionanteparedesrivales'] == 1 ? true : false;
+    obj['_def_resolucionanteparedesrivales'];
     this._def_sabecuidarsuespalda =
-    obj['_def_sabecuidarsuespalda'] == 1 ? true : false;
+    obj['_def_sabecuidarsuespalda'];
     this._def_vigilayreferenciaalrival_enfaseofensiva =
-    obj['_def_vigilayreferenciaalrival_enfaseofensiva'] == 1 ? true : false;
+    obj['_def_vigilayreferenciaalrival_enfaseofensiva'];
     this._def_vigilanciassobrelateralrival =
-    obj['_def_vigilanciassobrelateralrival'] == 1 ? true : false;
-    this._def_blocaje = obj['_def_blocaje'] == 1 ? true : false;
+    obj['_def_vigilanciassobrelateralrival'];
+    this._def_blocaje = obj['_def_blocaje'];
     this._def_juegoaereolateral =
-    obj['_def_juegoaereolateral'] == 1 ? true : false;
+    obj['_def_juegoaereolateral'];
     this._def_juegoaereofrontal =
-    obj['_def_juegoaereofrontal'] == 1 ? true : false;
+    obj['_def_juegoaereofrontal'];
     this._def_habilidadenel1vs1 =
-    obj['_def_habilidadenel1vs1'] == 1 ? true : false;
-    this._def_despeje = obj['_def_despeje'] == 1 ? true : false;
+    obj['_def_habilidadenel1vs1'];
+    this._def_despeje = obj['_def_despeje'];
     this._def_anticipacion_intuicion =
-    obj['_def_anticipacion_intuicion'] == 1 ? true : false;
+    obj['_def_anticipacion_intuicion'];
     this._def_coberturadelineadefensiva =
-    obj['_def_coberturadelineadefensiva'] == 1 ? true : false;
-    this._def_abps = obj['_def_abps'] == 1 ? true : false;
-    this._def_penaltis = obj['_def_penaltis'] == 1 ? true : false;
+    obj['_def_coberturadelineadefensiva'];
+    this._def_abps = obj['_def_abps'];
+    this._def_penaltis = obj['_def_penaltis'];
     this.key = id;
   }
-
   //flutter: {name: edwdw, email: sdsdsdwd@1.com, mobileNo: 1234567789, feedback: wede}
   // Method to make GET parameters._key ,_jugador, _categoria, _equipo
   Map toJson() =>

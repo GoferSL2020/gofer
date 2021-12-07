@@ -106,7 +106,7 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
                             fontSize: 12,
                             fontWeight: FontWeight.bold)))),
                 "SV": Container(
-                    color: acciones != "SV" ? Colors.purple : Colors.black,
+                    color: acciones != "SV" ? Colors.purpleAccent : Colors.black,
                     padding: EdgeInsets.all(4.0),
                     width: 50,
                     height: 30,

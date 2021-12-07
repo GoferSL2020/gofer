@@ -757,17 +757,19 @@ Carrilero izquierdo
 
                       CRUDJugador con = CRUDJugador();
                       con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                      con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+
                       //jugadorService.updateJugadorIAScout(widget.jugador,false);
                       //ProductManager().insert(widget.jugador);
                       if(_imageFile!=null)
-                        await uploadFile(widget.jugador.idjugador);
+                        await uploadFile(widget.jugador.foto());
                       _showGrabar(context);
                     }
                   }),
             )
           ],
           backgroundColor: Colors.black,
-          title: Text("IAClub - Jugador",
+          title: Text("IAScout -Jugador",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -814,7 +816,6 @@ Carrilero izquierdo
   }
 
   Future uploadFile(String foto) async {
-    print("UPLLOAD");
     final _storage = FirebaseStorage.instance;
     final _picker = ImagePicker();
     await Permission.photos.request();
@@ -822,10 +823,8 @@ Carrilero izquierdo
 
     // if (permissionStatus.isGranted) {
     //Select Image
-    print("STORAGE:${_imageFile.path}");
 
     var file = File(_imageFile.path);
-    print("STORAGE:${_imageFile.path}");
 
     if (_imageFile != null) {
       //Upload to Firebase

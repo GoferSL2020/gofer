@@ -49,7 +49,7 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -62,19 +62,27 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                       children: [
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(105),
+                            0: FixedColumnWidth(65),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.ocupacionRacionalEspacio, 0, 3),
+                          children: ponerFila2col(Entrenador.inicioDeJuego, 0, 1),
                         ),
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(105),
+                            0: FixedColumnWidth(65),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.ocupacionRacionalEspacio, 3,6),
+                          children: ponerFila2col(Entrenador.inicioDeJuego, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.inicioDeJuego, 2, 3),
                         ),
 
                       ],)
@@ -83,106 +91,12 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5.0),
-                  child:Text("Asentamiento defensivo",
+                  child:Text("Ofensivo Progresión/finalización del juego",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      )),
-                ),
-                Container(
-                    padding: EdgeInsets.all(5.0),
-                    alignment: Alignment.center,
-                    child:
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-
-                      children: [
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoDefensivo, 0, 1),
-                        ),
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoDefensivo, 1,2),
-                        ),
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.planteamientoTacticoGeneral,  2,3),
-                        ),
-                      ],)
-                ),
-                Container(
-                  width: double.infinity,
-                  color:Colors.grey.shade800,
-                  padding: EdgeInsets.all(5.0),
-                  child:Text("Asentamiento ofensivo",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color:Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      )),
-                ),
-                Container(
-                    padding: EdgeInsets.all(5.0),
-                    alignment: Alignment.center,
-                    child:
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-
-                      children: [
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoOfensivo, 0, 1),
-                        ),
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoOfensivo, 1,2),
-                        ),
-                        new Table(
-                          columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(65),
-                            1: FixedColumnWidth(55),
-                          },
-                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.planteamientoTacticoGeneral,  2,3),
-                        ),
-                      ],)
-                ),
-                Container(
-                  width: double.infinity,
-                  color:Colors.grey.shade800,
-                  padding: EdgeInsets.all(5.0),
-                  child:Text("Asentamiento espacio",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color:Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -200,15 +114,15 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoEspacion, 0, 1),
+                          children: ponerFila2col(Entrenador.progresionFinalizacioJuego, 0, 1),
                         ),
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(105),
+                            0: FixedColumnWidth(85),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.asentamientoEspacion, 1,2),
+                          children: ponerFila2col(Entrenador.progresionFinalizacioJuego, 1, 2),
                         ),
                       ],)
                 ),
@@ -216,12 +130,106 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5.0),
-                  child:Text("Espacios de intervención",
+                  child:Text("Transiciones defensivas",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
+                      )),
+                ),
+                Container(
+                    padding: EdgeInsets.all(5.0),
+                    alignment: Alignment.center,
+                    child:
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                      children: [
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.transicionesDefensivas, 0, 1),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.transicionesDefensivas, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.transicionesDefensivas, 2, 3),
+                        ),
+                      ],)
+                ),
+                Container(
+                  width: double.infinity,
+                  color:Colors.grey.shade800,
+                  padding: EdgeInsets.all(5.0),
+                  child:Text("Juego defensivo",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      )),
+                ),
+                Container(
+                    padding: EdgeInsets.all(5.0),
+                    alignment: Alignment.center,
+                    child:
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                      children: [
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.juegoDefensivo, 0, 1),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.juegoDefensivo, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.juegoDefensivo, 2, 3),
+                        ),
+                      ],)
+                ),
+                Container(
+                  width: double.infinity,
+                  color:Colors.grey.shade800,
+                  padding: EdgeInsets.all(5.0),
+                  child:Text("Transiciones ofensivas",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -234,19 +242,27 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                       children: [
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(130),
+                            0: FixedColumnWidth(60),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.estructuracionJuegoColectivo, 0, 1),
+                          children: ponerFila2col(Entrenador.transicionesOfensivas, 0, 1),
                         ),
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(120),
+                            0: FixedColumnWidth(75),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.estructuracionJuegoColectivo, 1,2),
+                          children: ponerFila2col(Entrenador.transicionesOfensivas, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.transicionesOfensivas, 2, 3),
                         ),
                       ],)
                 ),
@@ -254,12 +270,12 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5),
-                  child:Text("Dinámica posicional",
+                  child:Text("Ritmos de juego",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 12,
                       )),
                 ),
                 Container(
@@ -273,19 +289,121 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                       children: [
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(105),
+                            0: FixedColumnWidth(65),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.dinamicaPosicional, 0, 1),
+                          children: ponerFila2col(Entrenador.ritmosDeJuego, 0, 1),
                         ),
                         new Table(
                           columnWidths: const <int, TableColumnWidth>{
-                            0: FixedColumnWidth(105),
+                            0: FixedColumnWidth(65),
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.dinamicaPosicional, 1,2),
+                          children: ponerFila2col(Entrenador.ritmosDeJuego, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(70),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.ritmosDeJuego, 2, 3),
+                        ),
+                      ],)
+                ),
+                Container(
+                  width: double.infinity,
+                  color:Colors.grey.shade800,
+                  padding: EdgeInsets.all(5),
+                  child:Text("Grados de libertad",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      )),
+                ),
+                Container(
+                    padding: EdgeInsets.all(5.0),
+                    alignment: Alignment.center,
+                    child:
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                      children: [
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.gradosDeLibertad, 0, 1),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.gradosDeLibertad, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.gradosDeLibertad, 2, 3),
+                        ),
+                      ],)
+                ),
+                Container(
+                  width: double.infinity,
+                  color:Colors.grey.shade800,
+                  padding: EdgeInsets.all(5),
+                  child:Text("Variabilidad Estrategecia (L/V)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      )),
+                ),
+                Container(
+                    padding: EdgeInsets.all(5.0),
+                    alignment: Alignment.center,
+                    child:
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                      children: [
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.variabilidadEstrategeciaLocalVisitante, 0, 1),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.variabilidadEstrategeciaLocalVisitante, 1, 2),
+                        ),
+                        new Table(
+                          columnWidths: const <int, TableColumnWidth>{
+                            0: FixedColumnWidth(65),
+                            1: FixedColumnWidth(55),
+                          },
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: ponerFila2col(Entrenador.variabilidadEstrategeciaLocalVisitante, 2, 3),
                         ),
                       ],)
                 ),
@@ -296,32 +414,6 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
     );
   }
 
-  List<TableRow> ponerFila1col() {
-    List<String> caract;
-    caract = Entrenador.estructuralHabitual;
-    List<TableRow> rows = new List<TableRow>();
-    for (String doc in caract) {
-      print("CARR:${doc}");
-      rows.add(TableRow(children: [
-        new Text(doc,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            )),
-        Switch(
-          value: false,
-          onChanged: (newValue){
-            setState(() {
-              Entrenador.poneElValor(doc, newValue, widget._entrenador);
-            });
-          },
-          activeTrackColor: Colors.blue.shade900,
-          activeColor:Colors.blue.shade900,
-        ),
-      ]));
-    }
-    return rows;
-  }
 
   List<TableRow> ponerFila2col(List<String> caract,int primero, int ultimo) {
     List<TableRow> rows = new List<TableRow>();
@@ -330,7 +422,6 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
       rows.add(TableRow(children: [
         new Text(caract[i],
             style: TextStyle(
-              fontWeight: FontWeight.bold,
               fontSize: 11,
             )),
         Switch(
@@ -340,8 +431,8 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
               Entrenador.poneElValor(caract[i], newValue, widget._entrenador);
             });
           },
-          activeTrackColor: Colors.blue.shade900,
-          activeColor:Colors.blue.shade900,
+          activeTrackColor: Colors.blue,
+          activeColor:Colors.blue,
         ),
       ]));
     }

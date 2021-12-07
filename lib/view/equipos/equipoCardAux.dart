@@ -129,7 +129,7 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
                         size: Size(50, 50), // button width and height
                         child: ClipOval(
                           child: Material(
-                            color: Colors.blue, // button color
+                            color: Colors.grey.shade700,// button color
                             child: InkWell(
                               splashColor: Colors.blue, // splash color
                               onTap: () {
@@ -141,7 +141,7 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(CustomIcon.marcador,size: 18, color: Colors.white,), // icon
+                                  Icon(CustomIcon.marcador,size: 23, color: Colors.white,), // icon
                                   //Text("Res.",style: TextStyle(color:Colors.white,fontSize: 10,fontWeight: FontWeight.bold),), // text
                                 ],
                               ),
@@ -153,7 +153,7 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
                         size: Size(50, 50), // button width and height
                         child: ClipOval(
                           child: Material(
-                            color: Colors.blue.shade900, // button color
+                            color: Colors.grey.shade800, // button color
                             child: InkWell(
                               splashColor: Colors.blue, // // splash color
                               onTap: () {
@@ -165,7 +165,7 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(IconMio.entrenador,size: 21, color: Colors.white,), // icon
+                                  Icon(FutbolMio.entrenador_1,size: 25, color: Colors.white,), // icon
                                   //Text("",style: TextStyle(color:Colors.white,fontSize: 10,fontWeight: FontWeight.bold),), // text
                                 ],
                               ),

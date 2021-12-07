@@ -109,7 +109,6 @@ class _CapacidadesFisico extends State<CapacidadesFisico> {
       caract = Player.todosFisico;
     List<TableRow> rows = new List<TableRow>();
     for (String doc in caract) {
-      print("CARR:${doc}");
       rows.add(TableRow(children: [
         new Text(doc,
             style: TextStyle(

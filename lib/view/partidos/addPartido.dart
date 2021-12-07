@@ -103,8 +103,6 @@ class _AddPartidoState extends State<AddPartido> {
     print(_observadoresAUX.length);
     _observadores.add("");
     for (var d in _observadoresAUX) {
-      print("asasaaa:");
-      print(d.scout);
       setState(() {
         _observadores.add(d.scout);
       });
@@ -199,7 +197,7 @@ class _AddPartidoState extends State<AddPartido> {
           )
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Jornada",
+        title: Text("IAScout -Jornada",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

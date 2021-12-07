@@ -752,7 +752,6 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                           setState(() {
                             jugadorFiltro.jugador=_nombre.text;
                             jugadorFiltro.paisNacimiento=_lugar.text;
-                            print(jugadorFiltro.paisNacimiento);
                             Navigator.of(context).push(new MaterialPageRoute(
                               builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro),
                             ));

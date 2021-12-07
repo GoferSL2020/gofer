@@ -72,7 +72,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
               )),
         ],
         backgroundColor: Colors.black,
-        title: Text("IAClub - Jugadores",
+        title: Text("IAScout - Entrenadores",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,
