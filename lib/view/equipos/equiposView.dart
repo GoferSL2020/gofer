@@ -71,6 +71,31 @@ class _EquiposViewState extends State<EquiposView> {
     }
   }
 
+  getMigrarEntrenadorSoloEquipo()  async {
+    print("getMigrarEntrenador");
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    String equipoId="8jrrYhokZHyJXedpu0wR";
+    String equipo="Internacional Madrid";
+    EntrenadorDao dao=new EntrenadorDao();
+      List<Entrenador> list2 =await dao.getEntrenadoresSoloEquipo(equipo);
+      for (var i = 0; i < list2.length; i++) {
+        print("${i}:${list2[i].entrenador},${list2[i].equipo},${list2[i]
+            .categoria}");
+        //temporadas/BuJNv17ghCPGnq37P2ev/paises/QqjzloEo6PI7sHfsffk2/categorias/rAeKFLQSry7l1x0WVW01/equipos/tbXIokAhjIMVyuNWcUyZ
+        print("/temporadas/${widget.temporada.id}/"
+            "paises/${widget.pais.id}/"
+            "categorias/${widget.categoria.id}/"
+            "equipos/${equipoId}/entrenadores");
+        await _db.collection(""
+            "/temporadas/${widget.temporada.id}/"
+            "paises/${widget.pais.id}/"
+            "categorias/${widget.categoria.id}/"
+            "equipos/${equipoId}/entrenadores")
+            .add(list2[i].toMap());
+      }
+
+  }
+
   getMigrarJORNADAS()  async {
     print("getMigrarJORNADAS");
     final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -101,6 +126,7 @@ class _EquiposViewState extends State<EquiposView> {
 
   @override
   Widget build(BuildContext context) {
+    //getMigrarEntrenadorSoloEquipo();
     //getMigrarEntrenador();
     //getJugaodes();
     //getMigrarJORNADAS();

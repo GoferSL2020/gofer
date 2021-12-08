@@ -92,6 +92,38 @@ class _JugadoresPageState extends State<JugadoresPage> {
     return lista;
   }
 
+  getMigrarJugadoresSoloEquipoESPANA()  async {
+    String equipoAux="Internacional Madrid";
+    String equipoID="8jrrYhokZHyJXedpu0wR";
+    String categoriaID="rAeKFLQSry7l1x0WVW01";
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<Player> lista = new List();
+    print("getJugadores");
+      String path2 =
+          "temporadas/2021-2022/paises/ESPAÑA/categorias/1ª División RFEF Grupo 1/equipos/$equipoAux/jugadores";
+      print(path2);
+      await FirebaseDatabase.instance.reference().child(
+          path2).once().then((snapshot) {
+        Map<dynamic, dynamic> values = snapshot.value;
+        //print(values.toString());
+        values.forEach((k, v) {
+          print("${v["jugador"]}:${equipoAux}:${equipoID}");
+          Jugador jugador = Jugador.fromJson(k, v);
+          //print(jugador.jugador);
+          //print(jugador.equipo);
+          Player player=Player.fromJsonJugador(jugador);
+          //lista.add(player);
+          _db.collection(""
+              "/temporadas/BuJNv17ghCPGnq37P2ev/"
+              "paises/QqjzloEo6PI7sHfsffk2/"
+              "categorias/rAeKFLQSry7l1x0WVW01/"
+              "equipos/${equipoID}/jugadores")
+              .add(player.toMap());
+        });
+      });
+    return lista;
+  }
+
   cogerEquipos()async{
     equipos= await JugadorDao().getDataCollectionEquipos("UtbfJN6CWzY0xnXzcMve");
 
@@ -116,6 +148,7 @@ class _JugadoresPageState extends State<JugadoresPage> {
 
   @override
   Widget build(BuildContext context) {
+ //   getMigrarJugadoresSoloEquipoESPANA();
  //  cogerEquipos();
  //  getMigrarJugadores();
     return Scaffold(

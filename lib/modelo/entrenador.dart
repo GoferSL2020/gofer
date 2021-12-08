@@ -660,7 +660,7 @@ class Entrenador {
     if (caracteristicas == "Combinativa mixta")  return e._fun_combinativa_mixta;
     if (caracteristicas == "Directa")  return e._fun_directa;
     if (caracteristicas == "Presión conjunta")  return e._fun_presion_conjunta;
-    if (caracteristicas == "Presión orientada al poseedor rival repliegue")  return e._fun_presion_orientada_al_poseedor_rival_repliegue;
+    if (caracteristicas == "Presión orientada al poseedor rival + repliegue")  return e._fun_presion_orientada_al_poseedor_rival_repliegue;
     if (caracteristicas == "Repliegue")  return e._fun_repliegue;
     if (caracteristicas == "Contencion")  return e._fun_contencion;
     if (caracteristicas == "Presionante")  return e._fun_presionante;
@@ -721,7 +721,7 @@ class Entrenador {
     if (caracteristicas == "Combinativa mixta")   e._fun_combinativa_mixta= value;
     if (caracteristicas == "Directa")   e._fun_directa= value;
     if (caracteristicas == "Presión conjunta")   e._fun_presion_conjunta= value;
-    if (caracteristicas == "Presión orientada al poseedor rival repliegue")   e._fun_presion_orientada_al_poseedor_rival_repliegue= value;
+    if (caracteristicas == "Presión orientada al poseedor rival + repliegue")   e._fun_presion_orientada_al_poseedor_rival_repliegue= value;
     if (caracteristicas == "Repliegue")   e._fun_repliegue= value;
     if (caracteristicas == "Contencion")   e._fun_contencion= value;
     if (caracteristicas == "Presionante")   e._fun_presionante= value;
@@ -817,7 +817,7 @@ class Entrenador {
   = <String>
   [
     'Presión conjunta',//  e._fun_presion_conjunta= value;
-    'Presión orientada al poseedor rival repliegue',//  e._fun_presion_orientada_al_poseedor_rival_repliegue= value;
+    'Presión orientada al poseedor rival + repliegue',//  e._fun_presion_orientada_al_poseedor_rival_repliegue= value;
     'Repliegue'];
 
   static List<String> juegoDefensivo

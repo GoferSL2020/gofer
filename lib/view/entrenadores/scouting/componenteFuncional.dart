@@ -364,7 +364,7 @@ class _ComponenteFuncional extends State<ComponenteFuncional> {
                   width: double.infinity,
                   color:Colors.grey.shade800,
                   padding: EdgeInsets.all(5),
-                  child:Text("Variabilidad Estrategecia (L/V)",
+                  child:Text("Variabilidad Estratégica (Local / Visitante)",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:Colors.white,

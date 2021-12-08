@@ -14,6 +14,7 @@ import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
+import 'package:iadvancedscout/pdf/pdfEntrenadorDatos.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
@@ -133,8 +134,11 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                     entrenadores = snapshot.data.docs
                         .map((doc) => Entrenador.fromJson(doc.id,doc.data()))
                         .toList();
-                    return ListView.builder(
+                    return ListView.separated(
                         itemCount: entrenadores.length,
+                        separatorBuilder: (context, index) {
+                          return Container(height: 1,color: Colors.black,);
+                        },
                         itemBuilder: (buildContext, index) {
                           return ListTile(
                               onTap: () {
@@ -158,14 +162,15 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                               trailing: FittedBox(
                                   fit: BoxFit.fill,
                                   child: Row(children: [
+
                                     IconButton(
                                         icon: new Icon(
-                                          CustomIcon.safari,
+                                          CustomIcon.file_pdf,
                                           size: 20,
                                         ),
-                                        color: Colors.blue[900],
-                                            onPressed: () {
-                                            _sendingHTML(entrenadores[index].scout);
+                                        color: Colors.red[900],
+                                        onPressed: () {
+                                          pdfEntrenador(context, entrenadores[index]);
                                         }),
                                     IconButton(
                                         icon: new Icon(
@@ -215,16 +220,34 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.bold),
                                     ),
-
-                               /*     Text(
-                                          entrenadores[index].key,
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child:
+                                    Text("Fec.Fichaje: ${entrenadores[index].fechaFichaje}",
                                       style: TextStyle(
-                                          color: Config.edadColorSub(
-                                              Config.edadSub(entrenadores[index]
-                                                  .fechaNacimiento)),
+                                          color: Colors.black,
                                           fontSize: 10.0,
                                           fontWeight: FontWeight.bold),
-                                    )*/
+                                    ),),
+                              Container(
+                                  padding: EdgeInsets.all(5),
+                                  child:
+                                    Text("Fec.Fin contrato: ${entrenadores[index].fechaFinContrato}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),),
+                              Container(
+                                  padding: EdgeInsets.all(5),
+                                  child:
+                                    GestureDetector(
+                                        onTap: () {_sendingHTML(entrenadores[index].scout);},
+                                        child: Image.network(
+                                          Config.escudoImages("transfer.png"),
+                                          fit: BoxFit.cover,height: 25,
+                                        )
+                                    ),),
                                   ]),
                               leading: Container(
                                 width: 55.0,
@@ -233,7 +256,6 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                   border: Border.all(width: 1.0, color: Colors.black),
-
                                   image: new DecorationImage(
                                     image:  NetworkImage(Config.imagenEntrenador(entrenadores[index])),
                                     fit: BoxFit.contain,scale: 1.5,
@@ -241,6 +263,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                   ),
                                 ),
                               ));
+
                         });
                   } else {
                     return Text('fetching');
@@ -347,19 +370,6 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
     );
   }
 
-  void pdfEntrenador(BuildContext context, Entrenador entrenador) {
-    Fluttertoast.showToast(
-        msg: "Espera...\nEstamos haciendo el \ndocumento del entrenadores:\n${entrenador.entrenador}",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 30,
-        backgroundColor: Colors.red.shade900,
-        textColor: Colors.white,
-        fontSize: 12.0);
-    //PdfJugadorDatosScout2 pdf =
-    //    PdfJugadorDatosScout2(widget.temporada, widget.equipo, entrenadors,widget.pais,widget.categoria,);
-    //pdf.generateInvoice();
-  }
 
   Future<bool> _showConfirmationDialog(
       BuildContext context, String action, Entrenador entrenador) {
@@ -415,5 +425,19 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
         );
       },
     );
+  }
+
+  void pdfEntrenador(BuildContext context, Entrenador entrenador) {
+    Fluttertoast.showToast(
+        msg: "Espera...\nEstamos haciendo el \ndocumento del entrenador:\n${entrenador.entrenador}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 4,
+        backgroundColor: Colors.red.shade900,
+        textColor: Colors.white,
+        fontSize: 12.0);
+    PdfEntrenadorDatos pdf =
+    PdfEntrenadorDatos(widget.temporada, widget.equipo, entrenador);
+    pdf.generateInvoice();
   }
 }

@@ -25,7 +25,7 @@ import 'package:http/http.dart' show get;
 
 /// Represents the PDF widget class.
 class PdfJugadorDatosScout2 {
-  PdfColor colorAzul = PdfColor(6, 20, 208);
+  PdfColor colorAzul = PdfColor(68, 114, 196);
   PdfColor colorNegro = PdfColor(0, 0, 0);
   PdfColor colorAzulClaro = PdfColor(0,138,216);
   PdfColor colorBlanco= PdfColor(255, 255, 255);
@@ -639,7 +639,7 @@ class PdfJugadorDatosScout2 {
     //Create the header row of the grid.
     final PdfGridRow headerRow1 = grid.headers.add(1)[0];
     //Set style
-    headerRow1.style.backgroundBrush = PdfSolidBrush(PdfColor(68, 114, 196));
+    headerRow1.style.backgroundBrush = PdfSolidBrush(colorNegro);
     headerRow1.style.textBrush = PdfBrushes.white;
     headerRow1.cells[0].value = 'Características ' +aux;
     headerRow1.cells[0].stringFormat.alignment = PdfTextAlignment.center;

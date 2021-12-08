@@ -50,6 +50,22 @@ class EntrenadorDao {
     return list;
   }
 
+  getEntrenadoresSoloEquipo(String equipo) async {
+    print("getEntrenadoresSolo");
+    var dbClient = await con.db;
+    String sql="SELECT * FROM ENTRENADOR "
+        " where EQUIPO='${equipo}'";
+    print(sql);
+    var res = await dbClient.rawQuery(sql);
+
+    List<Entrenador> list =
+    res.isNotEmpty ? res.map((c) => Entrenador.fromMap(c)).toList() : [];
+    print(list.length);
+
+
+    return list;
+  }
+
   getTodosPartidosJORNADAS(Categoria categoria, int jornada) async {
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(""

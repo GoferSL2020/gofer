@@ -163,7 +163,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.planteamientoTacticoGeneral,  2,3),
+                          children: ponerFila2col(Entrenador.asentamientoDefensivo,  2,3),
                         ),
                       ],)
                 ),
@@ -210,7 +210,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
                             1: FixedColumnWidth(55),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                          children: ponerFila2col(Entrenador.planteamientoTacticoGeneral,  2,3),
+                          children: ponerFila2col(Entrenador.asentamientoOfensivo,  2,3),
                         ),
                       ],)
                 ),

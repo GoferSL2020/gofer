@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
+import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 
 class Abajo extends StatelessWidget {
 
@@ -27,7 +28,7 @@ class Abajo extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => EquiposView(temporada: temporada),
+                builder: (BuildContext context) => TemporadaView(),
               ));
             },
           ),

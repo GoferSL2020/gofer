@@ -294,6 +294,15 @@ class Config{
    return s;
  }
 
+
+
+  static String escudoImages(String imagen) {
+    String s=
+        "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/images%2F${imagen}?alt=media";
+
+    return s;
+  }
+
  static Color edadColorSub(String sub){
 
    if(sub=="SUB-20") return Colors.red[900];
