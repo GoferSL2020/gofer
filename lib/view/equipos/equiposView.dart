@@ -74,8 +74,8 @@ class _EquiposViewState extends State<EquiposView> {
   getMigrarEntrenadorSoloEquipo()  async {
     print("getMigrarEntrenador");
     final FirebaseFirestore _db = FirebaseFirestore.instance;
-    String equipoId="8jrrYhokZHyJXedpu0wR";
-    String equipo="Internacional Madrid";
+    String equipoId="zy2EWayvTN6yIFP6XgC7";
+    String equipo="Sporting Gijón";
     EntrenadorDao dao=new EntrenadorDao();
       List<Entrenador> list2 =await dao.getEntrenadoresSoloEquipo(equipo);
       for (var i = 0; i < list2.length; i++) {
@@ -126,7 +126,7 @@ class _EquiposViewState extends State<EquiposView> {
 
   @override
   Widget build(BuildContext context) {
-    //getMigrarEntrenadorSoloEquipo();
+   //getMigrarEntrenadorSoloEquipo();
     //getMigrarEntrenador();
     //getJugaodes();
     //getMigrarJORNADAS();

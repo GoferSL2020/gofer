@@ -96,7 +96,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
     _fechaFinContrato=widget.entrenador.fechaFinContrato;
     _scout.text=widget.entrenador.scout;
 
-    insertar= widget.entrenador.entrenador==null?true:false;
+    insertar= widget.entrenador.entrenador==""?true:false;
     //_imageFile=Image.network(widget.entrenador.imagen));
     //_imageFile;
 
@@ -597,9 +597,11 @@ class _EditEntrenadorState extends State<EditEntrenador> {
                       widget.entrenador.scout=_scout.text;
 
                       CRUDEntrenador con = CRUDEntrenador();
-                      con.updateEntrenadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.entrenador);
+                      if(insertar)
+                        con.addEntrenadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.entrenador);
                       //con.updateEntrenadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.entrenador);
-
+                      else
+                        con.updateEntrenadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.entrenador);
                       //jugadorService.updateJugadorIAScout(widget.entrenador,false);
                       //ProductManager().insert(widget.entrenador);
                       if(_imageFile!=null)
