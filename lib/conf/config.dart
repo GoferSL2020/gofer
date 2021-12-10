@@ -61,7 +61,10 @@ class Config{
  static List<String> extranjeroArgentino = <String>
  ['Argentina', 'Extranjero'];
 
- static List<String> gestostecnicos = <String>
+  static List<String> activo = <String>
+  ['Activo', 'Inactivo'];
+
+  static List<String> gestostecnicos = <String>
  ['Muy buenos', 'Normal','Malo Tecnicamente'];
 
  static List<String> tipodeconducciones = <String>

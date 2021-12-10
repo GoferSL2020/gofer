@@ -275,6 +275,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Entrenador entrenador=new Entrenador();
+          entrenador.activo="Activo";
           //Jugador jugador = new Jugador();
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
               EditEntrenador(

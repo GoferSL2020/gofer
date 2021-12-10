@@ -21,6 +21,7 @@ import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/jugadoresFiltros.dart';
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
+import 'package:iadvancedscout/wigdet/migraciones.dart';
 import 'package:iadvancedscout/wigdet/politica.dart';
 import 'package:iadvancedscout/wigdet/termino.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -297,6 +298,24 @@ class MenuLateral extends StatelessWidget {
                         new MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 TemporadaView()));
+                  },
+                  leading: const Icon(Icons.person, color: Colors.white),
+                ),
+
+              ):null,
+              BBDDService().getUserScout().email=="lenrhanssen@gmail.com"?
+              Ink(
+                color: Colors.white,
+                child: ListTile(
+                  title: Text("MIGRACIONES",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                Migraciones()));
                   },
                   leading: const Icon(Icons.person, color: Colors.white),
                 ),

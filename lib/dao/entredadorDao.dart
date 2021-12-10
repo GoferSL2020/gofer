@@ -80,14 +80,16 @@ class EntrenadorDao {
   }
 
   getTodosJORNADAS(Categoria categoria) async {
+    print("getTodosJORNADAS:${categoria.categoria}");
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(""
-        "SELECT distinct JORNADA, FECHA FROM JORNADAS "
-        " where CATEGORIA='${categoria.categoria}' "
+        "SELECT *  FROM JORNADAS "
         " ORDER BY JORNADAS.JORNADA");
 
     List<Partido> list =
     res.isNotEmpty ? res.map((c) => Partido.fromMapBBDD(c)).toList() : [];
+    print(list.length);
+
     return list;
   }
 

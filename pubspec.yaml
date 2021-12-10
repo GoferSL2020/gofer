@@ -30,7 +30,7 @@ dependencies:
   #firebase_core: ^0.7.0
   #firebase_auth: ^0.20.1
   firebase_core: ^0.5.1
-  #cloud_firestore: ^0.14.2
+  cloud_firestore: ^0.14.2
   firebase_auth: ^0.18.2
   firebase_database: ^4.1.1
   firebase_storage: ^5.0.0
@@ -38,12 +38,10 @@ dependencies:
 
   #EXCEL
   gsheets: ^0.2.6
-  #CVS
-  csv: ^4.1.0
 
   provider: ^3.1.0
 
-  pdf: ^1.5.0
+  pdf: ^2.0.0
   syncfusion_flutter_pdf: ^18.3.53-beta
   flutter_full_pdf_viewer: ^1.0.6
 
@@ -55,16 +53,22 @@ dependencies:
   toggle_switch: ^0.1.8
   permission_handler: ^5.0.1+1
   image_picker: ^0.6.7+14
-  splashscreen : 1.2.0
-  shared_preferences: ^0.5.12+4
+  splashscreen: 1.2.0
+  #shared_preferences: ^0.5.12+4
   flutter_launcher_icons: ^0.8.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.0
 
   sqflite:
-  path_provider: ^0.4.1
+  path_provider: ^1.6.28
 
+  fluttertoast: ^4.0.0
+  native_pdf_renderer: ^2.4.0
+  image_gallery_saver: ^1.6.8
+  #notificacionesx
+  #firebase_messaging: ^7.0.3
+  fluttericon: ^1.0.7
 
 flutter_icons:
   image_path: "assets/img/icono.png"
@@ -93,6 +97,13 @@ flutter:
     - family:  CustomIcon
       fonts:
         - asset: fonts/CustomIcon.ttf
+    - family:  IconMio
+      fonts:
+        - asset: fonts/IconMio.ttf
+    - family:  FutbolMio
+      fonts:
+        - asset: fonts/FutbolMio.ttf
+
 
   assets:
     - assets/pais/ESPAÑA.png
@@ -145,134 +156,6 @@ flutter:
     - assets/img/47.png
 
     #clubes
-    - assets/clubes/Albacete.png
-    - assets/clubes/Alcorcón.png
-    - assets/clubes/Cartagena.png
-    - assets/clubes/Castellón.png
-    - assets/clubes/Espanyol.png
-    - assets/clubes/Fuenlabrada.png
-    - assets/clubes/Girona.png
-    - assets/clubes/Las Palmas.png
-    - assets/clubes/Leganés.png
-    - assets/clubes/Lugo.png
-    - assets/clubes/Mallorca.png
-    - assets/clubes/Mirandés.png
-    - assets/clubes/Málaga.png
-    - assets/clubes/Ponferradina.png
-    - assets/clubes/Rayo Vallecano.png
-    - assets/clubes/Real Oviedo.png
-    - assets/clubes/Real Zaragoza.png
-    - assets/clubes/Sabadell.png
-    - assets/clubes/Sporting Gijón .png
-    - assets/clubes/Tenerife.png
-    - assets/clubes/UD Logroñés.png
-    - assets/clubes/Almería.png
-
-    - assets/clubes/Alcoyano.png
-    - assets/clubes/Algeciras.png
-    - assets/clubes/Amorebieta.png
-    - assets/clubes/Arenas de Getxo.png
-    - assets/clubes/Athletic Bilbao B.png
-    - assets/clubes/Atlético Baleares.png
-    - assets/clubes/Atlético Levante.png
-    - assets/clubes/Atlético Madrid B.png
-    - assets/clubes/Atlético Sanluqueño.png
-    - assets/clubes/Atzeneta.png
-    - assets/clubes/Badalona.png
-    - assets/clubes/Barakaldo.png
-    - assets/clubes/Barcelona B.png
-    - assets/clubes/Burgos.png
-    - assets/clubes/CD Badajoz.png
-    - assets/clubes/CD Calahorra.png
-    - assets/clubes/CD San Fernando.png
-    - assets/clubes/Celta de Vigo B.png
-    - assets/clubes/Compostela.png
-    - assets/clubes/Cornellà.png
-    - assets/clubes/Coruxo.png
-    - assets/clubes/Covadonga.png
-    - assets/clubes/Cultural Leonesa.png
-    - assets/clubes/Cádiz B.png
-    - assets/clubes/Córdoba.png
-    - assets/clubes/Deportivo Alavés B.png
-    - assets/clubes/Deportivo La Coruña.png
-    - assets/clubes/Don Benito.png
-    - assets/clubes/Ebro.png
-    - assets/clubes/Ejea.png
-    - assets/clubes/El Ejido.png
-    - assets/clubes/Espanyol B.png
-    - assets/clubes/Extremadura UD.png
-    - assets/clubes/FC Andorra.png
-    - assets/clubes/Getafe B.png
-    - assets/clubes/Gimnàstic Tarragona.png
-    - assets/clubes/Granada B.png
-    - assets/clubes/Guijuelo.png
-    - assets/clubes/Haro.png
-    - assets/clubes/Hércules.png
-    - assets/clubes/Internacional Madrid.png
-    - assets/clubes/Izarra.png
-    - assets/clubes/L Hospitalet.png
-    - assets/clubes/La Nucía.png
-    - assets/clubes/Langreo.png
-    - assets/clubes/Laredo.png
-    - assets/clubes/Las Palmas B.png
-    - assets/clubes/Las Rozas.png
-    - assets/clubes/Lealtad.png
-    - assets/clubes/Leioa.png
-    - assets/clubes/Linares Deportivo.png
-    - assets/clubes/Linense.png
-    - assets/clubes/Llagostera.png
-    - assets/clubes/Lleida Esportiu.png
-    - assets/clubes/Lorca Deportiva.png
-    - assets/clubes/Marbella.png
-    - assets/clubes/Marino.png
-    - assets/clubes/Marino de Luanco.png
-    - assets/clubes/Melilla.png
-    - assets/clubes/Mutilvera.png
-    - assets/clubes/Mérida AD.png
-    - assets/clubes/Navalcarnero.png
-    - assets/clubes/Numancia.png
-    - assets/clubes/Olot.png
-    - assets/clubes/Orihuela.png
-    - assets/clubes/Osasuna B.png
-    - assets/clubes/Peña Deportiva.png
-    - assets/clubes/Poblense.png
-    - assets/clubes/Pontevedra.png
-    - assets/clubes/Portugalete.png
-    - assets/clubes/Prat.png
-    - assets/clubes/Racing Ferrol.png
-    - assets/clubes/Racing Santander.png
-    - assets/clubes/Rayo Majadahonda.png
-    - assets/clubes/Real Betis B.png
-    - assets/clubes/Real Madrid Castilla.png
-    - assets/clubes/Real Murcia.png
-    - assets/clubes/Real Oviedo B.png
-    - assets/clubes/Real Sociedad B.png
-    - assets/clubes/Real Unión.png
-    - assets/clubes/Real Valladolid B.png
-    - assets/clubes/Recreativo Huelva.png
-    - assets/clubes/res Deportivo.png
-    - assets/clubes/Salamanca CF UDS.png
-    - assets/clubes/SD Logroñés.png
-    - assets/clubes/Sevilla Atlético.png
-    - assets/clubes/Socuéllamos.png
-    - assets/clubes/Sporting Gijón B.png
-    - assets/clubes/Sporting Gijón .png
-    - assets/clubes/Sporting Gijón.png
-    - assets/clubes/Talavera CF.png
-    - assets/clubes/Tamaraceite.png
-    - assets/clubes/Tarazona.png
-    - assets/clubes/Tudelano.png
-    - assets/clubes/UCAM Murcia.png
-    - assets/clubes/UD Ibiza.png
-    - assets/clubes/UD Sanse.png
-    - assets/clubes/Unionistas de Salamanca.png
-    - assets/clubes/Valencia B.png
-    - assets/clubes/Villanovense.png
-    - assets/clubes/Villarreal B.png
-    - assets/clubes/Villarrobledo.png
-    - assets/clubes/Villarrubia.png
-    - assets/clubes/Yeclano.png
-    - assets/clubes/Zamora.png
     - assets/Burgos/Claudio Medina.png
     - assets/Burgos/Eneko Undabarrena.png
     - assets/Burgos/Galder Cerrajería.png

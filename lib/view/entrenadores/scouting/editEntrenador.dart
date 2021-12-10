@@ -300,7 +300,12 @@ class _EditEntrenadorState extends State<EditEntrenador> {
     void callDatePicker() async {
       var order = await getDate();
       setState(() {
+        try{
         _fecha = DateFormat('dd/MM/yyyy').format(order);
+        }
+        catch(e){
+          _fecha="";
+        }
       });
     }
 
@@ -528,9 +533,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
                         fontSize: 12,
                         labels:['Activo', 'Inactivo'],
                         onToggle: (index) {
-                          _activo=widget.entrenador.categoria.contains("Argentina")?
-                          Config.extranjeroArgentino[index]
-                              :Config.extranjero[index];
+                          _activo=Config.activo[index];
                         },
                       )),
                 ],

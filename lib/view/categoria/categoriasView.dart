@@ -81,7 +81,7 @@ class _CategoriasViewState extends State<CategoriasView> {
                 child:Text(
                   widget.temporada.temporada,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Config.colorCard,
+                  style: TextStyle(color: Config.colorAPP,
                       fontSize: 12,
                       fontStyle: FontStyle.italic),
                 ),),

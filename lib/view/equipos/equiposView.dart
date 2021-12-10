@@ -98,6 +98,7 @@ class _EquiposViewState extends State<EquiposView> {
 
   getMigrarJORNADAS()  async {
     print("getMigrarJORNADAS");
+    print(widget.categoria.categoria);
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     EntrenadorDao dao=new EntrenadorDao();
     List<Partido> jornadas =await dao.getTodosJORNADAS(widget.categoria);
