@@ -100,7 +100,7 @@ class _AddPartidoState extends State<AddPartido> {
     _observadores.clear();
     _observadoresAUX =
     await dao2.fetchScouting(widget.temporada, widget.pais, widget.categoria);
-    print(_observadoresAUX.length);
+    //print(_observadoresAUX.length);
     _observadores.add("");
     for (var d in _observadoresAUX) {
       setState(() {

@@ -234,6 +234,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                 Navigator.pop(context, true);
                 CRUDJugador con = new CRUDJugador();
                 con.updateJugadorScouting(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
                 return true; // showDialog() returns true
               },
             ),

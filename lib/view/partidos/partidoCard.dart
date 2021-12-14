@@ -48,6 +48,7 @@ class PartidoCard extends StatelessWidget {
       resultadoColor = Colors.red;
     return GestureDetector(
       onTap: () {
+        //print("${partido.equipoCASA}:${partido.equipoFUERA}:${partido.id}");
         Navigator.of(context).push(new MaterialPageRoute(
             builder: (BuildContext context) => TabPuntuaciones(temporada,categoria,pais,partido,jornada)));
 

@@ -43,27 +43,6 @@ class _JornadasViewState extends State<JornadasView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  width: 40,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.add_circle_outline_outlined,
-                      color:Config.colorAPP,
-                    ),
-                    onPressed: () {
-                      Jornada jornada= new Jornada(0,"");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => EditJornada(
-                              temporada: widget.temporada,
-                              pais: widget.pais,
-                              categoria: widget.categoria,
-                              jornada: jornada,
-                          )));
-
-                    },
-                  ),
-                ),
-                Container(
                     width: 50,
                     child: IconButton(
                       icon:
@@ -88,7 +67,51 @@ class _JornadasViewState extends State<JornadasView> {
         elevation: 0,
         centerTitle: true,
       ),
-      bottomNavigationBar: Abajo(temporada: widget.temporada,),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        //backgroundColor: widget.jugador.getColor(),
+        onPressed: () {
+          Jornada jornada= new Jornada(0,"");
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditJornada(
+                temporada: widget.temporada,
+                pais: widget.pais,
+                categoria: widget.categoria,
+                jornada: jornada,
+              )));
+        },
+        child: Icon(
+          Icons.add_circle_outline,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
+        tooltip: "Añadir un jugador",
+      ),
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => Abajo(),
+                ));
+              },
+            ),
+          ],
+        ),
+      ),
       body:
       Container(
         child: Column(

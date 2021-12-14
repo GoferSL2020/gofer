@@ -67,6 +67,7 @@ class PdfJugadorDatosScout2 {
     var partidos =await dao.getEquipoPartidos(
         _temporada, _pais, _categoria, _equipo);
     await new Future.delayed(new Duration(seconds: 1));
+    partidos.sort((a, b) => a.jornada.compareTo(b.jornada));
     int longitudPuntuaciones=0;
     for (var i=0;i<partidos.length;i++) {
       partidos[i].putuacionJugadorPartido=new AccionPutuacionJugadorPartido();
@@ -82,9 +83,12 @@ class PdfJugadorDatosScout2 {
       try{
         aux=double.parse(partidos[i].putuacionJugadorPartido.putuacion);
         aux>0?longitudPuntuaciones++:null;
+
       }catch(o){
         aux=0;
       }
+    print("${_jugador.jugador}:${partidos[i].jornada}:${aux}:${partidos[i].putuacionJugadorPartido.accion}");
+
       total+=aux;
     }
     promedio=total/longitudPuntuaciones;
@@ -818,6 +822,9 @@ class PdfJugadorDatosScout2 {
   }
   String puntuacion(Partido p) {
     String s=p.putuacionJugadorPartido.putuacion;
+      if((p.golesFUERA=="")&&(p.golesFUERA=="")){
+        s="";
+      }
       if(p.putuacionJugadorPartido.accion=="SIM"){
         s=p.putuacionJugadorPartido.accion;
       }
@@ -833,9 +840,9 @@ class PdfJugadorDatosScout2 {
       if(p.putuacionJugadorPartido.accion=="SC"){
         s=p.putuacionJugadorPartido.accion;
       }
-    if(p.putuacionJugadorPartido.accion=="NA"){
-      s=p.putuacionJugadorPartido.accion;
-    }
+      if(p.putuacionJugadorPartido.accion=="NA"){
+        s=p.putuacionJugadorPartido.accion;
+      }
       return s;
   }
 

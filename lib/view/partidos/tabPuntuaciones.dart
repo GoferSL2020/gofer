@@ -4,6 +4,7 @@ import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
@@ -54,17 +55,18 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
     cogerLosJugadores();
     _controller = TabController(length: 2, vsync: this);
     _controller.addListener(() {
-      print(_controller.index);
+      //print(_controller.index);
     });
   }
 
-
+  //cogerLosJugadores:BuJNv17ghCPGnq37P2ev:QqjzloEo6PI7sHfsffk2:JsHvDmVZuWbAi0Z1zRuj:2DvtLnNubpkJkuE66mWE:AD Ceuta
+  //cogerLosJugadores:BuJNv17ghCPGnq37P2ev:QqjzloEo6PI7sHfsffk2:JsHvDmVZuWbAi0Z1zRuj:2DvtLnNubpkJkuE66mWE:Villanovense
   List<Player> _jugadoresCASA;
   List<Player> _jugadoresFUERA;
   cogerLosJugadores() async{
     List<Player> jugadoresCASAAUX;
     List<Player> jugadoresFUERAAUX;
-    jugadoresCASAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoCASA);
+     jugadoresCASAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoCASA);
     jugadoresFUERAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoFUERA);
     try {
       await dao.fetchJugadoresPuntuaciones(
@@ -75,6 +77,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
           widget.categoria,
           widget.jornada,
           widget.partido);
+
       await dao.fetchJugadoresPuntuaciones(
           "jugadoresFUERA",
           jugadoresFUERAAUX,
@@ -83,7 +86,10 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
           widget.categoria,
           widget.jornada,
           widget.partido);
-    }catch(e){}
+
+    }catch(e){
+      //print(e.toString());
+    }
     setState(() {
       _jugadoresCASA=jugadoresCASAAUX;
       _jugadoresFUERA=jugadoresFUERAAUX;
@@ -399,6 +405,21 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                               textAlign: TextAlign.center),
                         ]),
                       ]),
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 25,bottom: 5),
+                  alignment: Alignment.center,
+                  color: Colors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(CustomIcon.star, size: 15,color: Colors.yellowAccent,),
+                    Container(width:5,),
+                    Text(
+                        "Estrella",
+                        style: TextStyle(fontSize: 11, color: Colors.yellowAccent),
+                        textAlign: TextAlign.center),
+                  ],)
                 ),
             Expanded(child:
             TabBarView(

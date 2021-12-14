@@ -153,7 +153,9 @@ Carrilero izquierdo
     _dorsal.text = widget.jugador.dorsal.toString();
     _puesto = widget.jugador.posicion.toUpperCase();
     _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
-    insertar= widget.jugador.jugador==null?true:false;
+    insertar= widget.jugador.jugador==""?true:false;
+
+
     //_imageFile=Image.network(widget.jugador.imagen));
     //_imageFile;
 
@@ -754,11 +756,19 @@ Carrilero izquierdo
                       widget.jugador.paisNacimiento=_provincia.text;
                       widget.jugador.lateral=_lateral;
                       widget.jugador.nacionalidad=_extranjero;
-
                       CRUDJugador con = CRUDJugador();
-                      con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
-                      con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
-
+                      if(insertar) {
+                        await con.addJugadorDatos(
+                            widget.temporada, widget.pais, widget.categoria,
+                            widget.equipo, widget.jugador);
+                       print(widget.jugador.key);
+                        con.addJugadorDatosDATABIG(
+                            widget.temporada, widget.pais, widget.categoria,
+                            widget.equipo, widget.jugador);
+                      }else {
+                        con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                        con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                      }
                       //jugadorService.updateJugadorIAScout(widget.jugador,false);
                       //ProductManager().insert(widget.jugador);
                       if(_imageFile!=null)
@@ -805,6 +815,7 @@ Carrilero izquierdo
               child: Text('Aceptar',
                   style: TextStyle(fontSize: 16, color: Colors.green[900])),
               onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pop();
                 return true; // showDialog() returns true
               },

@@ -112,7 +112,6 @@ class CRUDEntrenador extends ChangeNotifier {
 
   Future addEntrenadorDatos(Temporada temporada, Pais pais, Categoria categoria, Equipo equipo, Entrenador entrenador) async {
     Map<String, dynamic> map=entrenador.toJson();
-    print(entrenador.key);
     await _db.
     collection("temporadas").doc(temporada.id).
     collection("paises").doc(pais.id).

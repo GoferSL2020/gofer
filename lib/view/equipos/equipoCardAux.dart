@@ -47,20 +47,14 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
     var ganadoAux=0;
     var perdidoAux=0;
     await productProvider.empateContar(widget.temporada, widget.equipoDetails).then((value){
-      print(value.docs.length);
       empateAux= value.docs.length;
-      print(perdidoAux);
 
     });
     await productProvider.ganadoContar(widget.temporada, widget.equipoDetails).then((value){
-      print(value.docs.length);
       ganadoAux= value.docs.length;
-      print(ganadoAux);
     });
     await productProvider.perdidoContar(widget.temporada, widget.equipoDetails).then((value){
-      print(value.docs.length);
       perdidoAux= value.docs.length;
-      print(perdidoAux);
     });
 
     setState(() {

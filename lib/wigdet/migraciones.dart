@@ -6,8 +6,10 @@ import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDCategoria.dart';
 import 'package:iadvancedscout/dao/CRUDEntrenador.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
+import 'package:iadvancedscout/dao/CRUDJornada.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPais.dart';
+import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/dao/CRUDTemporada.dart';
 import 'package:iadvancedscout/dao/entredadorDao.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
@@ -16,6 +18,7 @@ import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/player.dart';
@@ -65,6 +68,7 @@ class _MigracionesState extends State<Migraciones> {
   Categoria _categoriaAux = new Categoria();
 
   List<Equipo> equipos = List();
+  List<Jornada> jornadas = List();
 
 
   Future<List<String>> get temporadasAux async {
@@ -91,11 +95,11 @@ class _MigracionesState extends State<Migraciones> {
   }
 
   _cogerPais() async {
-    print("PAIS");
-    print(_temporadaAux.id);
+    //print("PAIS");
+    //print(_temporadaAux.id);
     List<Pais> datos = await CRUDPais().fetchPaises(_temporadaAux);
     setState(() {
-      print(datos[0].id);
+      //print(datos[0].id);
       _paisAux = datos[0];
       paises.addAll(datos);
     });
@@ -118,7 +122,14 @@ class _MigracionesState extends State<Migraciones> {
       equipos.addAll(datos);
     });
   }
-
+  _cogerJornadas() async {
+    CRUDJornada dao = CRUDJornada();
+    List<Jornada> datos =
+    await dao.fetchJornadas(_temporadaAux, _paisAux, _categoriaAux);
+    setState(() {
+      jornadas.addAll(datos);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -240,6 +251,7 @@ class _MigracionesState extends State<Migraciones> {
                                     //newContact.favoriteColor = newValue;
                                     _categoriaAux = value;
                                     _cogerEquipos();
+                                    _cogerJornadas();
                                     state.didChange(value);
                                   });
                                 },
@@ -260,7 +272,8 @@ class _MigracionesState extends State<Migraciones> {
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 RaisedButton.icon(
                     onPressed: () async {
-                      getMigrarJugadores();
+                      //getMigrarCiclo1();
+                      getMigrarPuntuaciones();
                     },
                     label: Text(
                       "Los Mejores",
@@ -336,6 +349,7 @@ class _MigracionesState extends State<Migraciones> {
   getMigrarJugadores() async {
     print("getMigrarJugadores");
     final FirebaseFirestore _db = FirebaseFirestore.instance;
+    print(equipos.length);
     for (var doc in equipos) {
       print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
       print(
@@ -359,4 +373,133 @@ class _MigracionesState extends State<Migraciones> {
 
     }}
   }
+
+
+  getMigrarPuntuaciones() async {
+    print("getMigrarPuntuaciones");
+    CRUDPartido dao = CRUDPartido();
+    CRUDJugador daoJug = CRUDJugador();
+    JugadorDao daoJugDAO = JugadorDao();
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas();
+    List<Player> jugadoresFUERABBDD = await daoJugDAO.getPuntacionesJornadas();
+    //jornadas=jornadas.sublist(1);
+    for (int i=0;i<17;i++) {
+      Jornada jornada=jornadas[i];
+      print("${jornada.jornada},${jornada.fecha},${jornada.id}");
+      print("${DateTime.now()}");
+      //temporadas/BuJNv17ghCPGnq37P2ev/paises/QqjzloEo6PI7sHfsffk2/categorias/rAeKFLQSry7l1x0WVW01/equipos/tbXIokAhjIMVyuNWcUyZ
+
+
+      List<Partido> partidos = await dao.fetchPartidosJornada(
+          _temporadaAux, _paisAux, _categoriaAux, jornada);
+      for (var partido in partidos) {
+        List<Player> jugadoresCASA = await daoJug.fetchJugadores(
+            _temporadaAux, _paisAux, _categoriaAux, partido.equipoCASA);
+        List<Player> jugadoresFUERA = await daoJug.fetchJugadores(
+            _temporadaAux, _paisAux, _categoriaAux, partido.equipoFUERA);
+        //print("/temporadas/${_temporadaAux.id}/""paises/${_paisAux.id}/""categorias/${_categoriaAux.id}/""jornadas/${jornada.id}/partidos/${partido.id}");
+        for (var jugCASA in jugadoresCASA) {
+            List<Player> outputList = jugadoresCASABBDD.where((o) =>
+            (o.jugador) == (jugCASA.jugador)).toList();
+           // print("/temporadas/${_temporadaAux.id}/""paises/${_paisAux.id}/""categorias/${_categoriaAux.id}/""jornadas/${jornada.id}/partidos/${partido.id}/jugadoresCASA/${jugCASA.key}");
+            if(outputList.length>0) {
+              if (outputList.length == 1) {
+                jugCASA.ponerPuntuacion(outputList[0], jornada.jornada);
+              }
+              else {
+                if (outputList[0].equipo == jugCASA.equipo)
+                  jugCASA.ponerPuntuacion(outputList[0], jornada.jornada);
+                if (outputList[1].equipo == jugCASA.equipo)
+                  jugCASA.ponerPuntuacion(outputList[1], jornada.jornada);
+              }
+            }
+            else{
+              jugCASA.accion="";
+              jugCASA.puntuacion=0;
+            }
+            await _db.collection("/temporadas/${_temporadaAux.id}/"
+                "paises/${_paisAux.id}/"
+                "categorias/${_categoriaAux.id}/"
+                "jornadas/${jornada.id}/partidos/${partido.id}/jugadoresCASA").doc(jugCASA.key).set(
+                jugCASA.toJsonPuntuaciones());
+          print("LOCAL:${jornada.jornada}: ${jugCASA.jugador}:${jugCASA.accion}:${jugCASA.puntuacion}:");
+        }
+        for (var jugFUERA in jugadoresFUERA) {
+            List<Player> outputList = jugadoresCASABBDD.where((o) =>
+            o.jugador== jugFUERA.jugador).toList();
+          //  print("/temporadas/${_temporadaAux.id}/""paises/${_paisAux.id}/""categorias/${_categoriaAux.id}/""jornadas/${jornada.id}/partidos/${partido.id}/jugadoresFUERA/${jugFUERA.key}");
+            if(outputList.length>0) {
+              if (outputList.length == 1) {
+                jugFUERA.ponerPuntuacion(outputList[0], jornada.jornada);
+              }
+              else {
+                if (outputList[0].equipo == jugFUERA.equipo)
+                  jugFUERA.ponerPuntuacion(outputList[0], jornada.jornada);
+                if (outputList[1].equipo == jugFUERA.equipo)
+                  jugFUERA.ponerPuntuacion(outputList[1], jornada.jornada);
+              }
+            }
+            else{
+              jugFUERA.accion="";
+              jugFUERA.puntuacion=0;
+            }
+            await _db.collection("/temporadas/${_temporadaAux.id}/"
+                "paises/${_paisAux.id}/"
+                "categorias/${_categoriaAux.id}/"
+                "jornadas/${jornada.id}/partidos/${partido.id}/jugadoresFUERA").doc(jugFUERA.key).set(
+                jugFUERA.toJsonPuntuaciones());
+            print("VISITANTE:${jornada.jornada}: ${jugFUERA.jugador}:${jugFUERA.accion}:${jugFUERA.puntuacion}:");
+          }
+        }
+    }
+    print("${DateTime.now()}");
+  }
+
+
+getMigrarCiclo1() async {
+  print("getCiclo1");
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  print(equipos.length);
+  CRUDPartido dao = CRUDPartido();
+  CRUDJugador daoJug = CRUDJugador();
+  JugadorDao daoJugDAO = JugadorDao();
+  List<Player> jugadoresBBDD = await daoJugDAO.getPuntacionesJornadas();
+
+  for (var doc in equipos) {
+    print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
+    print(
+        "${doc.equipo},${doc.categoria},${doc.id}");
+    CRUDJugador dao=CRUDJugador();
+    List<Player> jugadores=await dao.fetchJugadoresList(_temporadaAux, _paisAux, _categoriaAux, doc);
+    for (var jug in jugadores) {
+      String ciclo="";
+      List<Player> outputList = jugadoresBBDD.where((o) =>
+      o.jugador== jug.jugador).toList();
+      if(outputList.length>0) {
+        if (outputList.length == 1) {
+         ciclo=outputList[0].nivel;
+        }
+        else {
+          if (outputList[0].equipo == jug.equipo)
+            ciclo=outputList[0].nivel;
+          if (outputList[1].equipo == jug.equipo)
+            ciclo=outputList[1].nivel;
+        }
+      }
+      else{
+        ciclo="";
+      }
+
+   //   print("${jug.key}:${jug.jugador}:${jug.equipo}:${ciclo}");
+      print("/temporadas/${_temporadaAux.id}/paises/${_paisAux.id}/categorias/${_categoriaAux.id}/equipos/${doc.id}/jugadores/${jug.key}");
+      await _db
+          .collection(""
+          "/temporadas/${_temporadaAux.id}/"
+          "paises/${_paisAux.id}/"
+          "categorias/${_categoriaAux.id}/"
+          "equipos/${doc.id}/jugadores").doc(jug.key).update({"nivel": ciclo});
+
+    }}
+}
 }

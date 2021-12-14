@@ -303,7 +303,7 @@ class MenuLateral extends StatelessWidget {
                 ),
 
               ):null,
-              BBDDService().getUserScout().email=="lenrhanssen@gmail.com"?
+              BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
                 child: ListTile(

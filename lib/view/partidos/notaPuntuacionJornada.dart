@@ -38,7 +38,8 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
   @override
   void initState() {
     setState(() {
-      if (widget.jugador.accion != "") acciones = widget.jugador.accion;
+      if (widget.jugador.accion != "")
+        acciones = widget.jugador.accion;
       if (widget.jugador.puntuacion != 0)
         puntuaciones = widget.jugador.puntuacion;
     });
@@ -64,16 +65,11 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
               Texto(
                   Config.edadColorSub(
                       Config.edadSub(widget.jugador.fechaNacimiento)),
-                  "${widget.jugador.dorsal == -2 ? "*" : widget.jugador.dorsal}. ${widget.jugador.jugador} (${Config.edad(widget.jugador.fechaNacimiento)})",
+                  "${widget.jugador.dorsal == -2 ? "*" : widget.jugador.dorsal}. ${widget.jugador.jugador} (${Config.edadSub( widget.jugador.fechaNacimiento)})",
                   10,
                   Colors.white,
                   false),
-              Texto(
-                  Colors.blue[900],
-                  "${widget.jugador.posicion.toUpperCase()}",
-                  9,
-                  Colors.white,
-                  false),
+
               Switch(
                 value: widget.jugador.estrella,
                 onChanged: (newValue) {
@@ -87,6 +83,19 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
                 activeColor: Colors.yellow[500],
               ),
             ],
+          ),
+          Container(
+            padding: EdgeInsets.only(left:20,bottom: 5,top:0),
+            child:
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("${widget.jugador.posicion.toUpperCase()}",
+                style: TextStyle(fontSize: 10,color: Colors.blue, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           ),
           CupertinoSegmentedControl(
               borderColor: Colors.black,
@@ -199,8 +208,8 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
                 0: Padding(
                     padding: EdgeInsets.all(3.0),
                     child: Text(
-                      "",
-                      style: TextStyle(fontSize: 10),
+                      "SC",
+                      style: TextStyle(fontSize: 8),
                     )),
                 4: Padding(
                     padding: EdgeInsets.all(3.0),

@@ -44,7 +44,6 @@ class _EditEquipoState extends State<EditEquipo> {
 
   @override
   void initState() {
-    print(widget.equipo.equipo);
     equipo = widget.equipo.equipo;
     categoria = widget.equipo.categoria;
     insertar = widget.equipo.equipo == null ? true : false;

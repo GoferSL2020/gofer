@@ -7,6 +7,7 @@ import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/model/pais.dart';
 import 'package:iadvancedscout/model/temporada.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/service/LogoService.dart';
 import 'package:iadvancedscout/service/db.dart';
@@ -80,6 +81,17 @@ class JugadorDao {
 
     List<Entrenador> list =
     res.isNotEmpty ? res.map((c) => Entrenador.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  getPuntacionesJornadas() async {
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES ");
+       // " where CATEGORIA='${categoria.categoria}' and EQUIPO='${equipo.equipo}' "
+        //" ORDER BY ENTRENADOR.ENTRENADOR");
+
+    List<Player> list =
+    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDPuntuaciones(c)).toList() : [];
     return list;
   }
 
@@ -700,6 +712,17 @@ class JugadorDao {
     return list;
   }
 
+  getJugadoresPutuacionesEquipo(String categoria, String equipo) async {
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery(""
+        "SELECT * FROM PUNTUACIONES WHERE "
+        "CATEGORIA='$categoria' and EQUIPO='$equipo'");
+
+    List<Player> list =
+    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDPuntuaciones(c)).toList() : [];
+    return list;
+  }
+
   getJugadores(Equipo _equipo)  async {
     List<EquipoCloud> equipos= await getDataCollectionEquipos("rAeKFLQSry7l1x0WVW01");
     List<Jugador> lista = new List();
@@ -725,6 +748,8 @@ class JugadorDao {
     }
     return lista;
   }
+
+
 
 
 

@@ -615,7 +615,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
             )
           ],
           backgroundColor: Colors.black,
-          title: Text("IAScout -Jugador",
+          title: Text("IAScout - Entrenador",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

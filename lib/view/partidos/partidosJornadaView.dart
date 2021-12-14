@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
+import 'package:iadvancedscout/dao/CRUDJornada.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
@@ -16,6 +17,7 @@ import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iadvancedscout/view/partidos/tabPuntuaciones.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
 import 'package:iadvancedscout/wigdet/imagen.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -176,7 +178,22 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
                       child: Text(
                           "Jornada ${values[index].jornada} (${values[index].fecha})",style:TextStyle(color:Config.colorCardLetra2,fontSize: 12),)),
                   subtitle:
+                GestureDetector(
+                onTap: () async{
+                  CRUDJornada dao=CRUDJornada();
+                  String key=await dao.getJornadaByNumero(widget.temporada,widget.pais,widget.categoria,values[index].jornada);
+                  Jornada jornada=new Jornada(values[index].jornada, values[index].fecha);
+                  jornada.id=key;
+                 // print("${values[index].equipoCASA}:${values[index].equipoFUERA}:${values[index].id}");
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => TabPuntuaciones(widget.temporada,widget.categoria,widget.pais,values[index],jornada)));
+
+                },
+                  //AD Ceuta:Villanovense:2DvtLnNubpkJkuE66mWE
+                  //AD Ceuta:Villanovense:2DvtLnNubpkJkuE66mWE
+                child:
                   Card(
+
                     color: Config.colorCard,
                     elevation: 5,
                     child:Column(children: [
@@ -243,7 +260,7 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
 
                       Container(height: 5,)
                     ]),
-                  ),
+                  ),),
                 );
               });
         });

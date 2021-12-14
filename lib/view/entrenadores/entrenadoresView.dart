@@ -82,9 +82,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
         elevation: 0,
         centerTitle: true,
       ),
-      bottomNavigationBar: Abajo(
-        temporada: widget.temporada,
-      ),
+
       body: Container(
         child: Column(children: <Widget>[
           Container(
@@ -272,7 +270,10 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
           )
         ]),
       ),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        //backgroundColor: widget.jugador.getColor(),
         onPressed: () {
           Entrenador entrenador=new Entrenador();
           entrenador.activo="Activo";
@@ -292,6 +293,29 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
         ),
         backgroundColor: Colors.black,
         tooltip: "Añadir un jugador",
+      ),
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => Abajo(),
+                ));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

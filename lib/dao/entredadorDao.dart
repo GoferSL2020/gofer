@@ -83,7 +83,8 @@ class EntrenadorDao {
     print("getTodosJORNADAS:${categoria.categoria}");
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(""
-        "SELECT *  FROM JORNADAS "
+        "SELECT distinct JORNADA, FECHA FROM JORNADAS "
+       " where CATEGORIA like '%${categoria.categoria}%' "
         " ORDER BY JORNADAS.JORNADA");
 
     List<Partido> list =

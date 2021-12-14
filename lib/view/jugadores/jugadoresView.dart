@@ -77,9 +77,52 @@ class _JugadoresViewState extends State<JugadoresView> {
         elevation: 0,
         centerTitle: true,
       ),
-      bottomNavigationBar: Abajo(
-        temporada: widget.temporada,
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        //backgroundColor: widget.jugador.getColor(),
+        onPressed: () {
+          Player jugador=new Player();
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+              EditJugador(
+                temporada: widget.temporada,
+                categoria: widget.categoria,
+                pais: widget.pais,
+                jugador: jugador,
+                equipo: widget.equipo,
+              )));
+        },
+        child: Icon(
+          Icons.add_circle_outline,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
+        tooltip: "Añadir un jugador",
       ),
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => Abajo(),
+                ));
+              },
+            ),
+          ],
+        ),
+      ),
+
       body: Container(
         child: Column(children: <Widget>[
           Container(
@@ -231,25 +274,8 @@ class _JugadoresViewState extends State<JugadoresView> {
           )
         ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Player jugador=new Player();
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              EditJugador(
-                temporada: widget.temporada,
-                categoria: widget.categoria,
-                pais: widget.pais,
-                jugador: jugador,
-                equipo: widget.equipo,
-              )));
-        },
-        child: Icon(
-          Icons.add_circle_outline,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.black,
-        tooltip: "Añadir un jugador",
-      ),
+
+
     );
   }
 
@@ -323,7 +349,7 @@ class _JugadoresViewState extends State<JugadoresView> {
         msg: "Espera...\nEstamos haciendo el \ndocumento del jugador:\n${jugador.jugador}",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 30,
+        timeInSecForIosWeb: 40,
         backgroundColor: Colors.red.shade900,
         textColor: Colors.white,
         fontSize: 12.0);
