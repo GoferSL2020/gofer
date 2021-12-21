@@ -173,7 +173,26 @@ class Config{
    return sub;
  }
 
- static String categoriaMin(String categoria){
+  static String edadSubSolo(String fechaNacimiento){
+    String sub="";
+    if (fechaNacimiento==null)return "Sin fecha";
+    if (fechaNacimiento=="")return "Sin fecha";
+    if (fechaNacimiento=="-")return "Sin fecha";
+    int edad;
+    var fechaDeHoy = DateTime.now();
+    DateFormat format = DateFormat("dd/MM/yyyy");
+    var fechaNac = format.parse(fechaNacimiento);
+    var anio = fechaDeHoy.difference(fechaNac);
+    edad=(anio.inDays/365).truncate();
+    if(edad<20) {
+      sub = "Sub-20";
+    }else if(edad<23) {
+      sub = "Sub-23";
+    }
+    return sub;
+  }
+
+  static String categoriaMin(String categoria){
    String sub="";
    if (categoria=="2ª División A")return "2ª A";
    if (categoria=="2ª División B Grupo 1 A")return "2ªB Grupo 1-A";
@@ -308,8 +327,8 @@ class Config{
 
  static Color edadColorSub(String sub){
 
-   if(sub=="SUB-20") return Colors.red[900];
-   if(sub=="SUB-23") return Colors.green[900];
+   if(sub.toUpperCase()=="SUB-20") return Colors.red[900];
+   if(sub.toUpperCase()=="SUB-23") return Colors.green[900];
    return Colors.black;
 
  }
@@ -443,7 +462,7 @@ class Config{
           quality: 60, name:
           "${DateTime.now().toIso8601String()}");
       ImageGallerySaver.saveImage(image2,
-      quality: 60, name:
+      quality: 100, name:
       "2${DateTime.now().toIso8601String()}");
 
       await open_file.OpenFile.open('${DateTime.now().toIso8601String()}');

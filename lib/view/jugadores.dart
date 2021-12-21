@@ -66,7 +66,7 @@ class _JugadoresPageState extends State<JugadoresPage> {
     for(var equiposBASEDATOS in equipos) {
         print("${equiposBASEDATOS.nombre}");
         String path2 =
-            "temporadas/2021-2022/paises/ARGENTINA/categorias/1ª División Liga Argentina/equipos/${equiposBASEDATOS
+            "temporadas/2021-2022/paises/ESPAÑA/categorias/2ª División RFEF Grupo 5/equipos/${equiposBASEDATOS
             .nombre}/jugadores";
         print(path2);
         await FirebaseDatabase.instance.reference().child(
@@ -76,14 +76,18 @@ class _JugadoresPageState extends State<JugadoresPage> {
           values.forEach((k, v) {
             print("${v["jugador"]}:${equiposBASEDATOS.nombre}:${equiposBASEDATOS.key}");
             Jugador jugador = Jugador.fromJson(k, v);
+            jugador.idTemporada="BuJNv17ghCPGnq37P2ev";
+            jugador.idPais="QqjzloEo6PI7sHfsffk2";
+            jugador.idCategoria="f3aZdzJvVC2HsuoxLV77";
+            jugador.idEquipo=equiposBASEDATOS.key;
             //print(jugador.jugador);
             //print(jugador.equipo);
             Player player=Player.fromJsonJugador(jugador);
             lista.add(player);
             _db.collection(""
                 "/temporadas/BuJNv17ghCPGnq37P2ev/"
-                "paises/FmUmyJV68ACrLHozX3oa/"
-                "categorias/UtbfJN6CWzY0xnXzcMve/"
+                "paises/QqjzloEo6PI7sHfsffk2/"
+                "categorias/f3aZdzJvVC2HsuoxLV77/"
                 "equipos/${equiposBASEDATOS.key}/jugadores")
                 .add(player.toMap());
           });

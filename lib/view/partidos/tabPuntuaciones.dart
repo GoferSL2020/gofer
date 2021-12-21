@@ -416,7 +416,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                       Icon(CustomIcon.star, size: 15,color: Colors.yellowAccent,),
                     Container(width:5,),
                     Text(
-                        "Estrella",
+                        "Destacado",
                         style: TextStyle(fontSize: 11, color: Colors.yellowAccent),
                         textAlign: TextAlign.center),
                   ],)

@@ -1,35 +1,39 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/view/filtroDatosJugadores.dart';
-import 'package:iadvancedscout/view/jugadoresFiltros.dart';
-import 'package:iadvancedscout/view/paises.dart';
+
+import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/filtro/jugadoresFiltros.dart';
+
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iadvancedscout/dao/CRUDCategoria.dart';
+import 'package:iadvancedscout/dao/CRUDPais.dart';
+import 'package:iadvancedscout/dao/CRUDTemporada.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/jornada.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/temporada.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
-class FiltroJugadores extends StatefulWidget {
+class FiltroPlayeres extends StatefulWidget {
 
-  FiltroJugadores() ;
+  FiltroPlayeres() ;
 
   @override
-  _FiltroJugadoresState createState() => _FiltroJugadoresState();
+  _FiltroPlayeresState createState() => _FiltroPlayeresState();
  }
 
-class _FiltroJugadoresState extends State<FiltroJugadores> {
+class _FiltroPlayeresState extends State<FiltroPlayeres> {
   final GlobalKey<FormState> formkey = new GlobalKey();
   String niveles;
   String posicion;
@@ -48,10 +52,63 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
 
   FirebaseDatabase _database = FirebaseDatabase.instance;
 
-  Jugador jugadorFiltro;
+  Player jugadorFiltro;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
- 
+
+  List<Temporada> temporadas = List();
+  List<Pais> paises = List();
+  List<Categoria> categorias = List();
+  Temporada _temporadaAux = new Temporada();
+  Pais _paisAux = new Pais();
+  Categoria _categoriaAux = new Categoria();
+
+  List<Jornada> jornadas = List();
+
+
+  Future<List<String>> get temporadasAux async {
+    CRUDTemporada dao = CRUDTemporada();
+    QuerySnapshot docs = await dao.getDataCollection();
+
+    List<Temporada> datos = List();
+    Temporada t = new Temporada();
+    t.id = '';
+    t.temporada = '';
+    datos.add(t);
+
+    for (var d in docs.docs) {
+      Temporada t = new Temporada();
+      t.id = d.id;
+      t.temporada = d.data()['temporada'];
+      datos.add(t);
+    }
+
+    setState(() {
+      _temporadaAux = datos[0];
+      temporadas = datos;
+    });
+  }
+
+  _cogerPais() async {
+    //print("PAIS");
+    //print(_temporadaAux.id);
+    List<Pais> datos = await CRUDPais().fetchPaises(_temporadaAux);
+    setState(() {
+      //print(datos[0].id);
+      _paisAux = datos[0];
+      paises.addAll(datos);
+    });
+  }
+
+  _cogerCategorias() async {
+    List<Categoria> datos =
+    await CRUDCategoria().fetchCategorias(_temporadaAux, _paisAux);
+    setState(() {
+      _categoriaAux = datos[0];
+      categorias.addAll(datos);
+    });
+  }
+
 
   List<String> _categoria2021 = <String>
   [ ' ',
@@ -110,13 +167,10 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
   void initState() {
 
     setState(() {
-      jugadorFiltro=new Jugador("","","","","","",);
-      if(BBDDService().getUserScout().categoria!="Todas"){
-        _categoria = <String>
-        [BBDDService().getUserScout().categoria];
-        categoria=BBDDService().getUserScout().categoria;
-        jugadorFiltro.categoria=categoria;
-      }
+        temporadasAux;
+
+      jugadorFiltro=new Player();
+
       jugadorFiltro.edadRange1=15;
       jugadorFiltro.edadRange2=44;
       _nombre.text="";
@@ -319,6 +373,54 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   verticalDirection: VerticalDirection.down,
                   children: [
+                    Padding(
+                      padding:
+                      EdgeInsets.only(top: 0.0, left: 20, right: 20, bottom: 5),
+                      child: isLoading
+                          ? CircularProgressIndicator()
+                          :
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        RaisedButton.icon(
+                            onPressed: () async {
+
+                              try {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                setState(() {
+                                  jugadorFiltro.jugador=_nombre.text;
+                                  jugadorFiltro.paisNacimiento=_lugar.text;
+                                  Navigator.of(context).push(new MaterialPageRoute(
+                                    builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
+                                  ));
+
+                                });
+                                setState(() {
+                                  isLoading = false;
+                                });
+
+                              }catch(e){
+                                setState(() {
+                                  isLoading=false;
+                                });
+                                e.toString();
+                              }
+                            },
+                            label: Text(
+                              "Buscar jugadores",
+                              style: TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                            icon: Icon(
+                              CustomIcon.search,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            textColor: Colors.black,
+                            splashColor: Colors.black,
+                            color: Colors.blue),
+                      ]),
+
+                    ),
               Padding(
                   padding:
                   EdgeInsets.only( top: 5.0, left: 20, right:20, bottom: 5),
@@ -330,40 +432,113 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                       TableCellVerticalAlignment.middle,
                       //border: TableBorder.all(),
                       children: [
-                        TableRow(
-                            children: [
+                        TableRow(children: [
+                          FormField(builder: (FormFieldState state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                labelText: "Selecciona la temporada",
+                              ),
+                              //isEmpty: temporadasAux == null,
+                              child: DropdownButtonFormField<Temporada>(
+                                hint: Text("Selecciona la temporada"),
+                                value: _temporadaAux,
+                                validator: (value) => value == null
+                                    ? 'Selecciona la temporada'
+                                    : null,
+                                isDense: true,
+                                onChanged: (Temporada value) async {
+                                  setState(() {
+                                    //newContact.favoriteColor = newValue;
+                                    _temporadaAux = value;
+                                    jugadorFiltro.temporada=value.temporada;
+                                    _cogerPais();
 
-                              FormField(
-                                  builder: (FormFieldState state) {
-                                    return InputDecorator(
-                                      decoration: InputDecoration(
-                                        labelText: "Selecciona la temporada",
-                                      ),
-                                      isEmpty: temporada == '',
-                                      child: new DropdownButtonFormField(
-                                        items: _temporadas.map((String value) {
-                                          return new DropdownMenuItem(
-                                            value: value,
-                                            child: new Text(value),
-                                          );
-                                        }).toList(),
-                                        value: temporada,
-                                        validator: (value) =>
-                                        value == null
-                                            ? 'Selecciona la temporada' : null,
-                                        isDense: true,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            //newContact.favoriteColor = newValue;
-                                            jugadorFiltro.temporada=value;
-                                            temporada = value;
-                                            state.didChange(value);
-                                          });
-                                        },
-                                      ),
-                                    );
-                                  }),
-                            ]),
+                                    state.didChange(value);
+                                  });
+                                },
+                                items: temporadas.map((Temporada temp) {
+                                  return DropdownMenuItem<Temporada>(
+                                    value: temp,
+                                    child: Text(
+                                      temp.temporada,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }),
+                        ]),
+                        TableRow(children: [
+                          FormField(builder: (FormFieldState state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                labelText: "Selecciona el pais",
+                              ),
+                              //isEmpty: temporadasAux == null,
+                              child: DropdownButtonFormField<Pais>(
+                                hint: Text("Selecciona el pais"),
+                                value: _paisAux,
+                                validator: (value) =>
+                                value == null ? 'Selecciona el pais' : null,
+                                isDense: true,
+                                onChanged: (Pais value) async {
+                                  setState(() {
+                                    //newContact.favoriteColor = newValue;
+                                    _paisAux = value;
+                                    jugadorFiltro.pais=value.pais;
+                                    _cogerCategorias();
+
+                                    state.didChange(value);
+                                  });
+                                },
+                                items: paises.map((Pais temp) {
+                                  return DropdownMenuItem<Pais>(
+                                    value: temp,
+                                    child: Text(
+                                      temp.pais,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }),
+                        ]),
+                        TableRow(children: [
+                          FormField(builder: (FormFieldState state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                labelText: "Selecciona el categoria",
+                              ),
+                              //isEmpty: temporadasAux == null,
+                              child: DropdownButtonFormField<Categoria>(
+                                hint: Text("Selecciona el categoria"),
+                                value: _categoriaAux,
+                                validator: (value) =>
+                                value == null ? 'Selecciona el categoria' : null,
+                                isDense: true,
+                                onChanged: (Categoria value) async {
+                                  setState(() {
+                                    //newContact.favoriteColor = newValue;
+                                    _categoriaAux = value;
+                                    jugadorFiltro.categoria=value.categoria;
+                                    state.didChange(value);
+                                  });
+                                },
+                                items: categorias.map((Categoria temp) {
+                                  return DropdownMenuItem<Categoria>(
+                                    value: temp,
+                                    child: Text(
+                                      temp.categoria,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }),
+                        ]),
                         TableRow(
                             children: [
 
@@ -390,7 +565,7 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                                           setState(() {
                                             _tipo.clear();
                                             _tipo.add(' ');
-                                            _tipo.addAll(Jugador.listaTiposPosicion(value));
+                                            _tipo.addAll(Player.listaTiposPosicion(value));
                                             //newContact.favoriteColor = newValue;
                                             jugadorFiltro.posicion = value;
                                             state.didChange(value);
@@ -400,44 +575,7 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                                     );
                                   }),
                             ]),
-                        TableRow(
-                            children: [
-                              FormField(
-                                  builder: (FormFieldState state) {
-                                    return InputDecorator(
-                                      decoration: InputDecoration(
-                                        labelText: "Selecciona la categoria",
-                                      ),
-                                      isEmpty: categoria == '',
-                                      child: new DropdownButtonFormField(
-                                        items: temporada=="2020-2021"?_categoria.map((String value) {
-                                          return new DropdownMenuItem(
-                                            value: value,
-                                            child: new Text(value),
-                                          );
-                                        }).toList():
-                                        _categoria2021.map((String value) {
-                                          return new DropdownMenuItem(
-                                            value: value,
-                                            child: new Text(value),
-                                          );
-                                        }).toList(),
-                                        value: categoria,
-                                        validator: (value) =>
-                                        value == null
-                                            ? 'Selecciona la categoria' : null,
-                                        isDense: true,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            //newContact.favoriteColor = newValue;
-                                            jugadorFiltro.categoria = value;
-                                            state.didChange(value);
-                                          });
-                                        },
-                                      ),
-                                    );
-                                  }),
-                            ]),
+
                         TableRow(
                           children: [
                             Container(
@@ -752,9 +890,8 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
                           setState(() {
                             jugadorFiltro.jugador=_nombre.text;
                             jugadorFiltro.paisNacimiento=_lugar.text;
-                            print(jugadorFiltro.paisNacimiento);
                             Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro),
+                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
                             ));
 
                           });
@@ -796,33 +933,33 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
   List<TableRow> ponerFisico() {
     List<String> caract;
     if (jugadorFiltro.posicion.toUpperCase().contains("PORTERO"))
-      caract = Jugador.porteroFisico;
+      caract = Player.porteroFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("LATERAL"))
-      caract = Jugador.lateralFisico;
+      caract = Player.lateralFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("CARRILERO"))
-      caract = Jugador.carrileroFisico;
+      caract = Player.carrileroFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("DEFENSA"))
-      caract = Jugador.centralFisico;
+      caract = Player.centralFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("CENTRAL"))
-      caract = Jugador.centralFisico;
+      caract = Player.centralFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("MEDIO"))
-      caract = Jugador.medioFisico;
+      caract = Player.medioFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("INTERIOR"))
-      caract = Jugador.medioFisico;
+      caract = Player.medioFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("CENTROCAMPISTA"))
-      caract = Jugador.medioFisico;
+      caract = Player.medioFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("PIVOTE"))
-      caract = Jugador.medioFisico;
+      caract = Player.medioFisico;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("VOLANTE"))
-      caract=Jugador.medioFisico;
+      caract=Player.medioFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("DELANTERO"))
-      caract = Jugador.delanteroFisico;
+      caract = Player.delanteroFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("PUNTA"))
-      caract = Jugador.delanteroFisico;
+      caract = Player.delanteroFisico;
     else if (jugadorFiltro.posicion.toUpperCase().contains("EXTREMO"))
-      caract = Jugador.extremoFisico;
+      caract = Player.extremoFisico;
     else
-      caract = Jugador.todosFisico;
+      caract = Player.todosFisico;
     List<TableRow> rows = new List<TableRow>();
     for (String doc in caract) {
 
@@ -833,10 +970,10 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
               fontSize: 12,
             )),
         Switch(
-          value: Jugador.dameElValor(doc, jugadorFiltro),
+          value: Player.dameElValor(doc, jugadorFiltro),
           onChanged: (newValue) {
             setState(() {
-              Jugador.poneElValor(doc, newValue, jugadorFiltro);
+              Player.poneElValor(doc, newValue, jugadorFiltro);
             });
           },
           activeTrackColor: Colors.blue[900],
@@ -849,33 +986,33 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
   List<TableRow> ponerDefensivo() {
     List<String> caract;
     if(jugadorFiltro.posicion.toUpperCase().contains("PORTERO"))
-      caract=Jugador.porteroDefensa;
+      caract=Player.porteroDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("LATERAL"))
-      caract=Jugador.lateralDefensa;
+      caract=Player.lateralDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CARRILERO"))
-      caract=Jugador.carrileroDefensa;
+      caract=Player.carrileroDefensa;
     else if(jugadorFiltro.posicion.toUpperCase().contains("DEFENSA"))
-      caract=Jugador.centralDefensa;
+      caract=Player.centralDefensa;
     else if(jugadorFiltro.posicion.toUpperCase().contains("CENTRAL"))
-      caract=Jugador.centralDefensa;
+      caract=Player.centralDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("MEDIO"))
-      caract=Jugador.medioDefensa;
+      caract=Player.medioDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("INTERIOR"))
-      caract=Jugador.medioDefensa;
+      caract=Player.medioDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CENTROCAMPISTA"))
-      caract=Jugador.medioDefensa;
+      caract=Player.medioDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PIVOTE"))
-      caract=Jugador.medioDefensa;
+      caract=Player.medioDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("VOLANTE"))
-      caract=Jugador.medioDefensa;
+      caract=Player.medioDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("DELANTERO"))
-      caract=Jugador.delanteroDefensa;
+      caract=Player.delanteroDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PUNTA"))
-      caract=Jugador.delanteroDefensa;
+      caract=Player.delanteroDefensa;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("EXTREMO"))
-      caract=Jugador.extremoDefensa;
+      caract=Player.extremoDefensa;
     else
-      caract=Jugador.todosDefensa;
+      caract=Player.todosDefensa;
     List<TableRow> rows =new List<TableRow>();
     for (String doc in caract) {
 
@@ -888,10 +1025,10 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
 
                 )),
             Switch(
-              value: Jugador.dameElValor(doc, jugadorFiltro),
+              value: Player.dameElValor(doc, jugadorFiltro),
               onChanged: (newValue) {
                 setState(() {
-                  Jugador.poneElValor(doc, newValue,  jugadorFiltro);
+                  Player.poneElValor(doc, newValue,  jugadorFiltro);
                 });
               },
               activeTrackColor: Colors.blue[900],
@@ -906,33 +1043,33 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
   List<TableRow> ponerOfensivos() {
     List<String> caract;
     if(jugadorFiltro.posicion.toUpperCase().contains("PORTERO"))
-      caract=Jugador.porteroOfensivas;
+      caract=Player.porteroOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("LATERAL"))
-      caract=Jugador.lateralOfensivas;
+      caract=Player.lateralOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CARRILERO"))
-      caract=Jugador.carrileroOfensivas;
+      caract=Player.carrileroOfensivas;
     else if(jugadorFiltro.posicion.toUpperCase().contains("DEFENSA"))
-      caract=Jugador.centralOfensivas;
+      caract=Player.centralOfensivas;
     else if(jugadorFiltro.posicion.toUpperCase().contains("CENTRAL"))
-      caract=Jugador.centralOfensivas;
+      caract=Player.centralOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("MEDIO"))
-      caract=Jugador.medioOfensivas;
+      caract=Player.medioOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("INTERIOR"))
-      caract=Jugador.medioOfensivas;
+      caract=Player.medioOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CENTROCAMPISTA"))
-      caract=Jugador.medioOfensivas;
+      caract=Player.medioOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PIVOTE"))
-      caract=Jugador.medioOfensivas;
+      caract=Player.medioOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("VOLANTE"))
-      caract=Jugador.medioOfensivas;
+      caract=Player.medioOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("DELANTERO"))
-      caract=Jugador.delanteroOfensivas;
+      caract=Player.delanteroOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PUNTA"))
-      caract=Jugador.delanteroOfensivas;
+      caract=Player.delanteroOfensivas;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("EXTREMO"))
-      caract=Jugador.extremoOfensivas;
+      caract=Player.extremoOfensivas;
     else
-      caract=Jugador.todosOfensivas;
+      caract=Player.todosOfensivas;
     List<TableRow> rows =new List<TableRow>();
     for (String doc in caract) {
 
@@ -945,10 +1082,10 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
 
                 )),
             Switch(
-              value: Jugador.dameElValor(doc, jugadorFiltro),
+              value: Player.dameElValor(doc, jugadorFiltro),
               onChanged: (newValue) {
                 setState(() {
-                  Jugador.poneElValor(doc, newValue,  jugadorFiltro);
+                  Player.poneElValor(doc, newValue,  jugadorFiltro);
                 });
               },
               activeTrackColor: Colors.blue[900],
@@ -963,33 +1100,33 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
   List<TableRow> ponerPsicologia() {
     List<String> caract;
     if(jugadorFiltro.posicion.toUpperCase().contains("PORTERO"))
-      caract=Jugador.porteroPsicologia;
+      caract=Player.porteroPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("LATERAL"))
-      caract=Jugador.lateralPsicologia;
+      caract=Player.lateralPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CARRILERO"))
-      caract=Jugador.carrileroPsicologia;
+      caract=Player.carrileroPsicologia;
     else if(jugadorFiltro.posicion.toUpperCase().contains("DEFENSA"))
-      caract=Jugador.centralPsicologia;
+      caract=Player.centralPsicologia;
     else if(jugadorFiltro.posicion.toUpperCase().contains("CENTRAL"))
-      caract=Jugador.centralPsicologia;
+      caract=Player.centralPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("MEDIO"))
-      caract=Jugador.medioPsicologia;
+      caract=Player.medioPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("INTERIOR"))
-      caract=Jugador.medioPsicologia;
+      caract=Player.medioPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("CENTROCAMPISTA"))
-      caract=Jugador.medioPsicologia;
+      caract=Player.medioPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PIVOTE"))
-      caract=Jugador.medioPsicologia;
+      caract=Player.medioPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("VOLANTE"))
-      caract=Jugador.medioPsicologia;
+      caract=Player.medioPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("DELANTERO"))
-      caract=Jugador.delanteroPsicologia;
+      caract=Player.delanteroPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("PUNTA"))
-      caract=Jugador.delanteroPsicologia;
+      caract=Player.delanteroPsicologia;
     else  if(jugadorFiltro.posicion.toUpperCase().contains("EXTREMO"))
-      caract=Jugador.extremoPsicologia;
+      caract=Player.extremoPsicologia;
     else
-      caract=Jugador.todosPsicologia;
+      caract=Player.todosPsicologia;
     List<TableRow> rows =new List<TableRow>();
     for (String doc in caract) {
 
@@ -1002,10 +1139,10 @@ class _FiltroJugadoresState extends State<FiltroJugadores> {
 
                 )),
             Switch(
-              value: Jugador.dameElValor(doc, jugadorFiltro),
+              value: Player.dameElValor(doc, jugadorFiltro),
               onChanged: (newValue) {
                 setState(() {
-                  Jugador.poneElValor(doc, newValue,  jugadorFiltro);
+                  Player.poneElValor(doc, newValue,  jugadorFiltro);
                 });
               },
               activeTrackColor: Colors.blue[900],

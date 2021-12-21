@@ -273,7 +273,8 @@ class _MigracionesState extends State<Migraciones> {
                 RaisedButton.icon(
                     onPressed: () async {
                       //getMigrarCiclo1();
-                      getMigrarPuntuaciones();
+                      //getMigrarPuntuaciones();
+                      getMigrarJugadores();
                     },
                     label: Text(
                       "Los Mejores",
@@ -364,6 +365,10 @@ class _MigracionesState extends State<Migraciones> {
       for (var jug in jugadores) {
         print(jug.key);
         print(jug.jugador);
+        jug.idTemporada="${_temporadaAux.id}";
+        jug.idPais="${_paisAux.id}";
+        jug.idCategoria="${_categoriaAux.id}";
+        jug.idEquipo=doc.id;
          await _db
             .collection(""
             "/temporadas/${_temporadaAux.id}/"

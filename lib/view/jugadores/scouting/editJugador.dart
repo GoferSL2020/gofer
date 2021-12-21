@@ -756,6 +756,10 @@ Carrilero izquierdo
                       widget.jugador.paisNacimiento=_provincia.text;
                       widget.jugador.lateral=_lateral;
                       widget.jugador.nacionalidad=_extranjero;
+                      widget.jugador.idCategoria=widget.categoria.id;
+                      widget.jugador.idPais=widget.pais.id;
+                      widget.jugador.idTemporada=widget.temporada.id;
+                      widget.jugador.idEquipo=widget.equipo.id;
                       CRUDJugador con = CRUDJugador();
                       if(insertar) {
                         await con.addJugadorDatos(

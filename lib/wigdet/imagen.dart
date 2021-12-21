@@ -51,10 +51,10 @@ class _ImagenState extends State<Imagen> {
       // final document = await PdfDocument.openFile('absolute/path/to/file');
 
       final page = await document.getPage(1); // Not index! Page number starts from 1
-      final pageImageAux = await page.render(width: page.width, height: page.height);
+      final pageImageAux = await page.render(width: page.width*5, height: page.height*5);
       final page2 = await document.getPage(2); // Not index! Page number starts from 1
-      final pageImageAux2 = await page2.render(width: page.width, height: page.height);
 
+      final pageImageAux2 = await page2.render(width: page.width*5, height: page.height*5);
       // You can increase image quality:
       // final pageImage = await page.render(width: page.width * 3, height: page.height * 3);
       // Before open another page it is necessary to close the previous

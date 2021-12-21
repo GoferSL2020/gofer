@@ -239,7 +239,7 @@ class _JugadoresViewState extends State<JugadoresView> {
                                           jugador[index].fechaNacimiento),
                                       style: TextStyle(
                                           color: Config.edadColorSub(
-                                              Config.edadSub(jugador[index]
+                                              Config.edadSubSolo(jugador[index]
                                                   .fechaNacimiento)),
                                           fontSize: 10.0,
                                           fontWeight: FontWeight.bold),

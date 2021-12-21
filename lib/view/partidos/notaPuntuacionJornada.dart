@@ -57,19 +57,26 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
     // TODO: implement build
     return Container(
         padding: EdgeInsets.all(0),
-        child: Column(children: [
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Texto(
-                  Config.edadColorSub(
-                      Config.edadSub(widget.jugador.fechaNacimiento)),
-                  "${widget.jugador.dorsal == -2 ? "*" : widget.jugador.dorsal}. ${widget.jugador.jugador} (${Config.edadSub( widget.jugador.fechaNacimiento)})",
-                  10,
-                  Colors.white,
-                  false),
+              Text(
+                "${widget.jugador.dorsal == -2 ? "*" : widget.jugador.dorsal}. ${widget.jugador.jugador} (${Config.edad( widget.jugador.fechaNacimiento)})",
+                style: new TextStyle(
+                    fontSize: 11, fontWeight: FontWeight.bold),
+              ),
 
+              Text(
+                  "${Config.edadSubSolo( widget.jugador.fechaNacimiento)}",
+                  style: new TextStyle(color:Config.edadColorSub(
+                      Config.edadSubSolo(widget.jugador.fechaNacimiento)),
+                  fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
               Switch(
                 value: widget.jugador.estrella,
                 onChanged: (newValue) {
@@ -92,7 +99,7 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("${widget.jugador.posicion.toUpperCase()}",
-                style: TextStyle(fontSize: 10,color: Colors.blue, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 9,color: Colors.blue, fontWeight: FontWeight.bold),
               ),
             ],
           ),

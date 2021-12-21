@@ -16,7 +16,7 @@ import 'package:iadvancedscout/sheets/sheets_controller.dart';
 import 'package:iadvancedscout/userScout.dart';
 import 'package:iadvancedscout/view/addPais.dart';
 import 'package:iadvancedscout/view/categorias.dart';
-import 'package:iadvancedscout/view/filtroJugadores.dart';
+import 'package:iadvancedscout/view/filtro/filtroJugadores.dart';
 import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/jugadoresFiltros.dart';
 import 'package:iadvancedscout/view/paises.dart';
@@ -303,7 +303,7 @@ class MenuLateral extends StatelessWidget {
                 ),
 
               ):null,
-              BBDDService().getUserScout().categoria=="Todas"?
+              /*BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
                 child: ListTile(
@@ -320,7 +320,7 @@ class MenuLateral extends StatelessWidget {
                   leading: const Icon(Icons.person, color: Colors.white),
                 ),
 
-              ):null,
+              ):null,*/
               Container(height: 1,color: Colors.white,),
               Ink(
                 color: Colors.white,
@@ -404,13 +404,13 @@ class MenuLateral extends StatelessWidget {
 
                       //Navigator.pop(context);
                       Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (BuildContext context) => FiltroJugadores(),
+                        builder: (BuildContext context) => FiltroPlayeres(),
                       ));
                     },
                     leading: Icon(Icons.star, color: Colors.white,)
                 ),),
               Container(height: 1,color: Colors.white,),
-              Ink(
+             /* Ink(
                 color:Colors.grey,
                 child: ListTile(
                     title: Text("Jugadores destacados por jornada", style: TextStyle(color:Colors.white, fontSize: 14),),
@@ -422,7 +422,7 @@ class MenuLateral extends StatelessWidget {
                       ));
                     },
                     leading: Icon(CustomIcon.camiseta, size:20, color: Colors.white,)
-                ),),
+                ),),*/
             ]),
       ),
     );

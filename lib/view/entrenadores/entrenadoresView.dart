@@ -462,7 +462,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
         textColor: Colors.white,
         fontSize: 12.0);
     PdfEntrenadorDatos pdf =
-    PdfEntrenadorDatos(widget.temporada, widget.equipo, entrenador);
+    PdfEntrenadorDatos(widget.temporada,widget.categoria,widget.pais, widget.equipo, entrenador);
     pdf.generateInvoice();
   }
 }

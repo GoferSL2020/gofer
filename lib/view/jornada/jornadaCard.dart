@@ -7,6 +7,7 @@ import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJornada.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
@@ -16,6 +17,7 @@ import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iadvancedscout/view/filtro/destacadosJornada.dart';
 import 'package:iadvancedscout/view/jornada/editJornada.dart';
 import 'package:iadvancedscout/view/jugadores/jugadoresView.dart';
 import 'package:iadvancedscout/view/partidos/partidosView.dart';
@@ -84,7 +86,7 @@ class JornadaCard extends StatelessWidget {
                           style: TextStyle(fontSize: 14, color: Config.colorCardLetra2),
                         ),
                       ),
-                      IconButton(
+                      /*IconButton(
                         icon: new Icon(
                           MyFlutterApp.pencil_alt,
                           color: Config.colorCardLetra,
@@ -109,7 +111,25 @@ class JornadaCard extends StatelessWidget {
                             //await  productProvider.update(temporada, equipo,jornada, jornada.id);
                             _showConfirmationDialog(context, "Eliminar", jornada);
                             //pdfJugador(context, jugadoresList[index]);
-                          }),
+                          }),*/
+                      IconButton(
+                        icon: new Icon(
+                          CustomIcon.medal,
+                          color: Colors.orange,
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => DestacadosJornada(
+                                    categoria,
+                                    jornada,
+                                    temporada,
+                                    pais,
+                                  )));
+                        },
+                      ),
                     ],
                   ),
                 ),

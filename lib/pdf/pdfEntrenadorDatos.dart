@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/dao/CRUDEquipo.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,6 +21,7 @@ import 'package:http/http.dart' show get;
 
 /// Represents the PDF widget class.
 class PdfEntrenadorDatos {
+
   PdfColor colorAzul = PdfColor(68, 114, 196);
   PdfColor colorNegro = PdfColor(0, 0, 0);
   PdfColor colorAzulClaro = PdfColor(0,138,216);
@@ -40,11 +45,53 @@ class PdfEntrenadorDatos {
   final Entrenador _entrenador;
   final Equipo _equipo;
   final Temporada _temporada;
+  final Pais _pais;
+  final Categoria _categoria;
 
-  PdfEntrenadorDatos(this._temporada,this._equipo, this._entrenador);
+  List<ImagenStorage> _imagenes=List();
+  List<Partido> _listaPartidos;
+
+  PdfEntrenadorDatos(this._temporada,this._categoria,this._pais, this._equipo, this._entrenador);
+
+  Future<List<dynamic>> imagenesJornada() async {
+    for (var d in _listaPartidos) {
+      var imgequipo;
+      imgequipo = await get(Uri.parse(
+            Config.escudo(d.equipoFUERA)));
+      ImagenStorage img = new ImagenStorage();
+      img.imagen = imgequipo;
+      _imagenes.add(img);
+    }
+  }
+
+
+  Future<List<Partido>>  partidosJornada() async {
+    CRUDEquipo dao = CRUDEquipo();
+    List<Partido> lista=List();
+    var partidos = dao.getEquipoPartidos(
+        _temporada, _pais, _categoria, _equipo);
+    await new Future.delayed(new Duration(seconds: 2));
+    DateFormat formato = DateFormat("dd/MM/yyyy");
+    partidos.then((value) {
+      value.forEach((element) {
+        print("${element.equipoCASA}:${element.equipoFUERA}");
+        print(formato.parse(element.fecha).isAfter(formato.parse(_entrenador.fechaFichaje)));
+        if((formato.parse(element.fecha).isAfter(formato.parse(_entrenador.fechaFichaje)))
+          &&(formato.parse(element.fecha).isBefore(formato.parse(_entrenador.fechaFinContrato))))
+            lista.add(element);
+      });
+    });
+    _listaPartidos=lista;
+    //_listaPartidos.sort((a,b)=>a.jornada.compareTo(b.jornada));
+    print(_listaPartidos.length);
+  }
+
+
 
   Future<void> generateInvoice() async {
     //Create a PDF document.
+    await partidosJornada();
+    await imagenesJornada();
     final PdfDocument document = PdfDocument();
     //Add page to the PDF
     final PdfPage page = document.pages.add();
@@ -60,17 +107,25 @@ class PdfEntrenadorDatos {
     page2.graphics.drawString("Observaciones",
         PdfStandardFont(PdfFontFamily.helvetica, 16, ),
         brush: PdfBrushes.black,
-        bounds: Rect.fromLTWH(15, 200, 300, 30),
+        bounds: Rect.fromLTWH(15, 160, 300, 30),
         pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
-        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
           ));
 
     page2.graphics.drawString(_entrenador.observaciones,
     PdfStandardFont(PdfFontFamily.helvetica, 12, ),
     brush: PdfBrushes.black,
-    bounds: Rect.fromLTWH(15, 230, page2.size.width-100, page2.size.width-50),
+    bounds: Rect.fromLTWH(15, 190, page2.size.width-100, 200),
     format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
     ));
+
+    page2.graphics.drawString("Partidos",
+        PdfStandardFont(PdfFontFamily.helvetica, 16, ),
+        brush: PdfBrushes.black,
+        pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
+        bounds: Rect.fromLTWH(15, 300, 300, 30),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
+        ));
 
     List<String> caractConceptualestructuralHabitual;
     List<String> caractConceptualplanteamientoTacticoGeneral;
@@ -145,6 +200,8 @@ class PdfEntrenadorDatos {
     //Added 30 as a margin for the layout
     drawHeader(page, pageSize,null,1);
     drawHeader(page2, pageSize,null,2);
+
+    getGridPartidos(page2);
 
     gridConceptual1.draw(
         page: page, bounds: Rect.fromLTWH(10, 170, 0, 0));
@@ -535,4 +592,138 @@ class PdfEntrenadorDatos {
         bounds: Rect.fromLTWH(0, pageSize.height - 15, pageSize.width, 0));
   }
 
+
+
+  getGridPartidos(PdfPage page) async {
+    _listaPartidos.sort((a,b)=>a.jornada.compareTo(b.jornada));
+    int altura=330;
+    double log=_listaPartidos.length/2.round();
+    for (int i=0;i<log.toInt();i++) {
+      page.graphics.drawString("J.${_listaPartidos[i].jornada.toString()} ${_listaPartidos[i].fecha.toString()}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds:  Rect.fromLTWH(0, altura.toDouble() , 60, 25),
+          brush: PdfSolidBrush(colorNegro));
+      page.graphics.drawString("${_listaPartidos[i].equipoCASA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds: Rect.fromLTWH(70, altura.toDouble(),130, 25),
+          brush: PdfSolidBrush(colorNegro,)
+      );
+      PdfColor  colorRES=colorResultado(_listaPartidos[i]);
+      page.graphics.drawString("${_listaPartidos[i].golesCASA} - ${_listaPartidos[i].golesFUERA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
+          format: PdfStringFormat(alignment: PdfTextAlignment.center,),
+          bounds: Rect.fromLTWH(150, altura.toDouble(),20, 25),
+          brush: PdfSolidBrush(colorRES,)
+      );
+      page.graphics.drawString("${_listaPartidos[i].equipoFUERA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds: Rect.fromLTWH(180, altura.toDouble(),130, 25),
+          brush: PdfSolidBrush(colorNegro,)
+      );
+
+/*
+      String equipo="";
+      if(_listaPartidos[i].equipoCASA==_equipo.equipo)
+        equipo=_listaPartidos[i].equipoFUERA;
+      else
+        equipo=_listaPartidos[i].equipoCASA;
+
+      try{
+        var newList = _imagenes.firstWhere((element) => element.club == equipo);
+        print(newList.club);
+        print(newList.imagen);
+        page.graphics.drawImage(
+            PdfBitmap(newList.imagen.bodyBytes.toList()),
+            Rect.fromLTWH(145, altura.toDouble(), 10, 10));
+
+      }catch(e){
+        print(e);
+      }
+*/
+      altura=altura+15;
+    }
+    altura=330;
+    for (int i=log.toInt();i<_listaPartidos.length;i++) {
+      page.graphics.drawString("J.${_listaPartidos[i].jornada.toString()} ${_listaPartidos[i].fecha.toString()} ",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds:  Rect.fromLTWH(270, altura.toDouble() , 60, 25),
+          brush: PdfSolidBrush(colorNegro));
+      page.graphics.drawString("${_listaPartidos[i].equipoCASA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds: Rect.fromLTWH(340, altura.toDouble(),130, 25),
+          brush: PdfSolidBrush(colorNegro,)
+      );
+      PdfColor  colorRES=colorResultado(_listaPartidos[i]);
+      page.graphics.drawString("${_listaPartidos[i].golesCASA} - ${_listaPartidos[i].golesFUERA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
+          format: PdfStringFormat(alignment: PdfTextAlignment.center,),
+          bounds: Rect.fromLTWH(420, altura.toDouble(),20, 25),
+          brush: PdfSolidBrush(colorRES,)
+      );
+      page.graphics.drawString("${_listaPartidos[i].equipoFUERA}",
+          PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
+          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
+          bounds: Rect.fromLTWH(460, altura.toDouble(),130, 25),
+          brush: PdfSolidBrush(colorNegro,)
+      );
+
+
+      /*String equipo="";
+      if(_listaPartidos[i].equipoCASA==_equipo.equipo)
+        equipo=_listaPartidos[i].equipoFUERA;
+      else
+        equipo=_listaPartidos[i].equipoCASA;
+
+      try{
+
+        var newList = _imagenes.firstWhere((element) => element.club == equipo);
+        page.graphics.drawImage(
+            PdfBitmap(newList.imagen.bodyBytes.toList()),
+            Rect.fromLTWH(470, altura.toDouble(), 10, 10));
+
+      }catch(e){
+        print(e);
+      }*/
+      //PdfBitmap(newList.imagen.bodyBytes.toList()),
+
+      /*     var imgequipo ;
+      if(_listaPartidos[i].equipoCASA==_equipo.equipo)
+        imgequipo=await get(Uri.parse("https://firebasestorage.googleapis.com/v0/b/iaclub.appspot.com/o/clubes%2F${Config.escudoClubes(listaPartidos[i].equipoFUERA)}?alt=media"));
+      else
+        imgequipo=await get(Uri.parse("https://firebasestorage.googleapis.com/v0/b/iaclub.appspot.com/o/clubes%2F${Config.escudoClubes(_partidos[i].equipoCASA)}?alt=media"));
+      try{
+        page.graphics.drawImage(
+            PdfBitmap(imgequipo.bodyBytes.toList()),
+            Rect.fromLTWH(600, altura.toDouble(), 25, 25));
+      }catch(e){}
+*/
+
+      altura=altura+15;
+    }
+
+  }
+
+  PdfColor colorResultado(Partido p) {
+    PdfColor color=colorNegro;
+    if(p.golesFUERA==p.golesCASA){
+      color=colorAzulClaro;
+    }else{
+      if(p.equipoCASA==_equipo.equipo){
+        color=int.parse(p.golesCASA)>int.parse(p.golesFUERA)?
+        colorVerde:
+        colorRojo;
+      }
+      else{
+        color=int.parse(p.golesCASA)>int.parse(p.golesFUERA)?
+        colorRojo:
+        colorVerde;
+      }
+    }
+    return color;
+  }
 }

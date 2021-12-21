@@ -285,7 +285,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
       return showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(1970),
+        firstDate: DateTime(1940),
         lastDate: DateTime(2050),
         locale : const Locale("es","ES"),
         builder: (BuildContext context, Widget child) {

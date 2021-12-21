@@ -87,7 +87,6 @@ class PdfJugadorDatosScout2 {
       }catch(o){
         aux=0;
       }
-    print("${_jugador.jugador}:${partidos[i].jornada}:${aux}:${partidos[i].putuacionJugadorPartido.accion}");
 
       total+=aux;
     }
@@ -99,8 +98,6 @@ class PdfJugadorDatosScout2 {
   }
 
    imagenesJornadaStorag()  async {
-     print(Config.imagenesClubes.length);
-     print("imagenesJornadaStorage");
      await Config.imagenesClubes.forEach((element) {
        _imagenes.add(element);
        element.club;
@@ -167,9 +164,9 @@ class PdfJugadorDatosScout2 {
 
 
     page2.graphics.drawString("Observaciones",
-        PdfStandardFont(PdfFontFamily.helvetica, 16, ),
+        PdfStandardFont(PdfFontFamily.helvetica, 10, ),
         brush: PdfBrushes.black,
-        bounds: Rect.fromLTWH(15, 200, 300, 30),
+        bounds: Rect.fromLTWH(0, 440, 300, 30),
         pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,
           ));
@@ -177,7 +174,7 @@ class PdfJugadorDatosScout2 {
     page2.graphics.drawString(_jugador.observaciones,
     PdfStandardFont(PdfFontFamily.helvetica, 12, ),
     brush: PdfBrushes.black,
-    bounds: Rect.fromLTWH(15, 230, page2.size.width-100, page2.size.width-50),
+    bounds: Rect.fromLTWH(0, 460, page2.size.width-100, 50),
     format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
     ));
 
@@ -435,7 +432,7 @@ class PdfJugadorDatosScout2 {
     };
     //Draw the PDF grid and get the result.
     result = grid.draw(
-        page: page, bounds: Rect.fromLTWH(10, 200, 0, 0));
+        page: page, bounds: Rect.fromLTWH(10, 180, 0, 0));
   }
   void drawGridPsicologia(PdfPage page, PdfGrid grid, PdfLayoutResult result) {
     Rect totalPriceCellBounds;
@@ -451,7 +448,7 @@ class PdfJugadorDatosScout2 {
     };
     //Draw the PDF grid and get the result.
     result = grid.draw(
-        page: page, bounds: Rect.fromLTWH(200, 200, 0, 0));
+        page: page, bounds: Rect.fromLTWH(200, 180, 0, 0));
   }
   void drawGridDefensiva(PdfPage page, PdfGrid grid, PdfLayoutResult result) {
     Rect totalPriceCellBounds;
@@ -467,7 +464,7 @@ class PdfJugadorDatosScout2 {
     };
     //Draw the PDF grid and get the result.
     result = grid.draw(
-        page: page, bounds: Rect.fromLTWH(390, 200, 0, 0));
+        page: page, bounds: Rect.fromLTWH(390, 180, 0, 0));
   }
   void drawGridOfensiva(PdfPage page, PdfGrid grid, PdfLayoutResult result) {
     Rect totalPriceCellBounds;
@@ -483,7 +480,7 @@ class PdfJugadorDatosScout2 {
     };
     //Draw the PDF grid and get the result.
     result = grid.draw(
-        page: page, bounds: Rect.fromLTWH(580, 200, 0, 0));
+        page: page, bounds: Rect.fromLTWH(580, 180, 0, 0));
   }
 
 
@@ -531,7 +528,7 @@ class PdfJugadorDatosScout2 {
       page.graphics.drawString(
         _jugador.veredicto==""?"Sin veredicto":_jugador.veredicto.toUpperCase(), PdfStandardFont(PdfFontFamily.helvetica, 15),
         brush: PdfBrushes.yellow,
-        bounds: Rect.fromLTWH(page.size.width-190, 63, 100, 30),
+        bounds: Rect.fromLTWH(page.size.width-210, 63, 100, 30),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.right));
 
     //EMPRESA
@@ -734,8 +731,6 @@ class PdfJugadorDatosScout2 {
 
       try{
         var newList = _imagenes.firstWhere((element) => element.club == equipo);
-          print(newList.club);
-        print(newList.imagen);
          page.graphics.drawImage(
             PdfBitmap(newList.imagen.bodyBytes.toList()),
          Rect.fromLTWH(145, altura.toDouble(), 10, 10));

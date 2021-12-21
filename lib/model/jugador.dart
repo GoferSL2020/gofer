@@ -166,6 +166,11 @@ class Jugador {
   int _edadRange1;
   int _edadRange2;
 
+  String idCategoria="";
+  String idTemporada="";
+  String idPais="";
+  String idEquipo="";
+
   String get foto => _foto;
 
   set foto(String value) {
@@ -427,7 +432,7 @@ class Jugador {
     this._paisNacimiento= obj.value['_paisNacimiento'];
     this._contrato= obj.value['_contrato'];
 
-    this._veredicto= obj.value['_veredicto'];
+    this._veredicto= obj.value['_veredicto']==null?"":obj.value['_veredicto'];
     this._prestamo= obj.value['_prestamo']==null?"no":obj.value['_prestamo'];
     this._lateral= obj.value['_lateral'];
     this._ccaa= obj.value['ccaa']==null?"":obj.value['ccaa'];

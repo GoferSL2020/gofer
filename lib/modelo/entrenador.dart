@@ -619,7 +619,6 @@ class Entrenador {
 
 
   static bool dameElValor(String caracteristicas, Entrenador e) {
-      print("dameelvalor:${caracteristicas}");
     if (caracteristicas == "1442")  return e._con_1442;
     if (caracteristicas == "14411")  return e._con_14411;
     if (caracteristicas == "14231")  return e._con_14231;
