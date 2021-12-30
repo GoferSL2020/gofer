@@ -1,38 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/dao/PaisService.dart';
-import 'package:iadvancedscout/dao/categoriaDao.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/main.dart';
-import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/model/pais.dart';
 import 'package:iadvancedscout/model/temporada.dart';
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-import 'package:iadvancedscout/notifications.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/sheets/gsheets.dart';
-import 'package:iadvancedscout/sheets/sheets_controller.dart';
-import 'package:iadvancedscout/userScout.dart';
-import 'package:iadvancedscout/view/addPais.dart';
-import 'package:iadvancedscout/view/categorias.dart';
 import 'package:iadvancedscout/view/filtro/filtroJugadores.dart';
-import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
-import 'package:iadvancedscout/view/jugadoresFiltros.dart';
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 import 'package:iadvancedscout/wigdet/migraciones.dart';
 import 'package:iadvancedscout/wigdet/politica.dart';
 import 'package:iadvancedscout/wigdet/termino.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:iadvancedscout/wigdet/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-
-import 'categoriasList.dart';
 
 class TemporadasPage extends StatefulWidget {
   @override
@@ -303,7 +282,7 @@ class MenuLateral extends StatelessWidget {
                 ),
 
               ):null,
-              /*BBDDService().getUserScout().categoria=="Todas"?
+              BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
                 child: ListTile(
@@ -320,7 +299,7 @@ class MenuLateral extends StatelessWidget {
                   leading: const Icon(Icons.person, color: Colors.white),
                 ),
 
-              ):null,*/
+              ):null,
               Container(height: 1,color: Colors.white,),
               Ink(
                 color: Colors.white,

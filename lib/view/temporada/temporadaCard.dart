@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-
-import 'package:iadvancedscout/view/equipos/equiposView.dart';
 import 'package:iadvancedscout/view/pais/paisView.dart';
-import 'package:iadvancedscout/view/temporada/ModifyTemporada.dart';
 
 class TemporadaCard extends StatelessWidget {
   final Temporada temporadaDetails;

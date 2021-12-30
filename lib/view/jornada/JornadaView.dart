@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDJornada.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
-
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';

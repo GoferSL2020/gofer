@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 

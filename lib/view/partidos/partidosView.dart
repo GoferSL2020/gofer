@@ -1,20 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/partidos/addPartido.dart';
 import 'package:iadvancedscout/view/partidos/partidoCard.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
-import 'package:provider/provider.dart';
 
 class PartidosView extends StatefulWidget {
   final Temporada temporada;

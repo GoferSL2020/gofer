@@ -1,13 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 
 class ComponenteFormal extends StatefulWidget {

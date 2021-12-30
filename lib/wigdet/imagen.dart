@@ -1,12 +1,8 @@
 
-import 'package:fluttertoast/fluttertoast.dart';
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
-
-
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:open_file/open_file.dart' as open_file;
 
@@ -102,8 +98,10 @@ class _ImagenState extends State<Imagen> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Column(
-              children: <Widget>[
+      body: SingleChildScrollView(
+            child:
+            Column(
+              children:  <Widget>[
               Container(
               padding: EdgeInsets.only(top: 10, left: 0, right: 0, bottom: 5),
               height: 40,
@@ -118,20 +116,11 @@ class _ImagenState extends State<Imagen> {
                   fontWeight: FontWeight.bold),
               ),
               ),
-                _pageImage!=null?
-                Image(
-                  image: MemoryImage(_pageImage.bytes),
-                ):Container(),
-                _pageImage2!=null?
-                Image(
-                  image: MemoryImage(_pageImage2.bytes),
-                ):Container(),
-
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                   RaisedButton.icon(
+                  RaisedButton.icon(
                       onPressed: () async {
-                           await Config.saveImage(_pageImage.bytes, _pageImage2.bytes) ?
-                            Fluttertoast.showToast(
+                        await Config.saveImage(_pageImage.bytes, _pageImage2.bytes) ?
+                        Fluttertoast.showToast(
                             msg: "Se ha grabado",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
@@ -139,7 +128,7 @@ class _ImagenState extends State<Imagen> {
                             backgroundColor: Colors.green.shade900,
                             textColor: Colors.white,
                             fontSize: 14.0):
-                            Fluttertoast.showToast(
+                        Fluttertoast.showToast(
                             msg: "No se ha grabado",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
@@ -178,7 +167,17 @@ class _ImagenState extends State<Imagen> {
                       splashColor: Colors.black,
                       color: Colors.blue)
                 ]),
+                _pageImage!=null?
+                Image(
+                  image: MemoryImage(_pageImage.bytes),
+                ):Container(),
+                _pageImage2!=null?
+                Image(
+                  image: MemoryImage(_pageImage2.bytes),
+                ):Container(),
+
+
               ],
-      ));
+      ),),);
 }
 }

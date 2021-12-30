@@ -1,23 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
-import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/futbol_mio_icons.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/entrenadores/entrenadoresView.dart';
-import 'package:iadvancedscout/view/equipos/editEquipo.dart';
-import 'package:iadvancedscout/view/equipos/equiposOpcionesViewAux.dart';
 import 'package:iadvancedscout/view/jugadores/jugadoresView.dart';
 import 'package:iadvancedscout/view/partidos/partidosJornadaView.dart';
 

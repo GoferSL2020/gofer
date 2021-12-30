@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +9,13 @@ import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
-import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-
 import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:image/image.dart' as ImageLib;
 import 'package:toggle_switch/toggle_switch.dart';
 
 

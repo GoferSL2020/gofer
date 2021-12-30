@@ -1,10 +1,10 @@
 
 import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/service/db.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class CategoriaDao {
   DB con = new DB();

@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDTemporada.dart';
-
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/temporada/temporadaCard.dart';
 import 'package:iadvancedscout/view/temporadas.dart';

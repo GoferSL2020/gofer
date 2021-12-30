@@ -1,11 +1,5 @@
-import 'dart:typed_data';
-import 'dart:io';
 
 import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:firebase_database/firebase_database.dart';
-
-import 'package:flutter/material.dart';
-import 'package:gsheets/gsheets.dart';
 
 class JugadorJornadaColumna {
   String _id;

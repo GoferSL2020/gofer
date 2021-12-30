@@ -1,21 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-
-
-import 'package:iadvancedscout/model/categoria.dart';
-
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/model/pais.dart';
-
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-
-import 'nivel.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
-
 import 'package:flutter/material.dart';
-
-import 'capacidadesFisico.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 
 class TabNivel extends StatefulWidget {
   @override

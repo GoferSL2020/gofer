@@ -1,8 +1,7 @@
+import 'package:gsheets/gsheets.dart';
 import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/model/jugadorJornada.dart';
 import 'package:iadvancedscout/model/jugadorJornadaColumna.dart';
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-import 'package:gsheets/gsheets.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 
 

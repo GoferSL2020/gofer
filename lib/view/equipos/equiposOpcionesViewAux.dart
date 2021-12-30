@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
@@ -9,7 +8,6 @@ import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
 import 'package:iadvancedscout/view/jornada/JornadaView.dart';
-import 'package:iadvancedscout/view/partidos/partidosView.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
 
 class EquiposOpcionesViewAux extends StatefulWidget {

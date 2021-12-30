@@ -1,7 +1,9 @@
 import 'package:iadvancedscout/auth/signup.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/paises.dart';
+import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/politica.dart';
 import 'package:iadvancedscout/wigdet/termino.dart';
@@ -74,12 +76,12 @@ const Language('Francais', 'fr_FR'),
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Config.fondo,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back_ios , color: Colors.white),
           onPressed: () => Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (BuildContext context) => TemporadasPage(),
+            builder: (BuildContext context) => TemporadaView(),
           )),
         ),
         //backgroundColor: Config.colorAPP,
@@ -111,66 +113,107 @@ const Language('Francais', 'fr_FR'),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Column(children: <Widget>[
-            Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Texto(Colors.black,
-                    BBDDService().getUserScout().email, 14.0, null,false)),
+          child: Column(
+              mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+           /*Container(
+              height: double.infinity,,
+              width: double.infinity,
+              child: CustomPaint(
+                painter: _HeaderWavePainter(),
+              ),
+           ),*/
+            Container(color: Colors.black,
+                padding: EdgeInsets.only(top:30.0),
+                child: Image.asset(Config.icono,scale: 1,)
+            ),
             Padding(
               padding: EdgeInsets.all(5.0),
+              child: Text("InAdvanced",
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,color: Colors.white,
+                      fontSize: 30,
+                      fontFamily:'Roboto')),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
               child: TextFormField(
-                controller: nameController,
+
+                style: TextStyle(
+                  color: Colors.white,
+                ),controller: nameController,
                 decoration: InputDecoration(
-                  labelText: "Nombre",
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                  icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                  hintStyle: TextStyle(
+                      color: Colors.white
                   ),
+                  labelStyle: new TextStyle(
+                      color: Colors.white
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  labelText: "Nombre",
                 ),
                 // The validator receives the text that the user has entered.
                 validator: (value) {
                   if (value.isEmpty) {
-                    return "Nombre";
+                    return 'Nombre';
                   }
                   return null;
                 },
               ),
             ),
-            /*    Padding(
-                    padding: EdgeInsets.only(top:5.0, left:20, right: 20, bottom: 5),
-                    child: Row(children: [
-                      Texto(Colors.black, "Color", 12, Config.fondo),
-                      _colorDropDownSection(),
-                    ]),
-                  ),*/
             Padding(
-              padding: EdgeInsets.all(5.0),
-              child: isLoading
-                  ? CircularProgressIndicator()
-                  : RaisedButton(
-                      color: Config.colorAPP,
-                      shape: Border.all(color: Config.fondo, width: 1.0),
-                      child: Text("Aceptar",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.white,
-                          )),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          var a = registerToFb();
-                          if (a == null) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                          }
-                        }
-                      },
-                    ),
+              padding: EdgeInsets.all(10.0),
+              child: Text(firebaseAuth.currentUser.email,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,color: Colors.white,
+                    fontSize: 14,
+                  )),
             ),
 
+            Padding(
+              padding: EdgeInsets.only(top:10, left:20, right: 20, bottom: 0),
+              child: isLoading
+                  ? CircularProgressIndicator()
+                  :
+              Container(
+                width: 250,
+                height: 65,
+                padding: EdgeInsets.all(10),
+                child: MaterialButton(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
+                    side: BorderSide(
+                      width: 1,
+                      color: Colors.white,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  child: Text("Aceptar"),
+                  color: Colors.blue.shade600,
+                  textColor: Colors.white,
+                  splashColor: Colors.black,
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      var a = registerToFb();
+                      if (a == null) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    }
+                  },
+                ),
+              ),
+            ),
             Center(
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -280,4 +323,37 @@ const Language('Francais', 'fr_FR'),
     ageController.dispose();
     language="";
   }
+}
+
+class _HeaderWavePainter extends CustomPainter {
+
+  @override
+  void paint(Canvas canvas, Size size) {
+
+    final lapiz = new Paint();
+
+    // Propiedades
+    lapiz.color = Colors.white  ;
+    lapiz.style = PaintingStyle.fill; // .fill .stroke
+    lapiz.strokeWidth = 40  ;
+
+    final path = new Path();
+
+    // Dibujar con el path y el lapiz
+    path.lineTo( 0, size.height * 0.25 );
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.30, size.width * 0.5, size.height * 0.25 );
+    path.quadraticBezierTo(size.width * 0.75, size.height * 0.20, size.width, size.height * 0.25 );
+    path.lineTo( size.width, 0 );
+
+
+
+
+    canvas.drawPath(path, lapiz );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+
 }

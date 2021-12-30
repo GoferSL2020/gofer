@@ -1,29 +1,24 @@
 
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/view/filtro/jugadoresFiltros.dart';
-
-import 'package:iadvancedscout/view/temporadas.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDCategoria.dart';
 import 'package:iadvancedscout/dao/CRUDPais.dart';
 import 'package:iadvancedscout/dao/CRUDTemporada.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-
-import 'package:permission_handler/permission_handler.dart';
+import 'package:iadvancedscout/view/filtro/jugadoresFiltros.dart';
+import 'package:iadvancedscout/view/temporadas.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FiltroPlayeres extends StatefulWidget {
 

@@ -3,7 +3,6 @@ import 'package:iadvancedscout/dao/CRUDCategoria.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:provider/provider.dart';
 
 
 class ModifyCategoria extends StatefulWidget {

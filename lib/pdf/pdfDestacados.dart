@@ -3,18 +3,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' show get;
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
-
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/player.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/widgets.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:open_file/open_file.dart' as open_file;
-import 'package:http/http.dart' show get;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 /// Represents the PDF widget class.
 class PDFDestacados {
@@ -214,6 +209,7 @@ class PDFDestacados {
 
     return '$path/jugadores.pdf';
     //await open_file.OpenFile.open('$path/output.pdf');
+
   }
 
   Future header(PdfPage page, Size pageSize, String titulo) async {

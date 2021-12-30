@@ -1,11 +1,9 @@
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/view/caracteristicas/tabNivel.dart';
-import 'package:iadvancedscout/view/notaPuntos.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/view/caracteristicas/tabNivel.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class Nivel extends StatefulWidget {

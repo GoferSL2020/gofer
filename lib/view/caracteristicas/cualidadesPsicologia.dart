@@ -1,10 +1,7 @@
 
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class CualidadesPsicologia extends StatefulWidget {

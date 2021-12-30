@@ -1,9 +1,8 @@
 
-import 'package:iadvancedscout/conf/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:iadvancedscout/conf/config.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:html/dom.dart' as dom;
 
 class Politica extends StatelessWidget {
   String descripcion =

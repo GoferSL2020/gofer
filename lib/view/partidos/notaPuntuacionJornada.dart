@@ -1,21 +1,10 @@
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/locale/app_localization.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/model/jugadorJornada.dart';
-import 'package:iadvancedscout/model/jugadorJornadaColumna.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/sheets/gsheets.dart';
-import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
-import 'package:iadvancedscout/view/jugadoresJornada.dart';
-
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/model/jugadorJornada.dart';
+import 'package:iadvancedscout/model/jugadorJornadaColumna.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 
 class NotaPuntuacionJornada extends StatefulWidget {
   final Player jugador;

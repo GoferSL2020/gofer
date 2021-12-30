@@ -9,7 +9,7 @@ import 'email_signup.dart';
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.black,
         appBar:new  AppBar(actions: <Widget>[
           IconButton(
             icon: new Image.asset(Config.icono),onPressed: () {
@@ -21,7 +21,7 @@ class SignUp extends StatelessWidget {
           )
         ],
           backgroundColor:Colors.black,
-          title: Text("IAScout - Iniciar",
+          title: Text("",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -33,53 +33,66 @@ class SignUp extends StatelessWidget {
         body:   SingleChildScrollView(
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
+                Container(color: Colors.black,
+                  padding: EdgeInsets.only(top:30.0),
+                  child: Image.asset(Config.icono,scale: 1,)
+                ),
             Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text("IAScout",
+              padding: EdgeInsets.all(5.0),
+              child: Text("InAdvanced",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,color: Colors.white,
                       fontSize: 30,
-                      fontFamily: 'Roboto')),
+                      fontFamily:'Roboto')),
             ),
-            Padding(
-                padding: EdgeInsets.all(5),
-                child: SignInButton(
-                  Buttons.Email,
-                  text: "Regístrate con su email",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EmailSignUp()),
-                    );
-                  },
-                )),
-            /*Padding(
-                padding: EdgeInsets.all(10.0),
-                child: SignInButton(
-                  Buttons.Google,
-                  text: "Sign up with Google",
-                  onPressed: () {},
-                )),
-            Padding(
-                padding: EdgeInsets.all(10.0),
-                child: SignInButton(
-                  Buttons.Twitter,
-                  text: "Sign up with Twitter",
-                  onPressed: () {},
-                )),*/
-            Padding(
-                padding: EdgeInsets.all(10.0),
-                child: GestureDetector(
-                    child: Text("Iniciar con su Email",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue)),
-                    onTap: () {
+                Container(
+                  width: 250,
+                  height: 65,
+                  padding: EdgeInsets.all(10),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
+                      side: BorderSide(
+                        width: 1,
+                        color: Colors.white,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Text("Regístrate con su email"),
+                    color: Colors.blue.shade600,
+                    textColor: Colors.white,
+                    splashColor: Colors.black,
+                    onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EmailLogIn()),
+                        MaterialPageRoute(builder: (context) => EmailSignUp()),
                       );
-                    })),
+                    },
+                  ),
+                ),
+                Container(
+                  width: 250,
+                  height: 65,
+                  padding: EdgeInsets.all(10),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
+                        side: BorderSide(
+                          width: 1,
+                          color: Colors.white,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      child: Text("Login"),
+                      color: Colors.black,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EmailLogIn()),
+                        );
+                      },
+                    ),
+                ),
+
                 Align(
                   alignment: Alignment.bottomCenter,
             child: Column(children: [
@@ -90,7 +103,7 @@ class SignUp extends StatelessWidget {
                         "la Política de Privacida de IAScout - InAdvanced.",textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 9,
-                            color: Colors.black)),
+                            color: Colors.grey)),
                     )),
 
               /*Center(

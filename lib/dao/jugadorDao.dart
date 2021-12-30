@@ -1,22 +1,16 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:iadvancedscout/model/categoria.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/model/pais.dart';
-import 'package:iadvancedscout/model/temporada.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/LogoService.dart';
 import 'package:iadvancedscout/service/db.dart';
 import 'package:iadvancedscout/sheets/gsheets.dart';
 import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
-import 'package:iadvancedscout/userScout.dart';
-import 'package:iadvancedscout/view/jugadoresList.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 class JugadorDao {

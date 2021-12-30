@@ -5,9 +5,7 @@ import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
-import 'package:provider/provider.dart';
 
 class EditEquipo extends StatefulWidget {
   final Temporada temporada;

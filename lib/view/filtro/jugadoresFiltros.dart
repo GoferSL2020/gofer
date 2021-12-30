@@ -1,24 +1,18 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
-
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
-
 import 'package:iadvancedscout/view/temporadas.dart';
-import 'package:iadvancedscout/wigdet/imagen.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-
-import 'package:flutter/material.dart';
 
 
 class JugadoresFiltroPage extends StatefulWidget {
@@ -95,6 +89,17 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
         color: Colors.white,
         child: Column(
           children: <Widget>[
+            Container(
+              height: 20,
+              width: double.infinity,
+              color:Colors.black,
+              child:Text(
+                "${jugadoresList.length} Jugadores",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Config.colorAPP,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic),
+              ),),
             Visibility(
               visible: jugadoresList.isNotEmpty,
               child: Flexible(
@@ -274,58 +279,6 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
           ],
         ),
         alignment: Alignment.centerRight,
-      ),
-    );
-  }
-
-
-  SingleChildScrollView dataBody() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        headingRowHeight: 0,
-        dataRowHeight: 55,
-        columns: [
-          DataColumn(label: Text('')),
-          DataColumn(label: Text('')),
-          DataColumn(label: Text('')),
-          //DataColumn(label: Text('Action')),
-        ],
-        rows:
-            jugadoresList // Loops through dataColumnText, each iteration assigning the value to element
-                .map(
-                  ((element) => DataRow(
-                        cells: <DataCell>[
-                          DataCell(
-                            new Image.asset(
-                                'assets/${element.equipo}/${element.jugador}.png',
-                                height: 25.0,
-                                width: 25.0),
-                          ),
-                          DataCell(
-                            Container(
-                              padding: EdgeInsets.all(2.0),
-                              child: FlatButton(
-                                  onPressed: () {
-                                    paginaJugador(context, element);
-                                  },
-                                  child: Text(element.jugador)),
-                            ),
-                          ),
-                          DataCell(
-                            new Text(
-                              element.posicion.toString(),
-                              style: TextStyle(
-
-                                  // fontWeight: FontWeight.bold,
-                                  fontSize: 12.0),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      )),
-                )
-                .toList(),
       ),
     );
   }

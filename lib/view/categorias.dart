@@ -1,18 +1,15 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/model/categoria.dart';
 import 'package:iadvancedscout/model/pais.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
-
 import 'package:iadvancedscout/view/equipos.dart';
 import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
-import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 
 class CategoriasPage extends StatefulWidget {
   const CategoriasPage(this._pais);

@@ -1,26 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
-
+import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/cualidadesPsicologia.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/defensivas.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/nivel.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/ofensivas.dart';
-
-
-import 'package:iadvancedscout/modelo/categoria.dart';
-
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/observaciones.dart';
-
-import 'package:flutter/material.dart';
-import 'package:iadvancedscout/view/jugadores/scouting/puntuacionesPartidos.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/ofensivas.dart';
 
 import 'capacidadesFisico.dart';
 

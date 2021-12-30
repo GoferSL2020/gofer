@@ -1,12 +1,9 @@
-import 'package:iadvancedscout/dao/categoriaDao.dart';
-import 'package:iadvancedscout/dao/equipoDao.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/view/jugadoresList.dart';
-import 'package:iadvancedscout/model/categoria.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/view/jugadoresList.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-import 'package:flutter/material.dart';
 
 class EquiposList extends StatefulWidget {
   @override

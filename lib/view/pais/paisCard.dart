@@ -3,7 +3,6 @@ import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/categoria/categoriasView.dart';
-import 'package:iadvancedscout/view/equipos/equiposView.dart';
 
 class PaisCard extends StatelessWidget {
   final Pais paisDetails;

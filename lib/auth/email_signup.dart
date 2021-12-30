@@ -1,12 +1,10 @@
 
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/view/paises.dart';
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/view/temporadas.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
+import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 
 
 
@@ -30,7 +28,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
   List<String> colores = <String>['azul','rojo','gris'];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Config.fondo,
+    return Scaffold(backgroundColor:Colors.black,
         appBar:new  AppBar(actions: <Widget>[
           IconButton(
             icon: new Image.asset(Config.icono),onPressed: () {
@@ -41,7 +39,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
           },
           )
         ],
-          backgroundColor:Colors.black,
+
           title: Text("IAScout - Sign up",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -55,15 +53,42 @@ class _EmailSignUpState extends State<EmailSignUp> {
             key: _formKey,
             child: SingleChildScrollView(
                 child: Column(children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top:20.0, left:20, right: 20, bottom: 5),
+                  Container(color: Colors.black,
+                      padding: EdgeInsets.only(top:30.0),
+                      child: Image.asset(Config.icono,scale: 1,)
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text("InAdvanced",
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,color: Colors.white,
+                            fontSize: 30,
+                            fontFamily:'Roboto')),
+                  ),
+
+
+                  Padding(
+                  padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
                 child: TextFormField(
-                  controller: nameController,
+
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),controller: nameController,
                   decoration: InputDecoration(
-                    labelText: "Nombre",
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                    icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                    hintStyle: TextStyle(
+                        color: Colors.white
                     ),
+                    labelStyle: new TextStyle(
+                        color: Colors.white
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    labelText: "Nombre",
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
@@ -75,14 +100,27 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top:5.0, left:20, right: 20, bottom: 5),
+                padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 5),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   controller: emailController,
                   decoration: InputDecoration(
-                    labelText: "Correo eléctronico",
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                    icon: Icon(IconMio.mail,color: Colors.white,size: 20,),
+                    hintStyle: TextStyle(
+                        color: Colors.white
                     ),
+                    labelStyle: new TextStyle(
+                        color: Colors.white
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    labelText: "Correo eléctronico",
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
@@ -96,15 +134,29 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top:5.0, left:20, right: 20, bottom: 5),
+                padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 0),
                 child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+
                   obscureText: true,
                   controller: passwordController,
                   decoration: InputDecoration(
-                    labelText: "Contraseña",
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                    icon: Icon(Icons.vpn_key_sharp,color: Colors.white,size: 20,),
+                    hintStyle: TextStyle(
+                        color: Colors.white
                     ),
+                    labelStyle: new TextStyle(
+                        color: Colors.white
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    labelText: "Password",
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
@@ -118,33 +170,42 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top:5.0, left:20, right: 20, bottom: 5),
+                padding: EdgeInsets.only(top:10, left:20, right: 20, bottom: 0),
                 child: isLoading
                     ? CircularProgressIndicator()
-                  : RaisedButton(
-                  color: Config.colorAPP,
-                  shape: Border.all(color: Config.fondo, width: 1.0),
-                  child: Text("Enviar",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                  :
+                Container(
+                  width: 250,
+                  height: 65,
+                  padding: EdgeInsets.all(10),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
+                      side: BorderSide(
+                        width: 1,
                         color: Colors.white,
-                      )),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Text("Enviar"),
+                    color: Colors.blue.shade600,
+                    textColor: Colors.white,
+                    splashColor: Colors.black,
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        var a= registerToFb();
+                        //print("a"+a.toString());
+                        if (a==null) {
                           setState(() {
-                            isLoading = true;
+                            isLoading = false;
                           });
-                          var a= registerToFb();
-                          //print("a"+a.toString());
-                          if (a==null) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                          }
                         }
-                      },
+                      }
+                    },
                   ),
+                ),
               )
             ]))));
   }
@@ -223,7 +284,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
         });
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TemporadasPage()));
+          MaterialPageRoute(builder: (context) => TemporadaView()));
       });
     }).catchError((err) {
       setState(() {

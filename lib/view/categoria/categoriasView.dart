@@ -1,22 +1,13 @@
-import 'dart:async';
-
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/dao/CRUDCategoria.dart';
-import 'package:iadvancedscout/dao/CRUDPais.dart';
-import 'package:iadvancedscout/dao/CRUDTemporada.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/categoria/categoriaCard.dart';
-import 'package:iadvancedscout/view/pais/paisCard.dart';
-import 'package:iadvancedscout/view/temporada/temporadaCard.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
 
 

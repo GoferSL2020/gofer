@@ -1,5 +1,6 @@
 import'package:flutter/material.dart';
 import'package:intl/intl.dart';
+
 import'../l10n/messages_all.dart';
 
 class AppLocalization {

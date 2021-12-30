@@ -1,8 +1,7 @@
 
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/wigdet/abajo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
 
 class EmailPassword extends StatefulWidget {
   @override

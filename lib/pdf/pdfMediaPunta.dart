@@ -1,13 +1,4 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-
-import 'package:open_file/open_file.dart' as open_file;
 /*
 /// Represents the PDF widget class.
 class MediaPuntaCreatePdf {

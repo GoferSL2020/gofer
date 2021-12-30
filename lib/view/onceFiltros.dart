@@ -1,36 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/dao/categoriaDao.dart';
-import 'package:iadvancedscout/dao/equipoDao.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/model/jugadorJornada.dart';
-import 'package:iadvancedscout/model/pais.dart';
-import 'package:iadvancedscout/my_flutter_app_icons.dart';
-import 'package:iadvancedscout/pdf/PdfPreviewScreen.dart';
-import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
 import 'package:iadvancedscout/pdf/pdfPartido.dart';
-
-import 'package:iadvancedscout/view/addJugador.dart';
-import 'package:iadvancedscout/view/caracteristicas/tabCaracteristicas.dart';
-
-import 'package:iadvancedscout/view/editJugador.dart';
-
-import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/imagen.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-
-
 import '../custom_icon_icons.dart';
-import 'jugadoresList.dart';
 
 class OnceFiltroPage extends StatefulWidget {
   const OnceFiltroPage(this._categoria, this._jornada, this._temporada);

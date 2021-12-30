@@ -1,21 +1,9 @@
-import 'package:iadvancedscout/dao/jugadorDao.dart';
 
-import 'package:iadvancedscout/model/jugador.dart';
-
-import 'package:iadvancedscout/conf/config.dart';
-
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:flutter/material.dart';
-
-import 'package:avatar_glow/avatar_glow.dart';
-import 'dart:async';
-import 'package:iadvancedscout/service/LogoService.dart';
-
-import 'package:flutter/services.dart';
-
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
-import '../notaPuntos.dart';
 
 class CapacidadesFisico extends StatefulWidget {
   CapacidadesFisico(this._jugador);

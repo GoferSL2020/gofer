@@ -5,17 +5,12 @@ import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
-
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
-
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/partidos/editPartido.dart';
 import 'package:iadvancedscout/view/partidos/tabPuntuaciones.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
-
-import '../../my_flutter_app_icons.dart';
 
 class PartidoCard extends StatelessWidget {
   final Partido partido;

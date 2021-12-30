@@ -1,17 +1,13 @@
 
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
-
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:intl/intl.dart';
 
-
-import 'jugadoresList.dart';
 import 'notaPuntosJornada.dart';
 
 class JugadoresJornadaPage extends StatefulWidget {

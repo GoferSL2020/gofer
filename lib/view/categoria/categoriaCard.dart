@@ -4,7 +4,6 @@ import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/equipos/equiposOpcionesViewAux.dart';
-import 'package:iadvancedscout/view/equipos/equiposView.dart';
 
 class CategoriaCard extends StatelessWidget {
   final Pais paisDetails;

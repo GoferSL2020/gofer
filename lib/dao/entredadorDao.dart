@@ -1,17 +1,11 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/db.dart';
-import 'package:iadvancedscout/sheets/gsheets.dart';
-import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/entrenador.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/partido.dart';
+import 'package:iadvancedscout/service/db.dart';
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 class EntrenadorDao {

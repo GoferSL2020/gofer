@@ -1,14 +1,10 @@
 
-import 'package:iadvancedscout/main.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/userScout.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:iadvancedscout/main.dart';
+import 'package:iadvancedscout/userScout.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
 
 import 'conf/config.dart';
 

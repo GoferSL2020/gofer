@@ -1,36 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
-
 import 'package:iadvancedscout/dao/jugadorDao.dart';
-
-import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/model/equipo.dart';
+import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/modelo/player.dart';
-
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
-
-import 'package:iadvancedscout/pdf/pdfJugadorDatos.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatosAnt.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
-
-import 'package:iadvancedscout/view/addJugador.dart';
 import 'package:iadvancedscout/view/caracteristicas/tabCaracteristicas.dart';
-
 import 'package:iadvancedscout/view/editJugador.dart';
-
-import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
-
 import 'package:iadvancedscout/wigdet/FireStorageService.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-
-
-import 'jugadoresList.dart';
 
 class JugadoresPage extends StatefulWidget {
   const JugadoresPage(this._equipo);

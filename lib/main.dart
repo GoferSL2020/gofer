@@ -2,32 +2,25 @@
 import 'dart:convert';
 import 'dart:io';
 
-//token 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
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:iadvancedscout/dao/equipoDao.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/db.dart';
-import 'package:iadvancedscout/view/equiposList.dart';
-import 'package:iadvancedscout/auth/signup.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/locale/app_localization.dart';
-import 'package:iadvancedscout/view/paises.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-import 'package:iadvancedscout/view/temporadas.dart';
-
-import 'package:iadvancedscout/wigdet/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+//token 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
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' show get;
+import 'package:iadvancedscout/auth/signup.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/dao/equipoDao.dart';
+import 'package:iadvancedscout/dao/jugadorDao.dart';
+import 'package:iadvancedscout/locale/app_localization.dart';
+import 'package:iadvancedscout/model/equipo.dart';
+import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iadvancedscout/view/temporada/temporadaView.dart';
+import 'package:iadvancedscout/wigdet/splash.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 //import 'package:flutter_localizations/flutter_localizations.dart';

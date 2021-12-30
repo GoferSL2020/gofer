@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 
 class CualidadesPsicologia extends StatefulWidget {

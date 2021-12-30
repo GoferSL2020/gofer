@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/dao/CRUDTemporada.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:provider/provider.dart';
 
 
 class ModifyTemporada extends StatefulWidget {

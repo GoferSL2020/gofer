@@ -1,14 +1,10 @@
-import 'dart:typed_data';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 import 'package:flutter/material.dart';
-import 'package:gsheets/gsheets.dart';
+import 'package:iadvancedscout/service/BBDDService.dart';
 
 class Entrenador {
   String key;

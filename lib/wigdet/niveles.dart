@@ -1,11 +1,10 @@
 
 
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/locale/app_localization.dart';
-
-import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/locale/app_localization.dart';
+import 'package:iadvancedscout/wigdet/texto.dart';
 
 import '../conf/config.dart';
 

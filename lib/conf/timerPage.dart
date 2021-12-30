@@ -1,6 +1,7 @@
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:iadvancedscout/conf/config.dart';
 
 class ElapsedTime {
   final int hundreds;

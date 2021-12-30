@@ -1,7 +1,7 @@
 
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-import 'package:flutter/material.dart';
 
 class JugadoresList extends StatefulWidget {
   @override

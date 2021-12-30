@@ -1,10 +1,9 @@
 
-import 'package:iadvancedscout/userScout.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:iadvancedscout/userScout.dart';
 
 
 

@@ -1,25 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDEntrenador.dart';
-import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/futbol_mio_icons.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
-
 import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteConceptual.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFormal.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFuncional.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/observaciones.dart';
-
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
-
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-
-
-import 'package:flutter/material.dart';
 
 
 class TabEntrenadores extends StatefulWidget {

@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
@@ -8,14 +10,9 @@ import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/pdf/pdfDestacados.dart';
-import 'package:iadvancedscout/pdf/pdfPartido.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-
-import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/imagen.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 
 
 class DestacadosJornada extends StatefulWidget {
@@ -119,7 +116,7 @@ class _DestacadosJornadaState extends State<DestacadosJornada> {
 
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 20,
+                    timeInSecForIosWeb: 40,
                     backgroundColor: Colors.green.shade900,
                     textColor: Colors.white,
                     fontSize: 14.0);

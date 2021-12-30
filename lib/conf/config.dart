@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:iadvancedscout/locale/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:iadvancedscout/locale/app_localization.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:open_file/open_file.dart' as open_file;
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart' as open_file;
 
 class Config{
 
