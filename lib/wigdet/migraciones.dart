@@ -264,8 +264,8 @@ class _MigracionesState extends State<Migraciones> {
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 RaisedButton.icon(
                     onPressed: () async {
-                      getMigrarCiclo1();
-                      //getMigrarPuntuaciones();
+                      //getMigrarCiclo1();
+                      //getMigrarPuntuacionesNuevo();
                       //getMigrarJugadores();
                     },
                     label: Text(
@@ -379,15 +379,12 @@ class _MigracionesState extends State<Migraciones> {
     JugadorDao daoJugDAO = JugadorDao();
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas();
-    List<Player> jugadoresFUERABBDD = await daoJugDAO.getPuntacionesJornadas();
     //jornadas=jornadas.sublist(1);
     for (int i=0;i<17;i++) {
       Jornada jornada=jornadas[i];
       print("${jornada.jornada},${jornada.fecha},${jornada.id}");
       print("${DateTime.now()}");
       //temporadas/BuJNv17ghCPGnq37P2ev/paises/QqjzloEo6PI7sHfsffk2/categorias/rAeKFLQSry7l1x0WVW01/equipos/tbXIokAhjIMVyuNWcUyZ
-
-
       List<Partido> partidos = await dao.fetchPartidosJornada(
           _temporadaAux, _paisAux, _categoriaAux, jornada);
       for (var partido in partidos) {
@@ -413,13 +410,13 @@ class _MigracionesState extends State<Migraciones> {
             }
             else{
               jugCASA.accion="";
-              jugCASA.puntuacion=0;
+              jugCASA.puntuacion="";
             }
             await _db.collection("/temporadas/${_temporadaAux.id}/"
                 "paises/${_paisAux.id}/"
                 "categorias/${_categoriaAux.id}/"
                 "jornadas/${jornada.id}/partidos/${partido.id}/jugadoresCASA").doc(jugCASA.key).set(
-                jugCASA.toJsonPuntuaciones());
+                jugCASA.toJsonpuntaciones());
           print("LOCAL:${jornada.jornada}: ${jugCASA.jugador}:${jugCASA.accion}:${jugCASA.puntuacion}:");
         }
         for (var jugFUERA in jugadoresFUERA) {
@@ -439,18 +436,67 @@ class _MigracionesState extends State<Migraciones> {
             }
             else{
               jugFUERA.accion="";
-              jugFUERA.puntuacion=0;
+              jugFUERA.puntuacion="";
             }
             await _db.collection("/temporadas/${_temporadaAux.id}/"
                 "paises/${_paisAux.id}/"
                 "categorias/${_categoriaAux.id}/"
                 "jornadas/${jornada.id}/partidos/${partido.id}/jugadoresFUERA").doc(jugFUERA.key).set(
-                jugFUERA.toJsonPuntuaciones());
+                jugFUERA.toJsonpuntaciones());
             print("VISITANTE:${jornada.jornada}: ${jugFUERA.jugador}:${jugFUERA.accion}:${jugFUERA.puntuacion}:");
           }
         }
     }
     print("${DateTime.now()}");
+  }
+
+  getMigrarPuntuacionesNuevo() async {
+    print("getMigrarPuntuaciones");
+    CRUDPartido dao = CRUDPartido();
+    CRUDJugador daoJug = CRUDJugador();
+    JugadorDao daoJugDAO = JugadorDao();
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas();
+    //jornadas=jornadas.sublist(1);
+
+    for(var jugador in jugadoresCASABBDD){
+      print("${jugador.equipo}:${jugador.jugador}");
+      try {
+      String idKeyEquipo=await CRUDEquipo().getEquipoByNombre(_temporadaAux, _paisAux, _categoriaAux, jugador.equipo);
+      String idKeyJugador=await CRUDJugador().getJugadorByNombre(_temporadaAux, _paisAux, _categoriaAux,idKeyEquipo, jugador.jugador);
+
+        print("${idKeyEquipo}:${idKeyJugador}:${jugador.equipo}:${jugador
+            .jugador}");
+        await _db.collection("/temporadas/${_temporadaAux.id}/"
+            "paises/${_paisAux.id}/"
+            "categorias/${_categoriaAux.id}/"
+            "equipos/${idKeyEquipo}/jugadores").doc("${idKeyJugador}").update(
+            {
+              "puntaciones_jornada_1": "${jugador.puntaciones_jornada_1}",
+              "puntaciones_jornada_2": "${jugador.puntaciones_jornada_2}",
+              "puntaciones_jornada_3": "${jugador.puntaciones_jornada_3}",
+              "puntaciones_jornada_4": "${jugador.puntaciones_jornada_4}",
+              "puntaciones_jornada_5": "${jugador.puntaciones_jornada_5}",
+              "puntaciones_jornada_6": "${jugador.puntaciones_jornada_6}",
+              "puntaciones_jornada_7": "${jugador.puntaciones_jornada_7}",
+              "puntaciones_jornada_8": "${jugador.puntaciones_jornada_8}",
+              "puntaciones_jornada_9": "${jugador.puntaciones_jornada_9}",
+              "puntaciones_jornada_10": "${jugador.puntaciones_jornada_10}",
+              "puntaciones_jornada_11": "${jugador.puntaciones_jornada_11}",
+              "puntaciones_jornada_12": "${jugador.puntaciones_jornada_12}",
+              "puntaciones_jornada_13": "${jugador.puntaciones_jornada_13}",
+              "puntaciones_jornada_14": "${jugador.puntaciones_jornada_14}",
+              "puntaciones_jornada_15": "${jugador.puntaciones_jornada_15}",
+              "puntaciones_jornada_16": "${jugador.puntaciones_jornada_16}",
+              "puntaciones_jornada_17": "",
+              "puntaciones_jornada_18": "",
+            }
+        );
+      }catch(e){
+        print("ERRRRROOOOORR:${jugador.equipo}:${jugador.jugador}");
+      }
+
+    }
   }
 
 

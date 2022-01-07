@@ -85,7 +85,7 @@ class JugadorDao {
         //" ORDER BY ENTRENADOR.ENTRENADOR");
 
     List<Player> list =
-    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDPuntuaciones(c)).toList() : [];
+    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDpuntaciones(c)).toList() : [];
     return list;
   }
 
@@ -713,7 +713,7 @@ class JugadorDao {
         "CATEGORIA='$categoria' and EQUIPO='$equipo'");
 
     List<Player> list =
-    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDPuntuaciones(c)).toList() : [];
+    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDpuntaciones(c)).toList() : [];
     return list;
   }
 

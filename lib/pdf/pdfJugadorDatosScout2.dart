@@ -166,15 +166,15 @@ class PdfJugadorDatosScout2 {
     page2.graphics.drawString("Observaciones",
         PdfStandardFont(PdfFontFamily.helvetica, 10, ),
         brush: PdfBrushes.black,
-        bounds: Rect.fromLTWH(0, 440, 300, 30),
+        bounds: Rect.fromLTWH(0, 330, 300, 30),
         pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,
           ));
 
     page2.graphics.drawString(_jugador.observaciones,
-    PdfStandardFont(PdfFontFamily.helvetica, 12, ),
+    PdfStandardFont(PdfFontFamily.helvetica, 8, ),
     brush: PdfBrushes.black,
-    bounds: Rect.fromLTWH(0, 460, page2.size.width-100, 50),
+    bounds: Rect.fromLTWH(0, 350, 330, 200),
     format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
     ));
 
@@ -528,8 +528,8 @@ class PdfJugadorDatosScout2 {
       page.graphics.drawString(
         _jugador.veredicto==""?"Sin veredicto":_jugador.veredicto.toUpperCase(), PdfStandardFont(PdfFontFamily.helvetica, 15),
         brush: PdfBrushes.yellow,
-        bounds: Rect.fromLTWH(page.size.width-210, 63, 100, 30),
-        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.right));
+        bounds: Rect.fromLTWH(page.size.width-190, 63, 100, 30),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.center));
 
     //EMPRESA
    /* page.graphics.drawString('', PdfStandardFont(PdfFontFamily.helvetica, 18),
@@ -835,9 +835,15 @@ class PdfJugadorDatosScout2 {
       if(p.putuacionJugadorPartido.accion=="SC"){
         s=p.putuacionJugadorPartido.accion;
       }
-      if(p.putuacionJugadorPartido.accion=="NA"){
+      if(p.putuacionJugadorPartido.accion=="T"){
         s=p.putuacionJugadorPartido.accion;
       }
+    if(p.putuacionJugadorPartido.accion=="S"){
+      s=p.putuacionJugadorPartido.accion;
+    }
+    if(p.putuacionJugadorPartido.accion=="NA"){
+      s=p.putuacionJugadorPartido.accion;
+    }
       return s;
   }
 

@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/futbol_mio_icons.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iadvancedscout/pdf/pdfEquipoTemporada.dart';
 import 'package:iadvancedscout/view/entrenadores/entrenadoresView.dart';
 import 'package:iadvancedscout/view/jugadores/jugadoresView.dart';
 import 'package:iadvancedscout/view/partidos/partidosJornadaView.dart';
@@ -90,7 +93,7 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 10,bottom: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 10,bottom: 5),
                   child: Row(
                     mainAxisAlignment:
                     MainAxisAlignment.start ,
@@ -111,54 +114,66 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
                               ),),
                           )
                       ),
-                      SizedBox.fromSize(
-                        size: Size(50, 50), // button width and height
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.grey.shade700,// button color
-                            child: InkWell(
-                              splashColor: Colors.blue, // splash color
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                    PartidosJornadaView(temporada: widget.temporada,
-                                      equipo: widget.equipoDetails,categoria:
-                                      widget.categoria, pais:widget.pais,)));
-                              }, // button pressed
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(CustomIcon.marcador,size: 23, color: Colors.white,), // icon
-                                  //Text("Res.",style: TextStyle(color:Colors.white,fontSize: 10,fontWeight: FontWeight.bold),), // text
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),Container(width: 5,),
-                      SizedBox.fromSize(
-                        size: Size(50, 50), // button width and height
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.grey.shade800, // button color
-                            child: InkWell(
-                              splashColor: Colors.blue, // // splash color
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                    EntrenadoresView(temporada: widget.temporada,
-                                      equipo: widget.equipoDetails,categoria:
-                                      widget.categoria, pais:widget.pais,)));
-                              }, // button pressed
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FutbolMio.entrenador_1,size: 25, color: Colors.white,), // icon
-                                  //Text("",style: TextStyle(color:Colors.white,fontSize: 10,fontWeight: FontWeight.bold),), // text
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    ],
+                  ),
+
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 0,bottom: 20),
+                  child: Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.start ,
+                    children: <Widget>[
+                      SizedBox(
+                          height: 30,width: 120,
+                          child: RaisedButton.icon(
+                            elevation: 10,
+                            onPressed: () {
+                              pdfEquipo(context, widget.equipoDetails);
+                            },
+                            label: Text("Evaluaciones",
+                              style: TextStyle(color: Colors.black, fontSize: 10),),
+                            icon: Icon(CustomIcon.dice_five, size: 15, color: Colors.black,),
+                            textColor: Colors.white,
+                            hoverColor: Colors.black,
+                            splashColor: Colors.blue,
+                            color: Colors.white,)),
+                      Container(width: 2,),
+                      SizedBox(
+                          height: 30,width: 92,
+                          child: RaisedButton.icon(
+                            elevation: 10,
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                                  PartidosJornadaView(temporada: widget.temporada,
+                                    equipo: widget.equipoDetails,categoria:
+                                    widget.categoria, pais:widget.pais,)));
+                            },
+                            label: Text("Partidos",
+                              style: TextStyle(color: Colors.black, fontSize: 10),),
+                            icon: Icon(CustomIcon.marcador, size: 15, color: Colors.black,),
+                            textColor: Colors.white,
+                            hoverColor: Colors.black,
+                            splashColor: Colors.blue,
+                            color: Colors.white,))
+                      ,Container(width: 2,),
+                      SizedBox(
+                          height: 30,width: 120,
+                          child: RaisedButton.icon(
+                            elevation: 10,
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                                  EntrenadoresView(temporada: widget.temporada,
+                                    equipo: widget.equipoDetails,categoria:
+                                    widget.categoria, pais:widget.pais,)));
+                            },
+                            label: Text("Entrenador",
+                              style: TextStyle(color: Colors.black, fontSize: 10),),
+                            icon: Icon(FutbolMio.entrenador_1, size: 15, color: Colors.black,),
+                            textColor: Colors.white,
+                            hoverColor: Colors.black,
+                            splashColor: Colors.blue,
+                            color: Colors.white,))
                     ],
                   ),
 
@@ -177,6 +192,23 @@ class _EquipoCardAuxState extends State<EquipoCardAux> {
     CRUDEquipo dao=CRUDEquipo();
     partidoAUX= await dao.getEquipoPartidos(widget.temporada,widget.pais,widget.categoria,widget.equipoDetails);
 
+  }
+
+  void pdfEquipo(BuildContext context, Equipo equipo) {
+     for(int i=0;i<4;i++) {
+       Fluttertoast.showToast(
+           msg: "Espera...\nEstamos haciendo el \ndocumento del equipo:\n${equipo
+               .equipo}",
+           toastLength: Toast.LENGTH_LONG,
+           gravity: ToastGravity.CENTER,
+           timeInSecForIosWeb: 20,
+           backgroundColor: Colors.red.shade900,
+           textColor: Colors.white,
+           fontSize: 12.0);
+     }
+    PdfEquipoTemporada pdf =
+    PdfEquipoTemporada(widget.temporada, equipo,widget.pais,widget.categoria,);
+    pdf.generateInvoice();
   }
 
   Future<bool> _showConfirmationDialog(

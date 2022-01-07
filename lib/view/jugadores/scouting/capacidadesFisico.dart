@@ -93,6 +93,8 @@ class _CapacidadesFisico extends State<CapacidadesFisico> {
       caract = Player.medioFisico;
     else if (widget._jugador.posicion.toUpperCase().contains("INTERIOR"))
       caract = Player.medioFisico;
+    else if (widget._jugador.posicion.toUpperCase().contains("VOLANTE"))
+      caract = Player.medioFisico;
     else if (widget._jugador.posicion.toUpperCase().contains("CENTROCAMPISTA"))
       caract = Player.medioFisico;
     else if (widget._jugador.posicion.toUpperCase().contains("PIVOTE"))

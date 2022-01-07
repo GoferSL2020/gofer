@@ -12,7 +12,7 @@ import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/partidos/editPartido.dart';
 import 'package:iadvancedscout/view/partidos/tabPuntuaciones.dart';
 
-class PartidoCard extends StatelessWidget {
+class PartidoCard extends StatefulWidget {
   final Partido partido;
   final Temporada temporada;
   final Pais pais;
@@ -30,22 +30,33 @@ class PartidoCard extends StatelessWidget {
         @required this.temporada});
 
   final productProvider = new CRUDPartido();
+  @override
+  _PartidoCardState createState() => new _PartidoCardState();
+}
+
+class _PartidoCardState extends State<PartidoCard> {
+
+
+  @override
+  void initState() {
+    //_cogerPartidos();
+  }
+
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    Color resultadoColor = Config.colorAPP;
-    if (partido.resultado == "GANADO")
-      resultadoColor = Colors.green;
-    else if (partido.resultado == "EMPATE")
-      resultadoColor = Colors.blue[900];
-    else
-      resultadoColor = Colors.red;
     return GestureDetector(
       onTap: () {
         //print("${partido.equipoCASA}:${partido.equipoFUERA}:${partido.id}");
         Navigator.of(context).push(new MaterialPageRoute(
-            builder: (BuildContext context) => TabPuntuaciones(temporada,categoria,pais,partido,jornada)));
+            builder: (BuildContext context) => TabPuntuaciones(widget.temporada,widget.categoria,widget.pais,widget.partido,widget.jornada)));
 
         },
       child: Padding(
@@ -54,7 +65,7 @@ class PartidoCard extends StatelessWidget {
           color: Config.colorCard,
           elevation: 5,
           child: Container(
-            height: 130,
+            height: 133,
             width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: <Widget>[
@@ -63,7 +74,7 @@ class PartidoCard extends StatelessWidget {
                   color: Colors.blue.shade900,
                   child:Center(
                   child:Text(
-                    'Scouter: ${partido.observador}',
+                    'Scouter: ${widget.partido.observador}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
@@ -82,21 +93,19 @@ class PartidoCard extends StatelessWidget {
                 children: [
                   TableRow(children: [
                     Image.network(
-                        Config.escudoClubes(partido.equipoCASA),
-                        // "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2F${widget.equipoDetails.equipo}.png?alt=media",
+                        Config.escudoClubes(widget.partido.equipoCASA),
                         height: 35
                     ),
                     Text(
-                        "${partido.equipoCASA}",
+                        "${widget.partido.equipoCASA}",
                         style: TextStyle(fontSize: 12, color: Colors.black,fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center),
                     Text(
-                        "${partido.equipoFUERA}",
+                        "${widget.partido.equipoFUERA}",
                         style: TextStyle(fontSize: 12, color: Colors.black,fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center),
                     Image.network(
-                        Config.escudoClubes(partido.equipoFUERA),
-                        // "https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2F${widget.equipoDetails.equipo}.png?alt=media",
+                        Config.escudoClubes(widget.partido.equipoFUERA),
                         height: 35
                     ),
 
@@ -114,101 +123,92 @@ class PartidoCard extends StatelessWidget {
                       TableRow(children: [
                          Container(),
                         Text(
-                            partido.golesCASA!=""?"${partido.golesCASA}":"-",
+                            widget.partido.golesCASA!=""?"${widget.partido.golesCASA}":"-",
                             style: TextStyle(fontSize: 20, color: Colors.green.shade900,fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center),
                         Text(
-                            partido.golesFUERA!=""?"${partido.golesFUERA}":"-",
+                            widget.partido.golesFUERA!=""?"${widget.partido.golesFUERA}":"-",
                             style: TextStyle(fontSize: 20, color: Colors.green.shade900,fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center),
                           Container(),
 
                       ]),
                     ]),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-            SizedBox(
-                height: 30,width: 100,
-                child: RaisedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditPartido(
-                      temporada: temporada,
-                      pais: pais,
-                      categoria: categoria,
-                      partido: partido,
-                      jornada: jornada,
-                    )));
-              },
-              label: Text("Editar",
-                style: TextStyle(color: Colors.black, fontSize: 11),),
-              icon: Icon(CustomIcon.marcador, size: 20, color: Colors.black,),
-              textColor: Colors.white,
-              splashColor: Colors.blue,
-              color: Colors.white,)),Container(width: 5,)
-                    ],
-                  ),
-                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    new Text("Evaluado",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+
+                        )),
+                    Switch(
+                      value: widget.partido.accion=="Evaluado"?true:false,
+                      onChanged: (newValue) {
+                        setState(() {
+                          newValue==true?widget.partido.accion="Evaluado":widget.partido.accion="Sin evaluar";
+                          CRUDPartido().updatePartidoAccion(widget.temporada,widget.pais,widget.categoria,widget.jornada,widget.partido);
+                        });
+                      },
+                      activeTrackColor: Colors.green[900],
+                      activeColor: Colors.green[900],
+                    ),
+                    new Text("Sin evaluar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+
+                        )),
+                    Switch(
+                      value: widget.partido.accion=="Sin evaluar"?true:false,
+                      onChanged: (newValue) {
+                        setState(() {
+                          newValue==true?widget.partido.accion="Sin evaluar":widget.partido.accion="Evaluado";
+                          CRUDPartido().updatePartidoAccion(widget.temporada,widget.pais,widget.categoria,widget.jornada,widget.partido);
+                        });
+                      },
+                      activeTrackColor: Colors.red[900],
+                      activeColor: Colors.red[900],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          SizedBox(
+                              height: 30,width: 100,
+                              child: RaisedButton.icon(
+                                elevation: 20,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => EditPartido(
+                                        temporada: widget.temporada,
+                                        pais: widget.pais,
+                                        categoria: widget.categoria,
+                                        partido: widget.partido,
+                                        jornada: widget.jornada,
+                                      )));
+                                },
+                                label: Text("Editar",
+                                  style: TextStyle(color: Colors.black, fontSize: 11),),
+                                icon: Icon(CustomIcon.marcador, size: 20, color: Colors.black,),
+                                textColor: Colors.white,
+                                hoverColor: Colors.black,
+                                splashColor: Colors.blue,
+                                color: Colors.white,)),Container(width: 5,)
+                        ],
+                      ),
+                    ),
+                  ],),
+
 
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  _displaySnackBar(BuildContext context,String frase) {
-    final snackBar = SnackBar(
-        content: Container(
-            height: 100,
-            width: 350,
-            color: Colors.red[900],
-            child: Center(child: Text("No está la ${frase}", style: TextStyle(fontSize: 30)))),
-        duration: Duration(seconds: 2));
-    _scaffoldkey.currentState.showSnackBar(snackBar);
-  }
-
-  Future<bool> _showConfirmationDialog(
-      BuildContext context, String action, Temporada temporada,Pais pais,Categoria categoria,Jornada jornada,Partido partido) {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text('ATENCIÓN',style: TextStyle(fontSize: 18,decoration: TextDecoration.underline,)),
-          content:
-              Column(children: [
-                Container(height: 10,),
-                Text('¿Quieres $action el partido?'),
-                Container(height: 10,),
-                Text('Eliminar los datos del partido',style: TextStyle(color: Colors.red, fontSize: 18,decoration: TextDecoration.underline,)),
-                Container(height: 10,),
-              ],),
-          actions: <Widget>[
-            FlatButton(
-              child:  Text('Aceptar',style:TextStyle(fontSize: 12, color: Colors.green[900])),
-              onPressed: () {
-                Navigator.pop(context, true);
-                true
-                    ? productProvider.removePartido(temporada,pais,categoria,jornada,partido)
-                    : "";
-                return true; // showDialog() returns true
-              },
-            ),
-            FlatButton(
-              child: Text('Cancelar',style:TextStyle(fontSize: 12, color: Config.colorAPP),),
-              onPressed: () {
-                Navigator.pop(context, false);
-                return false; // showDialog() returns false
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 

@@ -169,14 +169,14 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
                   subtitle:
                 GestureDetector(
                 onTap: () async{
-                  CRUDJornada dao=CRUDJornada();
+                  /*CRUDJornada dao=CRUDJornada();
                   String key=await dao.getJornadaByNumero(widget.temporada,widget.pais,widget.categoria,values[index].jornada);
                   Jornada jornada=new Jornada(values[index].jornada, values[index].fecha);
                   jornada.id=key;
                  // print("${values[index].equipoCASA}:${values[index].equipoFUERA}:${values[index].id}");
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => TabPuntuaciones(widget.temporada,widget.categoria,widget.pais,values[index],jornada)));
-
+*/
                 },
                   //AD Ceuta:Villanovense:2DvtLnNubpkJkuE66mWE
                   //AD Ceuta:Villanovense:2DvtLnNubpkJkuE66mWE
@@ -233,17 +233,16 @@ class _PartidosJornadaViewState extends State<PartidosJornadaView> {
                           ]),
                     ),
                       Container(
-                        alignment: Alignment.bottomLeft,
-                          color: values[index].accion== "Sin imágenes" ? Colors.grey.shade700 : values[index].accion== "Sin visualizar"?Colors.purpleAccent:values[index].accion== "Aplazado" ? Colors.red :Colors.white,
+                          alignment: Alignment.bottomLeft,
                           padding: EdgeInsets.all(4.0),
                           width: 180,
                           height: 20,
                           child: Center(
                               child:
-                              Text(values[index].accion.toUpperCase()!=""?"Visionado, ${values[index].accion.toUpperCase()}":"",
+                              Text(values[index].accion,
                                   style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
+                                      color: values[index].accion== "Evaluado" ? Colors.green.shade700 : values[index].accion== "Sin evaluar"?Colors.red.shade900:Colors.black,
+                                      fontSize: 12,
                                   fontWeight: FontWeight.bold)))),
 
 

@@ -166,7 +166,12 @@ class _PartidosViewState extends State<PartidosView> {
                 return Text('fetching');
               }
             }),
-          )
+          ),
+              Container(
+                height: 40,
+                width: double.infinity,
+
+                ),
         ]
          ),
       ),

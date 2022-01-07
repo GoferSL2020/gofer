@@ -74,7 +74,10 @@ Widget build(BuildContext context) {
       caract=Player.medioOfensivas;
     else  if(widget._jugador.posicion.toUpperCase().contains("INTERIOR"))
       caract=Player.medioOfensivas;
-    else  if(widget._jugador.posicion.toUpperCase().contains("CENTROCAMPISTA"))
+     else  if(widget._jugador.posicion.toUpperCase().contains("VOLANTE"))
+       caract=Player.medioOfensivas;
+
+     else  if(widget._jugador.posicion.toUpperCase().contains("CENTROCAMPISTA"))
       caract=Player.medioOfensivas;
     else  if(widget._jugador.posicion.toUpperCase().contains("PIVOTE"))
       caract=Player.medioOfensivas;

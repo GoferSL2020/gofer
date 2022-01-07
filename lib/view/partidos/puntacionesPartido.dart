@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
+import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/view/partidos/notaPuntuacionJornada.dart';
 
 
 class PuntacionesPartido extends StatefulWidget {
   final List<Player> jugadores;
+  final Partido partido;
 
-  PuntacionesPartido({@required this.jugadores});
+  PuntacionesPartido({@required this.jugadores, this.partido});
   @override
 
   State<StatefulWidget> createState() {
@@ -39,10 +41,9 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                       itemCount: widget.jugadores.length,
                       itemBuilder: (context, index)
                         {
-                          print(widget.jugadores[index].jugador);
                           return
                             ListTile(
-                              title: NotaPuntuacionJornada(jugador: widget.jugadores[index])
+                              title: NotaPuntuacionJornada(partido:widget.partido,jugador: widget.jugadores[index])
                             );
                         }
                     ):Container(

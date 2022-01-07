@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
+import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPartido.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
@@ -61,7 +63,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
     List<Player> jugadoresFUERAAUX;
      jugadoresCASAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoCASA);
     jugadoresFUERAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoFUERA);
-    try {
+    /*try {
       await dao.fetchJugadoresPuntuaciones(
           "jugadoresCASA",
           jugadoresCASAAUX,
@@ -82,7 +84,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
     }catch(e){
       //print(e.toString());
-    }
+    }*/
     setState(() {
       _jugadoresCASA=jugadoresCASAAUX;
       _jugadoresFUERA=jugadoresFUERAAUX;
@@ -114,7 +116,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                 )
               ],
                   backgroundColor: Colors.black,
-                  title: Text("IAScout -Puntuaciones",
+                  title: Text("IAScout - Puntuaciones",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -173,13 +175,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           for(var d in _jugadoresFUERA){
                             setState(() {
                               d.accion="SIM";
-                              d.puntuacion=0;
+                              d.puntuacion="SIM";
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
                               d.accion="SIM";
-                              d.puntuacion=0;
+                              d.puntuacion="SIM";
                             });
                           }
                           setState(() {
@@ -189,13 +191,10 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuaciones(
+                            dao.updateJugadorPuntuacionesMigrar(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                            dao.updatePartidoAccion(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,"SIM");
-                            Fluttertoast.showToast(
+                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
@@ -236,13 +235,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           setState(() {
                           for(var d in _jugadoresFUERA){
                               d.accion="SV";
-                              d.puntuacion=0;
+                              d.puntuacion="SV";
                           }
                           });
                           setState(() {
                             for(var d in _jugadoresCASA){
                               d.accion="SV";
-                              d.puntuacion=0;
+                              d.puntuacion="SV";
                           }
                           });
                           setState(() {
@@ -252,13 +251,10 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuaciones(
+                            dao.updateJugadorPuntuacionesMigrar(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                            dao.updatePartidoAccion(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,"SV");
-                            Fluttertoast.showToast(
+                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
@@ -299,13 +295,13 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           for(var d in _jugadoresFUERA){
                             setState(() {
                               d.accion="A";
-                              d.puntuacion=0;
+                              d.puntuacion="A";
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
                               d.accion="A";
-                              d.puntuacion=0;
+                              d.puntuacion="A";
                             });
                           }
                           setState(() {
@@ -315,13 +311,10 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuaciones(
+                            dao.updateJugadorPuntuacionesMigrar(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                            dao.updatePartidoAccion(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,"A");
-                            Fluttertoast.showToast(
+                             Fluttertoast.showToast(
                                 msg: "Se ha grabado",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
@@ -418,8 +411,8 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
             TabBarView(
               controller: _controller,
               children: [
-                PuntacionesPartido(jugadores:  _jugadoresCASA,),
-                PuntacionesPartido(jugadores:  _jugadoresFUERA,),
+                PuntacionesPartido(partido: widget.partido, jugadores:  _jugadoresCASA,),
+                PuntacionesPartido(partido: widget.partido,jugadores:  _jugadoresFUERA,),
               ],
             ),),
         ])
@@ -468,10 +461,10 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
             FlatButton(
               child: Text('Aceptar',
                   style: TextStyle(fontSize: 16, color: Colors.green[900])),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(context, true);
                 CRUDJugador con = new CRUDJugador();
-                con.updateJugadorPuntuaciones(
+                 con.updateJugadorPuntuacionesMigrar(
                     widget.temporada,widget.pais,widget.categoria,widget.jornada,
                     widget.partido,_jugadoresCASA,_jugadoresFUERA);
 

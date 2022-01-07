@@ -66,6 +66,8 @@ class _CualidadesPsicologia extends State<CualidadesPsicologia> {
       caract=Player.medioPsicologia;
     else  if(widget._jugador.posicion.toUpperCase().contains("INTERIOR"))
       caract=Player.medioPsicologia;
+    else  if(widget._jugador.posicion.toUpperCase().contains("VOLANTE"))
+      caract=Player.medioPsicologia;
     else  if(widget._jugador.posicion.toUpperCase().contains("CENTROCAMPISTA"))
       caract=Player.medioPsicologia;
     else  if(widget._jugador.posicion.toUpperCase().contains("PIVOTE"))
