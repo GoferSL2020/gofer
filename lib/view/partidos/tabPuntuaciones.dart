@@ -174,14 +174,14 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           CRUDPartido dao = new CRUDPartido();
                           for(var d in _jugadoresFUERA){
                             setState(() {
-                              d.accion="SIM";
-                              d.puntuacion="SIM";
+                              d.estado="SIM";
+                              d.puntuacion="";
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
-                              d.accion="SIM";
-                              d.puntuacion="SIM";
+                              d.estado="SIM";
+                              d.puntuacion="";
                             });
                           }
                           setState(() {
@@ -191,7 +191,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesMigrar(
+                            dao.updateJugadorPuntuacionesPartido(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
                              Fluttertoast.showToast(
@@ -214,7 +214,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           }
                         },
                         label: Text(
-                          "Sin video",
+                          "Sin imág.",
                           style: TextStyle(color: Colors.white, fontSize: 10),
                         ),
                         icon: Icon(
@@ -234,14 +234,14 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                         onPressed: () {
                           setState(() {
                           for(var d in _jugadoresFUERA){
-                              d.accion="SV";
-                              d.puntuacion="SV";
+                              d.estado="SV";
+                              d.puntuacion="";
                           }
                           });
                           setState(() {
                             for(var d in _jugadoresCASA){
-                              d.accion="SV";
-                              d.puntuacion="SV";
+                              d.estado="SV";
+                              d.puntuacion="";
                           }
                           });
                           setState(() {
@@ -251,7 +251,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesMigrar(
+                            dao.updateJugadorPuntuacionesPartido(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
                              Fluttertoast.showToast(
@@ -294,14 +294,14 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                         onPressed: () {
                           for(var d in _jugadoresFUERA){
                             setState(() {
-                              d.accion="A";
-                              d.puntuacion="A";
+                              d.estado="A";
+                              d.puntuacion="";
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
-                              d.accion="A";
-                              d.puntuacion="A";
+                              d.estado="A";
+                              d.puntuacion="";
                             });
                           }
                           setState(() {
@@ -311,7 +311,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                           try {
                             CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesMigrar(
+                            dao.updateJugadorPuntuacionesPartido(
                                 widget.temporada,widget.pais,widget.categoria,widget.jornada,
                                 widget.partido,_jugadoresCASA,_jugadoresFUERA);
                              Fluttertoast.showToast(
@@ -464,7 +464,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
               onPressed: () async {
                 Navigator.pop(context, true);
                 CRUDJugador con = new CRUDJugador();
-                 con.updateJugadorPuntuacionesMigrar(
+                 con.updateJugadorPuntuacionesPartido(
                     widget.temporada,widget.pais,widget.categoria,widget.jornada,
                     widget.partido,_jugadoresCASA,_jugadoresFUERA);
 

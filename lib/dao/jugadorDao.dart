@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:iadvancedscout/model/categoria.dart';
 import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iadvancedscout/modelo/EquipoCloud.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
@@ -78,10 +79,10 @@ class JugadorDao {
     return list;
   }
 
-  getPuntacionesJornadas() async {
+  getPuntacionesJornadas(String categoria) async {
     var dbClient = await con.db;
-    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES ");
-       // " where CATEGORIA='${categoria.categoria}' and EQUIPO='${equipo.equipo}' "
+    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES where"
+        " CATEGORIA='$categoria'");
         //" ORDER BY ENTRENADOR.ENTRENADOR");
 
     List<Player> list =
@@ -717,7 +718,7 @@ class JugadorDao {
     return list;
   }
 
-  getJugadores(Equipo _equipo)  async {
+  /*getJugadores(Equipo _equipo)  async {
     List<EquipoCloud> equipos= await getDataCollectionEquipos("rAeKFLQSry7l1x0WVW01");
     List<Jugador> lista = new List();
     print("getJugadores");
@@ -741,23 +742,21 @@ class JugadorDao {
       });
     }
     return lista;
-  }
+  }*/
 
 
 
 
 
-  Future <List<EquipoCloud>> getDataCollectionEquipos(String categoria) async{
+  Future <List<EquipoCloud>> getDataCollectionEquipos(String temporada,String pais,String categoria) async{
     List<EquipoCloud> equipos=List();
-
+    print(categoria);
     Stream<QuerySnapshot> q= _db.
-    collection("temporadas").doc("BuJNv17ghCPGnq37P2ev").
-    collection("paises").doc("FmUmyJV68ACrLHozX3oa").
+    collection("temporadas").doc(temporada).
+    collection("paises").doc(pais).
     collection("categorias").doc(categoria).
     collection("equipos").
     orderBy("equipo", descending: false).snapshots();
-
-
     q.forEach((element) {
       element.docs.forEach((element) {
         EquipoCloud eq=new EquipoCloud();

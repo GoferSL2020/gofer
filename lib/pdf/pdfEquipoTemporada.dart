@@ -298,12 +298,14 @@ class PdfEquipoTemporada {
       anchoMAX=35;
     double log=_partidos.length/2.round();
     for (int i=0;i<_jugadores.length;i++) {
-     page.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. ${_jugadores[i].jugador.replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
+     page.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. "
+         "${_jugadores[i].jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
       PdfStandardFont(PdfFontFamily.helvetica, 7, style: PdfFontStyle.bold),
       format: PdfStringFormat(alignment: PdfTextAlignment.left,),
       bounds:  Rect.fromLTWH(10, altura.toDouble() , 120, 25),
       brush: PdfSolidBrush(colorNegro));
-     page2.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. ${_jugadores[i].jugador.replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
+     page2.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. "
+      "${_jugadores[i].jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
          PdfStandardFont(PdfFontFamily.helvetica, 7, style: PdfFontStyle.bold),
          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
          bounds:  Rect.fromLTWH(10, altura.toDouble() , 120, 25),
@@ -348,8 +350,7 @@ class PdfEquipoTemporada {
       }
       altura=105;
       for(int k=0;k<_jugadores.length;k++) {
-        print("${_partidos[j].jornada}:${_jugadores[k].jugador}:${_jugadores[k].puntaciones_jornada_1}:${_jugadores[k].puntaciones_jornada_2}");
-        PdfColor color= colorAccion(puntuacionJornada(_partidos[j], _jugadores[k]));
+        PdfColor color= colorAccion(estadoJornada(_partidos[j], _jugadores[k]));
         page.graphics.drawRectangle(
             brush: PdfSolidBrush(color),
             bounds: Rect.fromLTWH(ancho.toDouble(), altura.toDouble(),30, 15));
@@ -402,8 +403,7 @@ class PdfEquipoTemporada {
 
       altura=105;
       for(int k=0;k<_jugadores.length;k++) {
-        print("${_partidos[j].jornada}:${_jugadores[k].jugador}:${_jugadores[k].accion}:${_jugadores[k].puntuacion}");
-        PdfColor color= colorAccion(puntuacionJornada(_partidos[j], _jugadores[k]));
+        PdfColor color= colorAccion(estadoJornada(_partidos[j], _jugadores[k]));
         page2.graphics.drawRectangle(
             brush: PdfSolidBrush(color),
             bounds: Rect.fromLTWH(ancho.toDouble(), altura.toDouble(),30, 15));
@@ -438,38 +438,6 @@ class PdfEquipoTemporada {
     return color;
   }
 
-  String puntuacion(Partido p, Player jug) {
-    String s=jug.puntuacion.toString();
-    if((p.golesFUERA=="")&&(p.golesFUERA=="")){
-      s="";
-    }
-    if(jug.puntuacion=="SIM"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="SV"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="SC"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="A"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="NA"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="T"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="S"){
-      s=jug.puntuacion;
-    }
-    if(jug.puntuacion=="A"){
-      s=jug.puntuacion;
-    }
-    print(s);
-    return s;
-  }
 
   String puntuacionJornada(Partido p, Player jug) {
     String s="";
@@ -520,6 +488,62 @@ class PdfEquipoTemporada {
     if(p.jornada==45) s=jug.puntaciones_jornada_45;
     if(p.jornada==46) s=jug.puntaciones_jornada_46;
     if(s==null)s="";
+    if(s==""){
+      s=estadoJornada(p, jug);
+    }
+    print(s);
+    return s;
+  }
+
+  String estadoJornada(Partido p, Player jug) {
+    String s="";
+    if(p.jornada==1) s=jug.estado_jornada_1;
+    if(p.jornada==2) s=jug.estado_jornada_2;
+    if(p.jornada==3) s=jug.estado_jornada_3;
+    if(p.jornada==4) s=jug.estado_jornada_4;
+    if(p.jornada==5) s=jug.estado_jornada_5;
+    if(p.jornada==6) s=jug.estado_jornada_6;
+    if(p.jornada==7) s=jug.estado_jornada_7;
+    if(p.jornada==8) s=jug.estado_jornada_8;
+    if(p.jornada==9) s=jug.estado_jornada_9;
+    if(p.jornada==10) s=jug.estado_jornada_10;
+    if(p.jornada==11) s=jug.estado_jornada_11;
+    if(p.jornada==12) s=jug.estado_jornada_12;
+    if(p.jornada==13) s=jug.estado_jornada_13;
+    if(p.jornada==14) s=jug.estado_jornada_14;
+    if(p.jornada==15) s=jug.estado_jornada_15;
+    if(p.jornada==16) s=jug.estado_jornada_16;
+    if(p.jornada==17) s=jug.estado_jornada_17;
+    if(p.jornada==18) s=jug.estado_jornada_18;
+    if(p.jornada==19) s=jug.estado_jornada_19;
+    if(p.jornada==20) s=jug.estado_jornada_20;
+    if(p.jornada==21) s=jug.estado_jornada_21;
+    if(p.jornada==22) s=jug.estado_jornada_22;
+    if(p.jornada==23) s=jug.estado_jornada_23;
+    if(p.jornada==24) s=jug.estado_jornada_24;
+    if(p.jornada==25) s=jug.estado_jornada_25;
+    if(p.jornada==26) s=jug.estado_jornada_26;
+    if(p.jornada==27) s=jug.estado_jornada_27;
+    if(p.jornada==28) s=jug.estado_jornada_28;
+    if(p.jornada==29) s=jug.estado_jornada_29;
+    if(p.jornada==30) s=jug.estado_jornada_30;
+    if(p.jornada==31) s=jug.estado_jornada_31;
+    if(p.jornada==32) s=jug.estado_jornada_32;
+    if(p.jornada==33) s=jug.estado_jornada_33;
+    if(p.jornada==34) s=jug.estado_jornada_34;
+    if(p.jornada==35) s=jug.estado_jornada_35;
+    if(p.jornada==36) s=jug.estado_jornada_36;
+    if(p.jornada==37) s=jug.estado_jornada_37;
+    if(p.jornada==38) s=jug.estado_jornada_38;
+    if(p.jornada==39) s=jug.estado_jornada_39;
+    if(p.jornada==40) s=jug.estado_jornada_40;
+    if(p.jornada==41) s=jug.estado_jornada_41;
+    if(p.jornada==42) s=jug.estado_jornada_42;
+    if(p.jornada==43) s=jug.estado_jornada_43;
+    if(p.jornada==44) s=jug.estado_jornada_44;
+    if(p.jornada==45) s=jug.estado_jornada_45;
+    if(p.jornada==46) s=jug.estado_jornada_46;
+    if(s==null)s="";
     print(s);
     return s;
   }
@@ -532,11 +556,8 @@ class PdfEquipoTemporada {
     if(accion=="SV"){
       color=colorMorado;
     }
-    if(accion=="SC"){
-      color=colorAzulClaro;
-    }
     if(accion=="A"){
-      color=colorRojo;
+      color=colorAzulClaro;
     }
     if(accion=="T"){
       color=colorVerde;

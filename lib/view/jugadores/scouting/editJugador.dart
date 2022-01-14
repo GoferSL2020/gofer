@@ -140,7 +140,7 @@ Carrilero izquierdo
   void initState() {
     _nombre.text = widget.jugador.jugador;
     _valor.text=widget.jugador.valor;
-    _prestamo=widget.jugador.prestamo=="no"?false:true;
+    _prestamo=widget.jugador.prestamo=="si"?true:false;
     _fecha = widget.jugador.fechaNacimiento;
     _fechaContrato = widget.jugador.fechaContrato;
     _CCAA.text= widget.jugador.ccaa;
@@ -584,7 +584,12 @@ Carrilero izquierdo
                         fontSize: 12,
                         labels: ['derecho', 'izquierdo','unknown'],
                         onToggle: (index) {
-                          _lateral=Config.lateral[index];
+                          print(index);
+                          setState(() {
+                            _lateral=Config.lateral[index];
+                            widget.jugador.lateral=Config.lateral[index];
+                          });
+
                         },
                       )),
                 ],
@@ -680,10 +685,9 @@ Carrilero izquierdo
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
-                      width: 185,
                       padding: EdgeInsets.all(10.0),
                       child: ToggleSwitch(
-                        minWidth: 80,
+                        minWidth: 110,
                         minHeight: 30,
                         initialLabelIndex:
                         Config.getValue(widget.jugador.nacionalidad),
@@ -691,11 +695,15 @@ Carrilero izquierdo
                         inactiveBgColor: Colors.grey[300],
                         inactiveFgColor: Colors.black,
                         fontSize: 12,
-                        labels: widget.jugador.categoria.contains("Argentina")?['Argentina', 'Extranjero']:['Español', 'Extranjero'],
+                        labels: widget.jugador.categoria.contains("Argentina")?['Argentina', 'Extranjero']:['Nacional', 'Extranjero','Nacionalizado'],
                         onToggle: (index) {
-                          _extranjero=widget.jugador.categoria.contains("Argentina")?
-                          Config.extranjeroArgentino[index]
-                              :Config.extranjero[index];
+                          setState(() {
+                            _extranjero=widget.jugador.categoria.contains("Argentina")?
+                            Config.extranjeroArgentino[index]
+                                :Config.extranjero[index];
+                            widget.jugador.nacionalidad=_extranjero;
+                          });
+
                         },
                       )),
                 ],
@@ -764,13 +772,8 @@ Carrilero izquierdo
                         await con.addJugadorDatos(
                             widget.temporada, widget.pais, widget.categoria,
                             widget.equipo, widget.jugador);
-                       print(widget.jugador.key);
-                        con.addJugadorDatosDATABIG(
-                            widget.temporada, widget.pais, widget.categoria,
-                            widget.equipo, widget.jugador);
                       }else {
                         con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
-                        con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
                       }
                       //jugadorService.updateJugadorIAScout(widget.jugador,false);
                       //ProductManager().insert(widget.jugador);

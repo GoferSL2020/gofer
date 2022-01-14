@@ -10,6 +10,7 @@ import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:open_file/open_file.dart' as open_file;
 
 /// Represents the PDF widget class.
 class PDFDestacados {
@@ -195,20 +196,21 @@ class PDFDestacados {
     // drawFooter(page, pageSize);
     // drawFooter(page2, pageSize2);
     //Save and launch the document
+    String now=DateTime.now().toString();
+    //Save and launch the document
     final List<int> bytes = document.save();
     //Dispose the document.
     document.dispose();
-    //Set the page size
     //Get the storage folder location using path_provider package.
     final Directory directory =
     await path_provider.getApplicationDocumentsDirectory();
     final String path = directory.path;
-    final File file = File('$path/jugadores.pdf');
+    final File file = File('$path/Dest_${jornada.jornada}_${now}.pdf');
     await file.writeAsBytes(bytes);
     //Launch the file (used open_file package)
+    await open_file.OpenFile.open('$path/Dest_${jornada.jornada}_${now}.pdf');
 
-    return '$path/jugadores.pdf';
-    //await open_file.OpenFile.open('$path/output.pdf');
+    //return '$path/jugadores.pdf';
 
   }
 

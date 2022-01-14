@@ -19,6 +19,7 @@ import 'package:iadvancedscout/model/equipo.dart';
 import 'package:iadvancedscout/model/jugador.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
+import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/splash.dart';
 import 'package:path_provider/path_provider.dart';
 

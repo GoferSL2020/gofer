@@ -64,24 +64,15 @@ class PdfJugadorDatosScout2 {
   CRUDEquipo dao = CRUDEquipo();
 
   Future<List<Partido>> partidosJornada() async {
-    var partidos =await dao.getEquipoPartidos(
-        _temporada, _pais, _categoria, _equipo);
+    var partidos = await CRUDEquipo().getEquipoPartidos(_temporada, _pais, _categoria, _equipo);
     await new Future.delayed(new Duration(seconds: 1));
+
     partidos.sort((a, b) => a.jornada.compareTo(b.jornada));
     int longitudPuntuaciones=0;
     for (var i=0;i<partidos.length;i++) {
-      partidos[i].putuacionJugadorPartido=new AccionPutuacionJugadorPartido();
-      var imgequipo;
-      if (partidos[i].equipoCASA == _equipo.equipo)
-        partidos[i].putuacionJugadorPartido =await dao.getPuntosPartidos(
-            _temporada, _pais, _categoria, _equipo, partidos[i], _jugador, "jugadoresCASA" );
-      else
-        partidos[i].putuacionJugadorPartido =await dao.getPuntosPartidos(
-            _temporada, _pais, _categoria, _equipo, partidos[i], _jugador, "jugadoresFUERA" );
-
       double aux=0;
       try{
-        aux=double.parse(partidos[i].putuacionJugadorPartido.putuacion);
+        aux=double.parse(puntuacionJornada(partidos[i], _jugador));
         aux>0?longitudPuntuaciones++:null;
 
       }catch(o){
@@ -96,18 +87,169 @@ class PdfJugadorDatosScout2 {
 
     return partidos;
   }
+/*
+  print("${_partidos[j].jornada}:${_jugadores[k].jugador}:${_jugadores[k].puntaciones_jornada_1}:${_jugadores[k].puntaciones_jornada_2}");
+  PdfColor color= colorAccion(puntuacionJornada(_partidos[j], _jugadores[k]));
+  page.graphics.drawRectangle(
+  brush: PdfSolidBrush(color),
+  bounds: Rect.fromLTWH(ancho.toDouble(), altura.toDouble(),30, 15));
+  page.graphics.drawString(puntuacionJornada(_partidos[j], _jugadores[k]),
+  PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
+  format: PdfStringFormat(alignment: PdfTextAlignment.center,),
+  bounds: Rect.fromLTWH(ancho.toDouble(), altura.toDouble(),30, 15),
+  brush: PdfSolidBrush(colorNegro,)
+  );*/
 
-   imagenesJornadaStorag()  async {
+
+
+  imagenesJornadaStorag()  async {
      await Config.imagenesClubes.forEach((element) {
        _imagenes.add(element);
        element.club;
 
       });
-
-
    }
 
-    Future<List<dynamic>> imagenesJornada() async {
+
+
+
+  String puntuacionJornada(Partido p, Player jug) {
+    String s="";
+    if(p.jornada==1) s=jug.puntaciones_jornada_1;
+    if(p.jornada==2) s=jug.puntaciones_jornada_2;
+    if(p.jornada==3) s=jug.puntaciones_jornada_3;
+    if(p.jornada==4) s=jug.puntaciones_jornada_4;
+    if(p.jornada==5) s=jug.puntaciones_jornada_5;
+    if(p.jornada==6) s=jug.puntaciones_jornada_6;
+    if(p.jornada==7) s=jug.puntaciones_jornada_7;
+    if(p.jornada==8) s=jug.puntaciones_jornada_8;
+    if(p.jornada==9) s=jug.puntaciones_jornada_9;
+    if(p.jornada==10) s=jug.puntaciones_jornada_10;
+    if(p.jornada==11) s=jug.puntaciones_jornada_11;
+    if(p.jornada==12) s=jug.puntaciones_jornada_12;
+    if(p.jornada==13) s=jug.puntaciones_jornada_13;
+    if(p.jornada==14) s=jug.puntaciones_jornada_14;
+    if(p.jornada==15) s=jug.puntaciones_jornada_15;
+    if(p.jornada==16) s=jug.puntaciones_jornada_16;
+    if(p.jornada==17) s=jug.puntaciones_jornada_17;
+    if(p.jornada==18) s=jug.puntaciones_jornada_18;
+    if(p.jornada==19) s=jug.puntaciones_jornada_19;
+    if(p.jornada==20) s=jug.puntaciones_jornada_20;
+    if(p.jornada==21) s=jug.puntaciones_jornada_21;
+    if(p.jornada==22) s=jug.puntaciones_jornada_22;
+    if(p.jornada==23) s=jug.puntaciones_jornada_23;
+    if(p.jornada==24) s=jug.puntaciones_jornada_24;
+    if(p.jornada==25) s=jug.puntaciones_jornada_25;
+    if(p.jornada==26) s=jug.puntaciones_jornada_26;
+    if(p.jornada==27) s=jug.puntaciones_jornada_27;
+    if(p.jornada==28) s=jug.puntaciones_jornada_28;
+    if(p.jornada==29) s=jug.puntaciones_jornada_29;
+    if(p.jornada==30) s=jug.puntaciones_jornada_30;
+    if(p.jornada==31) s=jug.puntaciones_jornada_31;
+    if(p.jornada==32) s=jug.puntaciones_jornada_32;
+    if(p.jornada==33) s=jug.puntaciones_jornada_33;
+    if(p.jornada==34) s=jug.puntaciones_jornada_34;
+    if(p.jornada==35) s=jug.puntaciones_jornada_35;
+    if(p.jornada==36) s=jug.puntaciones_jornada_36;
+    if(p.jornada==37) s=jug.puntaciones_jornada_37;
+    if(p.jornada==38) s=jug.puntaciones_jornada_38;
+    if(p.jornada==39) s=jug.puntaciones_jornada_39;
+    if(p.jornada==40) s=jug.puntaciones_jornada_40;
+    if(p.jornada==41) s=jug.puntaciones_jornada_41;
+    if(p.jornada==42) s=jug.puntaciones_jornada_42;
+    if(p.jornada==43) s=jug.puntaciones_jornada_43;
+    if(p.jornada==44) s=jug.puntaciones_jornada_44;
+    if(p.jornada==45) s=jug.puntaciones_jornada_45;
+    if(p.jornada==46) s=jug.puntaciones_jornada_46;
+    if(s==null)s="";
+    if(s==""){
+      s=estadoJornada(p, jug);
+    }
+    print(s);
+    return s;
+  }
+
+  String estadoJornada(Partido p, Player jug) {
+    String s="";
+    if(p.jornada==1) s=jug.estado_jornada_1;
+    if(p.jornada==2) s=jug.estado_jornada_2;
+    if(p.jornada==3) s=jug.estado_jornada_3;
+    if(p.jornada==4) s=jug.estado_jornada_4;
+    if(p.jornada==5) s=jug.estado_jornada_5;
+    if(p.jornada==6) s=jug.estado_jornada_6;
+    if(p.jornada==7) s=jug.estado_jornada_7;
+    if(p.jornada==8) s=jug.estado_jornada_8;
+    if(p.jornada==9) s=jug.estado_jornada_9;
+    if(p.jornada==10) s=jug.estado_jornada_10;
+    if(p.jornada==11) s=jug.estado_jornada_11;
+    if(p.jornada==12) s=jug.estado_jornada_12;
+    if(p.jornada==13) s=jug.estado_jornada_13;
+    if(p.jornada==14) s=jug.estado_jornada_14;
+    if(p.jornada==15) s=jug.estado_jornada_15;
+    if(p.jornada==16) s=jug.estado_jornada_16;
+    if(p.jornada==17) s=jug.estado_jornada_17;
+    if(p.jornada==18) s=jug.estado_jornada_18;
+    if(p.jornada==19) s=jug.estado_jornada_19;
+    if(p.jornada==20) s=jug.estado_jornada_20;
+    if(p.jornada==21) s=jug.estado_jornada_21;
+    if(p.jornada==22) s=jug.estado_jornada_22;
+    if(p.jornada==23) s=jug.estado_jornada_23;
+    if(p.jornada==24) s=jug.estado_jornada_24;
+    if(p.jornada==25) s=jug.estado_jornada_25;
+    if(p.jornada==26) s=jug.estado_jornada_26;
+    if(p.jornada==27) s=jug.estado_jornada_27;
+    if(p.jornada==28) s=jug.estado_jornada_28;
+    if(p.jornada==29) s=jug.estado_jornada_29;
+    if(p.jornada==30) s=jug.estado_jornada_30;
+    if(p.jornada==31) s=jug.estado_jornada_31;
+    if(p.jornada==32) s=jug.estado_jornada_32;
+    if(p.jornada==33) s=jug.estado_jornada_33;
+    if(p.jornada==34) s=jug.estado_jornada_34;
+    if(p.jornada==35) s=jug.estado_jornada_35;
+    if(p.jornada==36) s=jug.estado_jornada_36;
+    if(p.jornada==37) s=jug.estado_jornada_37;
+    if(p.jornada==38) s=jug.estado_jornada_38;
+    if(p.jornada==39) s=jug.estado_jornada_39;
+    if(p.jornada==40) s=jug.estado_jornada_40;
+    if(p.jornada==41) s=jug.estado_jornada_41;
+    if(p.jornada==42) s=jug.estado_jornada_42;
+    if(p.jornada==43) s=jug.estado_jornada_43;
+    if(p.jornada==44) s=jug.estado_jornada_44;
+    if(p.jornada==45) s=jug.estado_jornada_45;
+    if(p.jornada==46) s=jug.estado_jornada_46;
+    if(s==null)s="";
+    print(s);
+    return s;
+  }
+
+  PdfColor colorAccion(String accion) {
+    PdfColor color=colorBlanco;
+    if(accion=="SIM"){
+      color=colorGris;
+    }
+    if(accion=="SV"){
+      color=colorMorado;
+    }
+    if(accion=="A"){
+      color=colorAzulClaro;
+    }
+    if(accion=="T"){
+      color=colorVerde;
+    }
+    if(accion=="S"){
+      color=colorNaranja;
+    }
+    if(accion=="EX"){
+      color=colorRojo;
+    }
+    if(accion=="NA"){
+      color=colorAmarillo;
+    }
+    return color;
+  }
+
+
+  Future<List<dynamic>> imagenesJornada() async {
       for (var d in _partidos) {
         var imgequipo;
         if (d.equipoCASA == _equipo.equipo)
@@ -122,19 +264,18 @@ class PdfJugadorDatosScout2 {
           img.club =d.equipoFUERA;
         else
           img.club =d.equipoCASA;
-
         _imagenes.add(img);
-
       }
-
   }
 
 
 
   Future<void> generateInvoice() async {
-
+    print(DateTime.now());
      await partidosJornada();
+    print(DateTime.now());
     await imagenesJornada();
+    print(DateTime.now());
 
     //Create a PDF document.
     final PdfDocument document = PdfDocument();
@@ -177,9 +318,9 @@ class PdfJugadorDatosScout2 {
     bounds: Rect.fromLTWH(0, 350, 330, 200),
     format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
     ));
-
+    print(DateTime.now());
     puntuaciones(page);
-
+    print(DateTime.now());
     List<String> caractFisico;
     List<String> caractDefensiva;
     List<String> caractOfensiva;
@@ -504,7 +645,7 @@ class PdfJugadorDatosScout2 {
     //JUGADOR
     //Šipčić
     page.graphics.drawString(
-        _jugador.jugador.replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase()
+        _jugador.jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase()
             +" - " +
         _jugador.posicion,
         PdfStandardFont(PdfFontFamily.helvetica, 20),
@@ -517,7 +658,7 @@ class PdfJugadorDatosScout2 {
         bounds: Rect.fromLTWH(0, 30, pageSize.width, 30),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,alignment:PdfTextAlignment.center));
     page.graphics.drawString(
-        "${_jugador.paisNacimiento.toUpperCase()} (${_jugador.nacionalidad.toUpperCase()})", PdfStandardFont(PdfFontFamily.helvetica, 10),
+        "${_jugador.paisNacimiento.toUpperCase()} (${_jugador.nacionalidad})", PdfStandardFont(PdfFontFamily.helvetica, 10),
         brush: PdfBrushes.white,
         bounds: Rect.fromLTWH(0, 55, pageSize.width, 30),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle,alignment:PdfTextAlignment.center));
@@ -540,7 +681,7 @@ class PdfJugadorDatosScout2 {
             lineAlignment: PdfVerticalAlignment.middle));*/
     final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
     //Draw string
-    page.graphics.drawString('Nombre: ${_jugador.jugador.replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
+    page.graphics.drawString('Nombre: ${_jugador.jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(10, 80, 300, 33),
         format: PdfStringFormat(
@@ -711,13 +852,14 @@ class PdfJugadorDatosScout2 {
           brush: PdfSolidBrush(colorNegro,)
       );
 
-           PdfColor color= colorAccion(_partidos[i]);
+           PdfColor color= colorAccion(estadoJornada(_partidos[i], _jugador));
+
 
            page.graphics.drawRectangle(
                brush: PdfSolidBrush(color),
                bounds: Rect.fromLTWH(295, altura.toDouble(),20, 15));
 
-           page.graphics.drawString(puntuacion(_partidos[i]),
+           page.graphics.drawString(puntuacionJornada(_partidos[i],_jugador),
                PdfStandardFont(PdfFontFamily.helvetica, 10, style: PdfFontStyle.bold),
                format: PdfStringFormat(alignment: PdfTextAlignment.center,),
                bounds: Rect.fromLTWH(295, altura.toDouble(),20, 15),
@@ -767,7 +909,7 @@ class PdfJugadorDatosScout2 {
           bounds: Rect.fromLTWH(485, altura.toDouble(),130, 25),
           brush: PdfSolidBrush(colorNegro,)
       );
-      PdfColor color= colorAccion(_partidos[i]);
+      PdfColor color= colorAccion(estadoJornada(_partidos[i], _jugador));
 
 
       page.graphics.drawRectangle(
@@ -775,7 +917,7 @@ class PdfJugadorDatosScout2 {
           bounds: Rect.fromLTWH(615, altura.toDouble(),20, 15));
 
 
-      page.graphics.drawString(puntuacion(_partidos[i]),
+      page.graphics.drawString(puntuacionJornada(_partidos[i],_jugador),
           PdfStandardFont(PdfFontFamily.helvetica, 10, style: PdfFontStyle.bold),
           format: PdfStringFormat(alignment: PdfTextAlignment.center,),
           bounds: Rect.fromLTWH(615, altura.toDouble(),20, 15),
@@ -815,66 +957,8 @@ class PdfJugadorDatosScout2 {
     }
 
   }
-  String puntuacion(Partido p) {
-    String s=p.putuacionJugadorPartido.putuacion;
-      if((p.golesFUERA=="")&&(p.golesFUERA=="")){
-        s="";
-      }
-      if(p.putuacionJugadorPartido.accion=="SIM"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-      if(p.putuacionJugadorPartido.accion=="SV"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-      if(p.putuacionJugadorPartido.accion=="SC"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-      if(p.putuacionJugadorPartido.accion=="A"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-      if(p.putuacionJugadorPartido.accion=="SC"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-      if(p.putuacionJugadorPartido.accion=="T"){
-        s=p.putuacionJugadorPartido.accion;
-      }
-    if(p.putuacionJugadorPartido.accion=="S"){
-      s=p.putuacionJugadorPartido.accion;
-    }
-    if(p.putuacionJugadorPartido.accion=="NA"){
-      s=p.putuacionJugadorPartido.accion;
-    }
-      return s;
-  }
 
-  PdfColor colorAccion(Partido p) {
-    PdfColor color=colorBlanco;
-    if(p.putuacionJugadorPartido.accion=="SIM"){
-      color=colorGris;
-    }
-    if(p.putuacionJugadorPartido.accion=="SV"){
-      color=colorMorado;
-    }
-    if(p.putuacionJugadorPartido.accion=="SC"){
-      color=colorAzulClaro;
-    }
-    if(p.putuacionJugadorPartido.accion=="A"){
-      color=colorRojo;
-    }
-    if(p.putuacionJugadorPartido.accion=="T"){
-      color=colorVerde;
-    }
-    if(p.putuacionJugadorPartido.accion=="S"){
-      color=colorNaranja;
-    }
-    if(p.putuacionJugadorPartido.accion=="EX"){
-      color=colorRojo;
-    }
-    if(p.putuacionJugadorPartido.accion=="NA"){
-      color=colorAmarillo;
-    }
-    return color;
-  }
+
 
 
   PdfColor colorResultado(Partido p) {

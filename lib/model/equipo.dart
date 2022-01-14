@@ -93,7 +93,4 @@ String key;
 
 }
 
-class EquipoCloud{
-  String key="";
-  String nombre="";
-}
+

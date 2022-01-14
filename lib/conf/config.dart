@@ -57,7 +57,7 @@ class Config{
  ['derecho', 'izquierdo','unknown'];
 
  static List<String> extranjero = <String>
- ['Español', 'Extranjero'];
+ ['Nacional', 'Extranjero','Nacionalizado'];
  static List<String> extranjeroArgentino = <String>
  ['Argentina', 'Extranjero'];
 
@@ -91,7 +91,7 @@ class Config{
    if (aux=="null") return 0;
    if (aux=="Altura reseñable para su posición") return 0;
    if (aux=="Baja") return 0;
-   if (aux=="Español") return 0;
+   if (aux=="Nacional") return 0;
    if (aux=="Gran velocidad en distancia larga") return 0;
    if (aux=="Gana los cuerpo a cuerpo") return 0;
    if (aux=="Nativo") return 0;
@@ -129,6 +129,7 @@ class Config{
    if (aux=="Malo Tecnicamente") return 2;
    if (aux=="Ocacional") return 2;
    if (aux=="unknown") return 2;
+   if (aux=="Nacionalizado") return 2;
 
    if (aux=="") return 0;
 

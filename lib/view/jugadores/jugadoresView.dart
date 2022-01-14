@@ -13,6 +13,7 @@ import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
+import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/editJugador.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/abajo.dart';
@@ -173,7 +174,35 @@ class _JugadoresViewState extends State<JugadoresView> {
                     return ListView.builder(
                         itemCount: jugador.length,
                         itemBuilder: (buildContext, index) {
-                          return ListTile(
+                          return Dismissible(
+                              background: slideLeftBackground(),
+                              //secondaryBackground: slideLeftBackground(),
+                              key: jugador[index]!=null?Key(jugador[index].key):"",
+                              confirmDismiss: (DismissDirection dismissDirection) async {
+                                switch(dismissDirection) {
+                                  case DismissDirection.endToStart:
+                                    return await _showConfirmationDialog(context, 'Eliminar el jugador', jugador[index]) == true;
+                                // case DismissDirection.startToEnd:
+                                //  return await _showConfirmationDialog(context, 'Cambiar el jugador',jugadoresList[index]) == true;
+                                  case DismissDirection.horizontal:
+                                  case DismissDirection.vertical:
+                                  case DismissDirection.up:
+                                  case DismissDirection.down:
+                                    assert(false);
+                                }
+                                return false;
+                              },
+                              onDismissed: (direction) {
+                                //_showAlert(context,jugadoresList[index]);
+                                // Remove the item from the data source.
+                                //print(direction);
+                                setState(() {
+                                  CRUDJugador con=new CRUDJugador();
+                                  con.removeJugador(widget.temporada, widget.pais,widget.categoria,widget.equipo, jugador[index]);
+                                  jugador.removeAt(index);
+                                });
+                                },
+                          child: ListTile(
                               onTap: () {
                                 paginaJugador(context, jugador[index]);
                               },
@@ -263,7 +292,7 @@ class _JugadoresViewState extends State<JugadoresView> {
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                              ));
+                              )));
                         });
                   } else {
                     return Text('fetching');
@@ -361,7 +390,8 @@ class _JugadoresViewState extends State<JugadoresView> {
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return CupertinoAlertDialog(
+        return BBDDService().getUserScout().categoria=="Todas"?
+         CupertinoAlertDialog(
           title: Text('ATENCIÓN',
               style: TextStyle(
                 fontSize: 18,
@@ -407,6 +437,40 @@ class _JugadoresViewState extends State<JugadoresView> {
               },
             ),
           ],
+        )
+        :
+         CupertinoAlertDialog(
+        title: Text('ATENCIÓN',
+        style: TextStyle(
+        fontSize: 18,
+        decoration: TextDecoration.underline,
+        )),
+        content: Column(
+        children: [
+        Container(
+        height: 10,
+        ),
+        Text('No puedes eliminar el \n${jugador.jugador}',
+        style: TextStyle(
+        color: Colors.red,
+        fontSize: 18,
+        decoration: TextDecoration.underline,
+        )),
+        Container(
+        height: 10,
+        ),
+        ],
+        ),
+        actions: <Widget>[
+        FlatButton(
+        child: Text('Aceptar',
+        style: TextStyle(fontSize: 16, color: Colors.green[900])),
+        onPressed: () {
+        Navigator.pop(context, false);
+        return false; // showDialog() returns true
+        },
+        ),
+        ],
         );
       },
     );

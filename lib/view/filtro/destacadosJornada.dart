@@ -121,24 +121,26 @@ class _DestacadosJornadaState extends State<DestacadosJornada> {
                     textColor: Colors.white,
                     fontSize: 14.0);
                 PDFDestacados pdf= PDFDestacados(jugadores: jugadoresList, categoria:widget._categoria,jornada:widget._jornada);
-                String file=await pdf.generateInvoice();
+                pdf.generateInvoice();
+
+                /*String file=await pdf.generateInvoice();
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Imagen(file,"Los mejores","${widget._categoria.categoria} - Jornada: ${widget._jornada.jornada}")));
-
+                  */
               },
               label: Text(
-                "Archivos",
+                "PDF",
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
               icon: Icon(
-                CustomIcon.file,
+                CustomIcon.file_pdf,
                 size: 20,
                 color: Colors.white,
               ),
               textColor: Colors.white,
               splashColor: Colors.black,
-              color: Colors.blue),
+              color: Colors.red.shade800),
             ]),
             Visibility(
               visible: jugadoresList.isNotEmpty,
