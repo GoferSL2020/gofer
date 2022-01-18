@@ -30,24 +30,22 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
   bool estrella;
   @override
   void initState() {
+    print("entro");
     setState(() {
       puntuaciones =  puntuacionJornada(widget.partido,widget.jugador);
       estado =  estadoJornada(widget.partido,widget.jugador);
       estrella =  estrellaJornada(widget.partido,widget.jugador);
-        widget.jugador.estrella=estrella;
-      widget.jugador.puntuacion=puntuaciones;
-      widget.jugador.estado=estado;
 
     });
   }
 
-  @override
+ /* @override
   void setState(fn) {
     //print("setStateFN");
     if (mounted) {
       super.setState(fn);
     }
-  }
+  }*/
 
   String puntuacionJornada(Partido p, Player jug) {
     String s="";
@@ -281,6 +279,10 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
                     setState(() {
                       puntuaciones="";
                       widget.jugador.puntaciones="";
+                      estado="";
+                      widget.jugador.estado="";
+                      widget.jugador.estrella=false;
+                      estrella=false;
                     });
                   },
                   label: Text(
@@ -367,58 +369,7 @@ class _NotaPuntuacionJornada extends State<NotaPuntuacionJornada> {
     );
   }
 
-  ponerLosPuntosFireBaseEstrella(int value) async {}
-  ponerLosPuntosFireBase(double value) async {}
 
-  ponerAccionesFireBase(String value) async {}
-
-  ponerLosPuntosExcel(int value, JugadorJornada jugadorJornada,
-      JugadorJornadaColumna jugadorJornadaColumna, int estrella) async {
-    /* await  ProductManager().insertJugadorHojaJornadaEquipo(jugadorJornada);
-        await  ProductManagerEXCELSCOUT().insertJugadorHojaJornadaEquipo(jugadorJornada);
-        int fila=0;
-        await ProductManager().filaById(jugadorJornadaColumna.id).then((value) {
-          fila=value;
-        });
-        await ProductManagerEXCELSCOUT().filaById(jugadorJornadaColumna.id).then((value) {
-          fila=value;
-        });
-        await ProductManager().insertJugadorHojaPuntuacionesJornada(jugadorJornadaColumna,fila);
-        await ProductManagerEXCELSCOUT().insertJugadorHojaPuntuacionesJornada(jugadorJornadaColumna,fila);
-  */
-  }
-
-  _showAlert(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (ctxt) => new AlertDialog(
-              title: Text(
-                "No hay la fecha o el Equipo",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              actions: <Widget>[
-                RaisedButton.icon(
-                  color: Config.colorAPP,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  label: Text(
-                    "Aceptar",
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                  icon: Icon(
-                    Icons.loop_outlined,
-                    color: Config.botones,
-                  ),
-                  textColor: Colors.white,
-                  splashColor: Colors.red,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
-  }
 
   @override
   void dispose() {

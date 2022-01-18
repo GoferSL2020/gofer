@@ -158,15 +158,17 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                 notchMargin: 10.0,
                 child:
                 Container(
-                  height: 50,
+                  height: 100,
                   width: double.infinity,
                   padding: EdgeInsets.only(left: 10,right: 10),
                   child:
+                      new Column(children: [
+                        Container(height: 2),
                   new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      width: 110,
+                      width: 120,
                       height: 30, // match_parent
                       child:
                       RaisedButton.icon(
@@ -174,44 +176,26 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                           CRUDPartido dao = new CRUDPartido();
                           for(var d in _jugadoresFUERA){
                             setState(() {
+                              puntuacionJornadaPoner(widget.partido, d, "");
+                              estadoJornadaPoner(widget.partido, d, "SIM");
+
                               d.estado="SIM";
                               d.puntuacion="";
                             });
                           }
                           for(var d in _jugadoresCASA){
                             setState(() {
+                              puntuacionJornadaPoner(widget.partido, d, "");
+                              estadoJornadaPoner(widget.partido, d, "SIM");
+
                               d.estado="SIM";
                               d.puntuacion="";
                             });
                           }
                           setState(() {
-                            _controller.index==0?_controller.index=1:_controller.index=0;
-                            _controller.index==0?_controller.index=1:_controller.index=0;
                           });
 
-                          try {
-                            CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesPartido(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                             Fluttertoast.showToast(
-                                msg: "Se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.green.shade900,
-                                textColor: Colors.white,
-                                fontSize: 12.0);
-                          } catch (e) {
-                            Fluttertoast.showToast(
-                                msg: "No se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.red.shade900,
-                                textColor: Colors.white,
-                                fontSize: 12.0);
-                          }
+
                         },
                         label: Text(
                           "Sin imág.",
@@ -224,54 +208,36 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                         ),
                         textColor: Colors.black,
                         splashColor: Colors.black,
-                        color: Colors.grey.shade900,
-                      ),),
+                        color: Colors.grey.shade600,
+                      ),),Container(width: 2),
                     SizedBox(
-                      width: 115,
+                      width: 120,
                       height: 30, // match_parent
                       child:
                       RaisedButton.icon(
                         onPressed: () {
                           setState(() {
                           for(var d in _jugadoresFUERA){
-                              d.estado="SV";
+                            puntuacionJornadaPoner(widget.partido, d, "");
+                            estadoJornadaPoner(widget.partido, d, "SV");
+
+                            d.estado="SV";
                               d.puntuacion="";
                           }
                           });
                           setState(() {
                             for(var d in _jugadoresCASA){
+                              puntuacionJornadaPoner(widget.partido, d, "");
+                              estadoJornadaPoner(widget.partido, d, "SV");
+
                               d.estado="SV";
                               d.puntuacion="";
                           }
                           });
                           setState(() {
-                            _controller.index==0?_controller.index=1:_controller.index=0;
-                            _controller.index==0?_controller.index=1:_controller.index=0;
                           });
 
-                          try {
-                            CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesPartido(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                             Fluttertoast.showToast(
-                                msg: "Se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.green.shade900,
-                                textColor: Colors.white,
-                                fontSize: 12.0);
-                          } catch (e) {
-                            Fluttertoast.showToast(
-                                msg: "No se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.red.shade900,
-                                textColor: Colors.white,
-                                fontSize: 12.0);
-                          }
+
                         },
                         label: Text(
                           "Sin visualizar",
@@ -286,70 +252,96 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                         splashColor: Colors.black,
                         color: Colors.purple,
                       ),),
-                    SizedBox(
-                      width: 110,
-                      height: 30, // match_parent
-                      child:
-                      RaisedButton.icon(
-                        onPressed: () {
-                          for(var d in _jugadoresFUERA){
-                            setState(() {
-                              d.estado="A";
-                              d.puntuacion="";
-                            });
-                          }
-                          for(var d in _jugadoresCASA){
-                            setState(() {
-                              d.estado="A";
-                              d.puntuacion="";
-                            });
-                          }
-                          setState(() {
-                            _controller.index==0?_controller.index=1:_controller.index=0;
-                            _controller.index==0?_controller.index=1:_controller.index=0;
-                          });
 
-                          try {
-                            CRUDJugador dao = new CRUDJugador();
-                            dao.updateJugadorPuntuacionesPartido(
-                                widget.temporada,widget.pais,widget.categoria,widget.jornada,
-                                widget.partido,_jugadoresCASA,_jugadoresFUERA);
-                             Fluttertoast.showToast(
-                                msg: "Se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.green.shade900,
+
+                  ],),Container(height: 2),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 120,
+                              height: 30, // match_parent
+                              child:
+                              RaisedButton.icon(
+                                onPressed: () {
+                                  for(var d in _jugadoresFUERA){
+                                    setState(() {
+                                      puntuacionJornadaPoner(widget.partido, d, "");
+                                      estadoJornadaPoner(widget.partido, d, "A");
+                                      d.estado="A";
+                                      d.puntuacion="";
+                                    });
+                                  }
+                                  for(var d in _jugadoresCASA){
+                                    setState(() {
+                                      puntuacionJornadaPoner(widget.partido, d, "");
+                                      estadoJornadaPoner(widget.partido, d, "A");
+                                      d.estado="A";
+                                      d.puntuacion="";
+                                    });
+                                  }
+                                  setState(() {
+                                  });
+
+
+                                },
+                                label: Text(
+                                  "Aplazado",
+                                  style: TextStyle(color: Colors.white, fontSize: 10),
+                                ),
+                                icon: Icon(
+                                  Icons.calendar_today_outlined,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
                                 textColor: Colors.white,
-                                fontSize: 12.0);
+                                splashColor: Colors.black,
+                                color: Colors.blue.shade900,
+                              ),),Container(width: 2),
+                            SizedBox(
+                              width: 120,
+                              height: 30, // match_parent
+                              child:
+                              RaisedButton.icon(
+                                onPressed: () {
+                                  for(var d in _jugadoresFUERA){
+                                    setState(() {
+                                      puntuacionJornadaPoner(widget.partido, d, "");
+                                      estadoJornadaPoner(widget.partido, d, "");
+                                      d.estado="";
+                                      d.puntuacion="";
+                                    });
+                                  }
+                                  for(var d in _jugadoresCASA){
+                                    setState(() {
+                                      puntuacionJornadaPoner(widget.partido, d, "");
+                                      estadoJornadaPoner(widget.partido, d, "");
+                                      d.estado="";
+                                      d.puntuacion="";
+                                    });
+                                  }
+                                  setState(() {
 
-                          } catch (e) {
-                            Fluttertoast.showToast(
-                                msg: "No se ha grabado",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.red.shade900,
-                                textColor: Colors.white,
-                                fontSize: 12.0);
-                          }
-                        },
-                        label: Text(
-                          "Aplazado",
-                          style: TextStyle(color: Colors.white, fontSize: 10),
-                        ),
-                        icon: Icon(
-                          Icons.calendar_today_outlined,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        textColor: Colors.white,
-                        splashColor: Colors.black,
-                        color: Colors.red.shade900,
-                      ),),
+                                  });
 
-                  ],
-                ),),
+
+                                },
+                                label: Text(
+                                  "Limpiar",
+                                  style: TextStyle(color: Colors.black, fontSize: 10),
+                                ),
+                                icon: Icon(
+                                  CustomIcon.eraser,
+                                  size: 20,
+                                  color: Colors.black,
+                                ),
+                                textColor: Colors.black,
+                                splashColor: Colors.black,
+                                color: Colors.grey.shade200,
+                              ),),
+                          ],),
+                  ]),
+                  ),
               ),
             body:
             Column(
@@ -486,5 +478,110 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
   }
 
+
+  puntuacionJornadaPoner(Partido p, Player jug, String valor) {
+    String s="";
+    if(p.jornada==1) jug.puntaciones_jornada_1=valor;
+    if(p.jornada==2) jug.puntaciones_jornada_2=valor;
+    if(p.jornada==3) jug.puntaciones_jornada_3=valor;
+    if(p.jornada==4) jug.puntaciones_jornada_4=valor;
+    if(p.jornada==5) jug.puntaciones_jornada_5=valor;
+    if(p.jornada==6) jug.puntaciones_jornada_6=valor;
+    if(p.jornada==7) jug.puntaciones_jornada_7=valor;
+    if(p.jornada==8) jug.puntaciones_jornada_8=valor;
+    if(p.jornada==9) jug.puntaciones_jornada_9=valor;
+    if(p.jornada==10) jug.puntaciones_jornada_10=valor;
+    if(p.jornada==11) jug.puntaciones_jornada_11=valor;
+    if(p.jornada==12) jug.puntaciones_jornada_12=valor;
+    if(p.jornada==13) jug.puntaciones_jornada_13=valor;
+    if(p.jornada==14) jug.puntaciones_jornada_14=valor;
+    if(p.jornada==15) jug.puntaciones_jornada_15=valor;
+    if(p.jornada==16) jug.puntaciones_jornada_16=valor;
+    if(p.jornada==17) jug.puntaciones_jornada_17=valor;
+    if(p.jornada==18) jug.puntaciones_jornada_18=valor;
+    if(p.jornada==19) jug.puntaciones_jornada_19=valor;
+    if(p.jornada==20) jug.puntaciones_jornada_20=valor;
+    if(p.jornada==21) jug.puntaciones_jornada_21=valor;
+    if(p.jornada==22) jug.puntaciones_jornada_22=valor;
+    if(p.jornada==23) jug.puntaciones_jornada_23=valor;
+    if(p.jornada==24) jug.puntaciones_jornada_24=valor;
+    if(p.jornada==25) jug.puntaciones_jornada_25=valor;
+    if(p.jornada==26) jug.puntaciones_jornada_26=valor;
+    if(p.jornada==27) jug.puntaciones_jornada_27=valor;
+    if(p.jornada==28) jug.puntaciones_jornada_28=valor;
+    if(p.jornada==29) jug.puntaciones_jornada_29=valor;
+    if(p.jornada==30) jug.puntaciones_jornada_30=valor;
+    if(p.jornada==31) jug.puntaciones_jornada_31=valor;
+    if(p.jornada==32) jug.puntaciones_jornada_32=valor;
+    if(p.jornada==33) jug.puntaciones_jornada_33=valor;
+    if(p.jornada==34) jug.puntaciones_jornada_34=valor;
+    if(p.jornada==35) jug.puntaciones_jornada_35=valor;
+    if(p.jornada==36) jug.puntaciones_jornada_36=valor;
+    if(p.jornada==37) jug.puntaciones_jornada_37=valor;
+    if(p.jornada==38) jug.puntaciones_jornada_38=valor;
+    if(p.jornada==39) jug.puntaciones_jornada_39=valor;
+    if(p.jornada==40) jug.puntaciones_jornada_40=valor;
+    if(p.jornada==41) jug.puntaciones_jornada_41=valor;
+    if(p.jornada==42) jug.puntaciones_jornada_42=valor;
+    if(p.jornada==43) jug.puntaciones_jornada_43=valor;
+    if(p.jornada==44) jug.puntaciones_jornada_44=valor;
+    if(p.jornada==45) jug.puntaciones_jornada_45=valor;
+    if(p.jornada==46) jug.puntaciones_jornada_46=valor;
+    jug.puntaciones=valor;
+
+  }
+
+
+  estadoJornadaPoner(Partido p, Player jug, String valor) {
+    String s="";
+    if(p.jornada==1) jug.estado_jornada_1=valor;
+    if(p.jornada==2) jug.estado_jornada_2=valor;
+    if(p.jornada==3) jug.estado_jornada_3=valor;
+    if(p.jornada==4) jug.estado_jornada_4=valor;
+    if(p.jornada==5) jug.estado_jornada_5=valor;
+    if(p.jornada==6) jug.estado_jornada_6=valor;
+    if(p.jornada==7) jug.estado_jornada_7=valor;
+    if(p.jornada==8) jug.estado_jornada_8=valor;
+    if(p.jornada==9) jug.estado_jornada_9=valor;
+    if(p.jornada==10) jug.estado_jornada_10=valor;
+    if(p.jornada==11) jug.estado_jornada_11=valor;
+    if(p.jornada==12) jug.estado_jornada_12=valor;
+    if(p.jornada==13) jug.estado_jornada_13=valor;
+    if(p.jornada==14) jug.estado_jornada_14=valor;
+    if(p.jornada==15) jug.estado_jornada_15=valor;
+    if(p.jornada==16) jug.estado_jornada_16=valor;
+    if(p.jornada==17) jug.estado_jornada_17=valor;
+    if(p.jornada==18) jug.estado_jornada_18=valor;
+    if(p.jornada==19) jug.estado_jornada_19=valor;
+    if(p.jornada==20) jug.estado_jornada_20=valor;
+    if(p.jornada==21) jug.estado_jornada_21=valor;
+    if(p.jornada==22) jug.estado_jornada_22=valor;
+    if(p.jornada==23) jug.estado_jornada_23=valor;
+    if(p.jornada==24) jug.estado_jornada_24=valor;
+    if(p.jornada==25) jug.estado_jornada_25=valor;
+    if(p.jornada==26) jug.estado_jornada_26=valor;
+    if(p.jornada==27) jug.estado_jornada_27=valor;
+    if(p.jornada==28) jug.estado_jornada_28=valor;
+    if(p.jornada==29) jug.estado_jornada_29=valor;
+    if(p.jornada==30) jug.estado_jornada_30=valor;
+    if(p.jornada==31) jug.estado_jornada_31=valor;
+    if(p.jornada==32) jug.estado_jornada_32=valor;
+    if(p.jornada==33) jug.estado_jornada_33=valor;
+    if(p.jornada==34) jug.estado_jornada_34=valor;
+    if(p.jornada==35) jug.estado_jornada_35=valor;
+    if(p.jornada==36) jug.estado_jornada_36=valor;
+    if(p.jornada==37) jug.estado_jornada_37=valor;
+    if(p.jornada==38) jug.estado_jornada_38=valor;
+    if(p.jornada==39) jug.estado_jornada_39=valor;
+    if(p.jornada==40) jug.estado_jornada_40=valor;
+    if(p.jornada==41) jug.estado_jornada_41=valor;
+    if(p.jornada==42) jug.estado_jornada_42=valor;
+    if(p.jornada==43) jug.estado_jornada_43=valor;
+    if(p.jornada==44) jug.estado_jornada_44=valor;
+    if(p.jornada==45) jug.estado_jornada_45=valor;
+    if(p.jornada==46) jug.estado_jornada_46=valor;
+    jug.estado=valor;
+
+  }
 
 }

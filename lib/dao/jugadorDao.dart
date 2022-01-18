@@ -81,8 +81,8 @@ class JugadorDao {
 
   getPuntacionesJornadas(String categoria) async {
     var dbClient = await con.db;
-    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES where"
-        " CATEGORIA='$categoria'");
+    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES_2 where"
+        " CATEGORIA='$categoria' order by equipo");
         //" ORDER BY ENTRENADOR.ENTRENADOR");
 
     List<Player> list =

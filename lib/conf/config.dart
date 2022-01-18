@@ -54,7 +54,7 @@ class Config{
  ['Gana los cuerpo a cuerpo', 'Pierde los duelos', 'No entra'];
 
  static List<String> lateral = <String>
- ['derecho', 'izquierdo','unknown'];
+ ['derecho', 'izquierdo','ambidextro','unknown'];
 
  static List<String> extranjero = <String>
  ['Nacional', 'Extranjero','Nacionalizado'];
@@ -124,12 +124,13 @@ class Config{
    if (aux=="Alta") return 2;
    if (aux=="Velocidad normal") return 2;
    if (aux=="No entra") return 2;
+   if (aux=="ambidextro") return 2;
 
    if (aux=="Ambidiestro") return 2;
    if (aux=="Malo Tecnicamente") return 2;
    if (aux=="Ocacional") return 2;
-   if (aux=="unknown") return 2;
    if (aux=="Nacionalizado") return 2;
+   if (aux=="unknown") return 3;
 
    if (aux=="") return 0;
 

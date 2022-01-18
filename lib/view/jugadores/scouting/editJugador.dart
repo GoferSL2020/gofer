@@ -58,7 +58,7 @@ class _EditJugadorState extends State<EditJugador> {
 
   bool _prestamo = false;
   String _puesto = "";
-  String _lateral = "derecho";
+  String _lateral = "";
   String _puesto2 = "";
   String _id = "";
   PickedFile _imageFile;
@@ -351,7 +351,7 @@ Carrilero izquierdo
     TextFormField inputValor = TextFormField(
       controller: _valor,
       inputFormatters: [
-        LengthLimitingTextInputFormatter(9),
+        LengthLimitingTextInputFormatter(10),
       ],
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -367,7 +367,7 @@ Carrilero izquierdo
       ],
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        labelText: 'Provincia',
+        labelText: 'Provincia / País de Nacimiento',
         icon: Icon(Icons.home_work_outlined, color: Colors.black,),
       ),
     );
@@ -409,12 +409,12 @@ Carrilero izquierdo
         labelText: 'Peso',
         icon: Icon(CustomIcon.weight, size: 20, color: Colors.black,),
       ),
-      validator: (value) {
+      /*validator: (value) {
         if (value.isEmpty) {
           return 'Incorrecto';
         }
         return null;
-      },
+      },*/
     );
     TextFormField inputAltura = TextFormField(
       controller: _altura,
@@ -426,12 +426,12 @@ Carrilero izquierdo
         labelText: 'Altura',
         icon: Icon(Icons.accessibility, color: Colors.black,),
       ),
-      validator: (value) {
+      /*validator: (value) {
         if (value.isEmpty) {
           return 'Incorrecto';
         }
         return null;
-      },
+      },*/
     );
 
 
@@ -543,7 +543,7 @@ Carrilero izquierdo
                     onPressed: callDatePicker,
                     padding: EdgeInsets.only(left: 0.0),
                     child: Icon(
-                      Icons.date_range,
+                      CustomIcon.birthday_cake,
                       color: Colors.black,
                       size: 20,
                     ),
@@ -571,7 +571,7 @@ Carrilero izquierdo
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
-                      width: 325,
+
                       padding: EdgeInsets.all(10.0),
                       child: ToggleSwitch(
                         minWidth: 100,
@@ -582,7 +582,7 @@ Carrilero izquierdo
                         inactiveBgColor: Colors.grey[300],
                         inactiveFgColor: Colors.black,
                         fontSize: 12,
-                        labels: ['derecho', 'izquierdo','unknown'],
+                        labels: ['derecho', 'izquierdo','ambidextro','unknown'],
                         onToggle: (index) {
                           print(index);
                           setState(() {
@@ -619,6 +619,7 @@ Carrilero izquierdo
                   Container(width: 100,
                       padding: EdgeInsets.only(left: 20),child:
                       inputPeso),
+
                 ],
               ),
 
@@ -627,9 +628,14 @@ Carrilero izquierdo
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(width: 170,
-                      padding: EdgeInsets.only(left: 10),child:
-                      inputValor),
+                  Container(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                      child: new Text("Fin de contrato",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ))),
                   FlatButton(
                     minWidth: 1,
                     onPressed: callDatePickerContrato,
@@ -660,10 +666,11 @@ Carrilero izquierdo
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+
                     Container(
                         padding:
                         EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-                        child: new Text("En prestamo",
+                        child: new Text("En préstamo",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -679,6 +686,9 @@ Carrilero izquierdo
                       activeColor: Colors.blue[900],
                     ),
                   ]),
+              Container(width: 200,
+                  padding: EdgeInsets.only(top:0,left: 10),child:
+                  inputValor),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -761,7 +771,7 @@ Carrilero izquierdo
                       widget.jugador.lateral=_lateral;
                       widget.jugador.ccaa=_CCAA.text;
                       widget.jugador.paisNacimiento=_provincia.text;
-                      widget.jugador.lateral=_lateral;
+
                       widget.jugador.nacionalidad=_extranjero;
                       widget.jugador.idCategoria=widget.categoria.id;
                       widget.jugador.idPais=widget.pais.id;

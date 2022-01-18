@@ -288,7 +288,7 @@ class MenuLateral extends StatelessWidget {
               Ink(
                 color: Colors.white,
                 child: ListTile(
-                  title: Text("MIGRACIONES",
+                  title: Text("Compartir Excel",
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
@@ -298,7 +298,7 @@ class MenuLateral extends StatelessWidget {
                             builder: (BuildContext context) =>
                                 Migraciones()));
                   },
-                  leading: const Icon(Icons.person, color: Colors.white),
+                  leading: const Icon(CustomIcon.file_excel, color: Colors.white),
                 ),
 
               ):null,
