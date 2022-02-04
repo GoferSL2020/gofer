@@ -371,16 +371,7 @@ class Config{
   });
  }
 
- static String ayudaPalabra(String palabra){
-  //print(palabra);
-   String aux="";
-   aux=palabra.substring(0,1);
-   for(var i=0;i<palabra.length-2;i++){
-     aux+="_ ";
-   }
-  aux+=palabra.substring(palabra.length-1,palabra.length);
-   return aux;
- }
+
 
  static MaterialColor generateMaterialColor(Color color2) {
 

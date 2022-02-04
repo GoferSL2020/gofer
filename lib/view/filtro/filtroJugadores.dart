@@ -132,6 +132,8 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
     'LATERAL DERECHO',
     'LATERAL IZQUIERDO',
     'CENTRAL',
+    'DEFENSA CENTRAL DERECHO',
+    'DEFENSA CENTRAL IZQUIERDO',
     'CARRILERO DERECHO',
     'CARRILERO IZQUIERDO',
     'PIVOTE',
@@ -139,8 +141,8 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
     'VOLANTE',
     'INTERIOR',
     'MEDIA PUNTA',
-    'EXTREMO IZQUIERDO',
-    'EXTREMO DERECHO',
+    'EXTREMO',
+  //  'EXTREMO DERECHO',
     'DELANTERO'];
   List<String> _niveles= <String>
   [ " ",'N/A','Bajo',
@@ -385,6 +387,9 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
                                 setState(() {
                                   jugadorFiltro.jugador=_nombre.text;
                                   jugadorFiltro.paisNacimiento=_lugar.text;
+                                  jugadorFiltro.categoria=_categoriaAux.categoria;
+                                  jugadorFiltro.temporada=_temporadaAux.temporada;
+                                  jugadorFiltro.pais=_paisAux.pais;
                                   Navigator.of(context).push(new MaterialPageRoute(
                                     builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
                                   ));

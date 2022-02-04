@@ -112,7 +112,7 @@ class BBDDService {
         _userAppalabros.name = values['nombre'];
         _userAppalabros.email = values['email'];
         _userAppalabros.categoria = values['categoria'];
-
+        print(values['categoria']);
       });
     });
 

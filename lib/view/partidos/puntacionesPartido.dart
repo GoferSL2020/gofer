@@ -57,9 +57,9 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "${widget.jugadores[index].dorsal == -2 ? "*" : widget.jugadores[index].dorsal}. ${widget.jugadores[index].jugador} (${Config.edad( widget.jugadores[index].fechaNacimiento)})",
+                                              "${widget.jugadores[index].dorsal == -2 ? "*" : widget.jugadores[index].dorsal}. ${widget.jugadores[index].jugador.toUpperCase()} (${Config.edad( widget.jugadores[index].fechaNacimiento)})",
                                               style: new TextStyle(
-                                                  fontSize: 11, fontWeight: FontWeight.bold),
+                                                  fontSize: 12, fontWeight: FontWeight.bold),
                                             ),
 
                                             Text(
@@ -92,10 +92,10 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
 
                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
-                                              botonPuntos("A", Colors.blue,widget.jugadores[index]),
-                                              botonPuntos("SV", Colors.purple,widget.jugadores[index]),
-                                              botonPuntos("SIM", Colors.grey,widget.jugadores[index]),
-                                              botonPuntos("NA", Colors.yellow,widget.jugadores[index]),
+                                              botonEstado("A", Colors.blue,widget.jugadores[index]),
+                                              botonEstado("SV", Colors.purple,widget.jugadores[index]),
+                                              botonEstado("SIM", Colors.grey,widget.jugadores[index]),
+                                              botonEstado("NA", Colors.yellow,widget.jugadores[index]),
                                               botonPuntos("T", Colors.green,widget.jugadores[index]),
                                               botonPuntos("S", Colors.orange,widget.jugadores[index]),
                                               // botonPuntos("SCT", Colors.green),
@@ -175,6 +175,29 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
         onPressed: () {
           setState(() {
             estadoJornadaPoner(widget.partido,jugador,est);
+            //puntuacionJornadaPoner(widget.partido,jugador,est);
+          });
+        },
+        child: Text(
+          est,
+          style: TextStyle( color: estadoJornada(widget.partido,jugador) != est ? Colors.black : Colors.white, fontSize: 10),
+        ),
+      ),
+    );
+  }
+
+  SizedBox botonEstado(String est, Color color,Player jugador) {
+    return SizedBox(
+      width: 30,
+      height: 25, // match_parent
+      child:
+      RaisedButton(
+        color: estadoJornada(widget.partido,jugador) != est ? color : Colors.black,
+        padding: EdgeInsets.only(left: 0),
+        onPressed: () {
+          setState(() {
+            estadoJornadaPoner(widget.partido,jugador,est);
+            puntuacionJornadaPoner(widget.partido,jugador,est);
           });
         },
         child: Text(

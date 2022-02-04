@@ -10,6 +10,7 @@ import 'package:iadvancedscout/view/filtro/filtroJugadores.dart';
 import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
+import 'package:iadvancedscout/wigdet/compartirExcel.dart';
 import 'package:iadvancedscout/wigdet/migraciones.dart';
 import 'package:iadvancedscout/wigdet/politica.dart';
 import 'package:iadvancedscout/wigdet/termino.dart';
@@ -236,6 +237,7 @@ class MenuLateral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     User result = FirebaseAuth.instance.currentUser;
     return new Drawer(
       child: Container(color: Colors.black,
@@ -265,7 +267,12 @@ class MenuLateral extends StatelessWidget {
                   leading: const Icon(Icons.person, color: Colors.white),
                 ),
 
-              ):null,
+              ):Ink(
+                color: Colors.white,
+                child: Container(
+                  ),
+
+              ),
               BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
@@ -283,7 +290,12 @@ class MenuLateral extends StatelessWidget {
                   leading: const Icon(Icons.person, color: Colors.white),
                 ),
 
-              ):null,
+              ):Ink(
+                color: Colors.white,
+                child: Container(
+                  ),
+
+              ),
               BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
@@ -296,12 +308,36 @@ class MenuLateral extends StatelessWidget {
                     Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                Migraciones()));
+                                CompartirExcel()));
                   },
                   leading: const Icon(CustomIcon.file_excel, color: Colors.white),
                 ),
 
-              ):null,
+              ):Ink(
+                color: Colors.white,
+                child: Container(
+                  ),
+
+              ),
+             /*BBDDService().getUserScout().categoria=="Todas"?
+              Ink(
+                color: Colors.white,
+                child: ListTile(
+                  title: Text("Importar",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                            Migraciones()));
+                  },
+                  leading: const Icon(CustomIcon.file_import, color: Colors.white),
+                ),
+
+              ):null,*/
+
               Container(height: 1,color: Colors.white,),
               Ink(
                 color: Colors.white,

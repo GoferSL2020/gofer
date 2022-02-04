@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/tabNivel.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
@@ -164,7 +165,24 @@ Widget build(BuildContext context) {
           buildContainerDelantero():
           caractAux.contains("WF 1")?
           buildContainerExtremo():null,
+          SizedBox(
+              width: 105, // specific value
+              child: RaisedButton.icon(
+                color: Colors.white,
+                icon: Icon(CustomIcon.eraser, color: Colors.black,size: 15,),
+                label: Text(
+                  "limpiar".toUpperCase(),
+                  style: TextStyle(color: Colors.black, fontSize: 10),
+                ),
+                textColor: Colors.black,
+                splashColor: Colors.white,
+                onPressed: () {
+                  setState(() {
+                    widget._jugador.tipo = "";
 
+                  });
+                },
+              )),
           Container(padding: EdgeInsets.only(left:15.0, right: 15),
               alignment: Alignment.center,
               child: new Table(
@@ -639,7 +657,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("MF 2")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "MF 2"
                       ? Colors.green
@@ -663,7 +681,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("MF 3")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "MF 3"
                       ? Colors.green
@@ -687,7 +705,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("MF 4")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "MF 4"
                       ? Colors.green
@@ -712,7 +730,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("MF 5")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "MF 5"
                       ? Colors.green
@@ -736,7 +754,7 @@ Container buildContainerPortero() {
             ),
 
             caractAux.contains("MF 5")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "MF 6"
                       ? Colors.green
@@ -919,7 +937,7 @@ Container buildContainerPortero() {
           mainAxisAlignment:MainAxisAlignment.center ,
           children: [
             caractAux.contains("WF 1")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "WF 1"
                       ? Colors.green
@@ -944,7 +962,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("WF 2")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "WF 2"
                       ? Colors.green
@@ -968,7 +986,7 @@ Container buildContainerPortero() {
               width: 1,
             ),
             caractAux.contains("WF 3")==true?SizedBox(
-                width: 56, // specific value
+                width: 58, // specific value
                 child: RaisedButton(
                   color: widget._jugador.tipo == "WF 3"
                       ? Colors.green

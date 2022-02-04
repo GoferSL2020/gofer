@@ -82,6 +82,12 @@ class _JugadoresViewState extends State<JugadoresView> {
         //backgroundColor: widget.jugador.getColor(),
         onPressed: () {
           Player jugador=new Player();
+          jugador.equipo=widget.equipo.equipo;
+          jugador.categoria=widget.categoria.categoria;
+          jugador.pais=widget.pais.pais;
+          jugador.idCategoria=widget.categoria.id;
+          jugador.idPais=widget.pais.id;
+          jugador.idEquipo=widget.equipo.id;
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
               EditJugador(
                 temporada: widget.temporada,
@@ -280,11 +286,81 @@ class _JugadoresViewState extends State<JugadoresView> {
                                           fontSize: 10.0,
                                           fontWeight: FontWeight.bold),
                                     )*/
-                                  ]),
+                                    new Container(
+                                      height: 3.0,
+                                    ),
+
+                                    Row(children: [
+                                      new Container(
+                                        width: 15.0,
+                                        height: 15.0,
+                                        decoration: new BoxDecoration(
+                                          color: Player.nivelColor(jugador[index].nivel),
+                                          shape: BoxShape.circle,
+                                            border: Border.all(color:Colors.black, width: 1.0)
+                                        ),),
+                                      new Container(
+                                        width: 5.0,
+                                      ),
+                                      new Container(
+                                        width: 15.0,
+                                        height: 15.0,
+                                        decoration: new BoxDecoration(
+                                          color: Player.nivelColor(jugador[index].nivel2),
+                                          shape: BoxShape.circle,
+                                            border: Border.all(color:Colors.black, width: 1.0)
+                                        ),),
+                                      new Container(
+                                        width: 5.0,
+                                      ),new Container(
+                                        width: 15.0,
+                                        height: 15.0,
+                                        decoration: new BoxDecoration(
+                                          color: Player.nivelColor(jugador[index].nivel3),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color:Colors.black, width: 1.0)
+                                        ),),
+                                      new Container(
+                                        width: 5.0,
+                                      ),new Container(
+                                        width: 15.0,
+                                        height: 15.0,
+                                        decoration: new BoxDecoration(
+                                          color:Player.nivelColor(jugador[index].nivel4),
+                                          shape: BoxShape.circle,border: Border.all(color:Colors.black, width: 1.0)
+                                        ),),
+                                      new Container(
+                                        width: 5.0,
+                                      ),
+                                      new Container(
+                                        padding: EdgeInsets.only(top:2,right: 5),
+                                        child: Text(
+                                          "Tipo:",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.normal),
+                                        ),),new Container(
+                                        padding: EdgeInsets.only(top:1,right: 5),
+
+                                        height: 15.0,
+                                        child: Text("${
+                                          jugador[index].tipoLetra()}",
+                                          style: TextStyle(
+                                              color: Colors.blue.shade800,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),),
+
+                                    ],),
+                                    new Container(
+                                      height: 15.0,
+                                    )]),
+
                               leading: CircleAvatar(
-                                backgroundColor: jugador[index].getColor(),
+                                backgroundColor: Colors.grey,
                                 child: Text(
-                                  jugador[index].dorsal == -2
+                                  jugador[index].dorsal == 99
                                       ? "*"
                                       : jugador[index].dorsal.toString(),
                                   style: TextStyle(

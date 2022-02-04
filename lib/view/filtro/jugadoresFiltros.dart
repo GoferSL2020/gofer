@@ -100,6 +100,7 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
                     fontSize: 14,
                     fontStyle: FontStyle.italic),
               ),),
+
             Visibility(
               visible: jugadoresList.isNotEmpty,
               child: Flexible(
@@ -134,18 +135,7 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
 
                             ]),
                               Column(children: [
-                                Row(children: [
-                                  //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
-                                  Text(
-                                    Config.edadSub(jugadoresList[index]
-                                        .fechaNacimiento),
-                                    style: TextStyle(
-                                        color: Config.edadColorSub(Config.edadSub(jugadoresList[index]
-                                            .fechaNacimiento)),
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ]),
+
                                 Row(children: [
                                   //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
                                   Text(
@@ -201,13 +191,91 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                ])
+                                ]),
+                              Row(children: [
+                                //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                                Text(
+                                  Config.edadSub(jugadoresList[index]
+                                      .fechaNacimiento),
+                                  style: TextStyle(
+                                      color: Config.edadColorSub(Config.edadSub(jugadoresList[index]
+                                          .fechaNacimiento)),
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ]),
+                              Row(children: [
+                                new Container(
+                                  width: 15.0,
+                                  height: 15.0,
+                                  decoration: new BoxDecoration(
+                                      color: Player.nivelColor(jugadoresList[index].nivel),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color:Colors.black, width: 1.0)
+                                  ),),
+                                new Container(
+                                  width: 5.0,
+                                ),
+                                new Container(
+                                  width: 15.0,
+                                  height: 15.0,
+                                  decoration: new BoxDecoration(
+                                      color: Player.nivelColor(jugadoresList[index].nivel2),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color:Colors.black, width: 1.0)
+                                  ),),
+                                new Container(
+                                  width: 5.0,
+                                ),new Container(
+                                  width: 15.0,
+                                  height: 15.0,
+                                  decoration: new BoxDecoration(
+                                      color: Player.nivelColor(jugadoresList[index].nivel3),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color:Colors.black, width: 1.0)
+                                  ),),
+                                new Container(
+                                  width: 5.0,
+                                ),new Container(
+                                  width: 15.0,
+                                  height: 15.0,
+                                  decoration: new BoxDecoration(
+                                      color:Player.nivelColor(jugadoresList[index].nivel4),
+                                      shape: BoxShape.circle,border: Border.all(color:Colors.black, width: 1.0)
+                                  ),),
+                                new Container(
+                                  width: 5.0,
+                                ),
+                                new Container(
+                                  padding: EdgeInsets.only(top:2,right: 5),
+                                  child: Text(
+                                    "Tipo:",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.normal),
+                                  ),),new Container(
+                                  padding: EdgeInsets.only(top:1,right: 5),
+
+                                  height: 15.0,
+                                  child: Text(
+                                    jugadoresList[index].tipoLetra(),
+                                    style: TextStyle(
+                                        color: Colors.blue.shade800,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),),
+
+                              ],),
+                              new Container(
+                                height: 15.0,
+                              )
 
                             ]),
                             leading:CircleAvatar(
-                              backgroundColor: jugadoresList[index].getColor(),
+                              backgroundColor: Colors.grey,
                               child:
-                              Text(jugadoresList[index].dorsal.toString()=="-2"?"*":jugadoresList[index].dorsal.toString(),
+                              Text(jugadoresList[index].dorsal.toString()=="99"?"*":jugadoresList[index].dorsal.toString(),
                                 style: TextStyle(
                                     color:Colors.black,
                                     fontSize: 18.0,

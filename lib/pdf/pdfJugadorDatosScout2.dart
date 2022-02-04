@@ -162,6 +162,7 @@ class PdfJugadorDatosScout2 {
     if(p.jornada==45) s=jug.puntaciones_jornada_45;
     if(p.jornada==46) s=jug.puntaciones_jornada_46;
     if(s==null)s="";
+    if(s=="null")s="";
     if(s==""){
       s=estadoJornada(p, jug);
     }
@@ -218,7 +219,7 @@ class PdfJugadorDatosScout2 {
     if(p.jornada==45) s=jug.estado_jornada_45;
     if(p.jornada==46) s=jug.estado_jornada_46;
     if(s==null)s="";
-    print(s);
+    if(s=="null")s="";
     return s;
   }
 
@@ -643,9 +644,9 @@ class PdfJugadorDatosScout2 {
         bounds: Rect.fromLTWH(10, 175, pageSize.width - 15, 1));
 
     //JUGADOR
-    //Šipčić
+    //Šipčićș
     page.graphics.drawString(
-        _jugador.jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase()
+        _jugador.jugador.replaceAll("ș","s").replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase()
             +" - " +
         _jugador.posicion,
         PdfStandardFont(PdfFontFamily.helvetica, 20),
@@ -681,7 +682,7 @@ class PdfJugadorDatosScout2 {
             lineAlignment: PdfVerticalAlignment.middle));*/
     final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
     //Draw string
-    page.graphics.drawString('Nombre: ${_jugador.jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
+    page.graphics.drawString('Nombre: ${_jugador.jugador.replaceAll("ș","s").replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(10, 80, 300, 33),
         format: PdfStringFormat(

@@ -298,14 +298,14 @@ class PdfEquipoTemporada {
       anchoMAX=35;
     double log=_partidos.length/2.round();
     for (int i=0;i<_jugadores.length;i++) {
-     page.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. "
-         "${_jugadores[i].jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
+     page.graphics.drawString("${_jugadores[i].dorsal==99?"*":_jugadores[i].dorsal}. "
+         "${_jugadores[i].jugador.replaceAll("ș","s").replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
       PdfStandardFont(PdfFontFamily.helvetica, 7, style: PdfFontStyle.bold),
       format: PdfStringFormat(alignment: PdfTextAlignment.left,),
       bounds:  Rect.fromLTWH(10, altura.toDouble() , 120, 25),
       brush: PdfSolidBrush(colorNegro));
-     page2.graphics.drawString("${_jugadores[i].dorsal==-2?"*":_jugadores[i].dorsal}. "
-      "${_jugadores[i].jugador.replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
+     page2.graphics.drawString("${_jugadores[i].dorsal==99?"*":_jugadores[i].dorsal}. "
+      "${_jugadores[i].jugador.replaceAll("ș","s").replaceAll("Č","C").replaceAll("ž","z").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}",
          PdfStandardFont(PdfFontFamily.helvetica, 7, style: PdfFontStyle.bold),
          format: PdfStringFormat(alignment: PdfTextAlignment.left,),
          bounds:  Rect.fromLTWH(10, altura.toDouble() , 120, 25),
@@ -488,6 +488,7 @@ class PdfEquipoTemporada {
     if(p.jornada==45) s=jug.puntaciones_jornada_45;
     if(p.jornada==46) s=jug.puntaciones_jornada_46;
     if(s==null)s="";
+    if(s=="null")s="";
     if(s==""){
       s=estadoJornada(p, jug);
     }

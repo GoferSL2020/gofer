@@ -219,14 +219,28 @@ class _JugadoresPageState extends State<JugadoresPage> {
                                       color: Colors.grey,
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.bold),
+
                                 ),
+
                                  Text(Config.edadSub(jugadoresList[index].fechaNacimiento),
                                    style: TextStyle(
                                        color: Config.edadColorSub(Config.edadSub(jugadoresList[index]
                                            .fechaNacimiento)),
                                        fontSize: 10.0,
                                        fontWeight: FontWeight.bold),
-                                 )]),
+                                 ), Text(
+                                            jugadoresList[index]
+                                                .tipo==null?"null":jugadoresList[index]
+                                                .tipo
+                                                ,
+                                            style: TextStyle(
+                                                color: Colors.blue.shade800,
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold),
+
+                                          ),
+                                        ]),
+
                                   leading:CircleAvatar(
                                       backgroundColor: jugadoresList[index].getColor(),
                                     child:

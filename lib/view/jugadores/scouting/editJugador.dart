@@ -151,7 +151,12 @@ Carrilero izquierdo
     _lateral = widget.jugador.lateral.toLowerCase();
     _dorsal.text = widget.jugador.dorsal.toString();
     _puesto = widget.jugador.posicion.toUpperCase();
-    _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
+    try {
+      _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
+    }
+    catch(e){
+      _puesto2="";
+    }
     insertar= widget.jugador.jugador==""?true:false;
 
 
@@ -351,7 +356,7 @@ Carrilero izquierdo
     TextFormField inputValor = TextFormField(
       controller: _valor,
       inputFormatters: [
-        LengthLimitingTextInputFormatter(10),
+        LengthLimitingTextInputFormatter(13),
       ],
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -782,8 +787,14 @@ Carrilero izquierdo
                         await con.addJugadorDatos(
                             widget.temporada, widget.pais, widget.categoria,
                             widget.equipo, widget.jugador);
+                        await con.addJugadorDatosDATABIG(
+                            widget.temporada, widget.pais, widget.categoria,
+                            widget.equipo, widget.jugador);
                       }else {
-                        con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                        await con.updateJugadorDatos(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                        await con.updateJugadorDATABIG(
+                            widget.temporada, widget.pais, widget.categoria,
+                            widget.equipo, widget.jugador);
                       }
                       //jugadorService.updateJugadorIAScout(widget.jugador,false);
                       //ProductManager().insert(widget.jugador);

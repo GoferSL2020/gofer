@@ -780,6 +780,14 @@ class Jugador {
   }
 
   Jugador.fromJson(this.key, Map obj) {
+    print(obj['jugador']);
+    int dorsal=-99;
+    try {
+      dorsal = int.parse(obj['_dorsal']);
+    }
+    catch(e){
+      dorsal=99;
+    }
     this._categoria = obj['categoria'];
     this._equipo = obj['equipo'];
     this._imagen = obj['imagen'];
@@ -792,7 +800,7 @@ class Jugador {
     this._tipo = obj['tipo'].toString();
 
     this._fechaContrato =obj['_fechaContrato'];
-    this._dorsal =BBDDService().getUserScout().temporada=="2020-2021"?int.parse(obj['_dorsal']):obj['_dorsal'];
+    this._dorsal =dorsal;
     this._peso= obj['_peso'];
     this._altura= obj['_altura'];
     this._valor= obj['_valor'];

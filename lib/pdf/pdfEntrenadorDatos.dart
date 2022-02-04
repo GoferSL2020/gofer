@@ -390,7 +390,7 @@ class PdfEntrenadorDatos {
         bounds: Rect.fromLTWH(0, 0, pageSize.width - 115, 90));
     //JUGADOR
     //Šipčić
-    page.graphics.drawString(_entrenador.entrenador.replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase(),
+    page.graphics.drawString(_entrenador.entrenador.replaceAll("ș","s").replaceAll("č","c").replaceAll("Š","S").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a").toUpperCase(),
         PdfStandardFont(PdfFontFamily.helvetica, 16),
         brush: PdfBrushes.white,
         bounds: Rect.fromLTWH(150, 10, pageSize.width - 115, 30),
@@ -419,7 +419,7 @@ class PdfEntrenadorDatos {
 
     final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
     //Draw string
-    page.graphics.drawString('Nombre: ${_entrenador.entrenador.replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
+    page.graphics.drawString('Nombre: ${_entrenador.entrenador.replaceAll("ș","s").replaceAll("č","c").replaceAll("Š","S").replaceAll("Ž","Z").replaceAll("ž","Z").replaceAll("ć","c").replaceAll("š", "s").replaceAll("ã", "a")}', contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(10, 80, 300, 33),
         format: PdfStringFormat(
