@@ -10,9 +10,13 @@ class UserScout {
 
   UserScout(this._id, this._name, this._email, this._categoria,this._temporada);
 
+  UserScout.fromJson(this._id, Map obj) {
+    this._name = obj['nombre'];
+    this._email = obj['email'];
+    this._categoria = obj['categoria'];
+  }
 
-
-  UserScout.map(dynamic obj){
+    UserScout.map(dynamic obj){
     this._name = obj['nombre'];
     this._email = obj['email'];
     this._categoria = obj['categoria'];

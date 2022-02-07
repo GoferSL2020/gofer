@@ -180,6 +180,8 @@ class _JugadoresViewState extends State<JugadoresView> {
                     return ListView.builder(
                         itemCount: jugador.length,
                         itemBuilder: (buildContext, index) {
+                          print(jugador[index].jugador);
+                          print(jugador[index].fechaNacimiento);
                           return Dismissible(
                               background: slideLeftBackground(),
                               //secondaryBackground: slideLeftBackground(),

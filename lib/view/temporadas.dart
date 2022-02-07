@@ -4,11 +4,13 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
+import 'package:iadvancedscout/futbol_mio_icons.dart';
 import 'package:iadvancedscout/model/temporada.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/filtro/filtroJugadores.dart';
 import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/paises.dart';
+import 'package:iadvancedscout/view/scouter/scouterView.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
 import 'package:iadvancedscout/wigdet/compartirExcel.dart';
 import 'package:iadvancedscout/wigdet/migraciones.dart';
@@ -254,6 +256,29 @@ class MenuLateral extends StatelessWidget {
               Ink(
                 color: Colors.white,
                 child: ListTile(
+                  title: Text("Scouters",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ScouterView()));
+                  },
+                  leading: const Icon(FutbolMio.entrenador_1, color: Colors.white),
+                ),
+
+              ):Ink(
+                color: Colors.white,
+                child: Container(
+                ),
+
+              ),
+              /*BBDDService().getUserScout().categoria=="Todas"?
+              Ink(
+                color: Colors.white,
+                child: ListTile(
                   title: Text("ANTIGUA",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -295,7 +320,7 @@ class MenuLateral extends StatelessWidget {
                 child: Container(
                   ),
 
-              ),
+              ),*/
               BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,

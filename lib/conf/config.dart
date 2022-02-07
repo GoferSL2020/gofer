@@ -147,7 +147,7 @@ class Config{
    DateFormat format = DateFormat("dd/MM/yyyy");
    var fechaNac = format.parse(fechaNacimiento);
    var anio = fechaDeHoy.difference(fechaNac);
-   edad=(anio.inDays/365).truncate();
+   edad=(anio.inDays/366).truncate();
    sub = edad.toString();
    return sub;
  }
@@ -164,7 +164,8 @@ class Config{
    DateFormat format = DateFormat("dd/MM/yyyy");
    var fechaNac = format.parse(fechaNacimiento);
    var anio = fechaDeHoy.difference(fechaNac);
-   edad=(anio.inDays/365).truncate();
+   edad=(anio.inDays/366).truncate();
+
    if(edad<20) {
      sub = edad.toString()+" (Sub-20"+")";
    }else if(edad<23) {
@@ -185,7 +186,7 @@ class Config{
     DateFormat format = DateFormat("dd/MM/yyyy");
     var fechaNac = format.parse(fechaNacimiento);
     var anio = fechaDeHoy.difference(fechaNac);
-    edad=(anio.inDays/365).truncate();
+    edad=(anio.inDays/366).truncate();
     if(edad<20) {
       sub = "Sub-20";
     }else if(edad<23) {
