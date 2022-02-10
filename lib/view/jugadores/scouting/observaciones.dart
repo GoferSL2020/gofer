@@ -4,11 +4,15 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class Observaciones extends StatefulWidget {
-  Observaciones(this._jugador);
+  Observaciones(this._jugador,this._padre);
+
+
+  final TabCaracteristicas _padre;
   final Player _jugador;
   @override
   _Observaciones createState() => _Observaciones();
@@ -103,7 +107,7 @@ class _Observaciones extends State<Observaciones> {
                   ),
                   onChanged: (String value) {
                     widget._jugador.observaciones=value;
-                   
+                    widget._padre.cambio=true;
                    
                     //_onChange(value);
                   },

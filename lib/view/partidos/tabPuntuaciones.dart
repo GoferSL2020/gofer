@@ -14,6 +14,8 @@ import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
+import 'package:iadvancedscout/view/partidos/partidosJornadaView.dart';
+import 'package:iadvancedscout/view/partidos/partidosView.dart';
 import 'package:iadvancedscout/view/partidos/puntacionesPartido.dart';
 
 
@@ -28,6 +30,10 @@ class TabPuntuaciones extends StatefulWidget {
       TabPuntuacionesState();
   TabPuntuaciones(this.temporada, this.categoria, this.pais, this.partido,this.jornada
      );
+  bool cambio=false;
+  cambiar(){
+    cambio=true;
+  }
 }
 
 class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProviderStateMixin {
@@ -103,6 +109,58 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                  onPressed: () {
+                    if (widget.cambio) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            title: Text('Atención'),
+                            content: Text('¿Has grabado los datos?'),
+                            actions: [
+                              FlatButton(
+                                  child: Text('Salir'),
+                                  onPressed: ()  async {
+                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, true);
+                                    Navigator
+                                        .push(
+                                      context,
+                                      new MaterialPageRoute(builder: (context) =>
+                                      new PartidosView(jornada: widget.jornada,
+                                          temporada: widget.temporada,
+                                          categoria: widget.categoria, pais: widget.pais)),
+                                    );
+                                  }
+                              ),
+                              FlatButton(
+                                  child: Text('Cancelar'),
+                                  onPressed: () {
+                                    Navigator.pop(context, true);
+
+                                  }
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else{
+                      Navigator.pop(context, true);
+                      Navigator
+                          .push(
+                        context,
+                        new MaterialPageRoute(builder: (context) =>
+                        new PartidosView(jornada: widget.jornada, temporada: widget.temporada,
+                            categoria: widget.categoria, pais: widget.pais)));
+                    }
+                  }
+              ),
               actions: <Widget>[
                 Container(
                   width: 80,
@@ -181,6 +239,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                               d.estado="SIM";
                               d.puntuacion="";
+                              widget.cambio=true;
                             });
                           }
                           for(var d in _jugadoresCASA){
@@ -190,6 +249,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                               d.estado="SIM";
                               d.puntuacion="";
+                              widget.cambio=true;
                             });
                           }
                           setState(() {
@@ -223,6 +283,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                             d.estado="SV";
                               d.puntuacion="";
+                            widget.cambio=true;
                           }
                           });
                           setState(() {
@@ -232,6 +293,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
                               d.estado="SV";
                               d.puntuacion="";
+                              widget.cambio=true;
                           }
                           });
                           setState(() {
@@ -270,6 +332,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                                       estadoJornadaPoner(widget.partido, d, "A");
                                       d.estado="A";
                                       d.puntuacion="";
+                                      widget.cambio=true;
                                     });
                                   }
                                   for(var d in _jugadoresCASA){
@@ -278,6 +341,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                                       estadoJornadaPoner(widget.partido, d, "A");
                                       d.estado="A";
                                       d.puntuacion="";
+                                      widget.cambio=true;
                                     });
                                   }
                                   setState(() {
@@ -310,6 +374,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                                       estadoJornadaPoner(widget.partido, d, "");
                                       d.estado="";
                                       d.puntuacion="";
+                                      widget.cambio=true;
                                     });
                                   }
                                   for(var d in _jugadoresCASA){
@@ -318,6 +383,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                                       estadoJornadaPoner(widget.partido, d, "");
                                       d.estado="";
                                       d.puntuacion="";
+                                      widget.cambio=true;
                                     });
                                   }
                                   setState(() {
@@ -403,8 +469,8 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
             TabBarView(
               controller: _controller,
               children: [
-                PuntacionesPartido(partido: widget.partido, jugadores:  _jugadoresCASA,),
-                PuntacionesPartido(partido: widget.partido,jugadores:  _jugadoresFUERA,),
+                PuntacionesPartido(partido: widget.partido, jugadores:  _jugadoresCASA,padre: widget),
+                PuntacionesPartido(partido: widget.partido,jugadores:  _jugadoresFUERA,padre: widget),
               ],
             ),),
         ])
@@ -459,7 +525,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                  con.updateJugadorPuntuacionesPartido(
                     widget.temporada,widget.pais,widget.categoria,widget.jornada,
                     widget.partido,_jugadoresCASA,_jugadoresFUERA);
-
+                widget.cambio=false;
                 return true; // showDialog() returns true
               },
             ),

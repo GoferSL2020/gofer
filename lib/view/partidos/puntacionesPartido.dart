@@ -5,13 +5,16 @@ import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
 import 'package:iadvancedscout/view/partidos/notaPuntuacionJornada.dart';
+import 'package:iadvancedscout/view/partidos/tabPuntuaciones.dart';
 
 
 class PuntacionesPartido extends StatefulWidget {
   final List<Player> jugadores;
   final Partido partido;
+  final TabPuntuaciones padre;
+  PuntacionesPartido({@required this.jugadores, this.partido,this.padre});
 
-  PuntacionesPartido({@required this.jugadores, this.partido});
+
   @override
 
   State<StatefulWidget> createState() {
@@ -73,6 +76,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                                               onChanged: (newValue) {
                                                 setState(() {
                                                   estrellaJornadaPoner(widget.partido,widget.jugadores[index],newValue);
+                                                  widget.padre.cambio=true;
                                                   //widget.jugador.estrella = newValue;
                                                   //ponerLosPuntosFireBaseEstrella(estrella);
                                                   // ponerLosPuntosExcel(puntuaciones, jugadorJornada, jugadorJornadaColumna, estrella);
@@ -114,6 +118,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                                                       puntuacionJornadaPoner(widget.partido,widget.jugadores[index],"");
                                                       estadoJornadaPoner(widget.partido,widget.jugadores[index],"");
                                                       estrellaJornadaPoner(widget.partido,widget.jugadores[index],false);
+                                                      widget.padre.cambio=true;
                                                     });
                                                   },
                                                   label: Text(
@@ -175,6 +180,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
         onPressed: () {
           setState(() {
             estadoJornadaPoner(widget.partido,jugador,est);
+            widget.padre.cambio=true;
             //puntuacionJornadaPoner(widget.partido,jugador,est);
           });
         },
@@ -198,6 +204,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
           setState(() {
             estadoJornadaPoner(widget.partido,jugador,est);
             puntuacionJornadaPoner(widget.partido,jugador,est);
+            widget.padre.cambio=true;
           });
         },
         child: Text(
@@ -221,6 +228,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
         onPressed: () {
           setState(() {
             puntuacionJornadaPoner(widget.partido,jugador,puntu);
+            widget.padre.cambio=true;
           });
         },
         child: Text(

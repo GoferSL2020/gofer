@@ -54,6 +54,7 @@ class _PartidoCardState extends State<PartidoCard> {
 
     return GestureDetector(
       onTap: () {
+        Navigator.of(context).pop();
         //print("${partido.equipoCASA}:${partido.equipoFUERA}:${partido.id}");
         Navigator.of(context).push(new MaterialPageRoute(
             builder: (BuildContext context) => TabPuntuaciones(widget.temporada,widget.categoria,widget.pais,widget.partido,widget.jornada)));

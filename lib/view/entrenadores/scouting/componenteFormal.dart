@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
+import 'package:iadvancedscout/view/entrenadores/scouting/tabEntrenadores.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
@@ -10,7 +11,10 @@ class ComponenteFormal extends StatefulWidget {
   @override
   _ComponenteFormal createState() => _ComponenteFormal();
   final Entrenador _entrenador;
-  ComponenteFormal(this._entrenador);
+  ComponenteFormal(this._entrenador,this._padre);
+
+
+  final TabEntrenadores _padre;
 }
 
 class _ComponenteFormal extends State<ComponenteFormal> {
@@ -360,6 +364,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
           onChanged: (newValue){
             setState(() {
               Entrenador.poneElValor(doc, newValue, widget._entrenador);
+              widget._padre.cambio=true;
             });
           },
           activeTrackColor: Colors.blue,
@@ -385,6 +390,7 @@ class _ComponenteFormal extends State<ComponenteFormal> {
           onChanged: (newValue){
             setState(() {
               Entrenador.poneElValor(caract[i], newValue, widget._entrenador);
+              widget._padre.cambio=true;
             });
           },
           activeTrackColor: Colors.blue,

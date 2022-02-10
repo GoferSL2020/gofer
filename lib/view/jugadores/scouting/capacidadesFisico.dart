@@ -2,14 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 
 
 class CapacidadesFisico extends StatefulWidget {
-  CapacidadesFisico(this._jugador);
+  CapacidadesFisico(this._jugador, this._padre);
+
   final Player _jugador;
+  final TabCaracteristicas _padre;
   @override
   _CapacidadesFisico createState() => _CapacidadesFisico();
 }
@@ -57,6 +60,8 @@ class _CapacidadesFisico extends State<CapacidadesFisico> {
                         setState(() {
                           widget._jugador.fis_envergadura =
                           Config.envergaduraFisica[index];
+                          widget._padre.cambio=true;
+
                         });
                       },
                     )),
@@ -123,6 +128,7 @@ class _CapacidadesFisico extends State<CapacidadesFisico> {
             
             setState(() {
               Player.poneElValor(doc, newValue, widget._jugador);
+              widget._padre.cambio=true;
             });
           },
           activeTrackColor: Colors.blue[900],

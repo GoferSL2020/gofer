@@ -325,7 +325,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
 
 
   void paginaEntrenador(BuildContext context, Entrenador entrenador) {
-    print(entrenador.key);
+    Navigator.of(context).pop();
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) => TabEntrenadores(widget.equipo,widget.temporada,widget.categoria,widget.pais,entrenador),
     ));

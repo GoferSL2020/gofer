@@ -49,7 +49,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
   final _CCAA = TextEditingController();
   final _provincia = TextEditingController();
   final _nacionalidad = TextEditingController();
-  String _activo =  "Activo";
+  String _activo =  "";
 
   final _valor = TextEditingController();
   var _fecha;
@@ -77,9 +77,15 @@ class _EditEntrenadorState extends State<EditEntrenador> {
     _nacionalidad.dispose();
     _scout.dispose();
     _CCAA.dispose();
-
     super.dispose();
   }
+
+
+  bool cambio=false;
+  cambiar(){
+    cambio=true;
+  }
+
 
   @override
   void initState() {
@@ -299,6 +305,7 @@ class _EditEntrenadorState extends State<EditEntrenador> {
       setState(() {
         try{
         _fecha = DateFormat('dd/MM/yyyy').format(order);
+        cambio=true;
         }
         catch(e){
           _fecha="";
@@ -310,12 +317,14 @@ class _EditEntrenadorState extends State<EditEntrenador> {
       var order = await getDate();
       setState(() {
         _fechaFinContrato = DateFormat('dd/MM/yyyy').format(order);
+        cambio=true;
       });
     }
     void callDatePickerFichaje() async {
       var order = await getDate();
       setState(() {
         _fechaFichaje = DateFormat('dd/MM/yyyy').format(order);
+        cambio=true;
       });
     }
 
@@ -530,7 +539,12 @@ class _EditEntrenadorState extends State<EditEntrenador> {
                         fontSize: 12,
                         labels:['Activo', 'Inactivo'],
                         onToggle: (index) {
-                          _activo=Config.activo[index];
+                          setState(() {
+                            _activo=Config.activo[index];
+                            widget.entrenador.activo=_activo;
+                            cambio=true;
+                          });
+
                         },
                       )),
                 ],
@@ -574,6 +588,44 @@ class _EditEntrenadorState extends State<EditEntrenador> {
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+              onPressed: () {
+                if (cambio) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Atención'),
+                        content: Text('¿Has grabado los datos?'),
+                        actions: [
+                          FlatButton(
+                              child: Text('Salir'),
+                              onPressed: ()  async {
+                                Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              }
+                          ),
+                          FlatButton(
+                              child: Text('Cancelar'),
+                              onPressed: () {
+                                Navigator.pop(context, true);
+
+                              }
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+                else{
+                  Navigator.pop(context, true);
+                }
+              }
+          ),
           actions: <Widget>[
 
             Container(

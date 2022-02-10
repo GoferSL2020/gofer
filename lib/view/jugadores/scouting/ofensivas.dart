@@ -2,20 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class Ofensivas extends StatefulWidget {
-   Ofensivas(this._jugador);
+   Ofensivas(this._jugador,this._padre);
 
+   final Player _jugador;
+   final TabCaracteristicas _padre;
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _Ofensivas();
   }
 
-   final Player _jugador;
-  
+
 
 }
 
@@ -107,6 +109,7 @@ Widget build(BuildContext context) {
               onChanged: (newValue){
                 setState(() {
                   Player.poneElValor(doc, newValue, widget._jugador);
+                  widget._padre.cambio=true;
                 });
               },
               activeTrackColor: Colors.blue[900],

@@ -16,14 +16,12 @@ class PartidosView extends StatefulWidget {
   final Categoria categoria;
   final Pais pais;
   final Jornada jornada;
-  final Partido partido;
 
   PartidosView({
     @required this.temporada,
     @required this.pais,
     @required this.categoria,
-    @required this.jornada,
-    @required this.partido});
+    @required this.jornada});
   @override
   _PartidosViewState createState() => new _PartidosViewState();
 }

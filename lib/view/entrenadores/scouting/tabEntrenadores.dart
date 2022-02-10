@@ -9,6 +9,7 @@ import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iadvancedscout/view/entrenadores/entrenadoresView.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteConceptual.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFormal.dart';
 import 'package:iadvancedscout/view/entrenadores/scouting/componenteFuncional.dart';
@@ -27,6 +28,7 @@ class TabEntrenadores extends StatefulWidget {
       TabEntrenadoresState();
   TabEntrenadores(this.equipo, this.temporada, this.categoria, this.pais, this.entrenador
      );
+  bool cambio=false;
 }
 
 class TabEntrenadoresState extends State<TabEntrenadores> {
@@ -41,6 +43,56 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
           length: 3,
           child: Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                  onPressed: () {
+                    if (widget.cambio) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            title: Text('Atención'),
+                            content: Text('¿Has grabado los datos?'),
+                            actions: [
+                              FlatButton(
+                                  child: Text('Salir'),
+                                  onPressed: ()  async {
+                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, true);
+                                    Navigator
+                                        .push(
+                                      context,
+                                      new MaterialPageRoute(builder: (context) =>
+                                      new EntrenadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
+                                    );
+                                  }
+                              ),
+                              FlatButton(
+                                  child: Text('Cancelar'),
+                                  onPressed: () {
+                                    Navigator.pop(context, true);
+
+                                  }
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else{
+                      Navigator.pop(context, true);
+                      Navigator
+                          .push(
+                        context,
+                        new MaterialPageRoute(builder: (context) =>
+                        new EntrenadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
+                      );
+                    }
+                  }
+              ),
               actions: <Widget>[
                 Container(
                   width: 80,
@@ -133,7 +185,7 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
                     onPressed: () {
                       Navigator.of(context).push(new MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            Observaciones(widget.entrenador),
+                            Observaciones(widget.entrenador,widget),
                       ));
                     },
                   ),
@@ -161,9 +213,9 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
             ),*/
             body: TabBarView(
               children: [
-                ComponenteConceptual(widget.entrenador),
-                ComponenteFormal(widget.entrenador),
-                ComponenteFuncional(widget.entrenador),
+                ComponenteConceptual(widget.entrenador,widget),
+                ComponenteFormal(widget.entrenador,widget),
+                ComponenteFuncional(widget.entrenador,widget),
               ],
             ),
           )),
@@ -216,6 +268,7 @@ class TabEntrenadoresState extends State<TabEntrenadores> {
                 CRUDEntrenador con = new CRUDEntrenador();
                 con.updateEntrenadorDatos
                   (widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.entrenador);
+                widget.cambio=false;
                 return true; // showDialog() returns true
               },
             ),

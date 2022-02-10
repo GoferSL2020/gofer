@@ -9,6 +9,7 @@ import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/player.dart';
 import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/view/equipos/equiposView.dart';
+import 'package:iadvancedscout/view/jugadores/jugadoresView.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/cualidadesPsicologia.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/defensivas.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/nivel.dart';
@@ -22,12 +23,17 @@ class TabCaracteristicas extends StatefulWidget {
   final Temporada temporada;
   final Categoria categoria;
   final Pais pais;
-  final Player jugador;
+  Player jugador;
   @override
   TabCaracteristicasState createState() =>
       TabCaracteristicasState();
   TabCaracteristicas(this.equipo, this.temporada, this.categoria, this.pais, this.jugador
      );
+
+  bool cambio=false;
+  cambiar(){
+    cambio=true;
+  }
 }
 
 class TabCaracteristicasState extends State<TabCaracteristicas> {
@@ -47,6 +53,56 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
           length: 5,
           child: Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  if (widget.cambio) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CupertinoAlertDialog(
+                          title: Text('Atención'),
+                          content: Text('¿Has grabado los datos?'),
+                          actions: [
+                            FlatButton(
+                                child: Text('Salir'),
+                                onPressed: ()  async {
+                                  Navigator.pop(context, true);
+                                  Navigator.pop(context, true);
+                                  Navigator
+                                      .push(
+                                    context,
+                                    new MaterialPageRoute(builder: (context) =>
+                                    new JugadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
+                                  );
+                                }
+                            ),
+                            FlatButton(
+                                child: Text('Cancelar'),
+                                onPressed: () {
+                                  Navigator.pop(context, true);
+
+                                }
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else{
+                    Navigator.pop(context, true);
+                    Navigator
+                        .push(
+                      context,
+                      new MaterialPageRoute(builder: (context) =>
+                      new JugadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
+                    );
+                  }
+                }
+              ),
               actions: <Widget>[
                 Container(
                   width: 80,
@@ -142,7 +198,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                     onPressed: () {
                       Navigator.of(context).push(new MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            Observaciones(widget.jugador),
+                            Observaciones(widget.jugador,widget),
                       ));
                     },
                   ),
@@ -170,11 +226,11 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
             ),*/
             body: TabBarView(
               children: [
-                CapacidadesFisico(widget.jugador),
-                Defensivas(widget.jugador),
-                Ofensivas(widget.jugador),
-                CualidadesPsicologia(widget.jugador),
-                Nivel(widget.jugador),
+                CapacidadesFisico(widget.jugador,widget),
+                Defensivas(widget.jugador,widget),
+                Ofensivas(widget.jugador,widget),
+                CualidadesPsicologia(widget.jugador,widget),
+                Nivel(widget.jugador,widget),
                 //PuntuacionesPartidos(widget.equipo, widget.temporada, widget.categoria, widget.pais, widget.jugador)
               ],
             ),
@@ -228,6 +284,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                 CRUDJugador con = new CRUDJugador();
                 con.updateJugadorScouting(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
                 con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
+                widget.cambio=false;
                 return true; // showDialog() returns true
               },
             ),

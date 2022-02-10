@@ -2,13 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 class Defensivas extends StatefulWidget {
-   Defensivas(this._jugador);
+   Defensivas(this._jugador,this._padre);
 
+   final Player _jugador;
+   final TabCaracteristicas _padre;
   @override
   _Defensivas createState() => _Defensivas();
-  final Player _jugador;
+
 }
 
 class _Defensivas extends State<Defensivas> {
@@ -101,6 +104,7 @@ class _Defensivas extends State<Defensivas> {
 
                 setState(() {
                   Player.poneElValor(doc, newValue, widget._jugador);
+                  widget._padre.cambio=true;
                 });
               },
               activeTrackColor:Colors.blue[900],

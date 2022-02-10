@@ -68,6 +68,11 @@ class _EditJugadorState extends State<EditJugador> {
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
 
+  bool cambio=false;
+  cambiar(){
+    cambio=true;
+  }
+
   List<String> _posicion = <String>[
     '',
     'PORTERO',
@@ -296,6 +301,7 @@ Carrilero izquierdo
             setState(() {
               //newContact.favoriteColor = newValue;
               _puesto = value;
+              cambio=true;
               state.didChange(value);
             });
           },
@@ -327,6 +333,7 @@ Carrilero izquierdo
             setState(() {
               //newContact.favoriteColor = newValue;
               _puesto2 = value;
+              cambio=true;
               state.didChange(value);
             });
           },
@@ -463,6 +470,7 @@ Carrilero izquierdo
       var order = await getDate();
       setState(() {
         _fecha = DateFormat('dd/MM/yyyy').format(order);
+        cambio=true;
       });
     }
 
@@ -470,6 +478,7 @@ Carrilero izquierdo
       var order = await getDate();
       setState(() {
         _fechaContrato = DateFormat('dd/MM/yyyy').format(order);
+        cambio=true;
       });
     }
 
@@ -593,6 +602,7 @@ Carrilero izquierdo
                           setState(() {
                             _lateral=Config.lateral[index];
                             widget.jugador.lateral=Config.lateral[index];
+                            cambio=true;
                           });
 
                         },
@@ -685,6 +695,7 @@ Carrilero izquierdo
                       onChanged: (newValue) {
                         setState(() {
                           _prestamo=newValue;
+                          cambio=true;
                         });
                       },
                       activeTrackColor: Colors.blue[900],
@@ -717,6 +728,7 @@ Carrilero izquierdo
                             Config.extranjeroArgentino[index]
                                 :Config.extranjero[index];
                             widget.jugador.nacionalidad=_extranjero;
+                            cambio=true;
                           });
 
                         },
@@ -751,6 +763,44 @@ Carrilero izquierdo
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+              onPressed: () {
+                if (cambio) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Atención'),
+                        content: Text('¿Has grabado los datos?'),
+                        actions: [
+                          FlatButton(
+                              child: Text('Salir'),
+                              onPressed: ()  async {
+                                Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              }
+                          ),
+                          FlatButton(
+                              child: Text('Cancelar'),
+                              onPressed: () {
+                                Navigator.pop(context, true);
+
+                              }
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+                else{
+                  Navigator.pop(context, true);
+                }
+              }
+          ),
           actions: <Widget>[
 
             Container(

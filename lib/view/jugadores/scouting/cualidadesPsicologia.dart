@@ -1,14 +1,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class CualidadesPsicologia extends StatefulWidget {
   @override
   _CualidadesPsicologia createState() => _CualidadesPsicologia();
+  CualidadesPsicologia(this._jugador,this._padre);
+
   final Player _jugador;
-  CualidadesPsicologia(this._jugador);
+  final TabCaracteristicas _padre;
 }
 
 class _CualidadesPsicologia extends State<CualidadesPsicologia> {
@@ -97,6 +100,7 @@ class _CualidadesPsicologia extends State<CualidadesPsicologia> {
               onChanged: (newValue){
                 setState(() {
                   Player.poneElValor(doc, newValue, widget._jugador);
+                  widget._padre.cambio=true;
                 });
               },
               activeTrackColor: Colors.blue[900],

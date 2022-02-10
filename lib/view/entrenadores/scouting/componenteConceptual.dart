@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
+import 'package:iadvancedscout/view/entrenadores/scouting/tabEntrenadores.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 
 class ComponenteConceptual extends StatefulWidget {
-  ComponenteConceptual(this._entrenador);
+  ComponenteConceptual(this._entrenador,this._padre);
+
+
+  final TabEntrenadores _padre;
   final Entrenador _entrenador;
   @override
   _ComponenteConceptual createState() => _ComponenteConceptual();
@@ -226,6 +230,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
           onChanged: (newValue){
             setState(() {
               Entrenador.poneElValor(doc, newValue, widget._entrenador);
+              widget._padre.cambio=true;
             });
           },
           activeTrackColor: Colors.blue,
@@ -250,6 +255,7 @@ class _ComponenteConceptual extends State<ComponenteConceptual> {
           onChanged: (newValue){
             setState(() {
               Entrenador.poneElValor(caract[i], newValue, widget._entrenador);
+              widget._padre.cambio=true;
             });
           },
           activeTrackColor: Colors.blue,

@@ -385,6 +385,7 @@ class _JugadoresViewState extends State<JugadoresView> {
   }
 
   void paginaJugador(BuildContext context, Player jugador) {
+    Navigator.pop(context, true);
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) => TabCaracteristicas(widget.equipo,widget.temporada,widget.categoria,widget.pais,jugador),
     ));

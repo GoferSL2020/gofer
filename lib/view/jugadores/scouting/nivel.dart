@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/view/jugadores/scouting/tabNivel.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
 
 class Nivel extends StatefulWidget {
-   Nivel( this._jugador);
+   Nivel( this._jugador,this._padre);
+
+   final Player _jugador;
+   final TabCaracteristicas _padre;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _Nivel();
   }
-
-  final Player _jugador;
 
 }
 
@@ -124,6 +126,8 @@ Widget build(BuildContext context) {
                           //newContact.favoriteColor = newValue;
                           widget._jugador.veredicto = value;
                           state.didChange(value);
+                          widget._padre.cambio=true;
+
                         });
                       },
                     ),
@@ -141,7 +145,7 @@ Widget build(BuildContext context) {
             height: 210,
             padding: EdgeInsets.only(left:0, right: 0),
             child:
-            TabNivel(widget._jugador),
+            TabNivel(widget._jugador, widget._padre),
           ),
           Container(padding: EdgeInsets.only(left:15.0, right: 15,top: 15),
             child: Text("TIPO",
@@ -179,7 +183,7 @@ Widget build(BuildContext context) {
                 onPressed: () {
                   setState(() {
                     widget._jugador.tipo = "";
-
+                    widget._padre.cambio=true;
                   });
                 },
               )),
@@ -224,6 +228,7 @@ Container buildContainerPortero() {
                 onPressed: () {
                   setState(() {
                     widget._jugador.tipo = "P 1";
+                    widget._padre.cambio=true;
                   });
 
                 },
@@ -247,7 +252,7 @@ Container buildContainerPortero() {
                     ? Colors.green
                     : Colors.grey,
                 onPressed: () {
-                  setState(() {
+                  setState(() { widget._padre.cambio=true;
                     widget._jugador.tipo = "P 2";
                   });
 
@@ -271,7 +276,7 @@ Container buildContainerPortero() {
                     ? Colors.green
                     : Colors.grey,
                 onPressed: () {
-                  setState(() {
+                  setState(() { widget._padre.cambio=true;
                     widget._jugador.tipo = "P 3";
                   });
 
@@ -295,7 +300,7 @@ Container buildContainerPortero() {
                     ? Colors.green
                     : Colors.grey,
                 onPressed: () {
-                  setState(() {
+                  setState(() { widget._padre.cambio=true;
                     widget._jugador.tipo = "P 4";
                   });
 
@@ -320,7 +325,7 @@ Container buildContainerPortero() {
                     ? Colors.green
                     : Colors.grey,
                 onPressed: () {
-                  setState(() {
+                  setState(() { widget._padre.cambio=true;
                     widget._jugador.tipo = "P 5";
                   });
                 },
@@ -352,7 +357,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "L 1";
                     });
 
@@ -377,7 +382,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "L 2";
                     });
 
@@ -401,7 +406,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "L 3";
                     });
 
@@ -425,7 +430,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "L 4";
                     });
 
@@ -458,7 +463,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CB 1";
                     });
 
@@ -483,7 +488,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CB 2";
                     });
 
@@ -507,7 +512,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CB 3";
                     });
 
@@ -531,7 +536,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CB 4";
                     });
 
@@ -565,7 +570,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "FB 1";
                     });
 
@@ -590,7 +595,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "FB 2";
                     });
 
@@ -614,7 +619,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "FB 3";
                     });
 
@@ -646,7 +651,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 1";
                     });
 
@@ -671,7 +676,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 2";
                     });
 
@@ -695,7 +700,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 3";
                     });
 
@@ -719,7 +724,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 4";
                     });
 
@@ -744,7 +749,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 5";
                     });
                   },
@@ -768,7 +773,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "MF 6";
                     });
                   },
@@ -799,7 +804,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 1";
                     });
 
@@ -824,7 +829,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 2";
                     });
 
@@ -848,7 +853,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 3";
                     });
 
@@ -872,7 +877,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 4";
                     });
 
@@ -897,7 +902,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 5";
                     });
                   },
@@ -920,7 +925,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "CF 6";
                     });
                   },
@@ -951,7 +956,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "WF 1";
                     });
 
@@ -976,7 +981,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "WF 2";
                     });
 
@@ -1000,7 +1005,7 @@ Container buildContainerPortero() {
                       ? Colors.green
                       : Colors.grey,
                   onPressed: () {
-                    setState(() {
+                    setState(() { widget._padre.cambio=true;
                       widget._jugador.tipo = "WF 3";
                     });
 
