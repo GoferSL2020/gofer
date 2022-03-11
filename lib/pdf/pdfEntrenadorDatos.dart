@@ -64,6 +64,28 @@ class PdfEntrenadorDatos {
     }
   }
 
+  int ganadoCasa=0;
+  int perdidoCasa=0;
+  int empateCasa=0;
+  int ganadoFuera=0;
+  int perdidoFuera=0;
+  int empateFuera=0;
+  int golesCasa=0;
+  int golesFuera=0;
+  int partidosCasa=0;
+  int partidosFuera=0;
+  int puntosCasa=0;
+  int puntosFuera=0;
+  int partido=0;
+  double puntosPartidoCasa=0;
+  double puntosPartidoFuera=0;
+  double porcentajeGanado=0;
+  double porcentajeEmpate=0;
+  double porcentajePerdido=0;
+  int ganado=0;
+  int perdido=0;
+  int empate=0;
+
 
   Future<List<Partido>>  partidosJornada() async {
     CRUDEquipo dao = CRUDEquipo();
@@ -74,17 +96,52 @@ class PdfEntrenadorDatos {
     DateFormat formato = DateFormat("dd/MM/yyyy");
     partidos.then((value) {
       value.forEach((element) {
-        print("${element.equipoCASA}:${element.equipoFUERA}");
-        print(formato.parse(element.fecha).isAfter(formato.parse(_entrenador.fechaFichaje)));
+        //print(formato.parse(element.fecha).isAfter(formato.parse(_entrenador.fechaFichaje)));
         if((formato.parse(element.fecha).isAfter(formato.parse(_entrenador.fechaFichaje)))
-          &&(formato.parse(element.fecha).isBefore(formato.parse(_entrenador.fechaFinContrato))))
-            lista.add(element);
+          &&(formato.parse(element.fecha).isBefore(formato.parse(_entrenador.fechaFinContrato)))) {
+          lista.add(element);
+          if(element.golesCASA!=""){
+          print("${element.equipoCASA}:${element.equipoFUERA}:${element.jugado}:${element.golesCASA}:${element.golesFUERA}");
+            partido=partido+1;
+            if (element.equipoCASA == _equipo.equipo) {
+              partidosCasa++;
+              golesCasa = golesCasa + int.parse(element.golesCASA);
+              if (int.parse(element.golesCASA) >
+                  int.parse(element.golesFUERA)) ganadoCasa = ganadoCasa + 1;
+              if (int.parse(element.golesCASA) ==
+                  int.parse(element.golesFUERA)) empateCasa = empateCasa + 1;
+              if (int.parse(element.golesCASA) < int.parse(element.golesFUERA))
+                perdidoCasa = perdidoCasa + 1;
+            }else {
+                partidosFuera=partidosFuera+1;
+                golesFuera = golesFuera + int.parse(element.golesFUERA);
+                if (int.parse(element.golesCASA) >
+                    int.parse(element.golesFUERA)) perdidoFuera=perdidoFuera+1;
+                if (int.parse(element.golesCASA) ==
+                    int.parse(element.golesFUERA)) empateFuera=empateFuera+1;
+                if (int.parse(element.golesCASA) <
+                    int.parse(element.golesFUERA)) ganadoFuera=ganadoFuera+1;
+              }
+              ganado = ganadoFuera + ganadoCasa;
+              empate = empateFuera + empateCasa;
+              perdido = perdidoFuera + perdidoCasa;
+
+
+              puntosCasa = (ganadoCasa * 3) + empateCasa;
+              puntosFuera = (ganadoFuera * 3) + empateFuera;
+              puntosPartidoCasa = (puntosCasa / partidosCasa);
+              puntosPartidoFuera = (puntosFuera / partidosFuera);
+
+
+          }
+        }
       });
     });
     _listaPartidos=lista;
     //_listaPartidos.sort((a,b)=>a.jornada.compareTo(b.jornada));
     print(_listaPartidos.length);
-  }
+
+   }
 
 
 
@@ -107,7 +164,7 @@ class PdfEntrenadorDatos {
     page2.graphics.drawString("Observaciones",
         PdfStandardFont(PdfFontFamily.helvetica, 16, ),
         brush: PdfBrushes.black,
-        bounds: Rect.fromLTWH(15, 160, 300, 30),
+        bounds: Rect.fromLTWH(10, 160, 300, 30),
         pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
           ));
@@ -115,7 +172,7 @@ class PdfEntrenadorDatos {
     page2.graphics.drawString(_entrenador.observaciones,
     PdfStandardFont(PdfFontFamily.helvetica, 12, ),
     brush: PdfBrushes.black,
-    bounds: Rect.fromLTWH(15, 190, page2.size.width-100, 200),
+    bounds: Rect.fromLTWH(10, 190, page2.size.width-100, 200),
     format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
     ));
 
@@ -123,7 +180,7 @@ class PdfEntrenadorDatos {
         PdfStandardFont(PdfFontFamily.helvetica, 16, ),
         brush: PdfBrushes.black,
         pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
-        bounds: Rect.fromLTWH(15, 300, 300, 30),
+        bounds: Rect.fromLTWH(10, 270, 300, 30),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
         ));
 
@@ -186,6 +243,8 @@ class PdfEntrenadorDatos {
     final PdfGrid gridFuncional7 = getGrid("Grados de Libertad",caractFuncionalgradosDeLibertad,3);
     final PdfGrid gridFuncional8 = getGrid("Variabilidad Estrategía Local/Visitante",caractFuncionalvariabilidadEstrategeciaLocalVisitante,3);
 
+    final PdfGrid gridDatos= getDatosRendimientoGrid();
+
 
 
     caractFuncionalinicioDeJuego=Entrenador.inicioDeJuego;
@@ -211,7 +270,83 @@ class PdfEntrenadorDatos {
         page: page, bounds: Rect.fromLTWH(10, 450, 0, 0));
     gridConceptual4.draw(
         page: page, bounds: Rect.fromLTWH(10, 530, 0, 0));
+    gridDatos.draw(
+        page: page2, bounds: Rect.fromLTWH(10, 630, 0, 0));
 
+
+
+    page2.graphics.drawRectangle(
+        brush: PdfSolidBrush(colorVerde),
+        bounds: Rect.fromLTWH(320, 680, 10, 10));
+    page2.graphics.drawString("% Ganados", contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(335, 680, 100, 10),
+        format: PdfStringFormat(
+            alignment: PdfTextAlignment.left,
+            lineAlignment: PdfVerticalAlignment.middle));
+    page2.graphics.drawRectangle(
+        brush: PdfSolidBrush(colorAzul),
+        bounds: Rect.fromLTWH(320, 692, 10, 10));
+    page2.graphics.drawString("% Empates", contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(335, 692, 100, 10),
+        format: PdfStringFormat(
+            alignment: PdfTextAlignment.left,
+            lineAlignment: PdfVerticalAlignment.middle));
+    page2.graphics.drawRectangle(
+        brush: PdfSolidBrush(colorRojo),
+        bounds: Rect.fromLTWH(320, 705, 10, 10));
+    page2.graphics.drawString("% Perdidos", contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(335, 705, 100, 10),
+        format: PdfStringFormat(
+            alignment: PdfTextAlignment.left,
+            lineAlignment: PdfVerticalAlignment.middle));
+
+    if(porcentajeGanado>0) {
+      page2.graphics.drawRectangle(
+          brush: PdfSolidBrush(colorVerde),
+          bounds: Rect.fromLTWH(320, 630, porcentajeGanado + 25, 45));
+      page2.graphics.drawString(
+          "${porcentajeGanado.toStringAsFixed(2)} % ", contentFontCelda7,
+          brush: PdfBrushes.black,
+          bounds: Rect.fromLTWH(320, 630, porcentajeGanado + 25, 45),
+          format: PdfStringFormat(
+              alignment: PdfTextAlignment.center,
+              lineAlignment: PdfVerticalAlignment.middle));
+    }
+    if(porcentajeEmpate>0) {
+      page2.graphics.drawRectangle(
+          brush: PdfSolidBrush(colorAzul),
+          bounds: Rect.fromLTWH(
+              320 + porcentajeGanado + 25, 630, porcentajeEmpate + 25, 45));
+      page2.graphics.drawString(
+          "${porcentajeEmpate.toStringAsFixed(2)} % ", contentFontCelda7,
+          brush: PdfBrushes.black,
+          bounds: Rect.fromLTWH(
+              320 + porcentajeGanado + 25, 630, porcentajeEmpate + 25, 45),
+          format: PdfStringFormat(
+              alignment: PdfTextAlignment.center,
+              lineAlignment: PdfVerticalAlignment.middle));
+    }
+    if(porcentajePerdido>0) {
+      double espacio=0;
+      porcentajeEmpate>0?espacio=(320 + porcentajeGanado + 25 + porcentajeEmpate + 25):espacio=320 + porcentajeGanado + 25;
+      page2.graphics.drawRectangle(
+          brush: PdfSolidBrush(colorRojo),
+          bounds: Rect.fromLTWH(
+              espacio, 630,
+              porcentajePerdido + 25, 45));
+      page2.graphics.drawString(
+          "${porcentajePerdido.toStringAsFixed(2)} % ", contentFontCelda7,
+          brush: PdfBrushes.black,
+          bounds: Rect.fromLTWH(
+              espacio, 630,
+              porcentajePerdido + 25, 45),
+          format: PdfStringFormat(
+              alignment: PdfTextAlignment.center,
+              lineAlignment: PdfVerticalAlignment.middle));
+    }
     gridFormal1.draw(
         page: page, bounds: Rect.fromLTWH(180, 170, 0, 0));
     gridFormal2.draw(
@@ -251,7 +386,8 @@ class PdfEntrenadorDatos {
         page: page, bounds: Rect.fromLTWH(350, 600, 0, 0));
     gridFuncional8.draw(
         page: page, bounds: Rect.fromLTWH(350, 670, 0, 0));
-    //Draw grid
+
+  //Draw grid
     //drawGrid1(page, gridCapacidadesFisico1, result);
     //drawGrid2(page, gridCapacidadesFisico2, result2);
     //drawGrid(page, gridCapacidadesFisico3 , result);
@@ -262,6 +398,23 @@ class PdfEntrenadorDatos {
 
 
     var imgjugador = await get(Uri.parse(Config.imagenEntrenador(_entrenador)));
+
+    var imgCategoria = await get(Uri.parse(Config.escudoCategoria(_categoria.categoria)));
+
+    page2.graphics.drawString("Datos de Rendimiento ${_temporada.temporada}",
+        PdfStandardFont(PdfFontFamily.helvetica, 16, ),
+        brush: PdfBrushes.black,
+        pen: PdfPen(PdfColor(0, 0, 0), width : 0.5),
+        bounds: Rect.fromLTWH(10, 610, 300, 20),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.top,
+        ));
+
+    try{
+        page2.graphics.drawImage(PdfBitmap(imgCategoria.bodyBytes.toList()),
+          Rect.fromLTWH(18, 637, 25, 25));
+    }catch(e){
+      print(_categoria.categoria);
+    }
 
     var imgequipo = await get(Uri.parse(
     Config.escudo(_entrenador.equipo)));
@@ -559,6 +712,100 @@ class PdfEntrenadorDatos {
 
 
 
+  PdfGrid getDatosRendimientoGrid() {
+//Create a PDF grid
+
+    //Create a PDF grid
+    final PdfGrid grid = PdfGrid();
+    //Secify the columns count to the grid.
+    grid.columns.add(count: 7);
+    //Create the header row of the grid.
+    final PdfGridRow headerRow1 = grid.headers.add(1)[0];
+    //Set style
+    headerRow1.style.backgroundBrush = PdfSolidBrush(colorNegro);
+    //headerRow1.style.backgroundBrush = PdfSolidBrush(PdfColor(68, 114, 196));
+
+    headerRow1.style.textBrush = PdfBrushes.white;
+    headerRow1.cells[0].value = "";
+    headerRow1.cells[0].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[1].value = "Partidos";
+    headerRow1.cells[1].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[2].value = "Ganado";
+    headerRow1.cells[2].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[3].value = "Empate";
+    headerRow1.cells[3].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[4].value = "Perdido";
+    headerRow1.cells[4].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[5].value = "Puntos";
+    headerRow1.cells[5].stringFormat.alignment = PdfTextAlignment.center;
+    headerRow1.cells[6].value = "Puntos por partido";
+    headerRow1.cells[6].stringFormat.alignment = PdfTextAlignment.center;
+
+    grid.columns[0].width = 40;
+    grid.columns[1].width = 40;
+    grid.columns[2].width = 40;
+    grid.columns[3].width = 40;
+    grid.columns[4].width = 40;
+    grid.columns[5].width = 40;
+    grid.columns[6].width = 40;
+
+    grid.rows.add();
+    grid.rows.add();
+    grid.rows.add();
+
+    grid.rows[0].cells[0].value="CASA";
+    grid.rows[0].cells[1].value=partidosCasa.toString();
+    grid.rows[0].cells[2].value=ganadoCasa.toString();
+    grid.rows[0].cells[3].value=empateCasa.toString();
+    grid.rows[0].cells[4].value=perdidoCasa.toString();
+    grid.rows[0].cells[5].value=puntosCasa.toString();
+    grid.rows[0].cells[6].value=puntosPartidoCasa.toStringAsFixed(2);
+    grid.rows[1].cells[0].value="FUERA";
+    grid.rows[1].cells[1].value=partidosFuera.toString();
+    grid.rows[1].cells[2].value=ganadoFuera.toString();
+    grid.rows[1].cells[3].value=empateFuera.toString();
+    grid.rows[1].cells[4].value=perdidoFuera.toString();
+    grid.rows[1].cells[5].value=puntosFuera.toString();
+    grid.rows[1].cells[6].value=puntosPartidoFuera.toStringAsFixed(2);
+    grid.rows[2].cells[0].value="TOTAL";
+    grid.rows[2].cells[1].value=partido.toString();
+    grid.rows[2].cells[2].value=ganado.toString();
+    grid.rows[2].cells[3].value=empate.toString();
+    grid.rows[2].cells[4].value=perdido.toString();
+    grid.rows[2].cells[5].value=(puntosCasa+puntosFuera).toString();
+    grid.rows[2].cells[6].value=((puntosCasa+puntosFuera)/partido).toStringAsFixed(2);
+
+    for (int i = 0; i < headerRow1.cells.count; i++) {
+      headerRow1.cells[i].style.cellPadding =
+          PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
+    }
+    for (int i = 0; i < grid.rows.count; i++) {
+      final PdfGridRow row = grid.rows[i];
+      for (int j = 0; j < row.cells.count; j++) {
+        final PdfGridCell cell = row.cells[j];
+        cell.stringFormat.alignment = PdfTextAlignment.center;
+        cell.style.cellPadding =
+            PdfPaddings(bottom: 0, left: 5, right: 5, top: 2);
+        cell.style.font=contentFontCelda7;
+      }
+    }
+
+    ganado=ganadoFuera+ganadoCasa;
+    empate=empateFuera+empateCasa;
+    perdido=perdidoFuera+perdidoCasa;
+    print("porcentajeGanado:$porcentajeGanado");
+    print("porcentajeEmpatea:$porcentajeEmpate");
+    print("porcentajePerdido:$porcentajePerdido");
+    porcentajeGanado=(100*ganado/partido);
+    porcentajeEmpate=(100*empate/partido);
+    porcentajePerdido=(100*perdido/partido);
+
+
+    return grid;
+  }
+
+
+
   Future<Uint8List> getImageFileFromAssets(String path) async {
     ByteData imageData1 = await rootBundle.load(path);
     return imageData1.buffer.asUint8List();
@@ -596,7 +843,7 @@ class PdfEntrenadorDatos {
 
   getGridPartidos(PdfPage page) async {
     _listaPartidos.sort((a,b)=>a.jornada.compareTo(b.jornada));
-    int altura=330;
+    int altura=300;
     double log=_listaPartidos.length/2.round();
     for (int i=0;i<log.toInt();i++) {
       page.graphics.drawString("J.${_listaPartidos[i].jornada.toString()} ${_listaPartidos[i].fecha.toString()}",
@@ -607,20 +854,20 @@ class PdfEntrenadorDatos {
       page.graphics.drawString("${_listaPartidos[i].equipoCASA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
           format: PdfStringFormat(alignment: PdfTextAlignment.left,),
-          bounds: Rect.fromLTWH(70, altura.toDouble(),130, 25),
+          bounds: Rect.fromLTWH(55, altura.toDouble(),130, 25),
           brush: PdfSolidBrush(colorNegro,)
       );
       PdfColor  colorRES=colorResultado(_listaPartidos[i]);
       page.graphics.drawString("${_listaPartidos[i].golesCASA} - ${_listaPartidos[i].golesFUERA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
           format: PdfStringFormat(alignment: PdfTextAlignment.center,),
-          bounds: Rect.fromLTWH(150, altura.toDouble(),20, 25),
+          bounds: Rect.fromLTWH(145, altura.toDouble(),20, 25),
           brush: PdfSolidBrush(colorRES,)
       );
       page.graphics.drawString("${_listaPartidos[i].equipoFUERA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
           format: PdfStringFormat(alignment: PdfTextAlignment.left,),
-          bounds: Rect.fromLTWH(180, altura.toDouble(),130, 25),
+          bounds: Rect.fromLTWH(170, altura.toDouble(),130, 25),
           brush: PdfSolidBrush(colorNegro,)
       );
 
@@ -645,7 +892,7 @@ class PdfEntrenadorDatos {
 */
       altura=altura+15;
     }
-    altura=330;
+    altura=300;
     for (int i=log.toInt();i<_listaPartidos.length;i++) {
       page.graphics.drawString("J.${_listaPartidos[i].jornada.toString()} ${_listaPartidos[i].fecha.toString()} ",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
@@ -655,20 +902,20 @@ class PdfEntrenadorDatos {
       page.graphics.drawString("${_listaPartidos[i].equipoCASA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
           format: PdfStringFormat(alignment: PdfTextAlignment.left,),
-          bounds: Rect.fromLTWH(340, altura.toDouble(),130, 25),
+          bounds: Rect.fromLTWH(330, altura.toDouble(),130, 25),
           brush: PdfSolidBrush(colorNegro,)
       );
       PdfColor  colorRES=colorResultado(_listaPartidos[i]);
       page.graphics.drawString("${_listaPartidos[i].golesCASA} - ${_listaPartidos[i].golesFUERA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.bold),
           format: PdfStringFormat(alignment: PdfTextAlignment.center,),
-          bounds: Rect.fromLTWH(420, altura.toDouble(),20, 25),
+          bounds: Rect.fromLTWH(410, altura.toDouble(),20, 25),
           brush: PdfSolidBrush(colorRES,)
       );
       page.graphics.drawString("${_listaPartidos[i].equipoFUERA}",
           PdfStandardFont(PdfFontFamily.helvetica, 8, style: PdfFontStyle.italic),
           format: PdfStringFormat(alignment: PdfTextAlignment.left,),
-          bounds: Rect.fromLTWH(460, altura.toDouble(),130, 25),
+          bounds: Rect.fromLTWH(440, altura.toDouble(),130, 25),
           brush: PdfSolidBrush(colorNegro,)
       );
 
@@ -726,4 +973,7 @@ class PdfEntrenadorDatos {
     }
     return color;
   }
+
+
+
 }

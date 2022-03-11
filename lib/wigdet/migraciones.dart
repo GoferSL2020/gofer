@@ -386,6 +386,32 @@ class _MigracionesState extends State<Migraciones> {
                   child:
                   RaisedButton.icon(
                       onPressed: () async {
+                        getCambiarNivelBajoJugadores();
+                        //getMigrarCiclo1();
+                        //getMigrarPuntuacionesNuevo();
+                        //getMigrarJugadores();
+                      },
+                      label: Text(
+                        "Nivel Bajo Jugadores",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      icon: Icon(
+                        CustomIcon.file_excel,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.white,
+                      splashColor: Colors.white,
+                      color: Colors.black),
+                ),),
+              Container(
+                color:Colors.white,padding: EdgeInsets.only(left: 70, right: 70),
+                child:
+
+                SizedBox(width: 50,
+                  child:
+                  RaisedButton.icon(
+                      onPressed: () async {
                         getPonerTemporadaCategoriaEquipo();
                         //getMigrarCiclo1();
                         //getMigrarPuntuacionesNuevo();
@@ -922,13 +948,12 @@ class _MigracionesState extends State<Migraciones> {
     }}
   }
 
-
-  getCambiarTipoJugadores() async {
-    print("getCambiarTipoJugadores");
+  getCambiarNivelBajoJugadores() async {
+    print("getCambiarNivelBajoJugadores");
     final FirebaseFirestore _db = FirebaseFirestore.instance;
     print(equipos.length);
     for (var doc in equipos) {
-     /* print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
+      /* print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
       print(
           "${doc.equipo},${doc.categoria},${doc.id}");
       //temporadas/BuJNv17ghCPGnq37P2ev/paises/QqjzloEo6PI7sHfsffk2/categorias/rAeKFLQSry7l1x0WVW01/equipos/tbXIokAhjIMVyuNWcUyZ
@@ -936,6 +961,34 @@ class _MigracionesState extends State<Migraciones> {
           "paises/${_paisAux.id}/"
           "categorias/${_categoriaAux.id}/"
           "equipos/${doc.id}/jugadores");*/
+      CRUDJugador dao=CRUDJugador();
+      List<Player> jugadores=await dao.fetchJugadoresList(_temporadaAux, _paisAux, _categoriaAux, doc);
+      for (var jug in jugadores) {
+        //print("${jug.equipo}:${jug.jugador}:${jug.posicion}:${jug.nivel}");
+        String nivel = jug.nivel;
+        if (nivel.toUpperCase() == "Discreto".toUpperCase()) {
+          //jug.tipo=tipoNuevo;
+          print("${jug.equipo}:${jug.jugador}:${jug.tipoAntiguo}:${jug
+              .tipoAntiguo}:${nivel}");
+          await _db
+              .collection(""
+              "/temporadas/${_temporadaAux.id}/"
+              "paises/${_paisAux.id}/"
+              "jugadoresDATA").doc(jug.key).update(
+              {"nivel": "Discreto"});
+
+        }
+      }}
+  }
+
+  getCambiarTipoJugadores() async {
+    print("getCambiarTipoJugadores");
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    print(equipos.length);
+    for (var doc in equipos) {
+     print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
+      print(
+          "${doc.equipo},${doc.categoria},${doc.id}");
       CRUDJugador dao=CRUDJugador();
       List<Player> jugadores=await dao.fetchJugadoresList(_temporadaAux, _paisAux, _categoriaAux, doc);
       for (var jug in jugadores) {
@@ -951,7 +1004,7 @@ class _MigracionesState extends State<Migraciones> {
             .collection("/temporadas/${_temporadaAux.id}/"
             "paises/${_paisAux.id}/"
             "categorias/${_categoriaAux.id}/"
-            "equipos/${doc.id}/jugadores").doc(jug.key).update({"tipo": tipoNuevo});
+            "equipos/${doc.id}/jugadores").doc(jug.key).update({"nviel": tipoNuevo});
       }}
   }
 

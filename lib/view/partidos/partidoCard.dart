@@ -141,7 +141,7 @@ class _PartidoCardState extends State<PartidoCard> {
                     new Text("Evaluado",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 10,
+                          fontSize: 8,
 
                         )),
                     Switch(
@@ -158,7 +158,7 @@ class _PartidoCardState extends State<PartidoCard> {
                     new Text("Sin evaluar",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 10,
+                          fontSize: 8,
 
                         )),
                     Switch(
@@ -173,12 +173,12 @@ class _PartidoCardState extends State<PartidoCard> {
                       activeColor: Colors.red[900],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, top: 5),
+                      padding: EdgeInsets.only(left: 5, top: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           SizedBox(
-                              height: 30,width: 100,
+                              height: 30,width: 90,
                               child: RaisedButton.icon(
                                 elevation: 20,
                                 onPressed: () {
@@ -198,6 +198,21 @@ class _PartidoCardState extends State<PartidoCard> {
                                 textColor: Colors.white,
                                 hoverColor: Colors.black,
                                 splashColor: Colors.blue,
+                                color: Colors.white,)),Container(width: 5,),
+                          SizedBox(
+                              height: 30,
+                              child: IconButton(
+                                onPressed: () async  {
+                                  CRUDPartido dao =new CRUDPartido();
+                                 if (await _showConfirmationDialog(context,widget.partido)==true)
+                                   setState(() {
+                                     dao.removePartido(widget.temporada, widget.pais, widget.categoria, widget.jornada, widget.partido);
+                                   });
+
+                                },
+                                icon: Icon(CustomIcon.trash_alt , size: 20, color: Colors.red.shade800,),
+                                hoverColor: Colors.black,
+                                splashColor: Colors.blue,
                                 color: Colors.white,)),Container(width: 5,)
                         ],
                       ),
@@ -212,5 +227,64 @@ class _PartidoCardState extends State<PartidoCard> {
       ),
     );
   }
+
+
+
+  Future<bool> _showConfirmationDialog(
+      BuildContext context, Partido partido) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('ATENCIÓN',
+              style: TextStyle(
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+              )),
+          content: Column(
+            children: [
+              Container(
+                height: 10,
+              ),
+              Text('¿Quieres eliminar el partido\n${partido.equipoCASA}-${partido.equipoFUERA}?'),
+              Container(
+                height: 10,
+              ),
+              Text('Eliminar el partido',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    decoration: TextDecoration.underline,
+                  )),
+              Container(
+                height: 10,
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar',
+                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
+              onPressed: () {
+                Navigator.pop(context, true);
+                return true; // showDialog() returns true
+              },
+            ),
+            FlatButton(
+              child: Text(
+                'Cancelar',
+                style: TextStyle(fontSize: 16, color: Config.colorAPP),
+              ),
+              onPressed: () {
+                Navigator.pop(context, false);
+                return false; // showDialog() returns false
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 }

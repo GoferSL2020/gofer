@@ -133,7 +133,7 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
     'EXTREMO DERECHO',
     'DELANTERO'];
   List<String> _niveles= <String>
-  [ " ",'N/A','Bajo',
+  [ " ",'N/A','Discreto',
     'Dudoso',
     'Intermedio',
     'Destacado',

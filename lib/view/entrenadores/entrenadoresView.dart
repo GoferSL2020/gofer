@@ -62,7 +62,6 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                 onPressed: () {
                   //var a = singOut();
                   //if (a != null) {
-
                   //}
                 },
               )),
@@ -176,7 +175,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (BuildContext
-                                                          context) =>
+                                                  context) =>
                                                       EditEntrenador(
                                                         temporada: widget.temporada,
                                                         categoria: widget.categoria,
@@ -184,6 +183,21 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                                         entrenador: entrenadores[index],
                                                         equipo: widget.equipo,
                                                       )));
+                                        }),
+                                    IconButton(
+                                        icon: new Icon(
+                                          MyFlutterApp.trash_alt,
+                                          size: 20,
+                                        ),
+                                        color: Colors.red.shade800,
+                                        onPressed: () async  {
+                                          if (await _showConfirmationDialog(context,"Eliminar", entrenadores[index])){
+                                            setState(() {
+                                              CRUDEntrenador con=new CRUDEntrenador();
+                                              con.removeEntrenador(widget.temporada,widget.pais,widget.categoria, widget.equipo, entrenadores[index]);
+                                              entrenadores.removeAt(index);
+                                            });
+                                          }
                                         }),
                                   ])),
                               subtitle: Column(
@@ -216,7 +230,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
                                     Container(
                                       padding: EdgeInsets.all(5),
                                       child:
-                                    Text("Fec.Fichaje: ${entrenadores[index].fechaFichaje}",
+                                    Text("Fec.Fichaje: ${entrenadores[index].fechaFichaje}}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 10.0,
@@ -411,7 +425,7 @@ class _EntrenadoresViewState extends State<EntrenadoresView> {
               Container(
                 height: 10,
               ),
-              Text('Eliminar los datos del entrenadores',
+              Text('Eliminar los datos del entrenador',
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 18,

@@ -92,7 +92,7 @@ class _PartidosViewState extends State<PartidosView> {
           color: Colors.white,
         ),
         backgroundColor: Colors.black,
-        tooltip: "Añadir un jugador",
+        tooltip: "Añadir un partido",
       ),
 
       bottomNavigationBar: BottomAppBar(

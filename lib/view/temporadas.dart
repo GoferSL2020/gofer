@@ -343,8 +343,8 @@ class MenuLateral extends StatelessWidget {
                 child: Container(
                   ),
 
-              ),
-             /*BBDDService().getUserScout().categoria=="Todas"?
+              ),/*
+            BBDDService().getUserScout().categoria=="Todas"?
               Ink(
                 color: Colors.white,
                 child: ListTile(
@@ -361,8 +361,8 @@ class MenuLateral extends StatelessWidget {
                   leading: const Icon(CustomIcon.file_import, color: Colors.white),
                 ),
 
-              ):null,*/
-
+              ):null,
+*/
               Container(height: 1,color: Colors.white,),
               Ink(
                 color: Colors.white,

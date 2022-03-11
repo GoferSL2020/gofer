@@ -264,7 +264,7 @@ class MediaPuntaCreatePdf {
   }
 
   String psicologia(int a){
-    if (a==0) return "Bajo";
+    if (a==0) return "Discreto";
     if (a==1) return "Medio";
     if (a==2) return "Correcto";
     if (a==3) return "Alto";

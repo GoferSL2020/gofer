@@ -1214,7 +1214,7 @@ class Jugador {
     if (nivelAux == "Destacado") return 4;//Colors.blue;//245,234,11
     if (nivelAux == "Intermedio") return 3;//Colors.yellow;//246,128,10
     if (nivelAux == "Dudoso") return 2;//Colors.orange;//248,25,8
-    if (nivelAux == "Bajo") return 1;//Colors.red[900];//193,20,7
+    if (nivelAux == "Discreto") return 1;//Colors.red[900];//193,20,7
     if (nivelAux == "N/A") return 0;//Colors.red[900];//193,20,7
     return -1;//Colors.red[900];//193,20,7
   }
@@ -1245,7 +1245,7 @@ class Jugador {
     if (nivelAux == "Destacado") return Color.fromRGBO(245, 234, 11, 1);//Colors.blue;//245,234,11
     if (nivelAux == "Intermedio") return Color.fromRGBO(246, 128, 10, 1);//Colors.yellow;//246,128,10
     if (nivelAux == "Dudoso") return Color.fromRGBO(248, 25, 8, 1);//Colors.orange;//248,25,8
-    if (nivelAux == "Bajo") return Color.fromRGBO(193, 20, 7, 1);//Colors.red[900];//193,20,7
+    if (nivelAux == "Discreto") return Color.fromRGBO(193, 20, 7, 1);//Colors.red[900];//193,20,7
     if (nivelAux == "N/A") return Color.fromRGBO(189, 243, 249, 1);//Colors.red[900];//193,20,7
 
     return Colors.grey;//Colors.grey;//189,243,249

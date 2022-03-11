@@ -426,7 +426,9 @@ class _JugadoresFiltroPageState extends State<JugadoresFiltroPage> {
     int edad;
     String edadStr=Config.edad(event.snapshot.value['fechaNacimiento']);
     edad=edadStr=="Sin fecha"?0:int.parse(edadStr);
-     setState(() {
+    print(widget._jugadorFiltro.nivel+"-"+event.snapshot.value['nivel']);
+
+    setState(() {
       if
       (
 

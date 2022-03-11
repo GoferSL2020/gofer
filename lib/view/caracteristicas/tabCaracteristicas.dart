@@ -433,20 +433,20 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                     SizedBox(
                         width: 105, // specific value
                         child: RaisedButton(
-                          color: widget._jugador.nivel == "Bajo"
+                          color: widget._jugador.nivel == "Discreto"
                               ? Colors.red[900]
                               : Colors.grey,
                           child: Text(
-                            "Bajo",
+                            "Discreto",
                             style: TextStyle(color: Colors.black, fontSize: 12),
                           ),
                           textColor: Colors.black,
-                          splashColor: widget._jugador.nivel == "Bajo"
+                          splashColor: widget._jugador.nivel == "Discreto"
                               ? Colors.red[900]
                               : Colors.grey,
                           onPressed: () {
                             setState(() {
-                              widget._jugador.nivel = "Bajo";
+                              widget._jugador.nivel = "Discreto";
                             });
                             
                           },

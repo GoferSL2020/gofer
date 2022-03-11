@@ -146,12 +146,12 @@ class _Nivel extends  State<Nivel> {
                           child: new  MaterialButton(
                             height: double.infinity,
                             minWidth:  double.infinity,
-                            color: widget._jugador.nivel=="Bajo"?Colors.red[900]:Colors.grey,
+                            color: widget._jugador.nivel=="Discreto"?Colors.red[900]:Colors.grey,
                             textColor: Colors.black,
                             child: new Text(choices[5].title, style: new TextStyle(fontSize: 10),),
                             onPressed: ()  {
                               setState(() {
-                                widget._jugador.nivel="Bajo";
+                                widget._jugador.nivel="Discreto";
                                 JugadorDao con=new JugadorDao();
                                 con.updateJugador(widget._jugador);
                               });

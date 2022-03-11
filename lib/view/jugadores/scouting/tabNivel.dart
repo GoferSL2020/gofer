@@ -223,19 +223,19 @@ class TabNivelState extends State<TabNivel> {
                               width: 105, // specific value
                               child: RaisedButton(
                                 color: widget._jugador.nivel.toUpperCase() ==
-                                        "Bajo".toUpperCase()
+                                        "Discreto".toUpperCase()
                                     ? Player.nivelColorBajo(
                                         widget._jugador.nivel.toUpperCase())
                                     : Colors.grey,
                                 child: Text(
-                                  "Bajo".toUpperCase(),
+                                  "Discreto".toUpperCase(),
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
                                 textColor: Colors.black,
                                 splashColor:
                                     widget._jugador.nivel.toUpperCase() ==
-                                            "Bajo".toUpperCase()
+                                            "Discreto".toUpperCase()
                                         ? Player.nivelColorBajo(
                                             widget._jugador.nivel.toUpperCase())
                                         : Colors.grey,
@@ -243,7 +243,7 @@ class TabNivelState extends State<TabNivel> {
                                   setState(() {
                                     widget._padre.cambio = true;
                                     widget._jugador.nivel =
-                                        "Bajo".toUpperCase();
+                                        "Discreto".toUpperCase();
                                   });
                                 },
                               )),
@@ -480,19 +480,19 @@ class TabNivelState extends State<TabNivel> {
                               width: 105, // specific value
                               child: RaisedButton(
                                 color: widget._jugador.nivel2.toUpperCase() ==
-                                        "Bajo".toUpperCase()
+                                        "Discreto".toUpperCase()
                                     ? Player.nivelColorBajo(
                                         widget._jugador.nivel.toUpperCase())
                                     : Colors.grey,
                                 child: Text(
-                                  "Bajo".toUpperCase(),
+                                  "Discreto".toUpperCase(),
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
                                 textColor: Colors.black,
                                 splashColor:
                                     widget._jugador.nivel2.toUpperCase() ==
-                                            "Bajo".toUpperCase()
+                                            "Discreto".toUpperCase()
                                         ? Player.nivelColorBajo(
                                             widget._jugador.nivel.toUpperCase())
                                         : Colors.grey,
@@ -500,7 +500,7 @@ class TabNivelState extends State<TabNivel> {
                                   setState(() {
                                     widget._padre.cambio = true;
                                     widget._jugador.nivel2 =
-                                        "Bajo".toUpperCase();
+                                        "Discreto".toUpperCase();
                                   });
                                 },
                               )),
@@ -735,19 +735,19 @@ class TabNivelState extends State<TabNivel> {
                               width: 105, // specific value
                               child: RaisedButton(
                                 color: widget._jugador.nivel3.toUpperCase() ==
-                                        "Bajo".toUpperCase()
+                                        "Discreto".toUpperCase()
                                     ? Player.nivelColorBajo(
                                         widget._jugador.nivel.toUpperCase())
                                     : Colors.grey,
                                 child: Text(
-                                  "Bajo".toUpperCase(),
+                                  "Discreto".toUpperCase(),
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
                                 textColor: Colors.black,
                                 splashColor:
                                     widget._jugador.nivel3.toUpperCase() ==
-                                            "Bajo".toUpperCase()
+                                            "Discreto".toUpperCase()
                                         ? Player.nivelColorBajo(
                                             widget._jugador.nivel.toUpperCase())
                                         : Colors.grey,
@@ -755,7 +755,7 @@ class TabNivelState extends State<TabNivel> {
                                   setState(() {
                                     widget._padre.cambio = true;
                                     widget._jugador.nivel3 =
-                                        "Bajo".toUpperCase();
+                                        "Discreto".toUpperCase();
                                   });
                                 },
                               )),
@@ -990,19 +990,19 @@ class TabNivelState extends State<TabNivel> {
                               width: 105, // specific value
                               child: RaisedButton(
                                 color: widget._jugador.nivel4.toUpperCase() ==
-                                        "Bajo".toUpperCase()
+                                        "Discreto".toUpperCase()
                                     ? Player.nivelColorBajo(
                                         widget._jugador.nivel.toUpperCase())
                                     : Colors.grey,
                                 child: Text(
-                                  "Bajo".toUpperCase(),
+                                  "Discreto".toUpperCase(),
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
                                 textColor: Colors.black,
                                 splashColor:
                                     widget._jugador.nivel4.toUpperCase() ==
-                                            "Bajo".toUpperCase()
+                                            "Discreto".toUpperCase()
                                         ? Player.nivelColorBajo(
                                             widget._jugador.nivel.toUpperCase())
                                         : Colors.grey,
@@ -1010,7 +1010,7 @@ class TabNivelState extends State<TabNivel> {
                                   setState(() {
                                     widget._padre.cambio = true;
                                     widget._jugador.nivel4 =
-                                        "Bajo".toUpperCase();
+                                        "Discreto".toUpperCase();
                                   });
                                 },
                               )),

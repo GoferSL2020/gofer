@@ -1379,7 +1379,7 @@ String estadoPuntuacion(String puntuaciones) {
           .cellStyle = styleDestacado;
 
     }
-    if(jug.toUpperCase()=="BAJO") {
+    if(jug.toUpperCase()=="DISCRETO") {
       sheet1
           .getRangeByIndex(fila, columna)
           .cellStyle = styleBajo;

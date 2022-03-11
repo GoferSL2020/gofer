@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/dao/CRUDEquipo.dart';
+import 'package:iadvancedscout/icon_mio_icons.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
 import 'package:iadvancedscout/modelo/entrenador.dart';
 import 'package:iadvancedscout/modelo/equipo.dart';
@@ -58,9 +59,11 @@ class CRUDEntrenador extends ChangeNotifier {
   }
 
 
-  Future removeEntrenador(Temporada temporada, Equipo equipo, String id) async {
-    await _db.collection("temporadas").doc(temporada.id).collection("equipos")
-        .doc(equipo.id).collection("entrenadores").doc(id)
+  Future removeEntrenador(Temporada temporada, Pais pais, Categoria categoria, Equipo equipo, Entrenador entrenador) async {
+    print("temporada/${temporada.id}/${pais.id}/categorias/${categoria.id}/${equipo.id}/entrenadores/${entrenador.key}");
+    await _db.collection("temporadas").doc(temporada.id).
+    collection("paises").doc(pais.id).collection("categorias").
+    doc(categoria.id).collection("equipos").doc(equipo.id).collection("entrenadores").doc(entrenador.key)
         .delete();
     return;
   }

@@ -161,10 +161,29 @@ class Config{
    if (fechaNacimiento=="-")return "Sin fecha";
    int edad;
    var fechaDeHoy = DateTime.now();
+   int anioHoy=(fechaDeHoy.year); //Año
+   int mesHoy=(fechaDeHoy.month); //Mes
+   int diaHoy=(fechaDeHoy.day);
+
    DateFormat format = DateFormat("dd/MM/yyyy");
    var fechaNac = format.parse(fechaNacimiento);
+   int anioJugador=(fechaNac.year); //Año
+   int mesJugador=(fechaNac.month); //Mes
+   int diaJugador=(fechaNac.day);
+   edad=anioHoy-anioJugador;
+
+   if (mesJugador>mesHoy)
+     edad--;
+   else {
+     if ((mesHoy == mesJugador)&& (diaHoy < diaJugador))
+         edad--;
+   }
+
    var anio = fechaDeHoy.difference(fechaNac);
-   edad=(anio.inDays/366).truncate();
+   var edad365=(anio.inDays/366);
+   var edadTruncate=(anio.inDays/366).truncate();
+
+  // edad=(anio.inDays/366).truncate();
 
    if(edad<20) {
      sub = edad.toString()+" (Sub-20"+")";
@@ -183,10 +202,24 @@ class Config{
     if (fechaNacimiento=="-")return "Sin fecha";
     int edad;
     var fechaDeHoy = DateTime.now();
+    int anioHoy=(fechaDeHoy.year); //Año
+    int mesHoy=(fechaDeHoy.month); //Mes
+    int diaHoy=(fechaDeHoy.day);
+
     DateFormat format = DateFormat("dd/MM/yyyy");
     var fechaNac = format.parse(fechaNacimiento);
-    var anio = fechaDeHoy.difference(fechaNac);
-    edad=(anio.inDays/366).truncate();
+    int anioJugador=(fechaNac.year); //Año
+    int mesJugador=(fechaNac.month); //Mes
+    int diaJugador=(fechaNac.day);
+    edad=anioHoy-anioJugador;
+
+    if (mesJugador>mesHoy)
+      edad--;
+    else {
+      if ((mesHoy == mesJugador)&& (diaHoy < diaJugador))
+        edad--;
+    }
+
     if(edad<20) {
       sub = "Sub-20";
     }else if(edad<23) {
