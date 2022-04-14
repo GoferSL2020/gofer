@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDJugador.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/partido.dart';
 import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/modelo/temporada.dart';
 import 'package:iadvancedscout/my_flutter_app_icons.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/view/partidos/notaPuntuacionJornada.dart';
 import 'package:iadvancedscout/view/partidos/tabPuntuaciones.dart';
 
@@ -12,9 +18,12 @@ class PuntacionesPartido extends StatefulWidget {
   final List<Player> jugadores;
   final Partido partido;
   final TabPuntuaciones padre;
-  PuntacionesPartido({@required this.jugadores, this.partido,this.padre});
+  PuntacionesPartido({@required this.jugadores, this.partido,this.padre, this.equipo, this.temporada,this.categoria,this.pais });
 
-
+  final Equipo equipo;
+  final Temporada temporada;
+  final Categoria categoria;
+  final Pais pais;
   @override
 
   State<StatefulWidget> createState() {
@@ -36,10 +45,242 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
     super.initState();
   }
 
+  ponerConteo(){
+    print("Poner conteo");
+    print(widget.padre.index);
+    setState(() {
+      String estado="";
+      String punt="";
+      double  puntDouble=0;
+      bool desc=false;
+      if(widget.padre.index==0) {
+        widget.partido.titularesCasa=0;
+        widget.partido.suplentesCasa=0;
+        widget.partido.sinDatosCasa=0;
+        widget.partido.EXCasa=0;
+        widget.partido.NACasa=0;
+        widget.partido.conteoDescCasa=0;
+
+
+         for (var d in widget.jugadores) {
+          print(d.jugador);
+          print("PUNTUACIONES:${punt}");
+          estado = estadoJornada(widget.partido, d);
+          desc = estrellaJornada(widget.partido, d);
+          punt=puntuacionJornada(widget.partido, d);
+          try{
+            puntDouble=double.parse(punt.replaceAll(",", "."));
+          }catch(e){
+            puntDouble=-1;
+          }
+          print("PUNTUACIONES_DOUBLE:${puntDouble}");
+          if (desc == true) widget.partido.conteoDescCasa++;
+          if ((estado == "T")&&(punt=="SC")) widget.partido.titularesCasa++;
+          else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesCasa++;
+          if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesCasa++;
+          else
+          if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesCasa++;
+
+          if (estado == "") widget.partido.sinDatosCasa++;
+          if (estado == "EX") widget.partido.EXCasa++;
+          if (estado == "NA") widget.partido.NACasa++;
+        }
+      }
+      else {
+        widget.partido.titularesFuera=0;
+        widget.partido.suplentesFuera=0;
+        widget.partido.sinDatosFuera=0;
+        widget.partido.EXFuera=0;
+        widget.partido.NAFuera=0;
+        widget.partido.conteoDescFuera=0;
+
+        for (var d in widget.jugadores) {
+          print(d.jugador);
+          estado = estadoJornada(widget.partido, d);
+          desc = estrellaJornada(widget.partido, d);
+          punt=puntuacionJornada(widget.partido, d);
+          try{
+            puntDouble=double.parse(punt.replaceAll(",", "."));
+          }catch(e){
+            puntDouble=-1;
+          }
+          if(desc==true)widget.partido.conteoDescFuera++;
+          if ((estado == "T")&&(punt=="SC")) widget.partido.titularesFuera++;
+          else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesFuera++;
+          if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesFuera++;
+          else
+          if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesFuera++;
+
+          if(estado=="") widget.partido.sinDatosFuera++;
+          if (estado == "EX") widget.partido.EXFuera++;
+          if (estado == "NA") widget.partido.NAFuera++;
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     CRUDJugador dao=CRUDJugador();
-    return Scaffold(
+    return Container(
+        padding: EdgeInsets.all(0),
+      color: Colors.black,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Table(
+                //border: TableBorder.symmetric(inside: BorderSide(width: 2, color: Colors.blue), outside: BorderSide(width: 3, color: Colors.blue)),
+                  columnWidths: {
+                    0: FlexColumnWidth(9),
+                    1: FlexColumnWidth(1),
+                    2: FlexColumnWidth(1),
+                    3: FlexColumnWidth(1),
+                    4: FlexColumnWidth(9),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    TableRow(children: [
+                      Container(
+                          padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                  "T: ${widget.partido.titularesCasa} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "S: ${widget.partido.suplentesCasa} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "NA: ${widget.partido.NACasa} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                            ],)
+                      ),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Container(
+                          padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                  "T: ${widget.partido.titularesFuera} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "S: ${widget.partido.suplentesFuera} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "NA: ${widget.partido.NAFuera} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+
+                            ],)
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Container(
+                          padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+
+                              Text(
+                                  "EX: ${widget.partido.EXCasa} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "SD: ${widget.partido.sinDatosCasa}",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                            ],)
+                      ),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Text(
+                          "",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          textAlign: TextAlign.center),
+                      Container(
+                          padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+
+                              Text(
+                                  "EX: ${widget.partido.EXFuera} ",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              Text(
+                                  "SD: ${widget.partido.sinDatosFuera}",
+                                  style: TextStyle(fontSize: 11, color: Colors.white),
+                                  textAlign: TextAlign.center),
+                            ],)
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Container(
+                        height: 5,
+                      ),
+                      Container(
+                        height: 5,
+                      ),
+                      Container(
+                        height: 5,
+                      ),
+                      Container(
+                        height: 5,
+                      ),
+                      Container(
+                        height: 5,
+                      ),
+                    ]),
+                  ]),
+    Container(
+        padding: EdgeInsets.only(right: 25,bottom: 5),
+        alignment: Alignment.center,
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(CustomIcon.star, size: 15,color: Colors.yellowAccent,),
+            Container(width:5,),
+            Text(
+                widget.padre.index==0?"Destacado (${widget.partido.conteoDescCasa})":"Destacado (${widget.partido.conteoDescFuera})",
+                style: TextStyle(fontSize: 11, color: Colors.yellowAccent),
+                textAlign: TextAlign.center),
+          ],)
+    ),Expanded(child:
+     Scaffold(
                   body:
                     widget.jugadores!=null?
                     ListView.builder(
@@ -48,9 +289,17 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                         {
                           return
                             ListTile(
+                              onTap: () {
+                                //Navigator.of(context).pop();
+                                //print("${partido.equipoCASA}:${partido.equipoFUERA}:${partido.id}");
+                                Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (BuildContext context) => TabCaracteristicas(widget.equipo,widget.temporada,widget.categoria,widget.pais,widget.jugadores[index], true),
+                                ));
+                              },
                               title:
                               Container(
                                   padding: EdgeInsets.all(0),
+
                                   child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +326,8 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                                                 setState(() {
                                                   estrellaJornadaPoner(widget.partido,widget.jugadores[index],newValue);
                                                   widget.padre.cambio=true;
+                                                  widget.padre.cambiar();
+                                                  ponerConteo();
                                                   //widget.jugador.estrella = newValue;
                                                   //ponerLosPuntosFireBaseEstrella(estrella);
                                                   // ponerLosPuntosExcel(puntuaciones, jugadorJornada, jugadorJornadaColumna, estrella);
@@ -166,6 +417,8 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
                       child:Center(
                         child:Text("Espera....",style: TextStyle(fontSize: 20,color: Colors.red),))
                     ),
+    ))],
+    ),
     );
   }
 
@@ -181,6 +434,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
           setState(() {
             estadoJornadaPoner(widget.partido,jugador,est);
             widget.padre.cambio=true;
+            ponerConteo();
             //puntuacionJornadaPoner(widget.partido,jugador,est);
           });
         },
@@ -204,8 +458,11 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
           setState(() {
             estadoJornadaPoner(widget.partido,jugador,est);
             puntuacionJornadaPoner(widget.partido,jugador,est);
+            ponerConteo();
             widget.padre.cambio=true;
+
           });
+
         },
         child: Text(
           est,
@@ -229,6 +486,7 @@ class _PuntacionesPartidoState extends State<PuntacionesPartido> {
           setState(() {
             puntuacionJornadaPoner(widget.partido,jugador,puntu);
             widget.padre.cambio=true;
+            ponerConteo();
           });
         },
         child: Text(

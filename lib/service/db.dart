@@ -4060,7 +4060,7 @@ class DB {
 */
 
         //await _db.execute("DROP TABLE jugador");
-        await _db.execute("create table jugador  ("
+       /* await _db.execute("create table jugador  ("
             "JUGADOR   TEXT default '',"
             "PAIS   TEXT default '',"
             "NACIONALIDAD   TEXT default '',"
@@ -4174,8 +4174,8 @@ class DB {
             "tec_usopiernanodominante   int default 1,"
             "primary key (jugador, equipo, pais, categoria, posicion, fechaNacimiento)"
             ")");
-        await _db.execute("delete from  jugador ");
-        print(
+        await _db.execute("delete from  jugador ");*/
+    /*    print(
             "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
         await db.execute(
@@ -5832,10 +5832,12 @@ class DB {
             "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('M. De los Santos','ARGENTINA','Extranjero','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Defensa Central derecho','','',83,187,-2,'','00/01/1900','Uruguay','','','derecho','')");
         await db.execute(
             "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('A. Bouzat','ARGENTINA','Argentina','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Mediapunta derecho','','',72,169,-2,'','00/01/1900','Argentina','','','izquierdo','')");
-        await db.execute(
-            "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('T. Guidara','ARGENTINA','Argentina','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Lateral derecho','','',70,173,-2,'','00/01/1900','Argentina','','','derecho','')");
-        await db.execute(
-            "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('Lenny Lobato','ARGENTINA','Extranjero','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Mediapunta izquierdo','','',0,0,-2,'','00/01/1900','Brazil','','','unknown','')");
+    */   // await db.execute(
+           // "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('T. Guidara','ARGENTINA','Argentina','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Lateral derecho','','',70,173,-2,'','00/01/1900','Argentina','','','derecho','')");
+        //await db.execute(
+          //  "INSERT into JUGADOR (JUGADOR, PAIS , NACIONALIDAD ,CATEGORIA,  EQUIPO, FECHANACIMIENTO,POSICION , POSICION_ALTERNATIVA, IMAGEN, PESO, ALTURA, DORSAL, VALOR ,FECHACONTRATO, LUGAR_NACIMIENTO, CCAA ,CONTRATO, LATERAL,VEREDICTO) VALUES ('Lenny Lobato','ARGENTINA','Extranjero','1ª División Liga Argentina','Vélez Sarsfield','00/01/1900','Mediapunta izquierdo','','',0,0,-2,'','00/01/1900','Brazil','','','unknown','')");
+
+
       });
 
 

@@ -8,7 +8,7 @@ import 'package:iadvancedscout/futbol_mio_icons.dart';
 import 'package:iadvancedscout/model/temporada.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/filtro/filtroJugadores.dart';
-import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
+import 'package:iadvancedscout/view/filtro/filtroJugadoresEstrella.dart';
 import 'package:iadvancedscout/view/paises.dart';
 import 'package:iadvancedscout/view/scouter/scouterView.dart';
 import 'package:iadvancedscout/view/temporada/temporadaView.dart';
@@ -452,19 +452,23 @@ class MenuLateral extends StatelessWidget {
                     leading: Icon(Icons.star, color: Colors.white,)
                 ),),
               Container(height: 1,color: Colors.white,),
-             /* Ink(
+              BBDDService().getUserScout().categoria=="Todas"?
+              Ink(
                 color:Colors.grey,
                 child: ListTile(
-                    title: Text("Jugadores destacados por jornada", style: TextStyle(color:Colors.white, fontSize: 14),),
+                    title: Text("Destacados de la  jornada", style: TextStyle(color:Colors.white, fontSize: 14),),
                     onTap: () {
 
                       //Navigator.pop(context);
                       Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (BuildContext context) => FiltroOnceJugadores(),
+                        builder: (BuildContext context) => FiltroJugadoresEstrella(),
                       ));
                     },
                     leading: Icon(CustomIcon.camiseta, size:20, color: Colors.white,)
-                ),),*/
+                ),):Ink(
+            color: Colors.white,
+            child: Container(),
+              )
             ]),
       ),
     );

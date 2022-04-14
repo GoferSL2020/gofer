@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDCategoria.dart';
@@ -87,6 +88,8 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
   _cogerPais() async {
     //print("PAIS");
     //print(_temporadaAux.id);
+    paises.clear();
+    categorias.clear();
     List<Pais> datos = await CRUDPais().fetchPaises(_temporadaAux);
     setState(() {
       //print(datos[0].id);
@@ -96,6 +99,7 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
   }
 
   _cogerCategorias() async {
+    categorias.clear();
     List<Categoria> datos =
     await CRUDCategoria().fetchCategorias(_temporadaAux, _paisAux);
     setState(() {
@@ -379,7 +383,14 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
                       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                         RaisedButton.icon(
                             onPressed: () async {
-
+                              Fluttertoast.showToast(
+                                  msg: "Espera...\nEstamos haciendo el \nfiltro",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 40,
+                                  backgroundColor: Colors.red.shade900,
+                                  textColor: Colors.white,
+                                  fontSize: 12.0);
                               try {
                                 setState(() {
                                   isLoading = true;
@@ -391,7 +402,7 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
                                   jugadorFiltro.temporada=_temporadaAux.temporada;
                                   jugadorFiltro.pais=_paisAux.pais;
                                   Navigator.of(context).push(new MaterialPageRoute(
-                                    builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
+                                    builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux,false),
                                   ));
 
                                 });
@@ -890,13 +901,13 @@ class _FiltroPlayeresState extends State<FiltroPlayeres> {
                           setState(() {
                             jugadorFiltro.jugador=_nombre.text;
                             jugadorFiltro.paisNacimiento=_lugar.text;
+                            jugadorFiltro.categoria=_categoriaAux.categoria;
+                            jugadorFiltro.temporada=_temporadaAux.temporada;
+                            jugadorFiltro.pais=_paisAux.pais;
                             Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
+                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux,false),
                             ));
 
-                          });
-                          setState(() {
-                            isLoading = false;
                           });
 
                         }catch(e){

@@ -7,7 +7,6 @@ import 'package:iadvancedscout/model/categoria.dart';
 import 'package:iadvancedscout/model/pais.dart';
 import 'package:iadvancedscout/service/BBDDService.dart';
 import 'package:iadvancedscout/view/equipos.dart';
-import 'package:iadvancedscout/view/filtroOnceJornadaJugadores.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 
@@ -169,14 +168,7 @@ class _CategoriasPageState extends State<CategoriasPage> {
                                   color: Colors.green[900],
                                   size: 20,
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => FiltroOnceJugadores(
-                                            categoria: categoriasList[index].categoria,
-                                          )));
-                                },
+
                             ),
                           ]),
                     );

@@ -31,8 +31,10 @@ class TabPuntuaciones extends StatefulWidget {
   TabPuntuaciones(this.temporada, this.categoria, this.pais, this.partido,this.jornada
      );
   bool cambio=false;
+  int index=0;
   cambiar(){
     cambio=true;
+    //ponerConteo();
   }
 }
 
@@ -51,6 +53,8 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
 
   @override
   void initState() {
+    CRUDEquipo dao2=CRUDEquipo();
+
     // TODO: implement initState
     super.initState();
     cogerLosJugadores();
@@ -64,42 +68,308 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
   //cogerLosJugadores:BuJNv17ghCPGnq37P2ev:QqjzloEo6PI7sHfsffk2:JsHvDmVZuWbAi0Z1zRuj:2DvtLnNubpkJkuE66mWE:Villanovense
   List<Player> _jugadoresCASA;
   List<Player> _jugadoresFUERA;
+  Equipo equipoCasa;
+  Equipo equipoFuera;
   cogerLosJugadores() async{
     List<Player> jugadoresCASAAUX;
     List<Player> jugadoresFUERAAUX;
      jugadoresCASAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoCASA);
     jugadoresFUERAAUX=await dao.fetchJugadores(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoFUERA);
-    /*try {
-      await dao.fetchJugadoresPuntuaciones(
-          "jugadoresCASA",
-          jugadoresCASAAUX,
-          widget.temporada,
-          widget.pais,
-          widget.categoria,
-          widget.jornada,
-          widget.partido);
+    CRUDEquipo dao2=CRUDEquipo();
+    String equipoCasaAux=await dao2.getEquipoByNombre(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoCASA);
+    String equipoFueraAux=await dao2.getEquipoByNombre(widget.temporada, widget.pais, widget.categoria,widget.partido.equipoFUERA);
+    equipoCasa=new Equipo();
+    equipoCasa.id=equipoCasaAux;
+    equipoFuera=new Equipo();
+    equipoFuera.id=equipoFueraAux;
 
-      await dao.fetchJugadoresPuntuaciones(
-          "jugadoresFUERA",
-          jugadoresFUERAAUX,
-          widget.temporada,
-          widget.pais,
-          widget.categoria,
-          widget.jornada,
-          widget.partido);
-
-    }catch(e){
-      //print(e.toString());
-    }*/
     setState(() {
-      _jugadoresCASA=jugadoresCASAAUX;
-      _jugadoresFUERA=jugadoresFUERAAUX;
-    });
+      _jugadoresCASA = jugadoresCASAAUX;
+      _jugadoresFUERA = jugadoresFUERAAUX;
+      String estado="";
+      String punt="";
+      double  puntDouble=0;
+      bool desc=false;
+      widget.partido.titularesCasa=0;
+      widget.partido.suplentesCasa=0;
+      widget.partido.sinDatosCasa=0;
+      widget.partido.EXCasa=0;
+      widget.partido.NACasa=0;
+      widget.partido.conteoDescCasa=0;
+      for (var d in jugadoresCASAAUX) {
+        print(d.jugador);
+        print("PUNTUACIONES:${punt}");
+        estado = estadoJornada(widget.partido, d);
+        desc = estrellaJornada(widget.partido, d);
+        punt=puntuacionJornada(widget.partido, d);
+        try{
+          puntDouble=double.parse(punt.replaceAll(",", "."));
+        }catch(e){
+          puntDouble=-1;
+        }
+        print("PUNTUACIONES_DOUBLE:${puntDouble}");
+        if (desc == true) widget.partido.conteoDescCasa++;
+        if ((estado == "T")&&(punt=="SC")) widget.partido.titularesCasa++;
+        else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesCasa++;
+        if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesCasa++;
+        else
+        if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesCasa++;
+        if (estado == "") widget.partido.sinDatosCasa++;
+        if (estado == "EX") widget.partido.EXCasa++;
+        if (estado == "NA") widget.partido.NACasa++;
+      }
+      widget.partido.titularesFuera=0;
+      widget.partido.suplentesFuera=0;
+      widget.partido.sinDatosFuera=0;
+      widget.partido.EXFuera=0;
+      widget.partido.NAFuera=0;
+      widget.partido.conteoDescFuera=0;
 
+      for (var d in jugadoresFUERAAUX) {
+        print(d.jugador);
+        estado = estadoJornada(widget.partido, d);
+        desc = estrellaJornada(widget.partido, d);
+        punt = puntuacionJornada(widget.partido, d);
+        try {
+          puntDouble = double.parse(punt.replaceAll(",", "."));
+        } catch (e) {
+          puntDouble = -1;
+        }
+        if (desc == true) widget.partido.conteoDescFuera++;
+        if ((estado == "T")&&(punt=="SC")) widget.partido.titularesFuera++;
+        else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesFuera++;
+        if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesFuera++;
+        else
+        if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesFuera++;
+        if (estado == "") widget.partido.sinDatosFuera++;
+        if (estado == "EX") widget.partido.EXFuera++;
+        if (estado == "NA") widget.partido.NAFuera++;
+      }
+    });
   }
 
+  String puntuacionJornada(Partido p, Player jug) {
+    String s="";
+    if(p.jornada==1) s=jug.puntaciones_jornada_1;
+    if(p.jornada==2) s=jug.puntaciones_jornada_2;
+    if(p.jornada==3) s=jug.puntaciones_jornada_3;
+    if(p.jornada==4) s=jug.puntaciones_jornada_4;
+    if(p.jornada==5) s=jug.puntaciones_jornada_5;
+    if(p.jornada==6) s=jug.puntaciones_jornada_6;
+    if(p.jornada==7) s=jug.puntaciones_jornada_7;
+    if(p.jornada==8) s=jug.puntaciones_jornada_8;
+    if(p.jornada==9) s=jug.puntaciones_jornada_9;
+    if(p.jornada==10) s=jug.puntaciones_jornada_10;
+    if(p.jornada==11) s=jug.puntaciones_jornada_11;
+    if(p.jornada==12) s=jug.puntaciones_jornada_12;
+    if(p.jornada==13) s=jug.puntaciones_jornada_13;
+    if(p.jornada==14) s=jug.puntaciones_jornada_14;
+    if(p.jornada==15) s=jug.puntaciones_jornada_15;
+    if(p.jornada==16) s=jug.puntaciones_jornada_16;
+    if(p.jornada==17) s=jug.puntaciones_jornada_17;
+    if(p.jornada==18) s=jug.puntaciones_jornada_18;
+    if(p.jornada==19) s=jug.puntaciones_jornada_19;
+    if(p.jornada==20) s=jug.puntaciones_jornada_20;
+    if(p.jornada==21) s=jug.puntaciones_jornada_21;
+    if(p.jornada==22) s=jug.puntaciones_jornada_22;
+    if(p.jornada==23) s=jug.puntaciones_jornada_23;
+    if(p.jornada==24) s=jug.puntaciones_jornada_24;
+    if(p.jornada==25) s=jug.puntaciones_jornada_25;
+    if(p.jornada==26) s=jug.puntaciones_jornada_26;
+    if(p.jornada==27) s=jug.puntaciones_jornada_27;
+    if(p.jornada==28) s=jug.puntaciones_jornada_28;
+    if(p.jornada==29) s=jug.puntaciones_jornada_29;
+    if(p.jornada==30) s=jug.puntaciones_jornada_30;
+    if(p.jornada==31) s=jug.puntaciones_jornada_31;
+    if(p.jornada==32) s=jug.puntaciones_jornada_32;
+    if(p.jornada==33) s=jug.puntaciones_jornada_33;
+    if(p.jornada==34) s=jug.puntaciones_jornada_34;
+    if(p.jornada==35) s=jug.puntaciones_jornada_35;
+    if(p.jornada==36) s=jug.puntaciones_jornada_36;
+    if(p.jornada==37) s=jug.puntaciones_jornada_37;
+    if(p.jornada==38) s=jug.puntaciones_jornada_38;
+    if(p.jornada==39) s=jug.puntaciones_jornada_39;
+    if(p.jornada==40) s=jug.puntaciones_jornada_40;
+    if(p.jornada==41) s=jug.puntaciones_jornada_41;
+    if(p.jornada==42) s=jug.puntaciones_jornada_42;
+    if(p.jornada==43) s=jug.puntaciones_jornada_43;
+    if(p.jornada==44) s=jug.puntaciones_jornada_44;
+    if(p.jornada==45) s=jug.puntaciones_jornada_45;
+    if(p.jornada==46) s=jug.puntaciones_jornada_46;
+    if(s==null)s="";
+    return s;
+  }
+
+  ponerConteo(){
+    print("Poner conteo");
+    setState(() {
+      String estado="";
+      String punt="";
+      double  puntDouble=0;
+      bool desc=false;
+        widget.partido.titularesCasa=0;
+        widget.partido.suplentesCasa=0;
+        widget.partido.sinDatosCasa=0;
+        widget.partido.EXCasa=0;
+        widget.partido.NACasa=0;
+        widget.partido.conteoDescCasa=0;
 
 
+        for (var d in _jugadoresCASA) {
+          print(d.jugador);
+          print("PUNTUACIONES:${punt}");
+          estado = estadoJornada(widget.partido, d);
+          desc = estrellaJornada(widget.partido, d);
+          punt=puntuacionJornada(widget.partido, d);
+          try{
+            puntDouble=double.parse(punt.replaceAll(",", "."));
+          }catch(e){
+            puntDouble=-1;
+          }
+          print("PUNTUACIONES_DOUBLE:${puntDouble}");
+          if (desc == true) widget.partido.conteoDescCasa++;
+          if ((estado == "T")&&(punt=="SC")) widget.partido.titularesCasa++;
+          else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesCasa++;
+          if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesCasa++;
+          else
+          if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesCasa++;
+          if (estado == "") widget.partido.sinDatosCasa++;
+          if (estado == "EX") widget.partido.EXCasa++;
+          if (estado == "NA") widget.partido.NACasa++;
+        }
+        widget.partido.titularesFuera=0;
+        widget.partido.suplentesFuera=0;
+        widget.partido.sinDatosFuera=0;
+        widget.partido.EXFuera=0;
+        widget.partido.NAFuera=0;
+        widget.partido.conteoDescFuera=0;
+
+        for (var d in _jugadoresFUERA) {
+          print(d.jugador);
+          estado = estadoJornada(widget.partido, d);
+          desc = estrellaJornada(widget.partido, d);
+          punt = puntuacionJornada(widget.partido, d);
+          try {
+            puntDouble = double.parse(punt.replaceAll(",", "."));
+          } catch (e) {
+            puntDouble = -1;
+          }
+          if (desc == true) widget.partido.conteoDescFuera++;
+          if ((estado == "T")&&(punt=="SC")) widget.partido.titularesFuera++;
+          else if ((estado == "T")&&(puntDouble!=-1)) widget.partido.titularesFuera++;
+          if ((estado == "S")&&(punt=="SC")) widget.partido.suplentesFuera++;
+          else
+          if ((estado == "S")&&(puntDouble!=-1)) widget.partido.suplentesFuera++;
+          if (estado == "") widget.partido.sinDatosFuera++;
+          if (estado == "EX") widget.partido.EXFuera++;
+          if (estado == "NA") widget.partido.NAFuera++;
+        }
+    });
+  }
+
+  String estadoJornada(Partido p, Player jug) {
+    String s="";
+    if(p.jornada==1) s=jug.estado_jornada_1;
+    if(p.jornada==2) s=jug.estado_jornada_2;
+    if(p.jornada==3) s=jug.estado_jornada_3;
+    if(p.jornada==4) s=jug.estado_jornada_4;
+    if(p.jornada==5) s=jug.estado_jornada_5;
+    if(p.jornada==6) s=jug.estado_jornada_6;
+    if(p.jornada==7) s=jug.estado_jornada_7;
+    if(p.jornada==8) s=jug.estado_jornada_8;
+    if(p.jornada==9) s=jug.estado_jornada_9;
+    if(p.jornada==10) s=jug.estado_jornada_10;
+    if(p.jornada==11) s=jug.estado_jornada_11;
+    if(p.jornada==12) s=jug.estado_jornada_12;
+    if(p.jornada==13) s=jug.estado_jornada_13;
+    if(p.jornada==14) s=jug.estado_jornada_14;
+    if(p.jornada==15) s=jug.estado_jornada_15;
+    if(p.jornada==16) s=jug.estado_jornada_16;
+    if(p.jornada==17) s=jug.estado_jornada_17;
+    if(p.jornada==18) s=jug.estado_jornada_18;
+    if(p.jornada==19) s=jug.estado_jornada_19;
+    if(p.jornada==20) s=jug.estado_jornada_20;
+    if(p.jornada==21) s=jug.estado_jornada_21;
+    if(p.jornada==22) s=jug.estado_jornada_22;
+    if(p.jornada==23) s=jug.estado_jornada_23;
+    if(p.jornada==24) s=jug.estado_jornada_24;
+    if(p.jornada==25) s=jug.estado_jornada_25;
+    if(p.jornada==26) s=jug.estado_jornada_26;
+    if(p.jornada==27) s=jug.estado_jornada_27;
+    if(p.jornada==28) s=jug.estado_jornada_28;
+    if(p.jornada==29) s=jug.estado_jornada_29;
+    if(p.jornada==30) s=jug.estado_jornada_30;
+    if(p.jornada==31) s=jug.estado_jornada_31;
+    if(p.jornada==32) s=jug.estado_jornada_32;
+    if(p.jornada==33) s=jug.estado_jornada_33;
+    if(p.jornada==34) s=jug.estado_jornada_34;
+    if(p.jornada==35) s=jug.estado_jornada_35;
+    if(p.jornada==36) s=jug.estado_jornada_36;
+    if(p.jornada==37) s=jug.estado_jornada_37;
+    if(p.jornada==38) s=jug.estado_jornada_38;
+    if(p.jornada==39) s=jug.estado_jornada_39;
+    if(p.jornada==40) s=jug.estado_jornada_40;
+    if(p.jornada==41) s=jug.estado_jornada_41;
+    if(p.jornada==42) s=jug.estado_jornada_42;
+    if(p.jornada==43) s=jug.estado_jornada_43;
+    if(p.jornada==44) s=jug.estado_jornada_44;
+    if(p.jornada==45) s=jug.estado_jornada_45;
+    if(p.jornada==46) s=jug.estado_jornada_46;
+    if(s==null)s="";
+    return s;
+  }
+
+  bool estrellaJornada(Partido p, Player jug) {
+    bool s=false;
+    if(p.jornada==1) s=jug.estrella_jornada_1;
+    if(p.jornada==2) s=jug.estrella_jornada_2;
+    if(p.jornada==3) s=jug.estrella_jornada_3;
+    if(p.jornada==4) s=jug.estrella_jornada_4;
+    if(p.jornada==5) s=jug.estrella_jornada_5;
+    if(p.jornada==6) s=jug.estrella_jornada_6;
+    if(p.jornada==7) s=jug.estrella_jornada_7;
+    if(p.jornada==8) s=jug.estrella_jornada_8;
+    if(p.jornada==9) s=jug.estrella_jornada_9;
+    if(p.jornada==10) s=jug.estrella_jornada_10;
+    if(p.jornada==11) s=jug.estrella_jornada_11;
+    if(p.jornada==12) s=jug.estrella_jornada_12;
+    if(p.jornada==13) s=jug.estrella_jornada_13;
+    if(p.jornada==14) s=jug.estrella_jornada_14;
+    if(p.jornada==15) s=jug.estrella_jornada_15;
+    if(p.jornada==16) s=jug.estrella_jornada_16;
+    if(p.jornada==17) s=jug.estrella_jornada_17;
+    if(p.jornada==18) s=jug.estrella_jornada_18;
+    if(p.jornada==19) s=jug.estrella_jornada_19;
+    if(p.jornada==20) s=jug.estrella_jornada_20;
+    if(p.jornada==21) s=jug.estrella_jornada_21;
+    if(p.jornada==22) s=jug.estrella_jornada_22;
+    if(p.jornada==23) s=jug.estrella_jornada_23;
+    if(p.jornada==24) s=jug.estrella_jornada_24;
+    if(p.jornada==25) s=jug.estrella_jornada_25;
+    if(p.jornada==26) s=jug.estrella_jornada_26;
+    if(p.jornada==27) s=jug.estrella_jornada_27;
+    if(p.jornada==28) s=jug.estrella_jornada_28;
+    if(p.jornada==29) s=jug.estrella_jornada_29;
+    if(p.jornada==30) s=jug.estrella_jornada_30;
+    if(p.jornada==31) s=jug.estrella_jornada_31;
+    if(p.jornada==32) s=jug.estrella_jornada_32;
+    if(p.jornada==33) s=jug.estrella_jornada_33;
+    if(p.jornada==34) s=jug.estrella_jornada_34;
+    if(p.jornada==35) s=jug.estrella_jornada_35;
+    if(p.jornada==36) s=jug.estrella_jornada_36;
+    if(p.jornada==37) s=jug.estrella_jornada_37;
+    if(p.jornada==38) s=jug.estrella_jornada_38;
+    if(p.jornada==39) s=jug.estrella_jornada_39;
+    if(p.jornada==40) s=jug.estrella_jornada_40;
+    if(p.jornada==41) s=jug.estrella_jornada_41;
+    if(p.jornada==42) s=jug.estrella_jornada_42;
+    if(p.jornada==43) s=jug.estrella_jornada_43;
+    if(p.jornada==44) s=jug.estrella_jornada_44;
+    if(p.jornada==45) s=jug.estrella_jornada_45;
+    if(p.jornada==46) s=jug.estrella_jornada_46;
+    if(s==null)s=false;
+    return s;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +456,8 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
               TabBar(
                   onTap: (index) {
                     _controller.index=index;
-
+                    widget.index=index;
+                    //ponerConteo();
                   },
                   labelStyle: TextStyle(fontSize: 12.0), //For Selected tab
                   controller: _controller,
@@ -232,25 +503,29 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                       RaisedButton.icon(
                         onPressed: () {
                           CRUDPartido dao = new CRUDPartido();
-                          for(var d in _jugadoresFUERA){
-                            setState(() {
-                              puntuacionJornadaPoner(widget.partido, d, "");
-                              estadoJornadaPoner(widget.partido, d, "SIM");
+                          if(widget.index==1) {
+                            for (var d in _jugadoresFUERA) {
+                              setState(() {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "SIM");
 
-                              d.estado="SIM";
-                              d.puntuacion="";
-                              widget.cambio=true;
-                            });
+                                d.estado = "SIM";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              });
+                            }
                           }
-                          for(var d in _jugadoresCASA){
-                            setState(() {
-                              puntuacionJornadaPoner(widget.partido, d, "");
-                              estadoJornadaPoner(widget.partido, d, "SIM");
+                          if(widget.index==0) {
+                            for (var d in _jugadoresCASA) {
+                              setState(() {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "SIM");
 
-                              d.estado="SIM";
-                              d.puntuacion="";
-                              widget.cambio=true;
-                            });
+                                d.estado = "SIM";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              });
+                            }
                           }
                           setState(() {
                           });
@@ -277,24 +552,28 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                       RaisedButton.icon(
                         onPressed: () {
                           setState(() {
-                          for(var d in _jugadoresFUERA){
-                            puntuacionJornadaPoner(widget.partido, d, "");
-                            estadoJornadaPoner(widget.partido, d, "SV");
+                            if(widget.index==1) {
+                              for (var d in _jugadoresFUERA) {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "SV");
 
-                            d.estado="SV";
-                              d.puntuacion="";
-                            widget.cambio=true;
-                          }
+                                d.estado = "SV";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              }
+                            }
                           });
                           setState(() {
-                            for(var d in _jugadoresCASA){
-                              puntuacionJornadaPoner(widget.partido, d, "");
-                              estadoJornadaPoner(widget.partido, d, "SV");
+                            if(widget.index==0) {
+                              for (var d in _jugadoresCASA) {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "SV");
 
-                              d.estado="SV";
-                              d.puntuacion="";
-                              widget.cambio=true;
-                          }
+                                d.estado = "SV";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              }
+                            }
                           });
                           setState(() {
                           });
@@ -314,7 +593,50 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                         splashColor: Colors.black,
                         color: Colors.purple,
                       ),),
+                    SizedBox(
+                      width: 80,
+                      height: 30, // match_parent
+                      child:
+                      RaisedButton.icon(
+                        onPressed: () {
+                          if(widget.index==1) {
+                            setState(() {
+                              for (var d in _jugadoresFUERA) {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "NA");
 
+                                d.estado = "NA";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              }
+                            });
+                          }
+                          if(widget.index==0) {
+                            setState(() {
+                              for (var d in _jugadoresCASA) {
+                                puntuacionJornadaPoner(widget.partido, d, "");
+                                estadoJornadaPoner(widget.partido, d, "NA");
+                                d.estado = "NA";
+                                d.puntuacion = "";
+                                widget.cambio = true;
+                              }
+                            });
+                          }
+                          ponerConteo();
+                        },
+                        label: Text(
+                          "N/A",
+                          style: TextStyle(color: Colors.black, fontSize: 9),
+                        ),
+                        icon: Icon(
+                          MyFlutterApp.dice_one,
+                          size: 15,
+                          color: Colors.black,
+                        ),
+                        textColor: Colors.black,
+                        splashColor: Colors.black,
+                        color: Colors.yellow,
+                      ),),
 
                   ],),Container(height: 2),
                         new Row(
@@ -326,23 +648,31 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                               child:
                               RaisedButton.icon(
                                 onPressed: () {
-                                  for(var d in _jugadoresFUERA){
-                                    setState(() {
-                                      puntuacionJornadaPoner(widget.partido, d, "");
-                                      estadoJornadaPoner(widget.partido, d, "A");
-                                      d.estado="A";
-                                      d.puntuacion="";
-                                      widget.cambio=true;
-                                    });
+                                  if(widget.index==1) {
+                                    for (var d in _jugadoresFUERA) {
+                                      setState(() {
+                                        puntuacionJornadaPoner(
+                                            widget.partido, d, "");
+                                        estadoJornadaPoner(
+                                            widget.partido, d, "A");
+                                        d.estado = "A";
+                                        d.puntuacion = "";
+                                        widget.cambio = true;
+                                      });
+                                    }
                                   }
-                                  for(var d in _jugadoresCASA){
-                                    setState(() {
-                                      puntuacionJornadaPoner(widget.partido, d, "");
-                                      estadoJornadaPoner(widget.partido, d, "A");
-                                      d.estado="A";
-                                      d.puntuacion="";
-                                      widget.cambio=true;
-                                    });
+                                  if(widget.index==0) {
+                                    for (var d in _jugadoresCASA) {
+                                      setState(() {
+                                        puntuacionJornadaPoner(
+                                            widget.partido, d, "");
+                                        estadoJornadaPoner(
+                                            widget.partido, d, "A");
+                                        d.estado = "A";
+                                        d.puntuacion = "";
+                                        widget.cambio = true;
+                                      });
+                                    }
                                   }
                                   setState(() {
                                   });
@@ -368,23 +698,31 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                               child:
                               RaisedButton.icon(
                                 onPressed: () {
-                                  for(var d in _jugadoresFUERA){
-                                    setState(() {
-                                      puntuacionJornadaPoner(widget.partido, d, "");
-                                      estadoJornadaPoner(widget.partido, d, "");
-                                      d.estado="";
-                                      d.puntuacion="";
-                                      widget.cambio=true;
-                                    });
+                                  if(widget.index==1) {
+                                    for (var d in _jugadoresFUERA) {
+                                      setState(() {
+                                        puntuacionJornadaPoner(
+                                            widget.partido, d, "");
+                                        estadoJornadaPoner(
+                                            widget.partido, d, "");
+                                        d.estado = "";
+                                        d.puntuacion = "";
+                                        widget.cambio = true;
+                                      });
+                                    }
                                   }
-                                  for(var d in _jugadoresCASA){
-                                    setState(() {
-                                      puntuacionJornadaPoner(widget.partido, d, "");
-                                      estadoJornadaPoner(widget.partido, d, "");
-                                      d.estado="";
-                                      d.puntuacion="";
-                                      widget.cambio=true;
-                                    });
+                                  if(widget.index==0) {
+                                    for (var d in _jugadoresCASA) {
+                                      setState(() {
+                                        puntuacionJornadaPoner(
+                                            widget.partido, d, "");
+                                        estadoJornadaPoner(
+                                            widget.partido, d, "");
+                                        d.estado = "";
+                                        d.puntuacion = "";
+                                        widget.cambio = true;
+                                      });
+                                    }
                                   }
                                   setState(() {
 
@@ -417,6 +755,7 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                   alignment: Alignment.center,
                   color: Colors.black,
                   child: new Table(
+                      //border: TableBorder.symmetric(inside: BorderSide(width: 2, color: Colors.blue), outside: BorderSide(width: 3, color: Colors.blue)),
                       columnWidths: {
                         0: FlexColumnWidth(9),
                         1: FlexColumnWidth(1),
@@ -448,29 +787,154 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
                               style: TextStyle(fontSize: 14, color: Colors.white),
                               textAlign: TextAlign.center),
                         ]),
+                        TableRow(children: [
+                          Container(
+                              height: 5,
+                          ),
+                          Container(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 5,
+                          ),
+                          Container(
+                            height: 5,
+                          ),
+                        ]),
+                       /* TableRow(children: [
+                          Container(
+                              padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                              alignment: Alignment.center,
+                              color: Colors.black,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                      "T: ${widget.partido.titularesCasa} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "S: ${widget.partido.suplentesCasa} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "NA: ${widget.partido.NACasa} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                ],)
+                          ),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Container(
+                              padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                              alignment: Alignment.center,
+                              color: Colors.black,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                      "T: ${widget.partido.titularesFuera} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "S: ${widget.partido.suplentesFuera} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "NA: ${widget.partido.NAFuera} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+
+                                ],)
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Container(
+                              padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                              alignment: Alignment.center,
+                              color: Colors.black,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+
+                                  Text(
+                                      "EX: ${widget.partido.EXCasa} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "SD: ${widget.partido.sinDatosCasa}",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                ],)
+                          ),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Text(
+                              "",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              textAlign: TextAlign.center),
+                          Container(
+                              padding: EdgeInsets.only(left:5,right: 5,bottom: 5),
+                              alignment: Alignment.center,
+                              color: Colors.black,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+
+                                  Text(
+                                      "EX: ${widget.partido.EXFuera} ",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                      "SD: ${widget.partido.sinDatosFuera}",
+                                      style: TextStyle(fontSize: 11, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                ],)
+                          ),
+                        ]),*/
                       ]),
                 ),
-                Container(
-                  padding: EdgeInsets.only(right: 25,bottom: 5),
-                  alignment: Alignment.center,
-                  color: Colors.black,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(CustomIcon.star, size: 15,color: Colors.yellowAccent,),
-                    Container(width:5,),
-                    Text(
-                        "Destacado",
-                        style: TextStyle(fontSize: 11, color: Colors.yellowAccent),
-                        textAlign: TextAlign.center),
-                  ],)
-                ),
+
+              /*  Container(
+                    padding: EdgeInsets.only(right: 25,bottom: 5),
+                    alignment: Alignment.center,
+                    color: Colors.black,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(CustomIcon.star, size: 15,color: Colors.yellowAccent,),
+                        Container(width:5,),
+                        Text(
+                            _controller.index==0?"Destacado (${widget.partido.conteoDescCasa})":"Destacado (${widget.partido.conteoDescFuera})",
+                            style: TextStyle(fontSize: 11, color: Colors.yellowAccent),
+                            textAlign: TextAlign.center),
+                      ],)
+                ),*/
             Expanded(child:
             TabBarView(
               controller: _controller,
               children: [
-                PuntacionesPartido(partido: widget.partido, jugadores:  _jugadoresCASA,padre: widget),
-                PuntacionesPartido(partido: widget.partido,jugadores:  _jugadoresFUERA,padre: widget),
+                PuntacionesPartido(temporada: widget.temporada, categoria: widget.categoria, pais:widget.pais, equipo:equipoCasa, partido: widget.partido, jugadores:  _jugadoresCASA,padre: widget),
+                PuntacionesPartido(temporada: widget.temporada, categoria: widget.categoria, pais:widget.pais, equipo:equipoFuera, partido: widget.partido,jugadores:  _jugadoresFUERA,padre: widget),
               ],
             ),),
         ])
@@ -520,12 +984,14 @@ class TabPuntuacionesState extends State<TabPuntuaciones> with SingleTickerProvi
               child: Text('Aceptar',
                   style: TextStyle(fontSize: 16, color: Colors.green[900])),
               onPressed: () async {
+
                 Navigator.pop(context, true);
                 CRUDJugador con = new CRUDJugador();
                  con.updateJugadorPuntuacionesPartido(
                     widget.temporada,widget.pais,widget.categoria,widget.jornada,
                     widget.partido,_jugadoresCASA,_jugadoresFUERA);
                 widget.cambio=false;
+                ponerConteo();
                 return true; // showDialog() returns true
               },
             ),

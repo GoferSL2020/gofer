@@ -1,55 +1,58 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/model/jugadorJornada.dart';
-import 'package:iadvancedscout/pdf/pdfPartido.dart';
+import 'package:iadvancedscout/dao/CRUDJugador.dart';
+import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
+import 'package:iadvancedscout/modelo/pais.dart';
+import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iadvancedscout/my_flutter_app_icons.dart';
+import 'package:iadvancedscout/pdf/pdfJugadorDatosScout2.dart';
+import 'package:iadvancedscout/view/jugadores/scouting/tabCaracteristicas.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
-import 'package:iadvancedscout/wigdet/imagen.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
 
-import '../custom_icon_icons.dart';
 
 class OnceFiltroPage extends StatefulWidget {
-  const OnceFiltroPage(this._categoria, this._jornada, this._temporada);
+  OnceFiltroPage(this.temporada,this.jornada);
 
   @override
   _OnceFiltroPageState createState() => _OnceFiltroPageState();
-  final String _categoria;
-  final String _jornada;
-  final String _temporada;
+  final Temporada temporada;
+  final int jornada;
 }
 
 class _OnceFiltroPageState extends State<OnceFiltroPage> {
   FirebaseDatabase _database = FirebaseDatabase.instance;
-  String nodeName = "";
+  String nodeName = "jugadores";
+  List<Player> jugadoresList = <Player>[];
+  Player _playerAux = new Player();
 
-
-  List<JugadorJornada> jugadoresList=new List<JugadorJornada>();
 
 // no need of the file extension, the name will do fine.
 
-
-
-    @override
+  @override
   void initState() {
-    //print(widget._jornada);
-    //print(widget._categoria);
-      jugadoresList.clear();
-    nodeName = "jornadas/${widget._temporada}";
-   /* setState(() {
-   //   getJugador();
+    setState(() {
+      _cogerJugadores();
+    });
 
-    });*/
-     //getJugadores();
-    _database.reference().child(nodeName).onChildAdded.listen(_childAdded);
     //  _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
     // _database.reference().child(nodeName).onChildChanged.listen(_childChanged);
   }
 
-    @override
-  Widget build(BuildContext context) {
+  _cogerJugadores() async {
+    //List<Player> datos = await CRUDJugador().fetchJugadoresOnce(widget.temporada,widget.jornada);
+    setState(() {
+      //print(datos[0].id);
+    //  jugadoresList=datos;
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -82,129 +85,204 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            /*Visibility(
-              visible: jugadoresList.isEmpty,
-              child: Center(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),*/
             Container(
-                alignment: Alignment.center,
-                color: Colors.black,
-                padding: EdgeInsets.all(8.0),
-                child:Center(
-                    child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Texto(Colors.white, "${widget._categoria==null?"":widget._categoria} - Jornada: ${widget._jornada==null?"":widget._jornada} (${jugadoresList.length})",
-                              14, Colors.black, false),
+              height: 20,
+              width: double.infinity,
+              color:Colors.black,
+              child:Text(
+                "${jugadoresList.length} Jugadores",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Config.colorAPP,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic),
+              ),),
 
-                        ]))
-            ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          RaisedButton.icon(
-              onPressed: () async {
-                Fluttertoast.showToast(
-                    msg: "Por favor, espere...",
-
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 20,
-                    backgroundColor: Colors.green.shade900,
-                    textColor: Colors.white,
-                    fontSize: 14.0);
-                PDFPartido pdf= PDFPartido(jugadores: jugadoresList);
-                String file=await pdf.generateInvoice();
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Imagen(file,"Los mejores","${widget._categoria} - Jornada: ${widget._jornada}")));
-
-              },
-              label: Text(
-                "Archivos",
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
-              icon: Icon(
-                CustomIcon.file,
-                size: 20,
-                color: Colors.white,
-              ),
-              textColor: Colors.white,
-              splashColor: Colors.black,
-              color: Colors.blue),
-            ]),
             Visibility(
               visible: jugadoresList.isNotEmpty,
               child: Flexible(
-                  child:
-                       ListView.builder(
-                      itemCount: jugadoresList.length,
-                      itemBuilder: (context, index) {
-                        return
-                          ListTile(
-                            onTap: () {
-                            },
-                            title: Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween ,
-                                children: [
-                                  //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
-                                  Text(
-                                    "${jugadoresList[index].jugador}"
-                                    ,
-                                    style: TextStyle(
-                                        color:Config.edadColorSub(Config.edadSub(jugadoresList[index].fechaNacimiento)),
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                  child: FirebaseAnimatedList(
+                      defaultChild:Center(child: CircularProgressIndicator()),
+                      query: _database.reference().child(nodeName),
+                      itemBuilder: (query,  DataSnapshot snap,
+                          Animation<double> animation, int index) {
+                        itemCount: jugadoresList.length;
 
-                                  Text(
-                                    jugadoresList[index]
-                                        .equipo
-                                    ,
-                                    style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                        return index<jugadoresList.length?
+                        ListTile(
+                          onTap: () {
+                            paginaJugador(
+                                context, jugadoresList[index]);
+                          },
+                          title:
+                          Column(children: [Row(children: [
+                            //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                            Text(
+                              jugadoresList[index]
+                                  .jugador==null?"":
+                              jugadoresList[index]
+                                  .jugador
+                                  .toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Container(width: 5,),
 
+                          ]),
+                            Column(children: [
 
-                                ]),
-                            subtitle:
-                              Column(
-                              children: <Widget>[
-                                Container(height: 5),
-                                  Row(
-                                    mainAxisAlignment:MainAxisAlignment.spaceBetween ,
-                                    children: [
-                                      Text(
-                                         jugadoresList[index].posicion,
-                                        style: TextStyle(
-                                            fontSize: 10.0, color: Colors.blue[900]),
-                                      ),
+                              Row(children: [
+                                //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                                Text(
+                                  jugadoresList[index]
+                                      .posicion==null?"":
+                                  jugadoresList[index]
+                                      .posicion
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ]),
+                            ],),
 
-                                  ],),
-                                Row(
-                                  mainAxisAlignment:MainAxisAlignment.end ,
-                                  children: [
-                                    Text(
-                                      Config.edadSub( jugadoresList[index].fechaNacimiento),
-                                      style: TextStyle(
-                                          color:Config.edadColorSub(Config.edadSub(jugadoresList[index].fechaNacimiento)),
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],),
-                                Container(height: 5),
-                                Container(height: 1, color: Colors.grey),
-                                Container(height: 5),
-                                ]
+                          ]),
+                          trailing:
+                          IconButton(
+                              icon: new Icon(MyFlutterApp.file_pdf,size: 20,),
+                              color: Colors.red[900],
+                              onPressed: ()async{
+                                pdfJugador(context, jugadoresList[index]);
+                              }),
+                          subtitle:
+                          Column(children: [
+
+                            Row(children: [
+                              //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                              Text(Config.categoriaMin(
+                                  jugadoresList[index]
+                                      .categoria),
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.bold),
                               ),
+                              Container(width: 20,),
+                              Text(
+                                jugadoresList[index].equipo==null?"":jugadoresList[index].equipo,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.bold),
+                              )]),
+                            Row(children: [
+                              //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                              Text(
+                                jugadoresList[index]
+                                    .paisNacimiento,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ]),
+                            Row(children: [
+                              //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                              Text(
+                                Config.edadSub(jugadoresList[index]
+                                    .fechaNacimiento),
+                                style: TextStyle(
+                                    color: Config.edadColorSub(Config.edadSub(jugadoresList[index]
+                                        .fechaNacimiento)),
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ]),
+                            Row(children: [
+                              new Container(
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: new BoxDecoration(
+                                    color: Player.nivelColor(jugadoresList[index].nivel),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color:Colors.black, width: 1.0)
+                                ),),
+                              new Container(
+                                width: 5.0,
+                              ),
+                              new Container(
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: new BoxDecoration(
+                                    color: Player.nivelColor(jugadoresList[index].nivel2),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color:Colors.black, width: 1.0)
+                                ),),
+                              new Container(
+                                width: 5.0,
+                              ),new Container(
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: new BoxDecoration(
+                                    color: Player.nivelColor(jugadoresList[index].nivel3),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color:Colors.black, width: 1.0)
+                                ),),
+                              new Container(
+                                width: 5.0,
+                              ),new Container(
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: new BoxDecoration(
+                                    color:Player.nivelColor(jugadoresList[index].nivel4),
+                                    shape: BoxShape.circle,border: Border.all(color:Colors.black, width: 1.0)
+                                ),),
+                              new Container(
+                                width: 5.0,
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(top:2,right: 5),
+                                child: Text(
+                                  "Tipo:",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.normal),
+                                ),),new Container(
+                                padding: EdgeInsets.only(top:1,right: 5),
 
-                          );
-                      },
-                       )),
+                                height: 15.0,
+                                child: Text(
+                                  jugadoresList[index].tipoLetra(),
+                                  style: TextStyle(
+                                      color: Colors.blue.shade800,
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold),
+                                ),),
+
+                            ],),
+                            new Container(
+                              height: 15.0,
+                            )
+
+                          ]),
+                          leading:CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            child:
+                            Text(jugadoresList[index].dorsal.toString()=="99"?"*":jugadoresList[index].dorsal.toString(),
+                              style: TextStyle(
+                                  color:Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold),),
+                          ),
+                          // , backgroundImage:  ExactAssetImage('assets/img/jugador.png')
+
+                        )
+                            :Container();
+
+                      })),
             )
             //dataBody(),
           ],
@@ -212,80 +290,117 @@ class _OnceFiltroPageState extends State<OnceFiltroPage> {
       ),
     );
   }
+  Widget slideRightBackground() {
+    return Container(
+      color: Colors.green[900],
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 20,
+            ),
+            Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            Text(
+              " Cambiar el jugador",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
+  }
+  Widget slideLeftBackground() {
+    return Container(
+      color: Colors.red[900],
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            Text(
+              " Eliminar el jugador",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
+      ),
+    );
+  }
 
 
 
+  void paginaJugador(BuildContext context, Player jugador) {
+    Equipo equipo=new Equipo();
+    equipo.id=jugador.idEquipo;
+    Pais pais=new Pais();
+    pais.id=jugador.idPais;
+    Categoria categoria=new Categoria();
+    categoria.id=jugador.idCategoria;
+    Temporada temporada=new Temporada();
+    temporada.id=jugador.idTemporada;
+    print(equipo.id);
+    print(categoria.id);
+    print(temporada.id);
+    print(pais.id);
+    Navigator.of(context).push(new MaterialPageRoute(
+      builder: (BuildContext context) => TabCaracteristicas(
+          equipo,
+          temporada,
+          categoria,
+          pais,
+          jugador,false),
+    ));
 
+  }
 
-  _childAdded(Event event) {
-    List<JugadorJornada> jugadoresListAux = new List<JugadorJornada>();
-    setState(() {
-            Map<dynamic, dynamic> auxMap2 = event.snapshot.value;
-            auxMap2.forEach((key, value) {
-                List<dynamic>  auxMap3 = value;
-               // print("ESTRELLA:${value2["estrella"]}");
-                  if (auxMap3.elementAt(1)["estrella"] != null) {
-                    print(widget._jornada);
-                    print(widget._categoria);
-                    print(auxMap3.elementAt(1)["jugador"]);
-                    if (
-                    (auxMap3.elementAt(1)["estrella"] == 1) &&
-                        (auxMap3.elementAt(1)["categoria"] ==
-                            widget._categoria) &&
-                        (auxMap3.elementAt(1)["jornada"].toString() ==
-                            widget._jornada) &&
-                        (auxMap3.elementAt(1)["jugador"] != null)
-                    ) {
-                      //jugadoresListAux.add(JugadorJornada.fromJson(key, auxMap3));
-                      jugadoresList.add(JugadorJornada.fromJson(key, auxMap3.elementAt(1)));
-                    }
-                  }
-              });
-            });
-    jugadoresList.sort((a, b) => b.posicion.compareTo(a.posicion));
-          }
+  pdfJugador(BuildContext context, Player jugador)  {
+    Fluttertoast.showToast(
+        msg: "Espera...\nEstamos haciendo el \ndocumento del jugador:\n${jugador.jugador}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 40,
+        backgroundColor: Colors.red.shade900,
+        textColor: Colors.white,
+        fontSize: 12.0);
+    Equipo equipo=new Equipo();
+    equipo.id=jugador.idEquipo;
+    equipo.equipo=jugador.equipo;
+    Pais pais=new Pais();
+    pais.id=jugador.idPais;
+    Categoria categoria=new Categoria();
+    categoria.id=jugador.idCategoria;
+    Temporada temporada=new Temporada();
+    temporada.id=jugador.idTemporada;
 
-
-
- /* _childAdded(Event event) {
-    List<JugadorJornada> jugadoresListAux = new List<JugadorJornada>();
-    setState(() {
-      Map<dynamic, dynamic> auxMap2 = event.snapshot.value;
-      print(widget._jornada);
-      print( widget._categoria);
-      print( widget._temporada);
-      print("map22:${auxMap2}");
-      auxMap2.forEach((key, value) {
-        print("SSSSSSSS:${value}");
-        List<dynamic>  auxMap3 = value;
-        print("map2:${auxMap3}");
-        //   print("VALUE2${value}");
-        // print(auxMap3.keys);
-        auxMap3.forEach((key2, value2) {
-          // print("map3:${key2}");
-          // print("VALUE3${value2}");
-
-          // print("ESTRELLA:${value2["estrella"]}");
-          if (value2["estrella"] != null){
-            print(widget._jornada);
-            print( widget._categoria);
-            print( value2["jugador"]);
-            if (
-            (value2["estrella"] == 1) &&
-                (value2["categoria"] == widget._categoria) &&
-                (value2["jornada"].toString() == widget._jornada) &&
-                (value2["jugador"] != null)
-            ) {
-              //jugadoresListAux.add(JugadorJornada.fromJson(key, auxMap3));
-              jugadoresList.add(JugadorJornada.fromJson(key2, value2));
-            }
-          }
-        });
-      });
-    });
-    jugadoresList.sort((a, b) => b.posicion.compareTo(a.posicion));
-
-  }*/
+    PdfJugadorDatosScout2 pdf= PdfJugadorDatosScout2(
+      temporada,
+      equipo,
+      jugador,
+      pais,
+      categoria,
+    );
+    pdf.generateInvoice();
+  }
 
 
   @override

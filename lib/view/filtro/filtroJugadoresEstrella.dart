@@ -1,17 +1,24 @@
 
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iadvancedscout/conf/config.dart';
+import 'package:iadvancedscout/conf/excelJugadores.dart';
 import 'package:iadvancedscout/custom_icon_icons.dart';
 import 'package:iadvancedscout/dao/CRUDCategoria.dart';
+import 'package:iadvancedscout/dao/CRUDEquipo.dart';
 import 'package:iadvancedscout/dao/CRUDJornada.dart';
+import 'package:iadvancedscout/dao/CRUDJugador.dart';
 import 'package:iadvancedscout/dao/CRUDPais.dart';
 import 'package:iadvancedscout/dao/CRUDTemporada.dart';
 import 'package:iadvancedscout/modelo/categoria.dart';
+import 'package:iadvancedscout/modelo/equipo.dart';
 import 'package:iadvancedscout/modelo/jornada.dart';
 import 'package:iadvancedscout/modelo/pais.dart';
 import 'package:iadvancedscout/modelo/player.dart';
@@ -20,6 +27,7 @@ import 'package:iadvancedscout/view/filtro/jugadoresFiltros.dart';
 import 'package:iadvancedscout/view/temporadas.dart';
 import 'package:iadvancedscout/wigdet/texto.dart';
 import 'package:image_picker/image_picker.dart';
+
 
 class FiltroJugadoresEstrella extends StatefulWidget {
 
@@ -90,6 +98,8 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
   _cogerPais() async {
     //print("PAIS");
     //print(_temporadaAux.id);
+    paises.clear();
+    jornadas.clear();
     List<Pais> datos = await CRUDPais().fetchPaises(_temporadaAux);
     setState(() {
       //print(datos[0].id);
@@ -99,17 +109,21 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
   }
 
   _cogerCategorias() async {
+    categorias.clear();
+    jornadas.clear();
     List<Categoria> datos =
     await CRUDCategoria().fetchCategorias(_temporadaAux, _paisAux);
     setState(() {
       _categoriaAux = datos[0];
       categorias.addAll(datos);
     });
+    _cogerJornadas();
   }
 
   _cogerJornadas() async {
+    jornadas.clear();
     List<Jornada> datos =
-    await CRUDJornada().fetchJornadas(_temporadaAux, _paisAux, _categoriaAux);
+    await CRUDJornada().fetchJornadas(_temporadaAux, _paisAux, categorias[0]);
     setState(() {
       _jornadaAux = datos[0];
       jornadas.addAll(datos);
@@ -302,7 +316,7 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
                             );
                           }),
                         ]),
-                        TableRow(children: [
+                       /* TableRow(children: [
                           FormField(builder: (FormFieldState state) {
                             return InputDecorator(
                               decoration: InputDecoration(
@@ -336,7 +350,7 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
                               ),
                             );
                           }),
-                        ]),
+                        ]),*/
                         TableRow(children: [
                           FormField(builder: (FormFieldState state) {
                             return InputDecorator(
@@ -383,14 +397,21 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   RaisedButton.icon(
                       onPressed: () async {
-
+                        Fluttertoast.showToast(
+                            msg: "Espera...\nEstamos haciendo el \nfiltro",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 40,
+                            backgroundColor: Colors.red.shade900,
+                            textColor: Colors.white,
+                            fontSize: 12.0);
                         try {
                           setState(() {
                             isLoading = true;
                           });
                           setState(() {
                             Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux),
+                              builder: (BuildContext context) => JugadoresFiltroPage(jugadorFiltro,_categoriaAux,_temporadaAux,_paisAux, true),
                             ));
 
                           });
@@ -406,7 +427,7 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
                         }
                       },
                       label: Text(
-                        "Buscar jugadores",
+                        "Aceptar",
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                       icon: Icon(
@@ -417,6 +438,25 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
                       textColor: Colors.black,
                       splashColor: Colors.black,
                       color: Colors.blue),
+                  RaisedButton.icon(
+                      onPressed: () async {
+                        ExcelJugadores excel=ExcelJugadores(jugadorFiltro,_temporadaAux,_paisAux,_categoriaAux);
+                        excel.generateExcel();
+
+                      }  // _generateExcel(categorias);
+                      ,
+                      label: Text(
+                        "Excel",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      icon: Icon(
+                        CustomIcon.file_excel,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      textColor: Colors.white,
+                      splashColor: Colors.white,
+                      color: Colors.black),
                 ]),
 
               ),
@@ -652,6 +692,8 @@ class _FiltroJugadoresEstrellaState extends State<FiltroJugadoresEstrella> {
     }
     return rows;
   }
+
+
 }
 
 

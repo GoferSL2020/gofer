@@ -23,11 +23,12 @@ class TabCaracteristicas extends StatefulWidget {
   final Temporada temporada;
   final Categoria categoria;
   final Pais pais;
+  final bool puntuaciones;
   Player jugador;
   @override
   TabCaracteristicasState createState() =>
       TabCaracteristicasState();
-  TabCaracteristicas(this.equipo, this.temporada, this.categoria, this.pais, this.jugador
+  TabCaracteristicas(this.equipo, this.temporada, this.categoria, this.pais, this.jugador, this.puntuaciones
      );
 
   bool cambio=false;
@@ -70,21 +71,31 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                             FlatButton(
                                 child: Text('Salir'),
                                 onPressed: ()  async {
-                                  Navigator.pop(context, true);
-                                  Navigator.pop(context, true);
-                                  Navigator
-                                      .push(
-                                    context,
-                                    new MaterialPageRoute(builder: (context) =>
-                                    new JugadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
-                                  );
+                                  if (widget.puntuaciones == true) {
+                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, true);
+                                  }
+                                  else {
+                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, true);
+                                    Navigator
+                                        .push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                          new JugadoresView(
+                                              equipo: widget.equipo,
+                                              temporada: widget.temporada,
+                                              categoria: widget.categoria,
+                                              pais: widget.pais)),
+                                    );
+                                  }
                                 }
                             ),
                             FlatButton(
                                 child: Text('Cancelar'),
                                 onPressed: () {
                                   Navigator.pop(context, true);
-
                                 }
                             ),
                           ],
@@ -93,6 +104,9 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                     );
                   }
                   else{
+                    if (widget.puntuaciones == true) {
+                      Navigator.pop(context, true);
+                    }else{
                     Navigator.pop(context, true);
                     Navigator
                         .push(
@@ -100,6 +114,7 @@ class TabCaracteristicasState extends State<TabCaracteristicas> {
                       new MaterialPageRoute(builder: (context) =>
                       new JugadoresView(equipo: widget.equipo, temporada: widget.temporada, categoria: widget.categoria, pais: widget.pais)),
                     );
+                  }
                   }
                 }
               ),
