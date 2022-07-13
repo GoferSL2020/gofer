@@ -88,6 +88,7 @@ class _JugadoresViewState extends State<JugadoresView> {
           jugador.idCategoria=widget.categoria.id;
           jugador.idPais=widget.pais.id;
           jugador.idEquipo=widget.equipo.id;
+          jugador.iniciaizarNA();
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
               EditJugador(
                 temporada: widget.temporada,

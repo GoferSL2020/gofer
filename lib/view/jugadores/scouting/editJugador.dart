@@ -158,6 +158,7 @@ Carrilero izquierdo
     _puesto = widget.jugador.posicion.toUpperCase();
     try {
       _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
+      _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
     }
     catch(e){
       _puesto2="";

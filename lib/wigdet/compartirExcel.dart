@@ -480,6 +480,10 @@ String estadoPuntuacion(String puntuaciones) {
     sheet.getRangeByIndex(1, columna).text = "J. 40".toUpperCase();columna++;//_J. 40,
     sheet.getRangeByIndex(1, columna).text = "J. 41".toUpperCase();columna++;//_J. 41,
     sheet.getRangeByIndex(1, columna).text = "J. 42".toUpperCase();columna++;//_J. 42,
+    sheet.getRangeByIndex(1, columna).text = "J. 43".toUpperCase();columna++;//_J. 42,
+    sheet.getRangeByIndex(1, columna).text = "J. 44".toUpperCase();columna++;//_J. 42,
+    sheet.getRangeByIndex(1, columna).text = "J. 45".toUpperCase();columna++;//_J. 42,
+    sheet.getRangeByIndex(1, columna).text = "J. 46".toUpperCase();columna++;//_J. 42,
     sheet.getRangeByIndex(1, columna).cellStyle=styleCabecera2;
     sheet.getRangeByIndex(1, columna).text = "PUNTUACIÓN TOTAL".toUpperCase();columna++;//_J. 43,
     sheet.getRangeByIndex(1, columna).cellStyle=styleCabecera2;
@@ -969,6 +973,22 @@ String estadoPuntuacion(String puntuaciones) {
           columna++;
           ponerCeldaValorPuntuacion(
               sheet1, fila, columna, jug.puntaciones_jornada_42,
+              jug.estado_jornada_42);
+          columna++;
+          ponerCeldaValorPuntuacion(
+              sheet1, fila, columna, jug.puntaciones_jornada_43,
+              jug.estado_jornada_42);
+          columna++;
+          ponerCeldaValorPuntuacion(
+              sheet1, fila, columna, jug.puntaciones_jornada_44,
+              jug.estado_jornada_42);
+          columna++;
+          ponerCeldaValorPuntuacion(
+              sheet1, fila, columna, jug.puntaciones_jornada_45,
+              jug.estado_jornada_42);
+          columna++;
+          ponerCeldaValorPuntuacion(
+              sheet1, fila, columna, jug.puntaciones_jornada_46,
               jug.estado_jornada_42);
           columna++;
           String puntuacionTolal="=SUM(V"+fila.toString()+":"+"BK"+fila.toString()+")";
