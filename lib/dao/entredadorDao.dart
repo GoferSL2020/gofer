@@ -1,11 +1,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/service/db.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/entrenador.dart';
+import 'package:iafootfeel/modelo/equipo.dart';
+import 'package:iafootfeel/modelo/partido.dart';
+import 'package:iafootfeel/service/db.dart';
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 class EntrenadorDao {

@@ -1,7 +1,7 @@
 import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
-import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iafootfeel/model/jugador.dart';
 
 
 /// SheetController is a class which does work of saving FeedbackForm in Google Sheets using

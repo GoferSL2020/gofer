@@ -26,8 +26,8 @@ class DB {
 // A continuación, define la función para insertar dogs en la base de datos
   Future<void> actual() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, "IAScout21-22.db");
-    //String path = join(documentDirectory.path, "IAScout21-22.db");
+    String path = join(documentDirectory.path, "iafootfeel21-22.db");
+    //String path = join(documentDirectory.path, "iafootfeel21-22.db");
     // await _db.execute("delete  from PUNTUACIONES");
     await _db.execute("DROP TABLE PUNTUACIONES_2");
 
@@ -4020,7 +4020,7 @@ class DB {
 
   initDB() async {
       Directory documentDirectory = await getApplicationDocumentsDirectory();
-      String path = join(documentDirectory.path, "IAScoutArgentino.db");
+      String path = join(documentDirectory.path, "iafootfeelArgentino.db");
       print(path);
 
       return await openDatabase(path, version: 1, onOpen: (db) {

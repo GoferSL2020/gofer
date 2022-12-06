@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/view/equipos/equiposOpcionesViewAux.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/modelo/FiltroJugadores.dart';
+import 'package:iafootfeel/modelo/cantera.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/equipo.dart';
+import 'package:iafootfeel/modelo/equipoJugador.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
+import 'package:iafootfeel/view/jugadores/jugadoresView.dart';
+
+import 'categoriasView.dart';
 
 class CategoriaCard extends StatelessWidget {
   final Pais paisDetails;
-  final Temporada temporada;
   final Categoria categoria;
-
-  CategoriaCard({@required this.paisDetails,@required this.temporada,@required this.categoria});
+  final EquipoJugador equipo;
+  final bool menu;
+  CategoriaCard({@required this.paisDetails,@required this.categoria,@required this.equipo,@required this.menu});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-
-        Navigator.push(context, MaterialPageRoute(builder: (_) => EquiposOpcionesViewAux(pais: paisDetails, temporada: temporada,categoria:categoria)));
+      onTap: () {
+        FiltroJugadores filtro=new FiltroJugadores("", false, categoria.categoria, "${paisDetails.pais}-${categoria.categoria}",equipo.equipo,paisDetails.pais);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => JugadoresView(filtro,paisDetails)));
       },
       child: Padding(
         padding: EdgeInsets.all(5),
@@ -48,23 +57,18 @@ class CategoriaCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      new Image.network(
-                          Config.escudoCategoria(categoria.categoria),
-                          height:30),
+                      new Image.network("https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/clubes%2F${paisDetails.pais.toString().replaceAll("Ñ", "N")}.png?alt=media",
+                          height:20),
                       Container(width: 20,),
                       Text(
                         categoria.categoria,
                         style: TextStyle(
-                          color: Config.colorCardLetra,
+                          color: Colors.black,
                             fontWeight: FontWeight.w900,
                             fontSize: 16,
                             fontStyle: FontStyle.italic),
                       ),
-
-
-
                     ],
-
                   ),
                 )
               ],
@@ -76,5 +80,5 @@ class CategoriaCard extends StatelessWidget {
   }
 }
 
-//https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/categorias%2F2ª%20División%20A.png
-//https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/categorias%2F2%C2%AA%20Divisio%CC%81n%20A.png
+//https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/categorias%2F2ª%20División%20A.png
+//https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/categorias%2F2%C2%AA%20Divisio%CC%81n%20A.png

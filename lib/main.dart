@@ -10,17 +10,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' show get;
-import 'package:iadvancedscout/auth/signup.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/dao/equipoDao.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/locale/app_localization.dart';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-import 'package:iadvancedscout/view/temporadas.dart';
-import 'package:iadvancedscout/wigdet/splash.dart';
+import 'package:iafootfeel/auth/signup.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/dao/equipoDao.dart';
+import 'package:iafootfeel/dao/jugadorDao.dart';
+import 'package:iafootfeel/locale/app_localization.dart';
+import 'package:iafootfeel/model/equipo.dart';
+import 'package:iafootfeel/model/jugador.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/view/menuFootFeel.dart';
+import 'package:iafootfeel/wigdet/splash.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -38,8 +37,9 @@ void main() async {
       login = true;
     } else {
       login = false;
+       //BBDDService().getUsuarioIniciar();
       //print("USER NO NULL:");
-      BBDDService().getUserApp();
+
     }
   });
 
@@ -72,8 +72,6 @@ class MyAppState extends State<MyApp> {
     AppLocalizationDelegate _localeOverrideDelegate =
     AppLocalizationDelegate(Locale('es', 'ES'));
 
-
-  inicio();
     //FirebaseAuth.instance.setPersistence(Persistence.NONE);
     
 
@@ -88,7 +86,7 @@ class MyAppState extends State<MyApp> {
        const Locale('en', 'US')
      ],
 
-     title: 'InAdvanced - IAScout',
+     title: 'iafootfeel',
       home:SplashScreen(),
       debugShowCheckedModeBanner: false,
 
@@ -100,7 +98,7 @@ class MyAppState extends State<MyApp> {
 
       routes: <String, WidgetBuilder>{
         "SPLASH_SCREEN": (BuildContext context) => SplashScreen(),
-        "HOME_SCREEN": (BuildContext context) => login == true ? SignUp():TemporadaView(),
+        "HOME_SCREEN": (BuildContext context) => login == true ? SignUp():MenuFootFeel(),
       },
 
     );
@@ -110,6 +108,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    inicio();
     jugadorAux="";
     // TODO: implement initState
     super.initState();
@@ -147,28 +146,14 @@ class MyAppState extends State<MyApp> {
           Config.imagenesClubes.add(img);
         });
       });
-//https://firebasestorage.googleapis.com/v0/b/iadvancedscout.appspot.com/o/clubes%2FSD%20Logron%CC%83e%CC%81s.png?alt=media&token=a4ace1d8-110a-4cca-b844-928d0cd66638
+//https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/clubes%2FSD%20Logron%CC%83e%CC%81s.png?alt=media&token=a4ace1d8-110a-4cca-b844-928d0cd66638
     }
     void inicio() async{
-      JugadorDao jug= JugadorDao();
-      List<Jugador> listEquipo2 = await jug.getTodosJugadores();
-      //subirPais();
-      //temporadas/2021-2022/paises/ESPA%C3%91A/categorias/Segunda%20B%20Grupo%20I/equipos/Burgos/jugadore
-      // eliminar();
-      //paises();
-      //
-      temporadas();
-      // jugadores();
-      //temporadas2DIVISION();
-      // jugadores();
-      // updatejugadores2();
-      //addjugadores2B();
-      //addjugadores2B();
-      //actual();
-      //_write("HOLA");
 
-      //await fileJugadores();
-      //await getCsv();
+    setState(() {
+
+    });
+
     }
 
 
@@ -333,7 +318,7 @@ class MyAppState extends State<MyApp> {
       /*
     //FirebaseDatabase.instance.reference().child("jugadores2021-2022").remove();
 
-   BBDDService().getUserScout().temporada="2021-2022";
+   BBDDService().getUserScout().puesto="2021-2022";
      String json="";
       List<Entrenador> list2 = await jug.getTodosEntrenadores();
       for (var i=0;i<list2.length;i++) {
@@ -498,7 +483,7 @@ class MyAppState extends State<MyApp> {
       row.add('lateral'.toUpperCase());
       rows.add(row);
       for (int i=0;i<list2.length;i++) {
-        String pathTemporadas = "temporadas/${BBDDService().getUserScout().temporada}/paises/${list2[i].pais}/"
+        String pathTemporadas = "temporadas/${BBDDService().getUserScout().puesto}/paises/${list2[i].pais}/"
             "categorias/${list2[i].categoria}/"
             "equipos/${list2[i].equipo}/jugadores/${list2[i].id}";
         print(pathTemporadas);
@@ -708,7 +693,7 @@ class MyAppState extends State<MyApp> {
       print(jugador);
       for (int i=0;i<list2.length;i++) {
 
-        String pathTemporadas="temporadas/${BBDDService().getUserScout().temporada}/paises/${list2[i].pais}/"
+        String pathTemporadas="temporadas/${BBDDService().getUserScout().puesto}/paises/${list2[i].pais}/"
             "categorias/${list2[i].categoria}/"
             "equipos/${list2[i].equipo}/jugadores/${list2[i].id}";
         print(pathTemporadas);

@@ -1,5 +1,5 @@
 
-import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
 
 class JugadorJornadaColumna {
   String _id;

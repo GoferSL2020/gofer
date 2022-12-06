@@ -1,13 +1,12 @@
-import 'package:iadvancedscout/auth/signup.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/view/paises.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-import 'package:iadvancedscout/view/temporadas.dart';
-import 'package:iadvancedscout/wigdet/politica.dart';
-import 'package:iadvancedscout/wigdet/termino.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
+import 'package:iafootfeel/view/jugadores/jugadoresView.dart';
+import 'package:iafootfeel/auth/signup.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/icon_mio_icons.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/view/menuFootFeel.dart';
+import 'package:iafootfeel/wigdet/politica.dart';
+import 'package:iafootfeel/wigdet/termino.dart';
+import 'package:iafootfeel/wigdet/texto.dart';
 
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,23 +80,11 @@ const Language('Francais', 'fr_FR'),
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back_ios , color: Colors.white),
           onPressed: () => Navigator.of(context).pushReplacement(new MaterialPageRoute(
-            builder: (BuildContext context) => TemporadaView(),
+            builder: (BuildContext context) => MenuFootFeel(),
           )),
         ),
         //backgroundColor: Config.colorAPP,
         actions: <Widget>[
-          IconButton(
-          icon: Icon(Icons.power_settings_new_sharp),
-            onPressed: () {
-              //var a = singOut();
-              //if (a != null) {
-              FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => SignUp(),
-              ));
-              //}
-            },
-          ),
             IconButton(
                 icon: new Image.asset(Config.icono),
           ),
@@ -129,7 +116,7 @@ const Language('Francais', 'fr_FR'),
             ),
             Padding(
               padding: EdgeInsets.all(5.0),
-              child: Text("InAdvanced",
+              child: Text("FootFeel",
                   style: TextStyle(
                       fontWeight: FontWeight.normal,color: Colors.white,
                       fontSize: 30,
@@ -277,10 +264,7 @@ const Language('Francais', 'fr_FR'),
 
     User result = FirebaseAuth.instance.currentUser;
     dbRef.child(result.uid).update({
-      "año": ageController.text,
-      "nombre": nameController.text,
-      "idioma": language,
-      "color": color
+      "nombre": nameController.text
     }).then((res) {
       setState(() {
         isLoading = false;

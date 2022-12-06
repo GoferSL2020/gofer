@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:iadvancedscout/conf/sidekick.dart';
+import 'package:iafootfeel/conf/sidekick.dart';
 
 /// Signature for building a sidekick team.
 typedef SidekickTeamWidgetBuilder<T> = Widget Function(

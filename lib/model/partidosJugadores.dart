@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/model/jugadorJornada.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/modelo/player.dart';
+import 'package:iafootfeel/model/jugadorJornada.dart';
+import 'package:iafootfeel/modelo/partido.dart';
+import 'package:iafootfeel/modelo/player.dart';
 
 class PartidoJugadores {
   Partido _partido;

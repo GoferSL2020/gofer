@@ -1,18 +1,18 @@
 //import 'package:firebase_course/models/post.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/model/pais.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iafootfeel/model/categoria.dart';
+import 'package:iafootfeel/model/pais.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
 
 
 class CategoriaService{
-  String nodeName = "temporadas/${BBDDService().getUserScout().temporada}/paises";
+  String nodeName = "temporadas/${BBDDService().getUserScout().puesto}/paises";
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference _databaseReference;
   Map post;
 
   CategoriaService(Pais pais){
-    nodeName = "temporadas/${BBDDService().getUserScout().temporada}/paises/${pais.pais}";
+    nodeName = "temporadas/${BBDDService().getUserScout().puesto}/paises/${pais.pais}";
   }
 
   addCategoria(Categoria categoria){

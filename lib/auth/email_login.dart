@@ -1,11 +1,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/auth/email_password.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-
+import 'package:iafootfeel/auth/email_password.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/icon_mio_icons.dart';
+import 'package:iafootfeel/view/menuFootFeel.dart';
 class EmailLogIn extends StatefulWidget {
   @override
   _EmailLogInState createState() => _EmailLogInState();
@@ -32,7 +31,7 @@ class _EmailLogInState extends State<EmailLogIn> {
           )
         ],
 
-          title: Text("IAScout - Login",
+          title: Text("FootFeel - Login",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -47,14 +46,14 @@ class _EmailLogInState extends State<EmailLogIn> {
                 child: Column(children: <Widget>[
                   Container(color: Colors.black,
                       padding: EdgeInsets.only(top:30.0),
-                      child: Image.asset(Config.icono,scale: 1,)
+                      child: Image.asset(Config.icono,)
                   ),
                   Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text("InAdvanced",
+                    child: Text("FootFeel",
                         style: TextStyle(
-                            fontWeight: FontWeight.normal,color: Colors.white,
-                            fontSize: 30,
+                            fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
+                            fontSize: 40,
                             fontFamily:'Roboto')),
                   ),
                   Padding(
@@ -121,7 +120,7 @@ class _EmailLogInState extends State<EmailLogIn> {
                         if (value.isEmpty) {
                           return 'Contraseñas';
                         } else if (value.length < 6) {
-                          return 'Password must be atleast 6 characters!';
+                          return 'Password must be at least 6 characters!';
                         }
                         return null;
                       },
@@ -189,7 +188,7 @@ class _EmailLogInState extends State<EmailLogIn> {
        Navigator.of(context).pop();
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TemporadaView()));
+          MaterialPageRoute(builder: (context) => MenuFootFeel()));
     }).catchError((err) {
       setState(() {
         isLoading =false;

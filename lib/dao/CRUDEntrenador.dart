@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/dao/CRUDEquipo.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iafootfeel/dao/CRUDEquipo.dart';
+import 'package:iafootfeel/icon_mio_icons.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/entrenador.dart';
+import 'package:iafootfeel/modelo/equipo.dart';
+import 'package:iafootfeel/modelo/jornada.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/partido.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
 
 class CRUDEntrenador extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

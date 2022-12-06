@@ -2,9 +2,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/main.dart';
-import 'package:iadvancedscout/userScout.dart';
-import 'package:iadvancedscout/wigdet/texto.dart';
+import 'package:iafootfeel/main.dart';
+import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/wigdet/texto.dart';
 
 import 'conf/config.dart';
 
@@ -117,7 +117,7 @@ class _MenuState extends State<Menu> {
 
           )
         ],
-        title:Text("IAScout"),
+        title:Text("iafootfeel"),
       ),
 
 

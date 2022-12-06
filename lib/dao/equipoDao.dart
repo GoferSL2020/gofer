@@ -2,10 +2,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/db.dart';
+import 'package:iafootfeel/model/equipo.dart';
+import 'package:iafootfeel/model/jugador.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/service/db.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class EquipoDao {
@@ -55,7 +55,7 @@ class EquipoDao {
   }
 
   addEquipoIAScout(Equipo _equipo) async {
-    String path="temporadas/${BBDDService().getUserScout().temporada}/pais/${_equipo.pais}/categorias/${_equipo.categoria}/equipos/${_equipo.equipo}";
+    String path="temporadas/${BBDDService().getUserScout().puesto}/pais/${_equipo.pais}/categorias/${_equipo.categoria}/equipos/${_equipo.equipo}";
 
     //String path2="temporadas/2021-2022/pais/${_jugador.pais}/categorias/${_jugador.categoria}/equipo/${_jugador.equipo}/jugadores/${_jugador.id}";
     // Write a message to the database

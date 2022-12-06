@@ -1,5 +1,5 @@
-name: iadvancedscout
-description: IAdvanced Scout
+name: iafootfeel
+description: InAdvanced FootFeel
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,12 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+ # url_launcher:
   flutter_localizations: # Add this line
     sdk: flutter
 
   #BBDDD
   #firebase_core: ^0.7.0
   #firebase_auth: ^0.20.1
+  flutter_restart: ^0.0.3
   firebase_core: ^0.5.1
   cloud_firestore: ^0.14.2
   firebase_auth: ^0.18.2
@@ -59,6 +62,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.0
+  flutter_image_compress: ^0.7.0
 
   sqflite:
   path_provider: ^1.6.28
@@ -69,9 +73,10 @@ dependencies:
   #notificacionesx
   #firebase_messaging: ^7.0.3
   fluttericon: ^1.0.7
+  table_calendar: ^2.3.3
 
 flutter_icons:
-  image_path: "assets/img/icono.png"
+  image_path: "assets/img/iconotitulo.png"
   android: true
   ios: true
 
@@ -106,76 +111,20 @@ flutter:
 
 
   assets:
-    - assets/pais/ESPAÑA.png
-    - assets/pais/ALEMANIA.png
-    - assets/pais/ARGENTINA.png
-    - assets/pais/ESPANA.png
-    - assets/pais/FRANCIA.png
-    - assets/pais/PORTUGAL.png
-    - assets/pais/URUGUAY.png
-    - assets/pais/ITALIA.png
-    - assets/img/camponegro.jpg
-    - assets/img/campoblanco.png
-
     - assets/img/ia_logotipo.png
-    - assets/img/123.png
+    - assets/img/trans.png
     - assets/img/ok.png
     - assets/img/false.png
-    - assets/img/lateralderecho.png
-    - assets/img/carrileroderecho.png
-    - assets/img/carrileroizquierdo.png
-    - assets/img/central.png
-    - assets/img/defensacentral.png
-    - assets/img/centralderecho.png
-    - assets/img/centralizquierdo.png
-    - assets/img/delantero.png
-    - assets/img/delanterocentro.png
-    - assets/img/extremoderecho.png
-    - assets/img/extremoizquierdo.png
-    - assets/img/interiorderecho.png
-    - assets/img/lateralderecho.png
-    - assets/img/lateralizquierdo.png
-    - assets/img/interiorizquierdo.png
-    - assets/img/volantederecho.png
-    - assets/img/volanteizquierdo.png
-    - assets/img/pivote.png
-    - assets/img/mediocentro.png
-    - assets/img/mediocentroofensivo.png
-    - assets/img/portero.png
-    - assets/img/mediapunta.png
-    - assets/img/mediocentroderecho.png
-    - assets/img/mediocentroizquierdo.png
-    - assets/pais/PORTUGAL.png
     - assets/img/fondo.png
     - assets/img/appbar.png
     - assets/img/icono.png
     - assets/img/iconotitulo.png
-    - assets/img/campo.jpg
-    - assets/img/1.png
-    - assets/img/2.png
-    - assets/img/47.png
+    - assets/img/marron.png
+    - assets/img/gris.png
+    - assets/img/azul.png
+    - assets/img/logogrande.png
+    - assets/img/scouter.png
 
-    #clubes
-    - assets/Burgos/Claudio Medina.png
-    - assets/Burgos/Eneko Undabarrena.png
-    - assets/Burgos/Galder Cerrajería.png
-    - assets/Burgos/Guillermo Fernández.png
-    - assets/Burgos/Javi Gómez.png
-    - assets/Burgos/Juanma Garcia.png
-    - assets/Burgos/L. Pisculichi.png
-    - assets/Burgos/M. Barovero.png
-    - assets/Burgos/Miki Muñoz.png
-    - assets/Burgos/Míchel Zabaco.png
-    - assets/Burgos/R. Leak.png
-    - assets/Burgos/Raúl Navarro.png
-    - assets/Burgos/Roberto Alarcón.png
-    - assets/Burgos/Rubén Lobato.png
-    - assets/Burgos/Saúl Berjón.png
-    - assets/Burgos/sinfoto.png
-    - assets/Burgos/Unai Elgezabal.png
-    - assets/Burgos/Álvaro Rodríguez.png
-    - assets/img/jugador.png
-    - assets/img/2b.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

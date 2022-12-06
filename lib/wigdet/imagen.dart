@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:iadvancedscout/conf/config.dart';
+import 'package:iafootfeel/conf/config.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:open_file/open_file.dart' as open_file;
 
@@ -89,7 +89,7 @@ class _ImagenState extends State<Imagen> {
           )
         ],
         backgroundColor: Colors.black,
-        title: Text("IAScout - ${widget.titulo}",
+        title: Text("iafootfeel - ${widget.titulo}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,

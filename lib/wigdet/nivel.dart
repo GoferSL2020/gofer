@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/model/jugador.dart';
+import 'package:iafootfeel/dao/jugadorDao.dart';
+import 'package:iafootfeel/model/jugador.dart';
 
 
 

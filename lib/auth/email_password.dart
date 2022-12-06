@@ -1,7 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
+import 'package:iafootfeel/conf/config.dart';
 
 class EmailPassword extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _EmailPasswordState extends State<EmailPassword> {
           )
         ],
           backgroundColor:Colors.black,
-          title: Text("IAScout - Password",
+          title: Text("FootFeel - Password",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

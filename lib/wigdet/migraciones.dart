@@ -3,28 +3,28 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/dao/CRUDCategoria.dart';
-import 'package:iadvancedscout/dao/CRUDEquipo.dart';
-import 'package:iadvancedscout/dao/CRUDJornada.dart';
-import 'package:iadvancedscout/dao/CRUDJugador.dart';
-import 'package:iadvancedscout/dao/CRUDPais.dart';
-import 'package:iadvancedscout/dao/CRUDPartido.dart';
-import 'package:iadvancedscout/dao/CRUDTemporada.dart';
-import 'package:iadvancedscout/dao/entredadorDao.dart';
-import 'package:iadvancedscout/dao/jugadorDao.dart';
-import 'package:iadvancedscout/futbol_mio_icons.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/modelo/EquipoCloud.dart';
-import 'package:iadvancedscout/modelo/equipo.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/custom_icon_icons.dart';
+import 'package:iafootfeel/dao/CRUDCategoria.dart';
+import 'package:iafootfeel/dao/CRUDEquipo.dart';
+import 'package:iafootfeel/dao/CRUDJornada.dart';
+import 'package:iafootfeel/dao/CRUDJugador.dart';
+import 'package:iafootfeel/dao/CRUDPais.dart';
+import 'package:iafootfeel/dao/CRUDPartido.dart';
+import 'package:iafootfeel/dao/CRUDTemporada.dart';
+import 'package:iafootfeel/dao/entredadorDao.dart';
+import 'package:iafootfeel/dao/jugadorDao.dart';
+import 'package:iafootfeel/futbol_mio_icons.dart';
+import 'package:iafootfeel/model/jugador.dart';
+import 'package:iafootfeel/modelo/EquipoCloud.dart';
+import 'package:iafootfeel/modelo/equipo.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/entrenador.dart';
+import 'package:iafootfeel/modelo/jornada.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/partido.dart';
+import 'package:iafootfeel/modelo/player.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -98,7 +98,7 @@ class _MigracionesState extends State<Migraciones> {
   _cogerPais() async {
     //print("PAIS");
     //print(_temporadaAux.id);
-    List<Pais> datos = await CRUDPais().fetchPaises(_temporadaAux);
+    List<Pais> datos = await CRUDPais().fetchPaises();
     setState(() {
       //print(datos[0].id);
       _paisAux = datos[0];
@@ -108,7 +108,7 @@ class _MigracionesState extends State<Migraciones> {
 
   _cogerCategorias() async {
     List<Categoria> datos =
-        await CRUDCategoria().fetchCategorias(_temporadaAux, _paisAux);
+        await CRUDCategoria().fetchCategorias( _paisAux);
     Categoria c=new Categoria();
     c.id = '';
     c.categoria = 'TODOS';
@@ -285,7 +285,7 @@ class _MigracionesState extends State<Migraciones> {
                   child:
                   RaisedButton.icon(
                       onPressed: () async {
-                        getMigrarJugadores();
+                        //getMigrarJugadores();
                     //    getMigrarJugadoresUPDATE();
                     //    getMigrarJugadoresAntiguo();
                       },
@@ -311,7 +311,7 @@ class _MigracionesState extends State<Migraciones> {
                   RaisedButton.icon(
                       onPressed: () async {
 
-                       getMigrarPuntuacionesRFEF();
+
 
                       },
                       label: Text(
@@ -336,7 +336,7 @@ class _MigracionesState extends State<Migraciones> {
                   RaisedButton.icon(
                       onPressed: () async {
 
-                        getMigrarPuntuacionesNuevo2Division();
+
 
                       },
                       label: Text(
@@ -464,7 +464,7 @@ class _MigracionesState extends State<Migraciones> {
                   child:
                 RaisedButton.icon(
                     onPressed: () async {
-                      getMigrarCiclo1();
+                      //getMigrarCiclo1();
                     },
                     label: Text(
                       "Migrar Ciclo",
@@ -743,41 +743,9 @@ class _MigracionesState extends State<Migraciones> {
     print("FIN");
   }
 
-  getMigrarJugadoresSoloEquipoESPANA()  async {
-    String equipoAux="Internacional Madrid";
-    String equipoID="8jrrYhokZHyJXedpu0wR";
-    String categoriaID="rAeKFLQSry7l1x0WVW01";
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> lista = new List();
-    print("getJugadores");
-    String path2 =
-        "temporadas/2021-2022/paises/ESPAÑA/categorias/1ª División RFEF Grupo 1/equipos/$equipoAux/jugadores";
-    print(path2);
-    await FirebaseDatabase.instance.reference().child(
-        path2).once().then((snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      //print(values.toString());
-      values.forEach((k, v) {
-        print("${v["jugador"]}:${equipoAux}:${equipoID}");
-        Jugador jugador = Jugador.fromJson(k, v);
-        //print(jugador.jugador);
-        //print(jugador.equipo);
-        Player player=Player.fromJsonJugador(jugador);
-        //lista.add(player);
-        _db.collection(""
-            "/temporadas/BuJNv17ghCPGnq37P2ev/"
-            "paises/QqjzloEo6PI7sHfsffk2/"
-            "categorias/rAeKFLQSry7l1x0WVW01/"
-            "equipos/${equipoID}/jugadores")
-            .add(player.toMap());
-      });
-    });
-    return lista;
-  }
-
   cogerEquipos()async{
- //   https://iadvancedscout-default-rtdb.firebaseio.com/temporadas/2021-2022/paises/ESPA%C3%91A/categorias/1%C2%AA%20Divisio%CC%81n%20RFEF%20Grupo%201/equipos/Athletic%20Bilbao%20B/jugadores
- //   https://iadvancedscout-default-rtdb.firebaseio.com/temporadas/2021-2022/paises/ESPA%C3%91A/categorias/1%C2%AA%20Divisi%C3%B3n%20RFEF%20Grupo%201/equipos/Athletic%20Bilbao%20B/jugadores
+ //   https://iafootfeel-default-rtdb.firebaseio.com/temporadas/2021-2022/paises/ESPA%C3%91A/categorias/1%C2%AA%20Divisio%CC%81n%20RFEF%20Grupo%201/equipos/Athletic%20Bilbao%20B/jugadores
+ //   https://iafootfeel-default-rtdb.firebaseio.com/temporadas/2021-2022/paises/ESPA%C3%91A/categorias/1%C2%AA%20Divisi%C3%B3n%20RFEF%20Grupo%201/equipos/Athletic%20Bilbao%20B/jugadores
   }
 
   List<String> getEquipo() {
@@ -827,43 +795,6 @@ class _MigracionesState extends State<Migraciones> {
       }
   }
 
-
-  getMigrarJugadores()  async {
-    List<EquipoCloud> equipos= await JugadorDao().getDataCollectionEquipos(_temporadaAux.id,_paisAux.id,_categoriaAux.id);
-    await new Future.delayed(new Duration(seconds: 1));
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> lista = new List();
-    print("getJugadores");
-    for(var equiposBASEDATOS in equipos) {
-      print("${equiposBASEDATOS.nombre}");
-      String path2 =
-          "temporadas/2020-2021/paises/ESPAÑA/categorias/${_categoriaAux.categoria}/equipos/${equiposBASEDATOS
-          .nombre}/jugadores";
-      print(path2);
-      await FirebaseDatabase.instance.reference().child(
-          path2).once().then((snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((k, v) {
-          Jugador jugador = Jugador.fromJson(k, v);
-          jugador.idTemporada=_temporadaAux.id;
-          jugador.idPais=_paisAux.id;
-          jugador.idCategoria=_categoriaAux.id;
-          jugador.idEquipo=equiposBASEDATOS.key;
-
-          //print(jugador.equipo);
-          Player player=Player.fromJsonJugador(jugador);
-          lista.add(player);
-          _db.collection(""
-              "/temporadas/${_temporadaAux.id}/"
-              "paises/${_paisAux.id}/"
-              "categorias/${_categoriaAux.id}/"
-              "equipos/${equiposBASEDATOS.key}/jugadores")
-              .add(player.toMap());
-        });
-      });
-    }
-    return lista;
-  }
 
   getMigrarEntrenador() async {
     print("getMigrarEntrenador");
@@ -1118,171 +1049,8 @@ class _MigracionesState extends State<Migraciones> {
   }
 
 
-  getMigrarPuntuacionesRFEF() async {
-    print("getMigrarPuntuaciones");
-    CRUDPartido dao = CRUDPartido();
-    CRUDJugador daoJug = CRUDJugador();
-    JugadorDao daoJugDAO = JugadorDao();
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas(_categoriaAux.categoria);
-    //jornadas=jornadas.sublist(1);
-
-    for(var jugador in jugadoresCASABBDD){
-      print("${jugador.equipo}:${jugador.jugador}");
-      try {
-      String idKeyEquipo=await CRUDEquipo().getEquipoByNombre(_temporadaAux, _paisAux, _categoriaAux, jugador.equipo);
-      String idKeyJugador=await CRUDJugador().getJugadorByNombre(_temporadaAux, _paisAux, _categoriaAux,idKeyEquipo, jugador.jugador);
-
-        print("${idKeyEquipo}:${idKeyJugador}:${jugador.equipo}:${jugador
-            .jugador}");
-        await _db.collection("/temporadas/${_temporadaAux.id}/"
-            "paises/${_paisAux.id}/"
-            "categorias/${_categoriaAux.id}/"
-            "equipos/${idKeyEquipo}/jugadores").doc("${idKeyJugador}").update(
-            {
-              "dorsal": jugador.dorsal,
-              "puntaciones_jornada_1": "${puntuacionEstado(jugador.puntaciones_jornada_1)}",
-              "puntaciones_jornada_2": "${puntuacionEstado(jugador.puntaciones_jornada_2)}",
-              "puntaciones_jornada_3": "${puntuacionEstado(jugador.puntaciones_jornada_3)}",
-              "puntaciones_jornada_4": "${puntuacionEstado(jugador.puntaciones_jornada_4)}",
-              "puntaciones_jornada_5": "${puntuacionEstado(jugador.puntaciones_jornada_5)}",
-              "puntaciones_jornada_6": "${puntuacionEstado(jugador.puntaciones_jornada_6)}",
-              "puntaciones_jornada_7": "${puntuacionEstado(jugador.puntaciones_jornada_7)}",
-              "puntaciones_jornada_8": "${puntuacionEstado(jugador.puntaciones_jornada_8)}",
-              "puntaciones_jornada_9": "${puntuacionEstado(jugador.puntaciones_jornada_9)}",
-              "puntaciones_jornada_10": "${puntuacionEstado(jugador.puntaciones_jornada_10)}",
-              "puntaciones_jornada_11": "${puntuacionEstado(jugador.puntaciones_jornada_11)}",
-              "puntaciones_jornada_12": "${puntuacionEstado(jugador.puntaciones_jornada_12)}",
-              "puntaciones_jornada_13": "${puntuacionEstado(jugador.puntaciones_jornada_13)}",
-              "puntaciones_jornada_14": "${puntuacionEstado(jugador.puntaciones_jornada_14)}",
-              "puntaciones_jornada_15": "${puntuacionEstado(jugador.puntaciones_jornada_15)}",
-              "puntaciones_jornada_16": "${puntuacionEstado(jugador.puntaciones_jornada_16)}",
-              "puntaciones_jornada_17": "${puntuacionEstado(jugador.puntaciones_jornada_17)}",
-              "puntaciones_jornada_18": "${puntuacionEstado(jugador.puntaciones_jornada_18)}",
-              "puntaciones_jornada_19": "${puntuacionEstado(jugador.puntaciones_jornada_19)}",
-              "puntaciones_jornada_20": "${puntuacionEstado(jugador.puntaciones_jornada_20)}",
-              "puntaciones_jornada_21": "${puntuacionEstado(jugador.puntaciones_jornada_21)}",
-
-              "estado_jornada_1": "${estadoPuntuacion(jugador.puntaciones_jornada_1)}",
-            "estado_jornada_2": "${estadoPuntuacion(jugador.puntaciones_jornada_2)}",
-            "estado_jornada_3": "${estadoPuntuacion(jugador.puntaciones_jornada_3)}",
-            "estado_jornada_4": "${estadoPuntuacion(jugador.puntaciones_jornada_4)}",
-            "estado_jornada_5": "${estadoPuntuacion(jugador.puntaciones_jornada_5)}",
-            "estado_jornada_6": "${estadoPuntuacion(jugador.puntaciones_jornada_6)}",
-            "estado_jornada_7": "${estadoPuntuacion(jugador.puntaciones_jornada_7)}",
-            "estado_jornada_8": "${estadoPuntuacion(jugador.puntaciones_jornada_8)}",
-            "estado_jornada_9": "${estadoPuntuacion(jugador.puntaciones_jornada_9)}",
-            "estado_jornada_10": "${estadoPuntuacion(jugador.puntaciones_jornada_10)}",
-            "estado_jornada_11": "${estadoPuntuacion(jugador.puntaciones_jornada_11)}",
-            "estado_jornada_12": "${estadoPuntuacion(jugador.puntaciones_jornada_12)}",
-            "estado_jornada_13": "${estadoPuntuacion(jugador.puntaciones_jornada_13)}",
-            "estado_jornada_14": "${estadoPuntuacion(jugador.puntaciones_jornada_14)}",
-            "estado_jornada_15": "${estadoPuntuacion(jugador.puntaciones_jornada_15)}",
-              "estado_jornada_16": "${estadoPuntuacion(jugador.puntaciones_jornada_16)}",
-              "estado_jornada_17": "${estadoPuntuacion(jugador.puntaciones_jornada_17)}",
-              "estado_jornada_18": "",
-              "estado_jornada_19": "",
-              "estado_jornada_20": "",
-              "estado_jornada_21":"",
-               "paisNacimiento" : "${jugador.paisNacimiento}",
-              "ccaa" : "${jugador.ccaa}",
-              "nacionalidad" : "${jugador.nacionalidad}",
-
-            }
-        );
-      }catch(e){
-        print("ERRRRROOOOORR:${jugador.equipo}:${jugador.jugador}");
-      }
-
-    }
-  }
 
 
-
-  getMigrarPuntuacionesNuevo2Division() async {
-    print("getMigrarPuntuacionesNuevo2Division");
-    CRUDPartido dao = CRUDPartido();
-    CRUDJugador daoJug = CRUDJugador();
-    JugadorDao daoJugDAO = JugadorDao();
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas2Divsion(_categoriaAux.categoria);
-    //jornadas=jornadas.sublist(1);
-
-    for(var jugador in jugadoresCASABBDD){
-      print("${jugador.equipo}:${jugador.jugador}");
-      try {
-        String idKeyEquipo=await CRUDEquipo().getEquipoByNombre(_temporadaAux, _paisAux, _categoriaAux, jugador.equipo);
-        String idKeyJugador=await CRUDJugador().getJugadorByNombre(_temporadaAux, _paisAux, _categoriaAux,idKeyEquipo, jugador.jugador);
-
-        print("${idKeyEquipo}:${idKeyJugador}:${jugador.equipo}:${jugador
-            .jugador}");
-        await _db.collection("/temporadas/${_temporadaAux.id}/"
-            "paises/${_paisAux.id}/"
-            "categorias/${_categoriaAux.id}/"
-            "equipos/${idKeyEquipo}/jugadores").doc("${idKeyJugador}").update(
-            {
-              "lateral": "${puntuacionEstado(jugador.lateral)}",
-              "valor": "${puntuacionEstado(jugador.valor)}",
-              "dorsal": jugador.dorsal,
-              "prestamo": "${puntuacionEstado(jugador.prestamo)}",
-              "peso": "${puntuacionEstado(jugador.peso)}",
-              "altura": "${puntuacionEstado(jugador.altura)}",
-              "fechaContrato": "${puntuacionEstado(jugador.fechaContrato)}",
-              "puntaciones_jornada_1": "${puntuacionEstado(jugador.puntaciones_jornada_1)}",
-              "puntaciones_jornada_2": "${puntuacionEstado(jugador.puntaciones_jornada_2)}",
-              "puntaciones_jornada_3": "${puntuacionEstado(jugador.puntaciones_jornada_3)}",
-              "puntaciones_jornada_4": "${puntuacionEstado(jugador.puntaciones_jornada_4)}",
-              "puntaciones_jornada_5": "${puntuacionEstado(jugador.puntaciones_jornada_5)}",
-              "puntaciones_jornada_6": "${puntuacionEstado(jugador.puntaciones_jornada_6)}",
-              "puntaciones_jornada_7": "${puntuacionEstado(jugador.puntaciones_jornada_7)}",
-              "puntaciones_jornada_8": "${puntuacionEstado(jugador.puntaciones_jornada_8)}",
-              "puntaciones_jornada_9": "${puntuacionEstado(jugador.puntaciones_jornada_9)}",
-              "puntaciones_jornada_10": "${puntuacionEstado(jugador.puntaciones_jornada_10)}",
-              "puntaciones_jornada_11": "${puntuacionEstado(jugador.puntaciones_jornada_11)}",
-              "puntaciones_jornada_12": "${puntuacionEstado(jugador.puntaciones_jornada_12)}",
-              "puntaciones_jornada_13": "${puntuacionEstado(jugador.puntaciones_jornada_13)}",
-              "puntaciones_jornada_14": "${puntuacionEstado(jugador.puntaciones_jornada_14)}",
-              "puntaciones_jornada_15": "${puntuacionEstado(jugador.puntaciones_jornada_15)}",
-              "puntaciones_jornada_16": "${puntuacionEstado(jugador.puntaciones_jornada_16)}",
-              "puntaciones_jornada_17": "${puntuacionEstado(jugador.puntaciones_jornada_17)}",
-              "puntaciones_jornada_18": "${puntuacionEstado(jugador.puntaciones_jornada_18)}",
-              "puntaciones_jornada_19": "${puntuacionEstado(jugador.puntaciones_jornada_19)}",
-              "puntaciones_jornada_20": "${puntuacionEstado(jugador.puntaciones_jornada_20)}",
-              "puntaciones_jornada_21": "${puntuacionEstado(jugador.puntaciones_jornada_21)}",
-
-              "estado_jornada_1": "${estadoPuntuacion(jugador.puntaciones_jornada_1)}",
-              "estado_jornada_2": "${estadoPuntuacion(jugador.puntaciones_jornada_2)}",
-              "estado_jornada_3": "${estadoPuntuacion(jugador.puntaciones_jornada_3)}",
-              "estado_jornada_4": "${estadoPuntuacion(jugador.puntaciones_jornada_4)}",
-              "estado_jornada_5": "${estadoPuntuacion(jugador.puntaciones_jornada_5)}",
-              "estado_jornada_6": "${estadoPuntuacion(jugador.puntaciones_jornada_6)}",
-              "estado_jornada_7": "${estadoPuntuacion(jugador.puntaciones_jornada_7)}",
-              "estado_jornada_8": "${estadoPuntuacion(jugador.puntaciones_jornada_8)}",
-              "estado_jornada_9": "${estadoPuntuacion(jugador.puntaciones_jornada_9)}",
-              "estado_jornada_10": "${estadoPuntuacion(jugador.puntaciones_jornada_10)}",
-              "estado_jornada_11": "${estadoPuntuacion(jugador.puntaciones_jornada_11)}",
-              "estado_jornada_12": "${estadoPuntuacion(jugador.puntaciones_jornada_12)}",
-              "estado_jornada_13": "${estadoPuntuacion(jugador.puntaciones_jornada_13)}",
-              "estado_jornada_14": "${estadoPuntuacion(jugador.puntaciones_jornada_14)}",
-              "estado_jornada_15": "${estadoPuntuacion(jugador.puntaciones_jornada_15)}",
-              "estado_jornada_16": "${estadoPuntuacion(jugador.puntaciones_jornada_16)}",
-              "estado_jornada_17": "${estadoPuntuacion(jugador.puntaciones_jornada_17)}",
-              "estado_jornada_18": "${estadoPuntuacion(jugador.puntaciones_jornada_18)}",
-              "estado_jornada_19": "${estadoPuntuacion(jugador.puntaciones_jornada_19)}",
-              "estado_jornada_20": "${estadoPuntuacion(jugador.puntaciones_jornada_20)}",
-              "estado_jornada_21": "${estadoPuntuacion(jugador.puntaciones_jornada_21)}",
-                "paisNacimiento" : "${jugador.paisNacimiento}",
-              "ccaa" : "${jugador.ccaa}",
-              "nacionalidad" : "${jugador.nacionalidad}",
-
-            }
-        );
-      }catch(e){
-        print("ERRRRROOOOORR:${jugador.equipo}:${jugador.jugador}");
-      }
-
-    }
-  }
 
   String puntuacionEstado(String puntuaciones) {
     if (puntuaciones=="A") return "A";
@@ -1311,123 +1079,6 @@ String estadoPuntuacion(String puntuaciones) {
   return "";
 
 
-}
-
-  getMigrarNacionalidad() async {
-    print("getMigrarNacionalidad");
-    CRUDPartido dao = CRUDPartido();
-    CRUDJugador daoJug = CRUDJugador();
-    JugadorDao daoJugDAO = JugadorDao();
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas(_categoriaAux.categoria);
-    //jornadas=jornadas.sublist(1);
-
-    for(var jugador in jugadoresCASABBDD){
-      print("${jugador.equipo}:${jugador.jugador}");
-      try {
-        String idKeyEquipo=await CRUDEquipo().getEquipoByNombre(_temporadaAux, _paisAux, _categoriaAux, jugador.equipo);
-        String idKeyJugador=await CRUDJugador().getJugadorByNombre(_temporadaAux, _paisAux, _categoriaAux,idKeyEquipo, jugador.jugador);
-
-        print("${idKeyEquipo}:${idKeyJugador}:${jugador.equipo}:${jugador
-            .jugador}");
-        await _db.collection("/temporadas/${_temporadaAux.id}/"
-            "paises/${_paisAux.id}/"
-            "categorias/${_categoriaAux.id}/"
-            "equipos/${idKeyEquipo}/jugadores").doc("${idKeyJugador}").update(
-            {
-              "paisNacimiento" : "${jugador.paisNacimiento}",
-              "ccaa" : "${jugador.ccaa}",
-              "nacionalidad" : "${jugador.nacionalidad}",
-
-            }
-              );
-      }catch(e){
-        print("ERRRRROOOOORR:${jugador.equipo}:${jugador.jugador}");
-      }
-
-    }
-  }
-
-  getMigrarNacionalidadEspanol() async {
-    print("getMigrarNacionalidad");
-    CRUDPartido dao = CRUDPartido();
-    CRUDJugador daoJug = CRUDJugador();
-    JugadorDao daoJugDAO = JugadorDao();
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> jugadoresCASABBDD = await daoJugDAO.getPuntacionesJornadas(_categoriaAux.categoria);
-    //jornadas=jornadas.sublist(1);
-
-    for(var jugador in jugadoresCASABBDD){
-      print("${jugador.equipo}:${jugador.jugador}");
-      try {
-        String idKeyEquipo=await CRUDEquipo().getEquipoByNombre(_temporadaAux, _paisAux, _categoriaAux, jugador.equipo);
-        String idKeyJugador=await CRUDJugador().getJugadorByNombre(_temporadaAux, _paisAux, _categoriaAux,idKeyEquipo, jugador.jugador);
-
-        print("${idKeyEquipo}:${idKeyJugador}:${jugador.equipo}:${jugador
-            .jugador}");
-
-        await _db.collection("/temporadas/${_temporadaAux.id}/"
-            "paises/${_paisAux.id}/"
-            "categorias/${_categoriaAux.id}/"
-            "equipos/${idKeyEquipo}/jugadores").doc("${idKeyJugador}").update(
-            {
-              "paisNacimiento" : "${jugador.paisNacimiento}",
-              "ccaa" : "${jugador.ccaa}",
-              "nacionalidad" : "${jugador.nacionalidad}",
-
-            }
-        );
-      }catch(e){
-        print("ERRRRROOOOORR:${jugador.equipo}:${jugador.jugador}");
-      }
-
-    }
-  }
-
-getMigrarCiclo1() async {
-  print("getCiclo1");
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-  print(equipos.length);
-  CRUDPartido dao = CRUDPartido();
-  CRUDJugador daoJug = CRUDJugador();
-  JugadorDao daoJugDAO = JugadorDao();
-  List<Player> jugadoresBBDD = await daoJugDAO.getPuntacionesJornadas(_categoriaAux.categoria);
-
-  for (var doc in equipos) {
-    print("${doc.equipo},${_temporadaAux.id},${_paisAux.id},${_categoriaAux.id}");
-    print(
-        "${doc.equipo},${doc.categoria},${doc.id}");
-    CRUDJugador dao=CRUDJugador();
-    List<Player> jugadores=await dao.fetchJugadoresList(_temporadaAux, _paisAux, _categoriaAux, doc);
-    for (var jug in jugadores) {
-      String ciclo="";
-      List<Player> outputList = jugadoresBBDD.where((o) =>
-      o.jugador== jug.jugador).toList();
-      if(outputList.length>0) {
-        if (outputList.length == 1) {
-         ciclo=outputList[0].nivel;
-        }
-        else {
-          if (outputList[0].equipo == jug.equipo)
-            ciclo=outputList[0].nivel;
-          if (outputList[1].equipo == jug.equipo)
-            ciclo=outputList[1].nivel;
-        }
-      }
-      else{
-        ciclo="";
-      }
-
-      print("${jug.key}:${jug.jugador}:${jug.equipo}:${ciclo}");
-      print("/temporadas/${_temporadaAux.id}/paises/${_paisAux.id}/categorias/${_categoriaAux.id}/equipos/${doc.id}/jugadores/${jug.key}");
-     /* await _db
-          .collection(""
-          "/temporadas/${_temporadaAux.id}/"
-          "paises/${_paisAux.id}/"
-          "categorias/${_categoriaAux.id}/"
-          "equipos/${doc.id}/jugadores").doc(jug.key).update({"nivel": ciclo});*/
-
-    }}
 }
 
 

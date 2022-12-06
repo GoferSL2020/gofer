@@ -1,4 +1,4 @@
-import 'package:iadvancedscout/conf/config.dart';
+import 'package:iafootfeel/conf/config.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -34,17 +34,17 @@ class SignUp extends StatelessWidget {
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
                 Container(color: Colors.black,
-                  padding: EdgeInsets.only(top:30.0),
-                  child: Image.asset(Config.icono,scale: 1,)
+                  padding: EdgeInsets.only(top:40.0),
+                  child: Image.asset(Config.icono,scale:1)
                 ),
-            Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Text("InAdvanced",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,color: Colors.white,
-                      fontSize: 30,
-                      fontFamily:'Roboto')),
-            ),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Text("FootFeel",
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
+                          fontSize: 35,
+                          fontFamily:'Roboto')),
+                ),
                 Container(
                   width: 250,
                   height: 65,
@@ -100,7 +100,7 @@ class SignUp extends StatelessWidget {
                 padding: EdgeInsets.all(40.0),
                 child: GestureDetector(
                     child: Text("Al crear su cuenta, acepta los Término y Condiciones y "
-                        "la Política de Privacida de IAScout - InAdvanced.",textAlign: TextAlign.center,
+                        "la Política de Privacida de inadvanced.",textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 9,
                             color: Colors.grey)),

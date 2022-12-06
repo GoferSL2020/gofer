@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/dao/CRUDCategoria.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
+import 'package:iafootfeel/dao/CRUDCategoria.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
 
 
 class ModifyCategoria extends StatefulWidget {

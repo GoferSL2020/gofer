@@ -2,9 +2,9 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/db.dart';
+import 'package:iafootfeel/model/categoria.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/service/db.dart';
 
 class CategoriaDao {
   DB con = new DB();
@@ -48,7 +48,7 @@ class CategoriaDao {
   }
 
   addCategoriaIAScout(Categoria _categoria) async {
-    String path="temporadas/${BBDDService().getUserScout().temporada}/pais/${_categoria.pais}/categorias/${_categoria.categoria}";
+    String path="temporadas/${BBDDService().getUserScout().puesto}/pais/${_categoria.pais}/categorias/${_categoria.categoria}";
 
     //String path2="temporadas/2021-2022/pais/${_jugador.pais}/categorias/${_jugador.categoria}/equipo/${_jugador.equipo}/jugadores/${_jugador.id}";
     // Write a message to the database

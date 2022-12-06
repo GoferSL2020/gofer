@@ -2,18 +2,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/dao/CRUDPais.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/view/pais/paisCard.dart';
-import 'package:iadvancedscout/wigdet/abajo.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/dao/CRUDPais.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/view/pais/paisCard.dart';
+import 'package:iafootfeel/wigdet/abajo.dart';
 
 
 class PaisView extends StatefulWidget {
-  final Temporada temporada;
-
-  PaisView({@required this.temporada});
+  final bool _menu;
+  PaisView(this._menu);
 
   @override
   _PaisViewState createState() => new _PaisViewState();
@@ -49,16 +49,16 @@ class _PaisViewState extends State<PaisView> {
                     )),
           ],
           backgroundColor: Colors.black,
-          title: Text("IAScout - Países",
+          title: Text("FootFeel - Word",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
+                fontSize: 16,
+                color: Config.colorFootFeel,
               )),
           elevation: 0,
           centerTitle: true,
         ),
-      bottomNavigationBar: Abajo(temporada: widget.temporada,),
+      bottomNavigationBar: Abajo(),
       body:
       Container(
         child: Column(
@@ -67,16 +67,15 @@ class _PaisViewState extends State<PaisView> {
                 height: 20,
                 width: double.infinity,
                 color:Colors.black,
-                child:Text(
-                  widget.temporada.temporada,
+                child:Text("Paises",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Config.colorAPP,
-                      fontSize: 12,
+                  style: TextStyle(color: Colors.white,
+                      fontSize: 16,
                       fontStyle: FontStyle.italic),
                 ),),
               Expanded(
                 child: StreamBuilder(
-                    stream:  paisProvider.getDataCollectionPaises(widget.temporada),
+                    stream:  paisProvider.getDataCollectionPaises(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
                         paises = snapshot.data.docs
@@ -86,10 +85,13 @@ class _PaisViewState extends State<PaisView> {
                         return ListView.builder(
                           itemCount: paises.length,
                           itemBuilder: (buildContext, index) =>
-                              PaisCard(temporada: widget.temporada, paisDetails: paises[index]),
+                          (BBDDService().getUserScout().tengoPais(paises[index].pais))==true?
+                              PaisCard(paisDetails: paises[index],
+                                  menu: widget._menu):Container()
                         );
                       } else {
                         return Text('fetching');
+
                       }
                     }),
               ),

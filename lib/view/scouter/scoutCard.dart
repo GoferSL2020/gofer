@@ -1,27 +1,23 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/custom_icon_icons.dart';
-import 'package:iadvancedscout/dao/CRUDScout.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/scout.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/userScout.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/custom_icon_icons.dart';
+import 'package:iafootfeel/dao/CRUDScout.dart';
+import 'package:iafootfeel/icon_mio_icons.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/jornada.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/scout.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
+import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/view/scouter/scoutEquiposView.dart';
 
 class ScoutCard extends StatefulWidget {
   final UserScout scout;
-  final List<Categoria> categorias;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-
-  ScoutCard(
-      {@required this.scout,this.categorias
-        });
+  ScoutCard({@required this.scout});
 
   final productProvider = new CRUDUserScout();
   @override
@@ -29,25 +25,15 @@ class ScoutCard extends StatefulWidget {
 }
 
 class _ScoutCardState extends State<ScoutCard> {
-   List<String> categoriasString=[];
-
+  List<String> categoriasString = [];
 
   @override
   void initState() {
-
     //_cogerScouts();
   }
 
-  void inicial() async{
-    setState(() {
-      categoriasString.clear();
-      categoriasString.add("");
-      categoriasString.add("Todas");
-      widget.categorias.forEach((element) {
-        categoriasString.add(element.categoria);
-      });
-    });
-
+  void inicial() async {
+    setState(() {});
   }
 
   void setState(fn) {
@@ -56,120 +42,48 @@ class _ScoutCardState extends State<ScoutCard> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     inicial();
     return GestureDetector(
       onTap: () {
-
-        },
+        Navigator.push(context, MaterialPageRoute(builder: (_) =>
+            ScoutEquiposView(widget.scout)));
+      },
       child: Padding(
         padding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
         child: Card(
+          shadowColor: Config.colorFootFeel,
           color: Config.colorCard,
-          elevation: 5,
+          elevation: 50,
           child: Container(
-            height: 180,
-            width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: <Widget>[
-                Container(
-                  width: double.infinity,height: 20,
-
-                  child:Center(
-                  child:Text(
-                    '${widget.scout.name}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      color: Colors.black,),
-                  )),
-                ),
-                Container(
-                  width: double.infinity,height: 20,
-
-                  child:Center(
-                      child:Text(
-                        '${widget.scout.email}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          color: Colors.blue.shade900,),
-                      )),
-                ),
-                Container(
-                  width: double.infinity,height: 20,
-
-                  child:Center(
-                      child:Text(
-                        'Categoria: ${widget.scout.categoria}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          color: Colors.red.shade900,),
-                      )),
-                ),
-                FormField(builder: (FormFieldState state) {
-                  return InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: "Selecciona el categoria",
-                    ),
-                    //isEmpty: temporadasAux == null,
-                    child: DropdownButtonFormField<String>(
-                      hint: Text("Selecciona el categoria"),
-                      value: widget.scout.categoria,
-                      validator: (value) =>
-                      value == null ? 'Selecciona el categoria' : null,
-                      isDense: true,
-                      onChanged: (String value) async {
-                        setState(() {
-                          //newContact.favoriteColor = newValue;
-                          widget.scout.categoria = value;
-                          state.didChange(value);
-                          CRUDUserScout dao = CRUDUserScout();
-                          dao.updateUserScout(widget.scout);
-                        });
-                      },
-                      items: categoriasString.map((String temp) {
-                        return DropdownMenuItem<String>(
-                          value: temp,
-                          child: Text(
-                            temp,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  );
-                }),
-             /*Container(height: 5,),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 30,
-                        child: RaisedButton.icon(
-                          elevation: 20,
-                          onPressed: () {
-                          },
-                          label: Text("Cambiar la categoria",
-                            style: TextStyle(color: Colors.black, fontSize: 11),),
-                          icon: Icon(IconMio.mode_edit, size: 20, color: Colors.black,),
-                          textColor: Colors.white,
-                          hoverColor: Colors.black,
-                          splashColor: Colors.blue,
-                          color: Colors.white,)),Container(width: 5,)
-                  ],
-                ),
-              ),*/
-            ],),
+                Padding(
+                    padding:
+                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("${widget.scout.name}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Config.colorFootFeel,
+                                fontSize: 16,
+                                fontFamily: 'Roboto')),
+                        Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Image.asset(
+                              Config.icono,
+                              height: 30,
+                            )),
+                      ],
+                    )),
+              ],
             ),
           ),
         ),
+      ),
     );
   }
-
 }

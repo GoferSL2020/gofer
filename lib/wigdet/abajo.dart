@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/view/equipos/equiposView.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
-
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
+import 'package:iafootfeel/view/menuFootFeel.dart';
 class Abajo extends StatelessWidget {
 
   final Temporada temporada;
@@ -28,7 +26,7 @@ class Abajo extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => TemporadaView(),
+                builder: (BuildContext context) => MenuFootFeel(),
               ));
             },
           ),

@@ -4,7 +4,8 @@ import 'dart:ui';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
 
 class Jugador {
 
@@ -26,6 +27,7 @@ class Jugador {
   String _nivel3;
   String _nivel4;
   String _tipo;
+  String _categoriaEdad;
   int _dorsal;
   String _fechaContrato="";
   String _peso;
@@ -3111,6 +3113,14 @@ static String tipoJugador(String posicion, String tipo){
   }
   
 }
+
+  String get categoriaEdad {
+    Config.edadCategoria(fechaNacimiento);
+  }
+
+  set categoriaEdad(String value) {
+    _categoriaEdad = value;
+  }
 
   String get fechaContrato => _fechaContrato;
 

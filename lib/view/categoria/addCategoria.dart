@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
+import 'package:iafootfeel/conf/config.dart';
 
 
 
@@ -67,7 +67,7 @@ class _AddCategoriaState extends State<AddCategoria> {
             )
         ],
           backgroundColor:Colors.black,
-          title: Text("IAScout -Añadir temporada",
+          title: Text("iafootfeel -Añadir temporada",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

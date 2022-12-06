@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/model/categoria.dart';
-import 'package:iadvancedscout/model/equipo.dart';
-import 'package:iadvancedscout/model/jugador.dart';
-import 'package:iadvancedscout/modelo/EquipoCloud.dart';
-import 'package:iadvancedscout/modelo/entrenador.dart';
-import 'package:iadvancedscout/modelo/player.dart';
-import 'package:iadvancedscout/service/BBDDService.dart';
-import 'package:iadvancedscout/service/db.dart';
-import 'package:iadvancedscout/sheets/gsheets.dart';
-import 'package:iadvancedscout/sheets/gsheetsSCOUT.dart';
+import 'package:iafootfeel/model/categoria.dart';
+import 'package:iafootfeel/model/equipo.dart';
+import 'package:iafootfeel/model/jugador.dart';
+import 'package:iafootfeel/modelo/EquipoCloud.dart';
+import 'package:iafootfeel/modelo/entrenador.dart';
+import 'package:iafootfeel/modelo/player.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/service/db.dart';
+import 'package:iafootfeel/sheets/gsheets.dart';
+import 'package:iafootfeel/sheets/gsheetsSCOUT.dart';
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 class JugadorDao {
@@ -79,27 +79,6 @@ class JugadorDao {
     return list;
   }
 
-  getPuntacionesJornadas(String categoria) async {
-    var dbClient = await con.db;
-    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES where"
-        " CATEGORIA='$categoria' order by equipo");
-        //" ORDER BY ENTRENADOR.ENTRENADOR");
-
-    List<Player> list =
-    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDpuntaciones(c)).toList() : [];
-    return list;
-  }
-
-  getPuntacionesJornadas2Divsion(String categoria) async {
-    var dbClient = await con.db;
-    var res = await dbClient.rawQuery("SELECT * FROM PUNTUACIONES_2 where"
-        " CATEGORIA='$categoria' order by equipo");
-    //" ORDER BY ENTRENADOR.ENTRENADOR");
-
-    List<Player> list =
-    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDpuntaciones(c)).toList() : [];
-    return list;
-  }
 
   getTodosJugadoresEquipo(String equipo) async {
     var dbClient = await con.db;
@@ -181,8 +160,8 @@ class JugadorDao {
   }
 
   updateJugadorIAScout(Jugador _jugador, bool jugadores) async {
-    String pathJugadores="jugadores${BBDDService().getUserScout().temporada}/${_jugador.id}";
-    String pathTemporadas="temporadas/${BBDDService().getUserScout().temporada}/paises/${_jugador.pais}/"
+    String pathJugadores="jugadores${BBDDService().getUserScout().puesto}/${_jugador.id}";
+    String pathTemporadas="temporadas/${BBDDService().getUserScout().puesto}/paises/${_jugador.pais}/"
         "categorias/${_jugador.categoria}/"
         "equipos/${_jugador.equipo}/jugadores/${_jugador.id}";
     String path2=jugadores==true?pathJugadores:pathTemporadas;
@@ -349,8 +328,8 @@ class JugadorDao {
   }
 
   addEntrenadorIAScout(Jugador _jugador, bool jugadores, int i) async {
-    String pathJugadores="jugadores${BBDDService().getUserScout().temporada}/${_jugador.id}";
-    String pathTemporadas="temporadas/${BBDDService().getUserScout().temporada}/paises/${_jugador.pais}/"
+    String pathJugadores="jugadores${BBDDService().getUserScout().puesto}/${_jugador.id}";
+    String pathTemporadas="temporadas/${BBDDService().getUserScout().puesto}/paises/${_jugador.pais}/"
         "categorias/${_jugador.categoria}/"
         "equipos/${_jugador.equipo}/entrenadores/${_jugador.id}";
     String path2=jugadores==true?pathJugadores:pathTemporadas;
@@ -512,8 +491,8 @@ class JugadorDao {
 
 
   addJugadorIAScout(Jugador _jugador, bool jugadores, int i) async {
-    String pathJugadores="jugadores${BBDDService().getUserScout().temporada}/${_jugador.id}";
-    String pathTemporadas="temporadas/${BBDDService().getUserScout().temporada}/paises/${_jugador.pais}/"
+    String pathJugadores="jugadores${BBDDService().getUserScout().puesto}/${_jugador.id}";
+    String pathTemporadas="temporadas/${BBDDService().getUserScout().puesto}/paises/${_jugador.pais}/"
         "categorias/${_jugador.categoria}/"
         "equipos/${_jugador.equipo}/jugadores/${_jugador.id}";
     String path2=jugadores==true?pathJugadores:pathTemporadas;
@@ -676,7 +655,7 @@ class JugadorDao {
 
   updateJugadorIAScoutDorsal(Jugador _jugador, bool jugadores) async {
     String pathJugadores="jugadores/${_jugador.id}";
-    String pathTemporadas="temporadas/${BBDDService().getUserScout().temporada}/paises/${_jugador.pais}/"
+    String pathTemporadas="temporadas/${BBDDService().getUserScout().puesto}/paises/${_jugador.pais}/"
         "categorias/${_jugador.categoria}/"
         "equipos/${_jugador.equipo}/jugadores/${_jugador.id}";
     String path2=jugadores==true?pathJugadores:pathTemporadas;
@@ -698,7 +677,7 @@ class JugadorDao {
 
   deleteJugadorIAScout(Jugador _jugador){
     String nodeName =
-        "temporadas/${BBDDService().getUserScout().temporada}/paises/${_jugador.pais}/categorias/${_jugador.categoria}/equipos/${_jugador.equipo}/jugadores";
+        "temporadas/${BBDDService().getUserScout().puesto}/paises/${_jugador.pais}/categorias/${_jugador.categoria}/equipos/${_jugador.equipo}/jugadores";
 
     DatabaseReference dbRef =
     FirebaseDatabase.instance.reference().child(nodeName);
@@ -718,16 +697,7 @@ class JugadorDao {
     return list;
   }
 
-  getJugadoresPutuacionesEquipo(String categoria, String equipo) async {
-    var dbClient = await con.db;
-    var res = await dbClient.rawQuery(""
-        "SELECT * FROM PUNTUACIONES WHERE "
-        "CATEGORIA='$categoria' and EQUIPO='$equipo'");
 
-    List<Player> list =
-    res.isNotEmpty ? res.map((c) => Player.fromMapBBDDpuntaciones(c)).toList() : [];
-    return list;
-  }
 
   /*getJugadores(Equipo _equipo)  async {
     List<EquipoCloud> equipos= await getDataCollectionEquipos("rAeKFLQSry7l1x0WVW01");
@@ -803,7 +773,7 @@ class JugadorDao {
   }
 
   eliminarTodoJugadores() async {
-    String path2 = "jugadores${BBDDService().getUserScout().temporada}";
+    String path2 = "jugadores${BBDDService().getUserScout().puesto}";
     // Write a message to the database
     DatabaseReference dbRef =
     FirebaseDatabase.instance.reference().child(path2);

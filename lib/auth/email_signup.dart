@@ -1,10 +1,12 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/icon_mio_icons.dart';
-import 'package:iadvancedscout/view/temporada/temporadaView.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/icon_mio_icons.dart';
+import 'package:iafootfeel/view/menuFootFeel.dart';
 
 
 
@@ -21,12 +23,46 @@ class _EmailSignUpState extends State<EmailSignUp> {
       FirebaseDatabase.instance.reference().child("Users");
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController apellidoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String language;
   String color='gris';
   List<String> languages = <String>['es-ES'];
   List<String> colores = <String>['azul','rojo','gris'];
+  List<String> _puestos = <String>['FootFeel','Agenda FootFeel','Marketing'];
+  List<DropdownMenuItem<String>> _dropDownMenuItems;
+  String _currentPuesto="";
   @override
+
+  @override
+  void initState(){
+    _dropDownMenuItems = getDropDownMenuItems();
+    _currentPuesto= _dropDownMenuItems[0].value;
+
+    super.initState();
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems(){
+    List<DropdownMenuItem<String>> items = new List();
+    for (String item in _puestos){
+      items.add(new DropdownMenuItem(
+        value: item,
+        child: new Text(
+            item,
+            style: TextStyle(
+              fontSize:12,
+            )
+        ),
+      ));
+    }
+    return items;
+  }
+
+  void changedDropDownItem(String selected){
+    setState(() {
+      _currentPuesto = selected;
+    });
+  }
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor:Colors.black,
         appBar:new  AppBar(actions: <Widget>[
@@ -40,7 +76,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
           )
         ],
 
-          title: Text("IAScout - Sign up",
+          title: Text("FootFeel - Sign up",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -55,17 +91,37 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 child: Column(children: <Widget>[
                   Container(color: Colors.black,
                       padding: EdgeInsets.only(top:30.0),
-                      child: Image.asset(Config.icono,scale: 1,)
+                      child: Image.asset(Config.icono)
                   ),
+                  //#6ea9dc
                   Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text("InAdvanced",
+                    child: Text("FootFeel",
                         style: TextStyle(
-                            fontWeight: FontWeight.normal,color: Colors.white,
-                            fontSize: 30,
+                            fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
+                            fontSize: 40,
                             fontFamily:'Roboto')),
                   ),
+                  Row(children: [
+                    Padding(
+                        padding: EdgeInsets.only(top:0.0, left:20, right: 30, bottom: 5),
+                        child:Text("Puesto:",
+                            style: TextStyle(
+                            fontSize:20, color:Colors.white))
+                    ),
+                    Container(color:Colors.white,height: 30,
+                      padding: EdgeInsets.only(top:0.0, left:30, right: 20, bottom: 0),
+                      child:DropdownButton(
 
+                        dropdownColor: Colors.white,
+                        focusColor: Colors.white,
+                        value: _currentPuesto,
+                        items: _dropDownMenuItems,
+                        onChanged: changedDropDownItem,
+                      ),
+                    ),
+
+                  ]),
 
                   Padding(
                   padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
@@ -99,6 +155,38 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   },
                 ),
               ),
+                  Padding(
+                    padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
+                    child: TextFormField(
+
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),controller: apellidoController,
+                      decoration: InputDecoration(
+                        icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                        hintStyle: TextStyle(
+                            color: Colors.white
+                        ),
+                        labelStyle: new TextStyle(
+                            color: Colors.white
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        labelText: "Apellido",
+                      ),
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Apellido';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
               Padding(
                 padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 5),
                 child: TextFormField(
@@ -163,7 +251,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                     if (value.isEmpty) {
                       return 'Contraseñas';
                     } else if (value.length < 6) {
-                      return 'Password must be atleast 6 characters!';
+                      return 'Password must be at least 6 characters!';
                     }
                     return null;
                   },
@@ -270,32 +358,26 @@ class _EmailSignUpState extends State<EmailSignUp> {
 
 
   Future<void> registerToFb() async {
-
-    return firebaseAuth
-        .createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text)
-        .then((result) {
-      dbRef.child(result.user.uid).set({
-        "email": emailController.text,
-        "nombre": nameController.text,
-      }).then((res) {
-        setState(() {
-          isLoading = false;
-        });
-        Navigator.pushReplacement(
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      ).then((value) {
+        putUsuario(value.user.uid);
+      });
+      BBDDService().getUsuarioIniciar();
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TemporadaView()));
-      });
-    }).catchError((err) {
-      setState(() {
-        isLoading = false;
-      });
+          MaterialPageRoute(builder: (context) => MenuFootFeel()));
+    } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Error"),
-              content: Text(err.message),
+              content: Text(e.message),
               actions: [
                 FlatButton(
                   child: Text("Ok"),
@@ -306,15 +388,25 @@ class _EmailSignUpState extends State<EmailSignUp> {
               ],
             );
           });
-      return null;
-    });
+    }
+  }
 
+  putUsuario(String uid){
+    final firestoreInstance = FirebaseFirestore.instance;
+    firestoreInstance.collection("users").doc(uid).set({
+      'nombre': nameController.text.toUpperCase(), // John Doe
+      'apellido': apellidoController.text.toUpperCase(), // Stokes and Sons
+      'puesto': _currentPuesto,
+    }).then((value){
+    });
+    BBDDService().getUsuarioIniciar();
   }
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
+    apellidoController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }

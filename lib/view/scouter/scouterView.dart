@@ -2,18 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:iadvancedscout/conf/config.dart';
-import 'package:iadvancedscout/dao/CRUDCategoria.dart';
-import 'package:iadvancedscout/dao/CRUDPartido.dart';
-import 'package:iadvancedscout/dao/CRUDScout.dart';
-import 'package:iadvancedscout/modelo/categoria.dart';
-import 'package:iadvancedscout/modelo/jornada.dart';
-import 'package:iadvancedscout/modelo/pais.dart';
-import 'package:iadvancedscout/modelo/partido.dart';
-import 'package:iadvancedscout/modelo/temporada.dart';
-import 'package:iadvancedscout/userScout.dart';
-import 'package:iadvancedscout/view/scouter/scoutCard.dart';
-import 'package:iadvancedscout/wigdet/abajo.dart';
+import 'package:iafootfeel/conf/config.dart';
+import 'package:iafootfeel/dao/CRUDCategoria.dart';
+import 'package:iafootfeel/dao/CRUDPartido.dart';
+import 'package:iafootfeel/dao/CRUDScout.dart';
+import 'package:iafootfeel/modelo/categoria.dart';
+import 'package:iafootfeel/modelo/jornada.dart';
+import 'package:iafootfeel/modelo/pais.dart';
+import 'package:iafootfeel/modelo/partido.dart';
+import 'package:iafootfeel/modelo/temporada.dart';
+import 'package:iafootfeel/service/BBDDService.dart';
+import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/view/scouter/scoutCard.dart';
+import 'package:iafootfeel/view/scouter/scoutEquiposView.dart';
+import 'package:iafootfeel/wigdet/abajo.dart';
 
 class ScouterView extends StatefulWidget {
 
@@ -34,18 +36,23 @@ class _ScouterViewState extends State<ScouterView> {
     List<Categoria> datos =
     await CRUDCategoria().fetchCategoriasScout();
     setState(() {
-      _categoriaAux = datos[0];
       categorias.addAll(datos);
+    });
+  }
+
+  _cogerScout() async {
+    List<UserScout> datos =
+    await CRUDUserScout().fetchUserScouts();
+    setState(() {
+      scoutList.addAll(datos);
     });
   }
 
 
   @override
   void initState() {
-       _cogerCategorias();
-      nodeName = "Users";
-      _database.reference().child(nodeName).orderByChild("name").onChildAdded.listen(_childAdded);
-      //  _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
+       _cogerScout();
+        //  _database.reference().child(nodeName).onChildRemoved.listen(_childRemoves);
      // _database.reference().child(nodeName).orderByChild("_dorsal").onChildChanged.listen(_childChanged);
   }
 
@@ -55,31 +62,19 @@ class _ScouterViewState extends State<ScouterView> {
     return new Scaffold(
       appBar: new AppBar(
         actions: <Widget>[
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-
-                Container(
-                    width: 50,
-                    child: IconButton(
-                      icon:
-                      new Image.asset(Config.icono),
-
-                      onPressed: () {
-                        //var a = singOut();
-                        //if (a != null) {
-
-                        //}
-                      },
-                    ))]
-          )
+          Container(
+              width: 50,
+              child: IconButton(
+                icon: new Image.asset(Config.icono),
+                onPressed: () {},
+              )),
         ],
         backgroundColor: Colors.black,
-        title: Text("IAScout -Scouter",
+        title: Text("FootFeel",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: Colors.white,
+              fontSize: 18,
+              color: Config.colorFootFeel,
             )),
         elevation: 0,
         centerTitle: true,
@@ -110,42 +105,86 @@ class _ScouterViewState extends State<ScouterView> {
       Container(
         child: Column(
             children: <Widget>[
-              Container(
-                height: 20,
-                width: double.infinity,
-                color:Colors.black,
-                child:Text("Scouter",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Config.colorAPP,
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic),
-                ),),
-              Container(
-                height: 20,
-                width: double.infinity,
-                color:Colors.black,
-                child:Text('Lista de Scouter',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Config.colorAPP,
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic),
-                ),),
-                Flexible(
-            child:
-            FirebaseAnimatedList(
-                  query: _database.reference().child(nodeName),
-                  itemBuilder: (query, DataSnapshot snap,
-                      Animation<double> animation, int index) {
-                    //print(snap.value);
-                    itemCount: scoutList.length;
-                    return index<scoutList.length?
-                    new ScoutCard(
-                        scout: scoutList[index],categorias:categorias)
-                        :Container();
 
-                    },
-                    ),),
-                    //dataBody(),
+              Container(
+                height: 20,
+                width: double.infinity,
+                color:Colors.black,
+                child:Text('Lista de Agente FootFeel',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white,
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic),
+                ),),
+              Visibility(
+                  visible: scoutList.isNotEmpty,
+                  child: Flexible(
+                    child:
+                    ListView.separated(
+                        itemCount: scoutList.length,
+                        separatorBuilder: (context, index) {
+                          return Container(
+                            height: 0,
+                            color: Colors.green,
+                          );
+                        },
+                        itemBuilder: (buildContext, index) {
+                          return
+                            ListTile(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                                      ScoutEquiposView(scoutList[index])));
+                                },
+
+                                title: Row(children: [
+                                  //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
+                                  Expanded(child: Text("Agente FootFeel",
+                                    style: TextStyle(
+
+                                        color: Colors.blue.shade800,
+                                        fontSize: 12.0,fontWeight: FontWeight.bold
+                                    ),
+                                  ),),
+                                ]),
+                                trailing: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 1, right: 5),
+                                      height: 15.0,
+                                      child: Text("",
+
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    new Container(
+                                        padding:
+                                        EdgeInsets.only(top: 1, right: 5),
+                                        height: 25.0,
+                                        child: Text(
+                                          "${scoutList[index].apellido}",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ],
+                                ),
+                                leading: CircleAvatar(
+                                  backgroundImage: AssetImage("assets/img/scouter.png"),
+                                ));
+                        }),
+                  )
+              )
+
                 ]
          ),
       ),

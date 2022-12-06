@@ -1,8 +1,8 @@
 
 import 'dart:async';
-import 'package:iadvancedscout/model/pais.dart';
-import 'package:iadvancedscout/model/pais.dart';
-import 'package:iadvancedscout/service/db.dart';
+import 'package:iafootfeel/model/pais.dart';
+import 'package:iafootfeel/model/pais.dart';
+import 'package:iafootfeel/service/db.dart';
 
 class PaisDao {
   DB con = new DB();

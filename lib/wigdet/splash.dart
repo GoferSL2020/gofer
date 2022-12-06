@@ -63,7 +63,7 @@ class SplashScreenState extends State<SplashScreen>
               Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
                 child: new Image.asset(
-                  'assets/img/icono.png',
+                  'assets/img/iconotitulo.png',
                   height: 100.0,
                   fit: BoxFit.scaleDown,
                 ),

@@ -1,18 +1,21 @@
 
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:iadvancedscout/userScout.dart';
+import 'package:iafootfeel/dao/CRUDScout.dart';
+import 'package:iafootfeel/userScout.dart';
 
 
 
 class BBDDService {
   DatabaseReference _counterRef;
-  static UserScout _userAppalabros=new UserScout("", "","","","");
+  static UserScout _userFootFeel=new UserScout("", "","","","");
   DatabaseReference _userRef;
   StreamSubscription<Event> _counterSubscription;
   StreamSubscription<Event> _messagesSubscription;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   FirebaseDatabase database = new FirebaseDatabase();
   int _counter;
   DatabaseError error;
@@ -38,7 +41,7 @@ class BBDDService {
   }
 
   UserScout getUserScout() {
-    return _userAppalabros;
+    return _userFootFeel;
   }
 
   addUserScout(UserScout user) async {
@@ -91,31 +94,61 @@ class BBDDService {
     FirebaseDatabase.instance.reference().child("Users").child(result.uid).once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
-        _userAppalabros.name = values['nombre'];
-        _userAppalabros.email = values['email'];
-        _userAppalabros.categoria = values['categoria'];
+        _userFootFeel.name = values['nombre'];
+        _userFootFeel.email = values['email'];
+        _userFootFeel.puesto = values['puesto'];
+        _userFootFeel.apellido = values['apellido'];
 
       });
     });
 
-    return _userAppalabros;
+    return _userFootFeel;
   }
 
-  Future<UserScout> getUserApp() async {
+  Future<UserScout> getUsuarioIniciar() async {
+    User id = FirebaseAuth.instance.currentUser;
+    var doc = await _db.collection("users").doc(id.uid).get();
+    _userFootFeel.name=doc.data()["nombre"];// = Usuario.fromMap(doc.data(), doc.id) ;
+    _userFootFeel.apellido=doc.data()["apellido"];// = Usuario.fromMap(doc.data(), doc.id) ;
+    _userFootFeel.email=id.email;// = Usuario.fromMap(doc.data(), doc.id) ;
+    _userFootFeel.puesto=doc.data()["puesto"];
+    // = Usuario.fromMap(doc.data(), doc.id) ;
+    print("FUTURREEEEEEFINALLL");
+    _userFootFeel.equipos= await CRUDUserScout().fetchEquiposUsuario(id.uid);
+    _userFootFeel.paises= await CRUDUserScout().fetchPaisesUsuario(id.uid);
+
+  }
+
+  Future<UserScout> getEquipos() async {
+    User id = FirebaseAuth.instance.currentUser;
+    var doc = await _db.collection("users").doc(id.uid).get();
+    print("FUTURREEEEEEFINALLL");
+    _userFootFeel.equipos= await CRUDUserScout().fetchEquiposUsuario(id.uid);
+
+  }
+
+  static UserScout get userFootFeel => _userFootFeel;
+
+  static set userFootFeel(UserScout value) {
+    _userFootFeel = value;
+  }
+
+/*Future<UserScout> getUserApp() async {
     User result = FirebaseAuth.instance.currentUser;
-    //print("FUTURREEEEEE:"+result.uid);
+    print("FUTURREEEEEE:"+result.uid);
      await FirebaseDatabase.instance.reference().child(
        "Users").orderByChild("email").equalTo(result.email).once().then((DataSnapshot snapshot) {
       //FirebaseDatabase.instance.reference().child("Users").child(result.uid).once().then((DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
-        _userAppalabros.name = values['nombre'];
-        _userAppalabros.email = values['email'];
-        _userAppalabros.categoria = values['categoria'];
-        print(values['categoria']);
+        _userFootFeel.name = values['nombre'];
+        _userFootFeel.email = values['email'];
+        _userFootFeel.apellido = values['apellido'];
+        _userFootFeel.puesto = values['puesto'];
       });
     });
 
-    return _userAppalabros;
-  }
+    return _userFootFeel;
+  }*/
+
 }
