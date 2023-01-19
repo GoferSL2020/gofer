@@ -228,7 +228,6 @@ class _JugadoresViewState extends State<JugadoresView> {
             else
               jugador.scouter = widget._filtro.scouter;
             if (widget._pais != null) {
-              print("DENTRO PAIs:${widget._filtro.scouter}");
               jugador.pais = widget._pais.pais;
               jugador.equipo = widget._filtro.equipo;
               if (widget._pais.pais == "LALIGA") {
@@ -451,7 +450,7 @@ class _JugadoresViewState extends State<JugadoresView> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      Config.edad(
+                                      Config.edadSubSolo(
                                               jugador[index].fechaNacimiento) +
                                           "  ${jugador[index].categoriaEdad}",
                                       style: TextStyle(

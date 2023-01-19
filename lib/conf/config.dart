@@ -172,8 +172,13 @@ class Config {
     DateFormat format = DateFormat("dd/MM/yyyy");
     var fechaNac = format.parse(fechaNacimiento);
     var anio = fechaDeHoy.difference(fechaNac);
+    print(fechaDeHoy);
+    print(fechaNac);
+    print(anio);
     edad = (anio.inDays / 366).truncate();
+    print(edad);
     sub = edad.toString();
+    print(sub);
     return sub;
   }
 
@@ -204,51 +209,48 @@ class Config {
           edadSring = "Sub-23";
         break;
       case 19:
-          edadSring = "Sub-20";
-        break;
-      case 18:
           edadSring = "3º Juvenil";
         break;
-      case 17:
+      case 18:
           edadSring = "2º Juvenil";
         break;
-      case 16:
+      case 17:
           edadSring = "1º Juvenil";
         break;
-      case 15:
+      case 16:
           edadSring = "2º Cadete";
         break;
-      case 14:
+      case 15:
           edadSring = "1º Cadete";
         break;
-      case 13:
+      case 14:
           edadSring = "2º Infantil";
         break;
-      case 12:
+      case 13:
           edadSring = "1º Infantil";
         break;
-      case 11:
+      case 12:
           edadSring = "2º Alevín";
         break;
-      case 10:
+      case 11:
           edadSring = "1º Alevín";
           break;
-      case 9:
+      case 10:
           edadSring = "2º Benjamín";
           break;
-      case 8:
+      case 9:
           edadSring= "1º Benjamín";
           break;
-      case 7:
+      case 8:
           edadSring= "2º Pre-Benjamín";
         break;
-      case 6:
+      case 7:
           edadSring= "1º Pre-Benjamín";
         break;
-      case 5:
+      case 6:
         edadSring= "Chupetín";
         break;
-      case 4:
+      case 5:
         edadSring= "Chupetín";
         break;
     }
@@ -283,51 +285,48 @@ class Config {
         edadSring = "Senior";
         break;
       case 19:
-        edadSring = "Senior";
-        break;
-      case 18:
         edadSring = "3º Juvenil";
         break;
-      case 17:
+      case 18:
         edadSring = "2º Juvenil";
         break;
-      case 16:
+      case 17:
         edadSring = "1º Juvenil";
         break;
-      case 15:
+      case 16:
         edadSring = "2º Cadete";
         break;
-      case 14:
+      case 15:
         edadSring = "1º Cadete";
         break;
-      case 13:
+      case 14:
         edadSring = "2º Infantil";
         break;
-      case 12:
+      case 13:
         edadSring = "1º Infantil";
         break;
-      case 11:
+      case 12:
         edadSring = "2º Alevín";
         break;
-      case 10:
+      case 11:
         edadSring = "1º Alevín";
         break;
-      case 9:
+      case 10:
         edadSring = "2º Benjamín";
         break;
-      case 8:
+      case 9:
         edadSring= "1º Benjamín";
         break;
-      case 7:
+      case 8:
         edadSring= "2º Pre-Benjamín";
         break;
-      case 6:
+      case 7:
         edadSring= "1º Pre-Benjamín";
         break;
-      case 5:
+      case 6:
         edadSring= "Chupetín";
         break;
-      case 4:
+      case 5:
         edadSring= "Chupetín";
         break;
     }
@@ -396,12 +395,7 @@ class Config {
     else {
       if ((mesHoy == mesJugador) && (diaHoy < diaJugador)) edad--;
     }
-
-    if (edad < 20) {
-      sub = "Sub-20";
-    } else if (edad < 23) {
-      sub = "Sub-23";
-    }
+    sub=edad.toString();
     return sub;
   }
 

@@ -248,7 +248,7 @@ class CompartirExcel {
       columna++; //_dorsal,
       ponerCeldaValor(sheet1, fila, columna, jug.competecion);
       columna++;
-      ponerCeldaValor(sheet1, fila, columna, jug.categoria);
+      ponerCeldaValor(sheet1, fila, columna, jug.categoria + " "+ jug.catCantera);
       columna++; //_lateral,
       ponerCeldaValor(sheet1, fila, columna, jug.seleccion);
       columna++; //_lateral,
@@ -340,10 +340,11 @@ class CompartirExcel {
     if (jug.toUpperCase() == "TOP") {
       sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuperlativo;
     }
-    if (jug.toUpperCase() == "DESCATADO") {
+    if (jug.toUpperCase() == "DESTACADO")
+    {
       sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuper;
     }
-    if (jug.toUpperCase() == "ACORDE A LA CATEGORIA") {
+    if (jug.toUpperCase() == "ACORDE A LA CATEGORÍA") {
       sheet1.getRangeByIndex(fila, columna).cellStyle = styleIntermedio;
     }
     if (jug.toUpperCase() == "DISCRETO") {
