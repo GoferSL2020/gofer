@@ -462,7 +462,7 @@ class Config {
   static String escudoClubesFF(String imagen) {
     String s =
         "https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/"
-        "clubes%2F${imagen.replaceAll("Ñ", "N").replaceAll("ñ", "n")}.png?alt=media";
+        "clubes%2F${imagen.replaceAll("Ñ", "N").replaceAll("ñ", "n").replaceAll("Á", "A%CC%81").replaceAll("É", "E%CC%81").replaceAll("Í", "I%CC%81").replaceAll("Ó", "O%CC%81").replaceAll("Ú", "U%CC%81")}.png?alt=media";
     /*replaceAll("Ñ", "2%C2%AA").
     replaceAll("Ó", "O%CC%81").
     replaceAll("1ª", "1%C2%AA").
