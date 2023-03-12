@@ -4,9 +4,11 @@ class Pais {
   String temporada="";
   bool cantera=false;
 
-  Pais({this.id, this.pais,  this.temporada});
 
-  Pais.fromMap(Map snapshot,String id) :
+  Pais(this.id, this.pais,  this.temporada);
+
+
+  Pais.fromMap(dynamic snapshot,String? id) :
         id = id ?? '',
         pais= snapshot['pais'] ?? '',
         temporada = snapshot['temporada'] ?? '',

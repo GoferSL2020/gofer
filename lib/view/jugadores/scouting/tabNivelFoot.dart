@@ -59,98 +59,80 @@ class TabNivelFootState extends State<TabNivelFoot> {
                         children: [
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel.toUpperCase() ==
+                              child: TextButton(
+                                  child: Text(
+                                    "Top".toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 10),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+
+                                      widget._jugador.nivel =
+                                          "Top".toUpperCase();
+                                    });
+                                  },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                 widget._jugador.nivel.toUpperCase() ==
                                         "Top".toUpperCase()
                                     ? Player.nivelColorSuperlativo(
                                         widget._jugador.nivel.toUpperCase())
-                                    : Colors.grey,
-                                child: Text(
-                                  "Top".toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 10),
-                                ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel.toUpperCase() ==
-                                            "Top".toUpperCase()
-                                        ? Player.nivelColorSuperlativo(
-                                            widget._jugador.nivel.toUpperCase())
-                                        : Colors.grey,
-                                onPressed: () {
-                                  setState(() {
-                                    
-                                    widget._jugador.nivel =
-                                        "Top".toUpperCase();
-                                  });
-                                },
+                                    : Colors.grey),
+                                  foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel.toUpperCase() ==
-                                        "Destacado".toUpperCase()
-                                    ? Player.nivelColorSuperior(
-                                        widget._jugador.nivel.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "Destacado".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel.toUpperCase() ==
-                                            "Destacado".toUpperCase()
-                                        ? Player.nivelColorSuperior(
-                                            widget._jugador.nivel.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel =
                                         "Destacado".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel.toUpperCase() ==
+                                        "Destacado".toUpperCase()
+                                        ? Player.nivelColorSuperior(
+                                        widget._jugador.nivel.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
-                            width: 105, // specific value
-                            child: RaisedButton(
-                              color: widget._jugador.nivel.toUpperCase() ==
-                                      "Acorde a la categoría".toUpperCase()
-                                  ? Player.nivelColorDestacado(
-                                      widget._jugador.nivel.toUpperCase())
-                                  : Colors.grey,
-                              child: Text(
-                                "Acorde a la categoría".toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 10),
-                              ),
-                              textColor: Colors.black,
-                              splashColor:
-                                  widget._jugador.nivel.toUpperCase() ==
-                                          "Acorde a la categoría".toUpperCase()
-                                      ? Player.nivelColorDestacado(
-                                          widget._jugador.nivel.toUpperCase())
-                                      : Colors.grey,
-                              onPressed: () {
-                                setState(() {
-                                  
-                                  widget._jugador.nivel =
-                                      "Acorde a la categoría".toUpperCase();
-                                });
-                              },
-                            ),
-                          ),
+                              width: 105, // specific value
+                              child: TextButton(
+                                child: Text(
+                                  "Acorde a la categoría".toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 10),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    widget._jugador.nivel =
+                                        "Acorde a la categoría".toUpperCase();
+                                  });
+                                },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel.toUpperCase() ==
+                                        "Acorde a la categoría".toUpperCase()
+                                        ? Player.nivelColorDestacado(
+                                        widget._jugador.nivel.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
+                              )),
                         ]),
                   ),
                   Container(
@@ -160,88 +142,76 @@ class TabNivelFootState extends State<TabNivelFoot> {
                         children: [
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel.toUpperCase() ==
-                                        "Discreto".toUpperCase()
-                                    ? Player.nivelColorIntermedio(
-                                        widget._jugador.nivel.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "Discreto".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel.toUpperCase() ==
-                                            "Discreto".toUpperCase()
-                                        ? Player.nivelColorIntermedio(
-                                            widget._jugador.nivel.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel =
                                         "Discreto".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel.toUpperCase() ==
+                                        "Discreto".toUpperCase()
+                                        ? Player.nivelColorIntermedio(
+                                        widget._jugador.nivel.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel.toUpperCase() ==
-                                        "No ha jugado".toUpperCase()
-                                    ? Player.nivelColorDudoso(
-                                        widget._jugador.nivel.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "No ha jugado".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel.toUpperCase() ==
-                                            "No ha jugado".toUpperCase()
-                                        ? Player.nivelColorDudoso(
-                                            widget._jugador.nivel.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel =
-                                        "No ha jugado".toUpperCase();
+                                        "DisNo ha jugadocreto".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel.toUpperCase() ==
+                                        "No ha jugado".toUpperCase()
+                                        ? Player.nivelColorDudoso(
+                                        widget._jugador.nivel.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
+
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton.icon(
-                                color: Colors.white,
-                                icon: Icon(CustomIcon.eraser,
-                                    color: Colors.black, size: 15),
+                              child: TextButton.icon(
                                 label: Text(
                                   "limpiar".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor: Colors.white,
+                                icon: Icon(CustomIcon.eraser,
+                                    color: Colors.black, size: 15),
                                 onPressed: () {
                                   setState(() {
-                                    widget._jugador.nivel = "";
+                                    widget._jugador.nivel =
+                                        "limpiar".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                         ]),
                   ),
@@ -258,100 +228,80 @@ class TabNivelFootState extends State<TabNivelFoot> {
                         children: [
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel2.toUpperCase() ==
-                                        "Top".toUpperCase()
-                                    ? Player.nivelColorSuperlativo(
-                                        widget._jugador.nivel2.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "Top".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel2.toUpperCase() ==
-                                            "Top".toUpperCase()
-                                        ? Player.nivelColorSuperlativo(
-                                            widget._jugador.nivel2.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
+
                                     widget._jugador.nivel2 =
                                         "Top".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel2.toUpperCase() ==
+                                        "Top".toUpperCase()
+                                        ? Player.nivelColorSuperlativo(
+                                        widget._jugador.nivel2.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel2.toUpperCase() ==
-                                        "Destacado".toUpperCase()
-                                    ? Player.nivelColorSuperior(
-                                        widget._jugador.nivel2.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "Destacado".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel2.toUpperCase() ==
-                                            "Destacado".toUpperCase()
-                                        ? Player.nivelColorSuperior(
-                                            widget._jugador.nivel2.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel2 =
                                         "Destacado".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel2.toUpperCase() ==
+                                        "Destacado".toUpperCase()
+                                        ? Player.nivelColorSuperior(
+                                        widget._jugador.nivel2.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
-                            width: 105, // specific value
-                            child: RaisedButton(
-                              color: widget._jugador.nivel2.toUpperCase() ==
-                                      "Acorde a la categoría".toUpperCase()
-                                  ? Player.nivelColorDestacado(
-                                      widget._jugador.nivel2.toUpperCase())
-                                  : Colors.grey,
-                              child: Text(
-                                "Acorde a la categoría".toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-
-                                    color: Colors.black, fontSize: 10),
-                              ),
-                              textColor: Colors.black,
-                              splashColor:
-                                  widget._jugador.nivel2.toUpperCase() ==
-                                          "Acorde a la categoría".toUpperCase()
-                                      ? Player.nivelColorDestacado(
-                                          widget._jugador.nivel2.toUpperCase())
-                                      : Colors.grey,
-                              onPressed: () {
-                                setState(() {
-                                  
-                                  widget._jugador.nivel2 =
-                                      "Acorde a la categoría".toUpperCase();
-                                });
-                              },
-                            ),
-                          ),
-                          
+                              width: 105, // specific value
+                              child: TextButton(
+                                child: Text(
+                                  "Acorde a la categoría".toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 10),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    widget._jugador.nivel2 =
+                                        "Acorde a la categoría".toUpperCase();
+                                  });
+                                },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel2.toUpperCase() ==
+                                        "Acorde a la categoría".toUpperCase()
+                                        ? Player.nivelColorDestacado(
+                                        widget._jugador.nivel2.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
+                              )),
                         ]),
                   ),
                   Container(
@@ -361,92 +311,79 @@ class TabNivelFootState extends State<TabNivelFoot> {
                         children: [
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel2.toUpperCase() ==
-                                        "Discreto".toUpperCase()
-                                    ? Player.nivelColorIntermedio(
-                                        widget._jugador.nivel2.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "Discreto".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel2.toUpperCase() ==
-                                            "Discreto".toUpperCase()
-                                        ? Player.nivelColorIntermedio(
-                                            widget._jugador.nivel2.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel2 =
                                         "Discreto".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel2.toUpperCase() ==
+                                        "Discreto".toUpperCase()
+                                        ? Player.nivelColorIntermedio(
+                                        widget._jugador.nivel2.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton(
-                                color: widget._jugador.nivel2.toUpperCase() ==
-                                        "Dudoso".toUpperCase()
-                                    ? Player.nivelColorDudoso(
-                                        widget._jugador.nivel2.toUpperCase())
-                                    : Colors.grey,
+                              child: TextButton(
                                 child: Text(
                                   "No ha jugado".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor:
-                                    widget._jugador.nivel2.toUpperCase() ==
-                                            "No ha jugado".toUpperCase()
-                                        ? Player.nivelColorDudoso(
-                                            widget._jugador.nivel2.toUpperCase())
-                                        : Colors.grey,
                                 onPressed: () {
                                   setState(() {
-                                    
                                     widget._jugador.nivel2 =
                                         "No ha jugado".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(
+                                    widget._jugador.nivel2.toUpperCase() ==
+                                        "No ha jugado".toUpperCase()
+                                        ? Player.nivelColorDudoso(
+                                        widget._jugador.nivel2.toUpperCase())
+                                        : Colors.grey),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
+
                           Container(
                             width: 2,
                           ),
                           SizedBox(
                               width: 105, // specific value
-                              child: RaisedButton.icon(
-                                color: Colors.white,
-                                icon: Icon(CustomIcon.eraser,
-                                    color: Colors.black, size: 15),
+                              child: TextButton.icon(
                                 label: Text(
                                   "limpiar".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                 ),
-                                textColor: Colors.black,
-                                splashColor: Colors.white,
+                                icon: Icon(CustomIcon.eraser,
+                                    color: Colors.black, size: 15),
                                 onPressed: () {
                                   setState(() {
-
-                                    widget._jugador.nivel2 = "";
+                                    widget._jugador.nivel2 =
+                                        "limpiar".toUpperCase();
                                   });
                                 },
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                    foregroundColor:MaterialStateProperty.all<Color>(Colors.black) ),
                               )),
                         ]),
                   ),
-
                 ]),
           ],
         ),

@@ -25,25 +25,25 @@ class _EmailSignUpState extends State<EmailSignUp> {
   TextEditingController nameController = TextEditingController();
   TextEditingController apellidoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  String language;
+  String language="";
   String color='gris';
   List<String> languages = <String>['es-ES'];
   List<String> colores = <String>['azul','rojo','gris'];
   List<String> _puestos = <String>['FootFeel','Agenda FootFeel','Marketing'];
-  List<DropdownMenuItem<String>> _dropDownMenuItems;
+  late List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentPuesto="";
   @override
 
   @override
   void initState(){
     _dropDownMenuItems = getDropDownMenuItems();
-    _currentPuesto= _dropDownMenuItems[0].value;
+    _currentPuesto= _dropDownMenuItems[0].value!;
 
     super.initState();
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems(){
-    List<DropdownMenuItem<String>> items = new List();
+    List<DropdownMenuItem<String>> items = [];
     for (String item in _puestos){
       items.add(new DropdownMenuItem(
         value: item,
@@ -112,32 +112,34 @@ class _EmailSignUpState extends State<EmailSignUp> {
                     Container(color:Colors.white,height: 30,
                       padding: EdgeInsets.only(top:0.0, left:30, right: 20, bottom: 0),
                       child:DropdownButton(
-
                         dropdownColor: Colors.white,
                         focusColor: Colors.white,
                         value: _currentPuesto,
                         items: _dropDownMenuItems,
-                        onChanged: changedDropDownItem,
+                        onChanged: (String? value) {
+                        setState(() {
+                            _currentPuesto = value!;
+                        });
+                        },
                       ),
-                    ),
+                      ),
 
-                  ]),
+                      ]),
+                      Padding(
+                      padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
+                      child: TextFormField(
 
-                  Padding(
-                  padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
-                child: TextFormField(
-
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),controller: nameController,
-                  decoration: InputDecoration(
-                    icon: Icon(IconMio.person,color: Colors.white,size: 20,),
-                    hintStyle: TextStyle(
-                        color: Colors.white
-                    ),
-                    labelStyle: new TextStyle(
-                        color: Colors.white
-                    ),
+                      style: TextStyle(
+                      color: Colors.white,
+                      ),controller: nameController,
+                      decoration: InputDecoration(
+                      icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                      hintStyle: TextStyle(
+                      color: Colors.white
+                      ),
+                      labelStyle: new TextStyle(
+                      color: Colors.white
+                      ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -148,7 +150,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Nombre';
                     }
                     return null;
@@ -180,7 +182,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'Apellido';
                         }
                         return null;
@@ -212,7 +214,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Correo eléctronico';
                     } else if (!value.contains('@')) {
                       return 'Please enter a valid email address';
@@ -248,7 +250,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Contraseñas';
                     } else if (value.length < 6) {
                       return 'Password must be at least 6 characters!';
@@ -279,7 +281,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                     textColor: Colors.white,
                     splashColor: Colors.black,
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         setState(() {
                           isLoading = true;
                         });
@@ -298,14 +300,10 @@ class _EmailSignUpState extends State<EmailSignUp> {
             ]))));
   }
 
-  Future _getLanguages() async {
-    if (languages != null) setState(() => languages);
-
-  }
 
 
   List<DropdownMenuItem<String>> getLanguageDropDownMenuItems() {
-    var items = List<DropdownMenuItem<String>>();
+    var items = <DropdownMenuItem<String>>[];
     for (dynamic type in languages) {
       items.add(
           DropdownMenuItem(value: type as String, child: Text(type as String)));
@@ -319,18 +317,10 @@ class _EmailSignUpState extends State<EmailSignUp> {
     });
   }
 
-  Widget _languageDropDownSection() => Container(
-      padding: EdgeInsets.only(top: 0.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        DropdownButton(
-          value: language,
-          items: getLanguageDropDownMenuItems(),
-          onChanged: changedLanguageDropDownItem,
-        ),
-      ]));
+
 
   List<DropdownMenuItem<String>> getColorDropDownMenuItems() {
-    var items = List<DropdownMenuItem<String>>();
+    var items = <DropdownMenuItem<String>>[];
     for (dynamic type in colores) {
       items.add(
           DropdownMenuItem(value: type as String, child: Text(type as String)));
@@ -344,16 +334,6 @@ class _EmailSignUpState extends State<EmailSignUp> {
     });
   }
 
-  Widget _colorDropDownSection() => Container(
-      padding: EdgeInsets.only(top: 0.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        DropdownButton(
-          value: color,
-          items: getColorDropDownMenuItems(),
-          onChanged: changedColorDropDownItem,
-
-        )
-      ]));
 
 
 
@@ -363,9 +343,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
           .createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-      ).then((value) {
-        putUsuario(value.user.uid);
-      });
+      ).then((value) => putUsuario(value.user!.uid));
       BBDDService().getUsuarioIniciar();
       Navigator.of(context).pop();
       Navigator.pushReplacement(
@@ -377,9 +355,9 @@ class _EmailSignUpState extends State<EmailSignUp> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Error"),
-              content: Text(e.message),
+              content: Text(e.message!),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text("Ok"),
                   onPressed: () {
                     Navigator.of(context).pop();

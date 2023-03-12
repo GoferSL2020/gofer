@@ -21,7 +21,7 @@ import 'package:iafootfeel/modelo/player.dart';
 import 'package:iafootfeel/modelo/seleccion.dart';
 import 'package:iafootfeel/modelo/temporada.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 
 import 'package:iafootfeel/view/jugadores/scouting/tabNivelFoot.dart';
 import 'package:iafootfeel/wigdet/texto.dart';
@@ -35,8 +35,8 @@ import 'dart:math' as Math;
 
 class ProcesoJugador extends StatefulWidget {
   static String tag = 'edit-page';
-  final Player jugador;
-  final Pais pais;
+  final Player? jugador;
+  final Pais? pais;
   ProcesoJugador({@required this.jugador, @required this.pais});
 
   @override
@@ -53,17 +53,17 @@ class _ProcesoJugadorState extends State<ProcesoJugador> {
   String _extranjero = "Español";
   final _jugador = TextEditingController();
   final _apodo = TextEditingController();
-  String _equipo;
+  String? _equipo;
   final _movil = TextEditingController();
   final _email = TextEditingController();
   final _valor = TextEditingController();
   var _fecha;
   var _fechaContrato;
 
-  String _nacionalidad;
-  String _nacionalidad2;
-  String _pais;
-  String _categoria;
+  String? _nacionalidad;
+  String? _nacionalidad2;
+  String? _pais;
+  String? _categoria;
   String _competicion = "";
   String _seleccion = "";
   bool _prestamo = false;
@@ -72,9 +72,8 @@ class _ProcesoJugadorState extends State<ProcesoJugador> {
   String _puesto2 = "";
   String _catCantera = "";
   String _id = "";
-  PickedFile _imageFile;
-  String imageUrl;
-  File _image;
+  String? imageUrl;
+  File? _image;
   bool insertar = false;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
@@ -84,12 +83,12 @@ class _ProcesoJugadorState extends State<ProcesoJugador> {
     cambio = true;
   }
 
-  List<String> _equipos = new List();
-  List<String> _paises = new List();
-  List<String> _nacionalidades = new List();
-  List<String> _categorias = new List();
-  List<String> _competiciones = new List();
-  List<String> _selecciones= new List();
+  List<String> _equipos =  [];
+  List<String> _paises =  [];
+  List<String> _nacionalidades =  [];
+  List<String> _categorias =  [];
+  List<String> _competiciones =  [];
+  List<String> _selecciones=  [];
 
   List<String> _posicion2 = <String>[
     '',
@@ -159,82 +158,84 @@ Carrilero izquierdo
   @override
   void initState() {
     if (widget.pais == null) {
-      if (widget.jugador.pais == "") {
+      if (widget.jugador!.pais == "") {
         _pais = "";
-        widget.jugador.pais = _pais;
+        widget.jugador!.pais = _pais!;
       } else {
-        _pais = widget.jugador.pais;
+        _pais = widget.jugador!.pais;
       }
     } else {
-      if (widget.jugador.pais == "") {
+      if (widget.jugador!.pais == "") {
         _pais = "";
-        widget.jugador.pais = _pais;
+        widget.jugador!.pais = _pais!;
       } else
-        _pais = widget.jugador.pais;
+        _pais = widget.jugador!.pais;
     }
 
     setState(() {
       _cogerSelecciones();
       _cogerNacionaliades();
       _cogerPais();
-      if (widget.jugador.pais != "") {
+      if (widget.jugador!.pais != "") {
         print("ENTRO");
         _cogerCategorias();
         _cogerEquipos();
         _cogerCompeticiones();
-        _equipo = widget.jugador.equipo;
+        _equipo = widget.jugador!.equipo;
       }
-      if (widget.jugador.categoria != "") {
-        _categoria = widget.jugador.categoria;
+      if (widget.jugador!.categoria != "") {
+        _categoria = widget.jugador!.categoria;
       }
-      if (widget.jugador.competecion != "") {
-        _competicion = widget.jugador.competecion;
+      if (widget.jugador!.competecion != "") {
+        _competicion = widget.jugador!.competecion;
       }
-      if (widget.jugador.seleccion != "") {
-        _seleccion = widget.jugador.seleccion;
+      if (widget.jugador!.seleccion != "") {
+        _seleccion = widget.jugador!.seleccion;
       }
       _cogerScuter();
     });
-    if(widget.jugador.scouter=="MIGRAR")
-      _scouter="";
-    else
-      _scouter = widget.jugador.scouter;
-    _nombre.text = widget.jugador.jugador;
-    _categoria = widget.jugador.categoria;
-    _seleccion= widget.jugador.seleccion;
-    _competicion = widget.jugador.competecion;
-    _apodo.text = widget.jugador.apodo;
-    _catCantera = widget.jugador.catCantera;
-    _valor.text = widget.jugador.valor;
-    _prestamo = widget.jugador.prestamo == "si" ? true : false;
-    _fecha = widget.jugador.fechaNacimiento;
-    _fechaContrato = widget.jugador.fechaContrato;
-    _nacionalidad2 = widget.jugador.nacionalidad2;
-    _nacionalidad = widget.jugador.nacionalidad;
+    print("SCOUTER:${widget.jugador!.scouter}");
 
-    _extranjero = widget.jugador.nacionalidad;
-    _altura.text = widget.jugador.altura;
-    _peso.text = widget.jugador.peso;
-    _lateral = widget.jugador.lateral.toLowerCase();
-    _dorsal.text = widget.jugador.dorsal.toString();
-    _puesto = widget.jugador.posicion.toUpperCase();
+    _nombre.text = widget.jugador!.jugador;
+    _categoria = widget.jugador!.categoria;
+    _seleccion= widget.jugador!.seleccion;
+    _competicion = widget.jugador!.competecion;
+    _apodo.text = widget.jugador!.apodo;
+    _catCantera = widget.jugador!.catCantera;
+    _valor.text = widget.jugador!.valor;
+    _prestamo = widget.jugador!.prestamo == "si" ? true : false;
+    _fecha = widget.jugador!.fechaNacimiento;
+    _fechaContrato = widget.jugador!.fechaContrato;
+    _nacionalidad2 = widget.jugador!.nacionalidad2;
+    _nacionalidad = widget.jugador!.nacionalidad;
+
+    _extranjero = widget.jugador!.nacionalidad;
+    _altura.text = widget.jugador!.altura;
+    _peso.text = widget.jugador!.peso;
+    _lateral = widget.jugador!.lateral.toLowerCase();
+    _dorsal.text = widget.jugador!.dorsal.toString();
+    _puesto = widget.jugador!.posicion.toUpperCase();
     try {
-      _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
-      _puesto2 = widget.jugador.posicionalternativa.toUpperCase();
+      _puesto2 = widget.jugador!.posicionalternativa.toUpperCase();
+      _puesto2 = widget.jugador!.posicionalternativa.toUpperCase();
     } catch (e) {
       _puesto2 = "";
     }
+    if(scouter.contains(widget.jugador!.scouter)==false)
+      _scouter="";
+    else
+      _scouter = widget.jugador!.scouter;
 
 
-    insertar = widget.jugador.jugador == "" ? true : false;
+    insertar = widget.jugador!.jugador == "" ? true : false;
 
-    //_imageFile=Image.network(widget.jugador.imagen));
+    //_imageFile=Image.network(widget.jugador!.imagen));
     //_imageFile;
 
     super.initState();
   }
 
-  List<String> scouter = List();
+  List<String> scouter = [];
   String _scouter = "";
   _cogerScuter() async {
     scouter.clear();
@@ -250,12 +251,12 @@ Carrilero izquierdo
 
   _cogerEquipos() async {
     _equipos.clear();
-    String pais = await CRUDPais().getEquipoByNombre(_pais);
-    List<EquipoJugador> datos;
-    datos = await CRUDEquipoJugador().fetchEquiposJugadores(pais);
+    String? pais = await CRUDPais().getEquipoByNombre(_pais!);
+    List<EquipoJugador>? datos;
+    datos = await CRUDEquipoJugador().fetchEquiposJugadores(pais!);
     setState(() {
       _equipos.add("");
-      for (var p in datos) _equipos.add(p.equipo);
+      for (var p in datos!) _equipos.add(p.equipo);
     });
   }
 
@@ -272,9 +273,9 @@ Carrilero izquierdo
   _cogerCompeticiones() async {
     _competiciones.clear();
 
-    String p = await CRUDPais().getEquipoByNombre(_pais);
-    Pais pais = new Pais();
-    pais.id = p;
+    String? p = await CRUDPais().getEquipoByNombre(_pais!);
+    Pais pais = new Pais("","","");
+    pais.id = p!;
 
     //  String pais = await CRUDPais().getEquipoByNombre(_pais);
     List<Categoria> datos;
@@ -322,110 +323,9 @@ Carrilero izquierdo
     });
   }
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 20,
-    );
-    setState(() {
-      _image = image;
-    });
-  }
-
-  _imgFromCamera() async {
-    try {
-      final pickedFile = await _picker.getImage(
-        source: ImageSource.camera,
-        imageQuality: 20,
-      );
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
-
-  _imgFromGallery() async {
-    try {
-      final pickedFile = await _picker.getImage(
-        source: ImageSource.gallery,
-        imageQuality: 20,
-      );
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
-    Column picture = Column(
-      children: <Widget>[
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              _showPicker(context);
-            },
-            child: CircleAvatar(
-              radius: 40,
-              backgroundColor: Colors.black,
-              child: ClipOval(
-                child: new SizedBox(
-                    width: 90.0,
-                    height: 90.0,
-                    child: _imageFile != null
-                        //https://firebasestorage.googleapis.com/v0/b/iaclub.appspot.com/o/
-                        ? Image.file(File(_imageFile.path), fit: BoxFit.fill)
-                        : Image.network(
-                            Config.imagenJugador(
-                              null,
-                              widget.jugador,
-                            ),
-                            fit: BoxFit.fitHeight,
-                          )),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
     FormField inputPosicion = new FormField(builder: (FormFieldState state) {
       return InputDecorator(
         decoration: InputDecoration(
@@ -444,11 +344,11 @@ Carrilero izquierdo
           value: _puesto,
           validator: (value) => value == null ? 'Puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _puesto = value;
-              widget.jugador.posicion = value;
+              //newContact.favoriteColor = newvalue!;
+              _puesto = value!;
+              widget.jugador!.posicion = value!;
               cambio = true;
               state.didChange(value);
             });
@@ -476,10 +376,10 @@ Carrilero izquierdo
           value: _puesto2,
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              _puesto2 = value;
-              widget.jugador.posicionalternativa = value;
+              _puesto2 = value!;
+              widget.jugador!.posicionalternativa = value!;
               cambio = true;
               state.didChange(value);
             });
@@ -510,11 +410,11 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner el equipo' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _equipo = value;
-              widget.jugador.equipo = _equipo;
+              //newContact.favoriteColor = newvalue!;
+              _equipo = value!;
+              widget.jugador!.equipo = _equipo!;
               cambio = true;
               state.didChange(value);
             });
@@ -544,15 +444,15 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner el pais' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _pais = value;
+              //newContact.favoriteColor = newvalue!;
+              _pais = value!;
               _equipos.clear();
               _equipo = "";
-              widget.jugador.pais = _pais;
-              widget.jugador.equipo = "";
-              widget.jugador.competecion = "";
+              widget.jugador!.pais = _pais!;
+              widget.jugador!.equipo = "";
+              widget.jugador!.competecion = "";
 
               _competicion="";
               _cogerEquipos();
@@ -589,11 +489,11 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner la nacionalidad' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _nacionalidad = value;
-              widget.jugador.nacionalidad = _nacionalidad;
+              //newContact.favoriteColor = newvalue!;
+              _nacionalidad = value!;
+              widget.jugador!.nacionalidad = _nacionalidad!;
               cambio = true;
               state.didChange(value);
             });
@@ -625,11 +525,11 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner la nacionalidad 2' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _nacionalidad2 = value;
-              widget.jugador.nacionalidad2 = _nacionalidad2;
+              //newContact.favoriteColor = newvalue!;
+              _nacionalidad2 = value!;
+              widget.jugador!.nacionalidad2 = _nacionalidad2!;
               cambio = true;
               state.didChange(value);
             });
@@ -656,15 +556,15 @@ Carrilero izquierdo
             );
           }).toList(),
           value: _categoria,
-          validator: (value) => value == '' ? 'Poner el pais' : '',
+          validator: (value) => value == '' ? 'Poner la Categoria' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _categoria = value;
+              //newContact.favoriteColor = newvalue!;
               setState(() {
-                widget.jugador.categoria = _categoria;
+                _categoria = value!;
+                widget.jugador!.categoria = _categoria!;
               });
               cambio = true;
               state.didChange(value);
@@ -697,12 +597,12 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner el pais' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _competicion = value;
+              //newContact.favoriteColor = newvalue!;
+              _competicion = value!;
               setState(() {
-                widget.jugador.competecion = _competicion;
+                widget.jugador!.competecion = _competicion;
               });
               cambio = true;
               state.didChange(value);
@@ -735,12 +635,12 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner la selección' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
+          onChanged: (String? value) {
             setState(() {
-              //newContact.favoriteColor = newValue;
-              _seleccion = value;
+              //newContact.favoriteColor = newvalue!;
+              _seleccion = value!;
               setState(() {
-                widget.jugador.seleccion = _seleccion;
+                widget.jugador!.seleccion = _seleccion;
               });
               cambio = true;
               state.didChange(value);
@@ -772,10 +672,10 @@ Carrilero izquierdo
           validator: (value) => value == '' ? 'Poner el A,B,C' : '',
           //validator: (value) => value == null ? 'Poner el 2º puesto' : null,
           isDense: true,
-          onChanged: (value) {
-            _catCantera = value;
+          onChanged: (String? value) {
+            _catCantera = value!;
             setState(() {
-              widget.jugador.catCantera = _catCantera;
+              widget.jugador!.catCantera = _catCantera;
             });
             cambio = true;
             state.didChange(value);
@@ -798,14 +698,14 @@ Carrilero izquierdo
         ),        */
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
       },
-      onChanged: (value) {
-        //newContact.favoriteColor = newValue;
-        widget.jugador.jugador = value;
+      onChanged: (String? value) {
+        //newContact.favoriteColor = newvalue!;
+        widget.jugador!.jugador = value!;
         cambio = true;
       },
     );
@@ -823,9 +723,9 @@ Carrilero izquierdo
           color: Colors.black,
         ),        */
       ),
-      onChanged: (value) {
-        //newContact.favoriteColor = newValue;
-        widget.jugador.apodo = value;
+      onChanged: (String? value) {
+        //newContact.favoriteColor = newvalue!;
+        widget.jugador!.apodo = value!;
         cambio = true;
       },
     );
@@ -859,15 +759,15 @@ Carrilero izquierdo
         ),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
       },
-      onChanged: (value) {
-        //newContact.favoriteColor = newValue;
-        _dorsal.text = value;
-        widget.jugador.dorsal = int.parse(_dorsal.text);
+      onChanged: (String? value) {
+        //newContact.favoriteColor = newvalue!;
+        _dorsal.text = value!;
+        widget.jugador!.dorsal = int.parse(_dorsal.text);
         cambio = true;
       },
     );
@@ -886,13 +786,13 @@ Carrilero izquierdo
           color: Colors.black,
         ),
       ),
-      onChanged: (value) {
-        //newContact.favoriteColor = newValue;
-        widget.jugador.peso = value;
+      onChanged: (String? value) {
+        //newContact.favoriteColor = newvalue!;
+        widget.jugador!.peso = value!;
         cambio = true;
       },
       /*validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -911,32 +811,32 @@ Carrilero izquierdo
           color: Colors.black,
         ),
       ),
-      onChanged: (value) {
-        //newContact.favoriteColor = newValue;
-        widget.jugador.altura = value;
+      onChanged: (String? value) {
+        //newContact.favoriteColor = newvalue!;
+        widget.jugador!.altura = value!;
         cambio = true;
       },
       /*validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
       },*/
     );
 
-    Future<DateTime> getDate() {
+    Future<DateTime?> getDate() {
       // Imagine that this function is
       // more complex and slow.
       return showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: Config.dateStringtodateCalendario(widget.jugador!.fechaNacimiento)!,
         firstDate: DateTime(1970),
         lastDate: DateTime(2050),
         locale: const Locale("es", "ES"),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext? context, Widget? child) {
           return Theme(
             data: ThemeData.dark(),
-            child: child,
+            child: child!,
           );
         },
       );
@@ -945,35 +845,16 @@ Carrilero izquierdo
     void callDatePicker() async {
       var order = await getDate();
       setState(() {
-        _fecha = DateFormat('dd/MM/yyyy').format(order);
-        widget.jugador.fechaNacimiento = _fecha;
-        _categoria = widget.jugador.edadCategoria();
+        _fecha = DateFormat('dd/MM/yyyy').format(order!);
+        widget.jugador!.fechaNacimiento = _fecha;
+        _categoria = "";
+        //_categoria = widget.jugador!.edadCategoriaSinLetras();
         cambio = true;
       });
     }
 
-    void callDatePickerContrato() async {
-      var order = await getDate();
-      setState(() {
-        _fechaContrato = DateFormat('dd/MM/yyyy').format(order);
-        cambio = true;
-      });
-    }
 
-    Widget _previewImage() {
-      if (_imageFile != null) {
-        return Semantics(
-            child: Image.file(File(_imageFile.path)), label: "IAMGEN");
-      } else if (_pickImageError != null) {
-        return Text(
-          'Pick image error: $_pickImageError',
-          textAlign: TextAlign.center,
-        );
-      } else {
-        return //Texto(Config.colorAPP, AppLocalization.of(context).imagen,20,Colors.grey
-            Image.asset('assets/img/jugador.png');
-      }
-    }
+
 
     FormField inputScouter = new FormField(builder: (FormFieldState state) {
       return DropdownButtonFormField(
@@ -992,11 +873,11 @@ Carrilero izquierdo
         value: _scouter,
         validator: (value) => value == null ? '' : null,
         isDense: true,
-        onChanged: (value) {
+        onChanged: (String? value) {
           setState(() {
-            //newContact.favoriteColor = newValue;
-            _scouter = value;
-            widget.jugador.scouter = value;
+            //newContact.favoriteColor = newvalue!;
+            _scouter = value!;
+            widget.jugador!.scouter = value!;
             cambio = true;
             state.didChange(value);
           });
@@ -1014,12 +895,12 @@ Carrilero izquierdo
               Container(
                 padding: EdgeInsets.only(top: 10, left: 5.0),
                 child: Image.network(
-                    Config.escudoClubesFF(widget.jugador.equipo),
+                    Config.escudoClubesFF(widget.jugador!.equipo),
                     height: 25),
               ),
               Container(
                   padding: EdgeInsets.only(top: 10, left: 5.0),
-                  child: Text('${widget.jugador.equipo}',
+                  child: Text('${widget.jugador!.equipo}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -1044,11 +925,11 @@ Carrilero izquierdo
                 ):Container(),
                 BBDDService().getUserScout().puesto == "FootFeel"
                     ? Switch(
-                  value: widget.jugador.firmado,
-                  onChanged: (newValue) {
+                  value: widget.jugador!.firmado,
+                  onChanged: ( value) {
                     setState(() {
-                      widget.jugador.firmado = newValue;
-                      print(widget.jugador.firmado);
+                      widget.jugador!.firmado =value!;
+                      print(widget.jugador!.firmado);
                     });
                   },
                   activeTrackColor: Config.colorFootFeel,
@@ -1058,7 +939,7 @@ Carrilero izquierdo
                 //   padding: EdgeInsets.only(left: 5,right: 10, top: 5), child: picture),
               ],
             ),
-            (widget.jugador.firmado == false &&  BBDDService().getUserScout().puesto!= "Marketing")?
+            (widget.jugador!.firmado == false &&  BBDDService().getUserScout().puesto!= "Marketing")?
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1075,11 +956,11 @@ Carrilero izquierdo
                   ),
                 ),
                 Switch(
-                  value: widget.jugador.proceso,
-                  onChanged: (newValue) {
+                  value: widget.jugador!.proceso,
+                  onChanged: (value) {
                     setState(() {
-                      widget.jugador.proceso = newValue;
-                      print(widget.jugador.proceso);
+                      widget.jugador!.proceso = value!;
+                      print(widget.jugador!.proceso);
                     });
                   },
                   activeTrackColor: Colors.red.shade700,
@@ -1112,10 +993,8 @@ Carrilero izquierdo
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                FlatButton(
-                  minWidth: 1,
+                TextButton(
                   onPressed: callDatePicker,
-                  padding: EdgeInsets.only(left: 0.0),
                   child: Icon(
                     CustomIcon.birthday_cake,
                     color: Colors.black,
@@ -1137,7 +1016,7 @@ Carrilero izquierdo
                 Container(
                   padding: EdgeInsets.only(left: 10, top: 15),
                   child: Text(
-                    widget.jugador.edadCategoria(),
+                    widget.jugador!.edadCategoria(),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -1187,9 +1066,10 @@ Carrilero izquierdo
                       minWidth: 100,
                       minHeight: 30,
                       initialLabelIndex:
-                          Config.getValue(widget.jugador.lateral),
-                      activeBgColor: Colors.blue[900],
-                      inactiveBgColor: Colors.grey[300],
+                          Config.getValue(widget.jugador!.lateral),
+
+                      activeBgColor: [Colors.blue.shade900],
+                      inactiveBgColor: Colors.grey.shade300,
                       inactiveFgColor: Colors.black,
                       fontSize: 12,
                       labels: [
@@ -1202,9 +1082,8 @@ Carrilero izquierdo
                         print(index);
                         setState(() {
                           print(_lateral);
-
-                          _lateral = Config.lateral[index];
-                          widget.jugador.lateral = _lateral;
+                          _lateral = Config.lateral[index!];
+                          widget.jugador!.lateral = _lateral;
                           cambio = true;
                         });
                       },
@@ -1262,16 +1141,16 @@ Carrilero izquierdo
                         minWidth: 110,
                         minHeight: 30,
                         initialLabelIndex:
-                            Config.getValue(widget.jugador.nacionalidad),
-                        activeBgColor: Colors.blue[900],
-                        inactiveBgColor: Colors.grey[300],
+                            Config.getValue(widget.jugador!.nacionalidad),
+                        activeBgColor: Colors.blue.shade900,
+                        inactiveBgColor: Colors.grey.shade300,
                         inactiveFgColor: Colors.black,
                         fontSize: 12,
                         labels: ['Nacional', 'Extranjero'],
                         onToggle: (index) {
                           setState(() {
                             _extranjero = Config.extranjero[index];
-                            widget.jugador.nacionalidad = _extranjero;
+                            widget.jugador!.nacionalidad = _extranjero;
                             cambio = true;
                           });
                         },
@@ -1289,91 +1168,4 @@ Carrilero izquierdo
     return Scaffold(body: body);
   }
 
-  Future<bool> _showGrabar(BuildContext context) {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text('ATENCIÓN',
-              style: TextStyle(
-                fontSize: 18,
-                decoration: TextDecoration.underline,
-              )),
-          content: Column(
-            children: [
-              Container(
-                height: 18,
-              ),
-              Text('El jugador\n${widget.jugador.jugador}'),
-              Container(
-                height: 18,
-              ),
-              Text('se ha grabado'.toUpperCase(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  )),
-              Container(
-                height: 10,
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Aceptar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pop(context, true);
-                return true; // showDialog() returns true
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future uploadFile(String foto) async {
-    final _storage = FirebaseStorage.instance;
-    final _picker = ImagePicker();
-    await Permission.photos.request();
-    var permissionStatus = await Permission.photos.status;
-
-    // if (permissionStatus.isGranted) {
-    //Select Image
-
-    var file = File(_imageFile.path);
-
-    if (_imageFile != null) {
-      final tempDir = await getTemporaryDirectory();
-      final path = tempDir.path;
-
-      Im.Image image = Im.decodeImage(file.readAsBytesSync());
-      image = Im.copyResize(
-        image,
-        width: 500,
-      );
-      // choose the size here, it will maintain aspect ratio
-      var compressedImage = new File('$path/img_copy.png')
-        ..writeAsBytesSync(Im.encodePng(image, level: 4));
-
-      //Upload to Firebase
-      var snapshot = await _storage
-          .ref()
-          .child('jugadores/$foto')
-          .putFile(compressedImage);
-
-      var downloadUrl = await snapshot.ref.getDownloadURL();
-
-      setState(() {
-        imageUrl = downloadUrl;
-      });
-    } else {
-      print('No Path Received');
-    }
-    /* } else {
-      print('Grant Permissions and try again');
-    }*/
-  }
 }

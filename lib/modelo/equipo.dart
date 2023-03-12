@@ -12,8 +12,6 @@ class Equipo {
   String scouter="";
 
 
-  Equipo({this.id, this.equipo, this.categoria, this.temporada, this.entrenador,this.club,
-      this.indice});
 
   Equipo.fromMap(Map snapshot,String id) :
         id = id ?? '',
@@ -43,7 +41,7 @@ class Equipo {
   }
 
 
-  int indiceCategoria(String aux){
+  int? indiceCategoria(String aux){
 
     if(aux.toUpperCase().contains("SENIOR"))
       return 1;
@@ -63,7 +61,7 @@ class Equipo {
       return 8;
   }
 
-  int duracionTiempo(String aux){
+  int? duracionTiempo(String aux){
 
     if(aux.toUpperCase().contains("SENIOR"))
       return 90;

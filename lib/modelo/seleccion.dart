@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 class Seleccion {
-  String _id;
-  String _seleccion;
-  int _indice;
+  String _id="";
+  String _seleccion="";
+  int _indice=0;
 
 
   Seleccion(); // Categoria(this._idCategoria, this._idCategoria, this._idPais, this._nombre,

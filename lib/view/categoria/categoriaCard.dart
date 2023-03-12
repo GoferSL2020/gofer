@@ -15,8 +15,7 @@ class CategoriaCard extends StatelessWidget {
   final Pais paisDetails;
   final Categoria categoria;
   final EquipoJugador equipo;
-  final bool menu;
-  CategoriaCard({@required this.paisDetails,@required this.categoria,@required this.equipo,@required this.menu});
+  CategoriaCard( this.paisDetails,this.categoria,this.equipo);
 
   @override
   Widget build(BuildContext context) {

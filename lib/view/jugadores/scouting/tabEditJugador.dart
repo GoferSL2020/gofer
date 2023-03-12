@@ -22,9 +22,9 @@ import 'package:iafootfeel/view/jugadores/scouting/tabNivelFoot.dart';
 
 class TabEditJugador extends StatefulWidget {
   final bool puntuaciones;
-  Player jugador;
-  Pais pais;
-  final FiltroJugadores filtro;
+  final Player jugador;
+  final Pais? pais;
+  final FiltroJugadores? filtro;
   @override
   TabEditJugadorState createState() => TabEditJugadorState();
   TabEditJugador(this.jugador, this.puntuaciones, this.filtro, this.pais);
@@ -47,6 +47,7 @@ class TabEditJugadorState extends State<TabEditJugador> {
 
   @override
   void initState() {
+    print("ENTRO TAB");
     insertar = widget.jugador.jugador == "" ? true : false;
 
     super.initState();
@@ -73,7 +74,7 @@ class TabEditJugadorState extends State<TabEditJugador> {
                               title: Text('Atención'),
                               content: Text('¿Has grabado los datos?'),
                               actions: [
-                                FlatButton(
+                                TextButton(
                                     child: Text('Salir'),
                                     onPressed: () async {
                                       if (widget.puntuaciones == true) {
@@ -92,7 +93,7 @@ class TabEditJugadorState extends State<TabEditJugador> {
                                         );
                                       }
                                     }),
-                                FlatButton(
+                                TextButton(
                                     child: Text('Cancelar'),
                                     onPressed: () {
                                       Navigator.pop(context, true);
@@ -187,7 +188,7 @@ class TabEditJugadorState extends State<TabEditJugador> {
                   FloatingActionButtonLocation.centerDocked,
               floatingActionButton: FloatingActionButton(
                 //backgroundColor: widget.jugador.getColor(),
-                backgroundColor: Colors.blue[900],
+                backgroundColor: Colors.blue.shade900,
                 child: const Icon(CustomIcon.save),
                 onPressed: () {
                   if (validacion() == true)
@@ -272,8 +273,8 @@ class TabEditJugadorState extends State<TabEditJugador> {
     super.dispose();
   }
 
-  Future<bool> _showGrabar(BuildContext context) {
-    return showDialog<bool>(
+  Future<bool?> _showGrabar(BuildContext context) {
+    return showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -296,9 +297,9 @@ class TabEditJugadorState extends State<TabEditJugador> {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Aceptar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
+                  style: TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: () async {
                 Navigator.pop(context, true);
                 CRUDJugador con = CRUDJugador();
@@ -312,15 +313,14 @@ class TabEditJugadorState extends State<TabEditJugador> {
                 }
                 //con.updateJugadorDATABIG(widget.temporada,widget.pais,widget.categoria,widget.equipo,widget.jugador);
                 widget.cambio = false;
-                return true; // showDialog() returns true
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('Cancelar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
+                  style: TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: () {
                 Navigator.pop(context, false);
-                return false; // showDialog() returns true
+                // showDialog() returns true
               },
             )
           ],
@@ -329,8 +329,8 @@ class TabEditJugadorState extends State<TabEditJugador> {
     );
   }
 
-  Future<bool> _showValidacion(BuildContext context) {
-    return showDialog<bool>(
+  Future<bool?> _showValidacion(BuildContext context) {
+    return showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -354,11 +354,11 @@ class TabEditJugadorState extends State<TabEditJugador> {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Aceptar', style: TextStyle(fontSize: 16)),
               onPressed: () {
                 Navigator.pop(context, false);
-                return false; // showDialog() returns true
+                // showDialog() returns true
               },
             )
           ],

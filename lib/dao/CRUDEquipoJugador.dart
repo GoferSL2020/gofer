@@ -7,10 +7,10 @@ import 'package:iafootfeel/modelo/pais.dart';
 
 class CRUDEquipoJugador extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference ref;
+  late CollectionReference ref;
 
 
-  List<EquipoJugador> equipos;
+  late List<EquipoJugador> equipos;
 
 
   Stream<QuerySnapshot> getDataCollectionEquipos(Pais pais) {

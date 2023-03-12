@@ -16,8 +16,8 @@ import 'package:iafootfeel/view/jugadores/scouting/tabEditJugador.dart';
 import 'package:iafootfeel/wigdet/abajo.dart';
 
 class JugadoresView extends StatefulWidget {
-  final FiltroJugadores _filtro;
-  final Pais _pais;
+  final FiltroJugadores? _filtro;
+  final Pais? _pais;
   JugadoresView(this._filtro, this._pais);
 
   @override
@@ -26,8 +26,8 @@ class JugadoresView extends StatefulWidget {
 
 class _JugadoresViewState extends State<JugadoresView> {
   String contador = "";
-  List<Player> jugador = new List<Player>();
-  List<Player> jugadorTODOS = new List<Player>();
+  List<Player> jugador = <Player>[];
+  List<Player> jugadorTODOS = <Player>[];
   final _filtrar = TextEditingController();
   final _posicion = TextEditingController();
   @override
@@ -50,20 +50,20 @@ class _JugadoresViewState extends State<JugadoresView> {
     //print("PAIS");
     //print(_temporadaAux.id);
     List<Player> datos;
-    if (widget._filtro.cantera.contains("Sub") ||
-        widget._filtro.cantera.contains("Absoluta")) {
+    if (widget._filtro!.cantera!.contains("Sub") ||
+        widget._filtro!.cantera!.contains("Absoluta")) {
       datos = await CRUDJugador()
-          .fetchJugadoresFootFeelCanteraSelecciones(widget._filtro);
+          .fetchJugadoresFootFeelCanteraSelecciones(widget._filtro!);
     } else {
-      if (widget._filtro.firmado == true)
-        datos = await CRUDJugador().fetchJugadoresFootFeel(widget._filtro);
+      if (widget._filtro!.firmado == true)
+        datos = await CRUDJugador().fetchJugadoresFootFeel(widget._filtro!);
       else
         datos =
-            await CRUDJugador().fetchJugadoresFootFeelCantera(widget._filtro);
+            await CRUDJugador().fetchJugadoresFootFeelCantera(widget._filtro!);
     }
     setState(() {
       jugador = datos;
-      if (widget._filtro.firmado == true)
+      if (widget._filtro!.firmado == true)
         jugador.sort((a, b) => a.jugador.compareTo(b.jugador));
       else
         jugador.sort((a, b) => a.catCantera.compareTo(b.catCantera));
@@ -114,7 +114,7 @@ class _JugadoresViewState extends State<JugadoresView> {
         ),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -127,12 +127,10 @@ class _JugadoresViewState extends State<JugadoresView> {
               jugador.add(d);
             }
           }
-          print(value);
           for (var d in jugadorTODOS) {
             if (d.jugador.toUpperCase().contains(value.toUpperCase(), 0)) {
               jugador.add(d);
             } else {
-              print("NO: ${d.jugador.toUpperCase()}-${value.toUpperCase()}");
             }
           }
 
@@ -171,7 +169,7 @@ class _JugadoresViewState extends State<JugadoresView> {
         ),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -184,12 +182,11 @@ class _JugadoresViewState extends State<JugadoresView> {
               jugador.add(d);
             }
           }
-          print(value);
           for (var d in jugadorTODOS) {
             if (d.posicion.toUpperCase().contains(value.toUpperCase(), 0)) {
               jugador.add(d);
             } else {
-              print("NO: ${d.jugador.toUpperCase()}-${value.toUpperCase()}");
+
             }
           }
 
@@ -209,7 +206,7 @@ class _JugadoresViewState extends State<JugadoresView> {
                 )),
           ],
           backgroundColor: Colors.black,
-          title: Text(widget._filtro.lugar,
+          title: Text(widget._filtro!.lugar!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -226,18 +223,18 @@ class _JugadoresViewState extends State<JugadoresView> {
             if (BBDDService().getUserScout().puesto == "Agenda FootFeel")
               jugador.scouter = BBDDService().getUserScout().name;
             else
-              jugador.scouter = widget._filtro.scouter;
-            if (widget._pais != null) {
-              jugador.pais = widget._pais.pais;
-              jugador.equipo = widget._filtro.equipo;
-              if (widget._pais.pais == "LALIGA") {
-                if (widget._filtro.cantera == "Senior")
+              jugador.scouter = widget._filtro!.scouter!;
+            if (widget._pais!.pais !="") {
+              jugador.pais = widget._pais!.pais;
+              jugador.equipo = widget._filtro!.equipo!;
+              if (widget._pais!.pais == "LALIGA") {
+                if (widget._filtro!.cantera == "Senior")
                   jugador.competecion = "";
                 else
-                  jugador.competecion = widget._filtro.cantera;
-                jugador.categoria = widget._filtro.cantera;
+                  jugador.competecion = widget._filtro!.cantera!;
+                jugador.categoria = widget._filtro!.cantera!;
               } else {
-                jugador.competecion = widget._filtro.cantera;
+                jugador.competecion = widget._filtro!.cantera!;
               }
             } else {
               jugador.pais = "";
@@ -247,11 +244,12 @@ class _JugadoresViewState extends State<JugadoresView> {
             }
 
             Navigator.pop(context, true);
+
             Navigator.of(context)
                 .push(
                   new MaterialPageRoute(
                       builder: (_) => TabEditJugador(
-                          jugador, false, widget._filtro, widget._pais)),
+                          jugador, false, widget._filtro!, widget._pais!)),
                 )
                 .then((val) => val ? _getRequests() : null);
           },
@@ -347,9 +345,8 @@ class _JugadoresViewState extends State<JugadoresView> {
                         return Dismissible(
                             background: slideLeftBackground(),
                             //secondaryBackground: slideLeftBackground(),
-                            key: jugador[index] != null
-                                ? Key(jugador[index].key)
-                                : "",
+
+                            key: Key(jugador![index].key),
                             confirmDismiss:
                                 (DismissDirection dismissDirection) async {
                               switch (dismissDirection) {
@@ -521,14 +518,14 @@ class _JugadoresViewState extends State<JugadoresView> {
         .push(
           new MaterialPageRoute(
               builder: (_) =>
-                  TabEditJugador(jugador, false, widget._filtro, widget._pais)),
+                  TabEditJugador(jugador, false, widget._filtro!, widget._pais!)),
         )
         .then((val) => val ? _getRequests() : null);
   }
 
   Widget slideRightBackground() {
     return Container(
-      color: Colors.green[900],
+      color: Colors.green.shade900,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -557,7 +554,7 @@ class _JugadoresViewState extends State<JugadoresView> {
 
   Widget slideLeftBackground() {
     return Container(
-      color: Colors.red[900],
+      color: Colors.red.shade900,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -584,7 +581,7 @@ class _JugadoresViewState extends State<JugadoresView> {
     );
   }
 
-  Future<bool> _showConfirmationDialog(
+  Future<bool?> _showConfirmationDialog(
       BuildContext context, String action, Player jugador) {
     return showDialog<bool>(
       context: context,
@@ -617,23 +614,22 @@ class _JugadoresViewState extends State<JugadoresView> {
                   ],
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('Aceptar',
                         style:
-                            TextStyle(fontSize: 16, color: Colors.green[900])),
+                            TextStyle(fontSize: 16, color: Colors.green.shade900)),
                     onPressed: () {
                       Navigator.pop(context, true);
-                      return true; // showDialog() returns true
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       'Cancelar',
                       style: TextStyle(fontSize: 16, color: Config.colorAPP),
                     ),
                     onPressed: () {
                       Navigator.pop(context, false);
-                      return false; // showDialog() returns false
+                       // showDialog() returns false
                     },
                   ),
                 ],
@@ -661,13 +657,13 @@ class _JugadoresViewState extends State<JugadoresView> {
                   ],
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('Aceptar',
                         style:
-                            TextStyle(fontSize: 16, color: Colors.green[900])),
+                            TextStyle(fontSize: 16, color: Colors.green.shade900)),
                     onPressed: () {
                       Navigator.pop(context, false);
-                      return false; // showDialog() returns true
+
                     },
                   ),
                 ],

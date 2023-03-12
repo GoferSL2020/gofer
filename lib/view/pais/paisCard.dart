@@ -10,9 +10,8 @@ import 'package:iafootfeel/view/equipos/equiposJugadorView.dart';
 
 class PaisCard extends StatelessWidget {
   final Pais paisDetails;
-  final Temporada temporada;
   final bool menu;
-  PaisCard({@required this.paisDetails,@required this.temporada,@required this.menu});
+  PaisCard({required this.paisDetails,required this.menu});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class PaisCard extends StatelessWidget {
           }else{
             //PAIS DE FUERA
             Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                CategoriasView(pais:paisDetails,equipo:equipo)));
+                CategoriasView(paisDetails,equipo)));
           }
         }
 

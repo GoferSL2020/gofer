@@ -19,7 +19,7 @@ class FutbolMio {
   FutbolMio._();
 
   static const _kFontFam = 'FutbolMio';
-  static const String _kFontPkg = null;
+  static const Null _kFontPkg = null;
 
   static const IconData entrenador_1 = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData entrenador_2 = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);

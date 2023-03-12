@@ -9,7 +9,7 @@ import 'package:iafootfeel/icon_mio_icons.dart';
 import 'package:iafootfeel/modelo/equipoJugador.dart';
 import 'package:iafootfeel/modelo/pais.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 
 import 'package:iafootfeel/view/categoria/categoriasView.dart';
 import 'package:iafootfeel/view/equipos/editEquipoJugador.dart';
@@ -30,8 +30,8 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
 
 
   _cogerEquipos() async {
-    List<EquipoJugador> datosTodos = List();
-    List<EquipoJugador> datosScout = List();
+    List<EquipoJugador> datosTodos = [];
+    List<EquipoJugador> datosScout = [];
     //todos los equipos
     datosScout = await CRUDUserScout().fetchEquiposTieneScout(widget._scout.id);
     datosTodos = await CRUDUserScout().fetchEquiposPaisesScout();
@@ -94,7 +94,7 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
       FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         //backgroundColor: widget.jugador.getColor(),
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue.shade900,
         child: const Icon(CustomIcon.save),
         onPressed: () {
             _showGrabar(context);
@@ -191,9 +191,9 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
                               children: <Widget>[
                                 new Checkbox(value: _equipoJugador[index].lotiene,
                                     activeColor: Colors.green,
-                                    onChanged:(bool newValue){
+                                    onChanged:(bool? newValue){
                                       setState(() {
-                                        _equipoJugador[index].lotiene = newValue;
+                                        _equipoJugador[index].lotiene = newValue!;
                                       });
                                     }),
                               ],
@@ -208,7 +208,7 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
     );
   }
 
-  Future<bool> _showGrabar(BuildContext context)  {
+  Future<void> _showGrabar(BuildContext context)  {
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -232,23 +232,22 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Aceptar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
+                  style: TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: ()  async {
                 Navigator.pop(context, true);
                 CRUDUserScout con = CRUDUserScout();
                 //widget.jugador.firmado=true;
                   await con.grabarEquipos(_equipoJugador,widget._scout);
-                return true; // showDialog() returns true
+                // showDialog() returns true
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('Cancelar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
+                  style: TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: () {
-                Navigator.pop(context, false);
-                return false; // showDialog() returns true
+                Navigator.pop(context, false);// showDialog() returns true
               },
             )
           ],
@@ -258,59 +257,4 @@ class _ScoutEquiposViewState extends State<ScoutEquiposView> {
 
   }
 
-  Future<bool> _showConfirmationDialog(
-      BuildContext context, String action, EquipoJugador equipo) {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text('ATENCIÓN',
-              style: TextStyle(
-                fontSize: 18,
-                decoration: TextDecoration.underline,
-              )),
-          content: Column(
-            children: [
-              Container(
-                height: 10,
-              ),
-              Text('¿Quieres $action el equipo\n${equipo.equipo}?'),
-              Container(
-                height: 10,
-              ),
-              Text('Eliminar el equipo',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 18,
-                    decoration: TextDecoration.underline,
-                  )),
-              Container(
-                height: 10,
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Aceptar',
-                  style: TextStyle(fontSize: 16, color: Colors.green[900])),
-              onPressed: () {
-                Navigator.pop(context, true);
-                return true; // showDialog() returns true
-              },
-            ),
-            FlatButton(
-              child: Text(
-                'Cancelar',
-                style: TextStyle(fontSize: 16, color: Config.colorFootFeel),
-              ),
-              onPressed: () {
-                Navigator.pop(context, false);
-                return false; // showDialog() returns false
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

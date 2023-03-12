@@ -12,14 +12,13 @@ import 'package:iafootfeel/service/BBDDService.dart';
 
 class CRUDCategoria extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference ref;
+  late CollectionReference ref;
 
-  CRUDCategoria() {
-  }
 
-  List<Categoria> categorias;
-  List<Cantera> canteras;
-  List<Seleccion> selecciones;
+
+  late List<Categoria> categorias;
+  late List<Cantera> canteras;
+  late List<Seleccion> selecciones;
 
 
 
@@ -91,7 +90,7 @@ class CRUDCategoria extends ChangeNotifier {
     return categorias;
   }
 
-  List<Scout> scouting;
+  late List<Scout> scouting;
   Future<List<Scout>> fetchScouting(Pais pais, Categoria categoria) async {
     List<Scout> scouter=[];
     var result = await _db.
@@ -110,7 +109,7 @@ class CRUDCategoria extends ChangeNotifier {
     return scouting;
   }
 
-  Stream<QuerySnapshot> getDataCollectionCategorias(Pais pais) {
+  Stream<QuerySnapshot>? getDataCollectionCategorias(Pais pais) {
     print("PAISES:${pais.id}");
      _db.collection("paises").
     doc(pais.id).collection("categorias").orderBy("indice", descending: false).snapshots();
@@ -123,11 +122,11 @@ class CRUDCategoria extends ChangeNotifier {
     return ref.snapshots();
   }
 
-  Future<Pais> getCategoriaById(String id) async {
+  /*Future<Pais> getCategoriaById(String id) async {
     var doc = await ref.doc(id).get();
     return  Pais.fromMap(doc.data(), doc.id) ;
   }
-
+*/
 
   Future removeCategoria(Temporada temporada,String id) async{
     await _db.collection("paises").doc(id).delete() ;

@@ -45,7 +45,7 @@ class SignUp extends StatelessWidget {
                           fontSize: 35,
                           fontFamily:'Roboto')),
                 ),
-                Container(
+                /*Container(
                   width: 250,
                   height: 65,
                   padding: EdgeInsets.all(10),
@@ -68,7 +68,7 @@ class SignUp extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Container(
                   width: 250,
                   height: 65,

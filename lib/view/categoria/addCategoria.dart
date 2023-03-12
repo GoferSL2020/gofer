@@ -39,7 +39,7 @@ class _AddCategoriaState extends State<AddCategoria> {
                       child: IconButton(
                           icon: Icon(Icons.save_outlined,size: 30, color: Colors.blue,),
                           onPressed: () async {
-                            if (_formKey.currentState.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               setState(() {
                                 isLoading = true;
                               });
@@ -83,7 +83,7 @@ class _AddCategoriaState extends State<AddCategoria> {
                   /*Row(children: [
                     Padding(
                         padding: EdgeInsets.only(top:20.0, left:20, right: 20, bottom: 5),
-                        child:Texto(Colors.blue[900], "Puesto",14, Colors.white, true)
+                        child:Texto(Colors.blue.shade900, "Puesto",14, Colors.white, true)
                     ),
                     Padding(
                       padding: EdgeInsets.only(top:20.0, left:20, right: 20, bottom: 5),
@@ -107,7 +107,7 @@ class _AddCategoriaState extends State<AddCategoria> {
                           labelText: 'Categoria'),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'Categoria';
                         }
                         return null;
@@ -118,20 +118,6 @@ class _AddCategoriaState extends State<AddCategoria> {
   }
 
 
-  String validateEmail(String value){
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    if (value.isEmpty){
-      return 'Por favor ingrese el email';
-    }else{
-      RegExp regex = new RegExp(pattern);
-      if (!regex.hasMatch(value)){
-        return 'Enter Valid Email';
-      }else{
-        return null;
-      }
-    }
-  }
   int _state = 0;
   Widget setUpButtonChild(){
     if(_state == 0){

@@ -5,12 +5,14 @@ import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/model/jugador.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
 import 'package:intl/intl.dart';
 
 class Player {
-  String key;
+
+  Player();
+
+  String key="";
   String _email = "";
   String _fecha = "";
   String _nombre = "";
@@ -65,8 +67,8 @@ class Player {
   int _calzado=0;
   String _fechaFinalizacionMarca = "";
 
-  int _edadRange1;
-  int _edadRange2;
+  int _edadRange1=0;
+  int _edadRange2=0;
 
   String _puntaciones = "";
   String _estado = "";
@@ -77,9 +79,7 @@ class Player {
   String _idTemporada = "";
   String _idPais = "";
   String _idEquipo = "";
-
-  Image image;
-
+  
   String _reunion = "";
 
   String _twitter = "";
@@ -90,7 +90,6 @@ class Player {
 
   String _transfermark="";
 
-  Player();
 
   String _rendimiento = "";
 
@@ -173,91 +172,6 @@ class Player {
     _competecion = value;
   }
 
-  Player.fromSnapshot(DataSnapshot obj) {
-    this._categoria = obj.value['categoria'];
-    this._competecion = obj.value['competecion'];
-    this._seleccion = obj.value['seleccion'];
-
-    this._equipo = obj.value['equipo'];
-
-    this._imagen = obj.value['imagen'];
-    this._jugador = obj.value['jugador'];
-    this._fechaNacimiento = obj.value['fechaNacimiento'];
-
-    this._nivel = obj.value['nivel'];
-    this._nivel2 = obj.value['nivel2'];
-    this._nivel3 = obj.value['nivel3'];
-    this._nivel4 = obj.value['nivel4'];
-    this._tipo = obj.value['tipo'];
-    this._tipoAntiguo = obj.value['tipoAntiguo'];
-
-    this._fechaContrato = obj.value['fechaContrato'];
-    this._dorsal = obj.value['dorsal'] is int ? obj.value['dorsal'] : int.parse(
-        obj.value['dorsal']);
-    this._peso = obj.value['peso'];
-    this._altura = obj.value['altura'];
-    this._valor = obj.value['valor'];
-    this._paisNacimiento = obj.value['paisNacimiento'];
-    this._contrato = obj.value['contrato'];
-    this._firmado = obj.value['firmado'] ? false : obj.value['firmado'];
-    this._contratoRepresentacion = obj.value['contratoRepresentacion'];
-    this._contratoFederacion = obj.value['contratoFederacion'];
-    this._contratoProteccionDatos = obj.value['contratoProteccionDatos'];
-    this._servicioComunicacion = obj.value['servicioComunicacion'];
-    this._fechaVencimientoContrato = obj.value['fechaVencimientoContrato'];
-    this._contratoMarcaDeportiva = obj.value['contratoMarcaDeportiva'];
-    this._marcaDeportiva = obj.value['marcaDeportiva'];
-    this._calzado = obj.value['calzado'];
-    this._fechaFinalizacionMarca = obj.value['fechaFinalizacionMarca'];
-
-
-    this._scouter = obj.value['scouter'];
-    this._contacto = obj.value['contacto'];
-    this._agente = obj.value['agente'];
-    this._reunion = obj.value['reunion'];
-    this._rendimiento = obj.value['rendimiento'];
-    this._instagram = obj.value['instagram'];
-    this._proceso = obj.value['proceso']== null ? false : obj.value['proceso'];
-
-    this._twitter = obj.value['twitter'];
-    this._transfermark = obj.value['transfermark'];
-
-    this._apodo = obj.value['apodo'];
-    this._catCantera = obj.value['catCantera'];
-
-    this._veredicto = obj.value['veredicto'];
-    this._prestamo =
-    obj.value['prestamo'] == null ? "no" : obj.value['prestamo'];
-    this._lateral = obj.value['lateral'];
-    this._ccaa = obj.value['ccaa'] == null ? "" : obj.value['ccaa'];
-    this._nacionalidad =
-    obj.value['nacionalidad'] == null ? "" : obj.value['nacionalidad'];
-    this._nacionalidad =
-    obj.value['nacionalidad2'] == null ? "" : obj.value['nacionalidad2'];
-    this._posicionalternativa =
-    obj.value['posicionalternativa'] == null ? "" : obj
-        .value['posicionalternativa'];
-
-
-    this._observaciones = obj.value['observaciones'];
-    this._descripcion = obj.value['_descripcion'];
-    this._comentarios = obj.value['_comentarios'];
-    this._pais = obj.value['pais'];
-    this._posicion = obj.value['posicion'];
-
-
-    this._idCategoria = obj.value['idCategoria'];
-    this._idTemporada = obj.value['idTemporada'];
-    this._idPais = obj.value['idPais'];
-    this._idEquipo = obj.value['idEquipo'];
-
-
-    //JugadorDao dao = JugadorDao();
-    //dao.getImagen(this.id, this.imagen);
-    imagen = null;
-    // "https://firebasestorage.googleapis.com/v0/b/iascout.appspot.com/o/jugadores%2F${this
-    //    .id}?alt=media";
-  }
 
 
   Map<String, dynamic> toMap() {
@@ -328,20 +242,6 @@ class Player {
     return map;
   }
 
-  static Uint8List decode(File imagen) {
-    Uint8List aux = imagen.readAsBytesSync();
-    //var thumbnail =copyResize(imagen, width: 500)
-    //print("DECODE:"+imagen.path);
-    //print("DECODE2:"+imagen.readAsBytesSync().toString());
-    return aux;
-
-    /* Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
-    var thumbnail = copyResize(image, width: 500);
-
-    // Save the thumbnail as a PNG.
-    File('thumbnail.png').writeAsBytesSync(encodePng(thumbnail));
-    return imagen;*/
-  }
 
   Player.fromJson(this.key, Map obj) {
     key = this.key;
@@ -679,14 +579,14 @@ class Player {
     if (nivelAux.toUpperCase() == "Dudoso".toUpperCase())
       return 2; //Colors.orange;//248,25,8
     if (nivelAux.toUpperCase() == "Discreto".toUpperCase())
-      return 1; //Colors.red[900];//193,20,7
+      return 1; //Colors.red.shade900;//193,20,7
     if (nivelAux.toUpperCase() == "N/A".toUpperCase())
-      return 0; //Colors.red[900];//193,20,7
-    return -1; //Colors.red[900];//193,20,7
+      return 0; //Colors.red.shade900;//193,20,7
+    return -1; //Colors.red.shade900;//193,20,7
   }
 
   Color getColor() {
-    List<int> niveles = List();
+    List<int> niveles = [];
     niveles.add(puntacionNivel(_nivel));
     niveles.add(puntacionNivel(_nivel2));
     niveles.add(puntacionNivel(_nivel3));
@@ -702,10 +602,10 @@ class Player {
     if (nivelColor == 2)
       return Color.fromRGBO(169, 11, 145, 1); //purple
     if (nivelColor == 1)
-      return Color.fromRGBO(193, 20, 7, 1); //Colors.red[900];//193,20,7
+      return Color.fromRGBO(193, 20, 7, 1); //Colors.red.shade900;//193,20,7
     if (nivelColor == 0)
-      return Color.fromRGBO(189, 243, 249, 1); //Colors.red[900];//193,20,7
-    if (nivelColor == -1) return Colors.grey; //Colors.red[900];//193,20,7
+      return Color.fromRGBO(189, 243, 249, 1); //Colors.red.shade900;//193,20,7
+    if (nivelColor == -1) return Colors.grey; //Colors.red.shade900;//193,20,7
 
     return Colors.grey; //Colors.grey;//189,243,249
   }
@@ -723,9 +623,9 @@ class Player {
     if (nivelAux.toUpperCase() == "No ha jugado".toUpperCase())
       return Color.fromRGBO(251, 54, 221, 1); //Colors.orange;//248,25,8
     if (nivelAux.toUpperCase() == "Discreto".toUpperCase())
-      return Color.fromRGBO(193, 20, 7, 1); //Colors.red[900];//193,20,7
+      return Color.fromRGBO(193, 20, 7, 1); //Colors.red.shade900;//193,20,7
     if (nivelAux.toUpperCase() == "N/A".toUpperCase())
-      return Color.fromRGBO(189, 243, 249, 1); //Colors.red[900];//193,20,7
+      return Color.fromRGBO(189, 243, 249, 1); //Colors.red.shade900;//193,20,7
 
     return Colors.white; //Colors.grey;//189,243,249
   }
@@ -752,11 +652,11 @@ class Player {
   }
 
   static Color nivelColorBajo(String nivelAux) {
-    return Color.fromRGBO(193, 20, 7, 1); //Colors.red[900];//193,20,7
+    return Color.fromRGBO(193, 20, 7, 1); //Colors.red.shade900;//193,20,7
   }
 
   static Color nivelColorNA(String nivelAux) {
-    return Color.fromRGBO(189, 243, 249, 1); //Colors.red[900];//193,20,7
+    return Color.fromRGBO(189, 243, 249, 1); //Colors.red.shade900;//193,20,7
   }
 
 
@@ -766,66 +666,50 @@ class Player {
         .padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
 
     return {
-      "_id": idjugador,
-      "_jugador": _jugador,
-      "_equipo": _equipo,
-      "_temporada": _temporada,
-      "_categoria": _categoria,
-      "competecion": _competecion,
-      "seleccion": _seleccion,
-
-      "_dorsal": _dorsal,
-      "_lateral": _lateral,
-      "_posicion": _posicion,
-      "_posicion2": _posicionalternativa,
-      "_posicionalternativa": _posicionalternativa,
-      "_pais": _pais,
-      "_fechaNacimiento": _fechaNacimiento,
-      "_peso": _peso,
-      "_altura": _altura,
-      "_valor": _valor,
-      "_paisNacimiento": _paisNacimiento,
-      "_ccaa": _ccaa,
-      "_nacionalidad": _nacionalidad,
-      "nacionalidad2": _nacionalidad2,
-
-      'contratoRepresentacion': _contratoRepresentacion,
-      'contratoFederacion': _contratoFederacion,
-      'contratoProteccionDatos': _contratoProteccionDatos,
-      'servicioComunicacion' :_servicioComunicacion,
-      'fechaVencimientoContrato': _fechaVencimientoContrato,
-      'contratoMarcaDeportiva': _contratoMarcaDeportiva,
-      'marcaDeportiva': _marcaDeportiva,
-      'calzado': _calzado,
-      'fechaFinalizacionMarca':_fechaFinalizacionMarca,
-      "_contrato": _contrato,
-      "_fechaContrato": _fechaContrato,
-      "_veredicto": _veredicto,
-      "_prestamo": _prestamo,
-      "_nivel": _nivel,
-      "_nivel2": _nivel2,
-      "_nivel3": _nivel3,
-      "_nivel4": _nivel4,
-      "_scouter": _scouter,
-      "_firmado": _firmado == null ? false : _firmado,
-      "_tipo": _tipo,
-      "_observaciones": _observaciones == null ? "" : _observaciones,
-    "_descripcion": _descripcion == null ? "" : _descripcion,
-    "_comentarios": _comentarios == null ? "" : _comentarios,
-
-    "_idCategoria": _idCategoria,
-      "_idTemporada": _idTemporada,
-      "_idPais": _idPais,
-      "_idEquipo": _idEquipo,
-
-
-      "nombre": BBDDService()
-          .getUserScout()
-          .name,
-      "email": BBDDService()
-          .getUserScout()
-          .email,
-      "fecha": dateSlug
+      "ID": key,
+      "FIRMADO": firmado,
+      "PROCESO": proceso,
+      "AGENTE FOOTFEEL": _scouter,
+      "PAIS": _pais,
+      "JUGADOR": _jugador,
+      "EQUIPO": _equipo,
+      "COMPETECIÓN": _competecion,
+      "CATEGORIA": _categoria + " "+ _catCantera,
+      "SELECCIÓN": _seleccion,
+      "FECHA NACIMIENTO": _fechaNacimiento,
+      "EDAD CATEGORIA": edadCategoria(),
+      "POSICION": _posicion,
+      "POSICION ALTERNATIVA": _posicionalternativa,
+      "LATERAL": _lateral,
+      "PESO": _peso,
+      "ALTURA": _altura,
+      "NACIONALIDAD 1": _nacionalidad,
+      "NACIONALIDAD 2": _nacionalidad2,
+      "CONTRATO REPRESENTACION": _contratoRepresentacion,
+      "FECHA VENCIMIENTO CONTRATO": fechaVencimientoContrato,
+      "CONTRATO FEDERACIÓN": _contratoFederacion,
+      'CONTRATO PROTECCIÓN DATOS': _contratoProteccionDatos,
+      'SERVICIO COMUNICACIÓN': _servicioComunicacion,
+      'INSTAGRAM': _instagram,
+      'TWITTER' :_twitter,
+      'TRANSFERMARK': _transfermark,
+      'CONTRATO MARCA DEPORTIVA': _contratoMarcaDeportiva,
+      'MARCA DEPORTIVA': _marcaDeportiva,
+      'CALZADO': _calzado,
+      'FECHA FINALIZACIÓN MARCA':_fechaFinalizacionMarca,
+      "FECHA FINALIZACION CLUB": _fechaContrato,
+      "PERIODO 1": _nivel,
+      "PERIODO 2": _nivel2,
+      "RENDIMINENTO": _rendimiento,
+      "DESCRIPCIÓN JUGADOR": _descripcion == null ? "" : _descripcion,
+      "OBSERVACIONES SCOUTER": _observaciones == null ? "" : _observaciones,
+      "AGENTE": _agente,
+      "CONTACTO": _contacto,
+      "COMENTARIOS CAPTACIÓN": _comentarios,
+      "COMENTARIOS CAPTACIÓN": _comentarios,
+      "nombre": _nombre,
+      "email": _email,
+      "id": key
     };
   }
 
@@ -1177,6 +1061,14 @@ class Player {
     if (fechaNacimiento == "") return "Sin fecha";
     if (fechaNacimiento == "-") return "Sin fecha";
     return Config.edadCategoria(fechaNacimiento);
+  }
+
+  String edadCategoriaSinLetras() {
+    String sub = "";
+    if (fechaNacimiento == null) return "";
+    if (fechaNacimiento == "") return "";
+    if (fechaNacimiento == "-") return "";
+    return Config.edadCategoriaSinLetras(fechaNacimiento);
   }
 
   String get contratoFederacion => _contratoFederacion;

@@ -3,14 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/conf/config.dart';
 import 'package:iafootfeel/custom_icon_icons.dart';
-import 'package:iafootfeel/dao/CRUDEquipoJugador.dart';
 import 'package:iafootfeel/dao/CRUDNacionalidad.dart';
 import 'package:iafootfeel/modelo/nacionalidad.dart';
-
-import 'package:iafootfeel/modelo/pais.dart';
-
-import 'package:iafootfeel/view/categoria/categoriasView.dart';
-import 'package:iafootfeel/view/equipos/editEquipoJugador.dart';
 import 'package:iafootfeel/view/nacionalidad/editNacionalidad.dart';
 import 'package:iafootfeel/wigdet/abajo.dart';
 
@@ -24,7 +18,7 @@ class NacionalidadesView extends StatefulWidget {
 }
 
 class _NacionalidadesViewState extends State<NacionalidadesView> {
-  List<Nacionalidad> nacionalidades;
+  late List<Nacionalidad> nacionalidades;
   
   @override
   void initState() {
@@ -122,7 +116,7 @@ class _NacionalidadesViewState extends State<NacionalidadesView> {
                 stream: productProvider.getDataCollectionNacionalidades(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    nacionalidades = snapshot.data.docs
+                    nacionalidades = snapshot.data!.docs
                         .map((doc) => Nacionalidad.fromMap(doc.data(), doc.id))
                         .toList();
                     return ListView.builder(
@@ -164,7 +158,7 @@ class _NacionalidadesViewState extends State<NacionalidadesView> {
                                   IconButton(
                                       icon: Icon(Icons.restore_from_trash,
                                           size: 25,
-                                          color: Colors.red[900]),
+                                          color: Colors.red.shade900),
                                       onPressed: () async {
                                         await  _showConfirmationDialog(context,"Eliminar",nacionalidades[index]) == true?
                                         productProvider.removeEquipo(nacionalidades[index].id):"";
@@ -186,9 +180,9 @@ class _NacionalidadesViewState extends State<NacionalidadesView> {
     );
   }
 
-  Future<bool> _showConfirmationDialog(
+  Future<bool?> _showConfirmationDialog(
       BuildContext context, String action, Nacionalidad nacionalidad) {
-    return showDialog<bool>(
+    return showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -202,18 +196,18 @@ class _NacionalidadesViewState extends State<NacionalidadesView> {
             Container(height: 10,),
           ],),
           actions: <Widget>[
-            FlatButton(
-              child:  Text('Aceptar',style:TextStyle(fontSize: 16, color: Colors.green[900])),
+            TextButton(
+              child:  Text('Aceptar',style:TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: () {
                 Navigator.pop(context, true);
-                return true; // showDialog() returns true
+                // showDialog() returns true
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('Cancelar',style:TextStyle(fontSize: 16, color: Config.colorFootFeel),),
               onPressed: () {
                 Navigator.pop(context, false);
-                return false; // showDialog() returns false
+               // showDialog() returns false
               },
             ),
           ],

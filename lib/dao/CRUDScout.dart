@@ -8,19 +8,20 @@ import 'package:iafootfeel/modelo/equipo.dart';
 import 'package:iafootfeel/modelo/equipoJugador.dart';
 import 'package:iafootfeel/modelo/pais.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 
 class CRUDUserScout {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference ref;
-  CollectionReference refNuevo;
+  CollectionReference? ref;
+  CollectionReference? refNuevo;
+  
+  List<UserScout>? UserScouts;
+  List<Pais>? paises;
+  List<EquipoJugador>? equipos;
+  
+  CRUDUserScout() ;
 
-  CRUDUserScout() {
-  }
-
-  List<UserScout> UserScouts;
-  List<Pais> paises;
-  List<EquipoJugador> equipos;
+ 
 
   Future<QuerySnapshot> getDataCollection() {
     return _db.collection("users").get();
@@ -31,8 +32,8 @@ class CRUDUserScout {
     UserScouts = result.docs
         .map((doc) => UserScout.fromJson(doc.id, doc.data()))
         .toList();
-    UserScouts.sort((a,b)=>a.apellido.compareTo(b.apellido));
-    return UserScouts;
+    UserScouts?.sort((a,b)=>a.apellido.compareTo(b.apellido));
+    return UserScouts??[];
   }
 
 
@@ -50,16 +51,6 @@ class CRUDUserScout {
     return _db.collection("users").doc(id).delete();
   }
 
-  Future<DocumentReference> addDocument(Map data) {
-    ref = _db.collection("users");
-    return ref.add(data);
-  }
-
-  Future<void> updateUserScout2(UserScout data, String id) {
-    return ref.doc(id).update({
-      "puesto": data.puesto,
-    });
-  }
 
 
   updateUserScout(UserScout data) async {
@@ -76,7 +67,7 @@ class CRUDUserScout {
 
 
   Future<List<EquipoJugador>> fetchEquiposUsuario(String id) async {
-    List<EquipoJugador> equiposAux=List();
+    List<EquipoJugador> equiposAux=[];
     var result = await  _db.collection("users").doc(id).collection("equipos").get();
     equiposAux = result.docs
         .map((doc) => EquipoJugador.fromMap(doc.data(), doc.id))
@@ -87,7 +78,7 @@ class CRUDUserScout {
     return equiposAux;
   }
   Future<List<EquipoJugador>> fetchEquiposTieneScout(String id) async {
-    List<EquipoJugador> equiposAux=List();
+    List<EquipoJugador> equiposAux=[];
 
     var result = await  _db.collection("users").doc(id).collection("equipos").get();
     equiposAux = result.docs
@@ -98,7 +89,7 @@ class CRUDUserScout {
   }
 
   Future<List<Pais>> fetchPaisesUsuario(String id) async {
-    List<Pais> paisAux=List();
+    List<Pais> paisAux=[];
     var result = await  _db.collection("users").doc(id).collection("paises").get();
     paisAux = result.docs
         .map((doc) => Pais.fromMap(doc.data(), doc.id))
@@ -109,7 +100,7 @@ class CRUDUserScout {
   }
 
   Future<List<Pais>> fetchPaisesTieneUsuario(String id) async {
-    List<Pais> paisAux=List();
+    List<Pais> paisAux=[];
     var result = await  _db.collection("users").doc(id).collection("paises").get();
     paisAux = result.docs
         .map((doc) => Pais.fromMap(doc.data(), doc.id))
@@ -123,7 +114,7 @@ class CRUDUserScout {
 
 
   Future<List<EquipoJugador>> fetchEquipo(String data, Pais pais) async {
-    List<EquipoJugador> equiposAux=List();
+    List<EquipoJugador> equiposAux=[];
     var result = await  _db.collection("users").doc(data).collection("paises").
     doc(pais.id).collection("equipos").orderBy("equipo", descending: false).get();
     equiposAux = result.docs
@@ -133,22 +124,22 @@ class CRUDUserScout {
   }
 
   Future<List<EquipoJugador>> fetchEquiposPaisesScout() async {
-    List<EquipoJugador> equiposAux=List();
-    equipos=List();
+    List<EquipoJugador> equiposAux=[];
+    equipos=[];
     var result = await  _db.collection("paises").where("pais",isEqualTo:"LALIGA").get();
     paises = result.docs
         .map((doc) => Pais.fromMap(doc.data(), doc.id))
         .toList();
-    for(var p in paises){
+    for(var p in paises!){
       equiposAux=await fetchEquiposScout(p);
-      equipos.addAll(equiposAux);
+      equipos?.addAll(equiposAux);
     }
-    return equipos;
+    return equipos??[];
   }
 
 
   Future<List<EquipoJugador>> fetchEquiposScout(Pais pais) async {
-    List<EquipoJugador> equiposAux=List();
+    List<EquipoJugador> equiposAux=[];
     var result = await  _db.collection("paises").doc(pais.id).collection("equipos").get();
     equiposAux = result.docs
         .map((doc) => EquipoJugador.fromMap(doc.data(), doc.id))

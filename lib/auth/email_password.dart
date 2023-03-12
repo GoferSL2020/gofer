@@ -53,7 +53,7 @@ class _EmailPasswordState extends State<EmailPassword> {
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Correo eléctronico';
                     } else if (!value.contains('@')) {
                       return 'Please enter a valid email address!';
@@ -66,9 +66,7 @@ class _EmailPasswordState extends State<EmailPassword> {
                   padding: EdgeInsets.all(20.0),
                   child: isLoading
                       ? CircularProgressIndicator()
-                      : RaisedButton(
-                          color: Config.colorAPP,
-                          shape: Border.all(color: Config.fondo, width: 1.0),
+                      : ElevatedButton(
                           child: Text("Enviar",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -76,7 +74,7 @@ class _EmailPasswordState extends State<EmailPassword> {
                                 color: Colors.white,
                               )),
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               setState(() {
                                 isLoading = true;
                               });
@@ -114,7 +112,7 @@ class _EmailPasswordState extends State<EmailPassword> {
               title: Text("Error"),
               content: Text(err.message),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text("Ok"),
                   onPressed: () {
                     Navigator.of(context).pop();

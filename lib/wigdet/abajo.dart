@@ -5,9 +5,7 @@ import 'package:iafootfeel/modelo/temporada.dart';
 import 'package:iafootfeel/view/menuFootFeel.dart';
 class Abajo extends StatelessWidget {
 
-  final Temporada temporada;
 
-  const Abajo({Key key, this.temporada}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(

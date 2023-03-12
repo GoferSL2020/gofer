@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/dao/CRUDEquipoJugador.dart';
 import 'package:iafootfeel/dao/CRUDNacionalidad.dart';
 import 'package:iafootfeel/modelo/equipoJugador.dart';
 import 'package:iafootfeel/modelo/nacionalidad.dart';
@@ -30,9 +29,6 @@ class EditNacionalidad extends StatefulWidget {
 class _EditNacionalidadState extends State<EditNacionalidad> {
   final _formKey = GlobalKey<FormState>();
   final _nombre = TextEditingController();
-  PickedFile _imageFile;
-  String imageUrl;
-  File _image;
   bool insertar=false;
   dynamic _pickImageError;
   final ImagePicker _picker = ImagePicker();
@@ -54,7 +50,7 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
 
     super.initState();
   }
-
+/*
   Future getImage() async {
     var image = await ImagePicker.pickImage(
       source: ImageSource.gallery,imageQuality: 20,
@@ -65,68 +61,9 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
       print('Image Path $_image');
     });
   }
+*/
 
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
-  _imgFromCamera() async {
-    try {
-      final pickedFile = await _picker.getImage(
-        source: ImageSource.camera,
-        imageQuality: 20,
-      );
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
-
-  _imgFromGallery() async {
-    try {
-      final pickedFile = await _picker.getImage(
-        source: ImageSource.gallery,
-        imageQuality: 20,
-      );
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +80,7 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
         icon: Icon(Icons.flag),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -151,55 +88,6 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
     );
 
 
-
-    Column picture = Column(
-      children: <Widget>[
-        SizedBox(
-          height: 25,
-        ),
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              _showPicker(context);
-            },
-            child: CircleAvatar(
-              radius: 55  ,
-              backgroundColor: Colors.black,
-              child:  new SizedBox(
-                    width: 120.0,
-                    height: 120.0,
-                    child: _imageFile != null
-                    //https://firebasestorage.googleapis.com/v0/b/iaclub.appspot.com/o/
-                        ? Image.file(File(_imageFile.path), fit: BoxFit.fill)
-                        : Image.network("https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/"
-                        "o/clubes"
-                        "%2F${widget.nacionalidad.nacionalidad.replaceAll("Ñ", "N").replaceAll("ñ", "n")}.png"
-                        "?alt=media",
-                            fit: BoxFit.cover,height: 90,
-                          )),
-            ),
-          ),
-        )
-      ],
-    );
-
-    Future<DateTime> getDate() {
-      // Imagine that this function is
-      // more complex and slow.
-      return showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1980),
-        lastDate: DateTime(2050),
-        locale : const Locale("es","ES"),
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData.dark(),
-            child: child,
-          );
-        },
-      );
-    }
 
     ListView body = ListView(
       padding: EdgeInsets.all(0),
@@ -236,9 +124,9 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
               child: IconButton(
                   icon: Icon(Icons.save_outlined,size: 30, color: Colors.blue,),
                   onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
-                      widget.nacionalidad.nacionalidad = inputNombre.controller.text.toUpperCase();
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      widget.nacionalidad.nacionalidad = inputNombre.controller!.text.toUpperCase();
                        if(insertar) {
                           await provider.addEquipo(
                             widget.nacionalidad);
@@ -246,8 +134,6 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
                         await provider.updateEquipo(
                             widget.nacionalidad);
                       }
-                      if(_imageFile!=null)
-                        await uploadFile();
                       Navigator.pop(context);
                     }
                   }),
@@ -267,63 +153,6 @@ class _EditNacionalidadState extends State<EditNacionalidad> {
         body: body);
   }
 
-  Future uploadFile() async {
-    print("UPLLOAD");
-    final _storage = FirebaseStorage.instance;
-    final _picker = ImagePicker();
-    await Permission.photos.request();
-    var permissionStatus = await Permission.photos.status;
-
-   // if (permissionStatus.isGranted) {
-      //Select Image
-      print("STORAGE:${_imageFile.path}");
-      var file = File(_imageFile.path);
-    setState(() {});
-      print("STORAGE:${_imageFile.path}");
-
-      if (_imageFile != null) {
-        final tempDir = await getTemporaryDirectory();
-        final path = tempDir.path;
-
-        Im.Image image = Im.decodeImage(file.readAsBytesSync());
-        image= Im.copyResize(image,width: 500,);
-        // choose the size here, it will maintain aspect ratio
-        var compressedImage = new File('$path/img_copy.png')..writeAsBytesSync(Im.encodePng(image,level: 4));
 
 
-        //Upload to Firebase
-        var snapshot =
-            await _storage.ref().child(
-                "clubes"
-                    "/${widget.nacionalidad.nacionalidad.replaceAll("Ñ", "N").
-                replaceAll("ñ", "n")}.png").putFile(compressedImage, SettableMetadata(contentType: 'image/png',));
-        var downloadUrl = await snapshot.ref.getDownloadURL();
-
-        setState(() {
-          imageUrl = downloadUrl;
-          compressedImage.delete();
-        });
-      } else {
-        print('No Path Received');
-      }
-   /* } else {
-      print('Grant Permissions and try again');
-    }*/
-  }
-
-
-  Future<File> testCompressAndGetFile(File file, String targetPath) async {
-    print("testCompressAndGetFile");
-    final result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      targetPath,
-      quality: 90,
-      minWidth: 100,
-      minHeight: 100,
-      rotate: 0,
-    );
-
-
-    return result;
-  }
 }

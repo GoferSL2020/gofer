@@ -6,12 +6,10 @@ import 'package:iafootfeel/modelo/nacionalidad.dart';
 
 class CRUDNacionalidad extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference ref;
+ late CollectionReference ref;
 
-  CRUDNacionalidad() {
-  }
 
-  List<Nacionalidad> nacionalidades;
+  late List<Nacionalidad> nacionalidades;
 
 
   Future<List<Nacionalidad>> fetchNacionalidades() async {

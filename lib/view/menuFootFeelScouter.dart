@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/dao/CRUDScout.dart';
 import 'package:iafootfeel/modelo/FiltroJugadores.dart';
+import 'package:iafootfeel/modelo/pais.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 import 'package:iafootfeel/view/jugadores/jugadoresView.dart';
 import 'package:iafootfeel/conf/config.dart';
 
@@ -17,7 +18,7 @@ class MenuFootFeelScouter extends StatefulWidget {
 class _MenuFootFeelScouterState extends State<MenuFootFeelScouter> {
 
   String contador="";
-  List<UserScout> scout=new List<UserScout>();
+  List<UserScout> scout=<UserScout>[];
   @override
   void initState() {
 //    Firestore.instance.collection('mountains').document()
@@ -99,10 +100,11 @@ class _MenuFootFeelScouterState extends State<MenuFootFeelScouter> {
                                 BBDDService().getUserScout().name=="${scout[index].name}")?
                              ListTile(
                                 onTap: () {
+                                  Pais pais=new Pais("","","");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => JugadoresView(FiltroJugadores(scout[index].name,true,"","Agentes - ${scout[index].name}","",""),null)));
+                                          builder: (_) => JugadoresView(FiltroJugadores(scout[index].name,true,"","Agentes - ${scout[index].name}","",""),pais)));
                                 },
 
                                  title: Row(children: [

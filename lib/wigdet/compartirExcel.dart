@@ -1,53 +1,33 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/custom_icon_icons.dart';
-import 'package:iafootfeel/dao/CRUDCategoria.dart';
-import 'package:iafootfeel/dao/CRUDEquipo.dart';
-import 'package:iafootfeel/dao/CRUDJornada.dart';
-import 'package:iafootfeel/dao/CRUDJugador.dart';
-import 'package:iafootfeel/dao/CRUDPais.dart';
-import 'package:iafootfeel/dao/CRUDPartido.dart';
-import 'package:iafootfeel/dao/CRUDTemporada.dart';
-import 'package:iafootfeel/dao/entredadorDao.dart';
-import 'package:iafootfeel/dao/jugadorDao.dart';
-import 'package:iafootfeel/futbol_mio_icons.dart';
-import 'package:iafootfeel/model/jugador.dart';
-import 'package:iafootfeel/modelo/EquipoCloud.dart';
-import 'package:iafootfeel/modelo/equipo.dart';
-import 'package:iafootfeel/modelo/categoria.dart';
-import 'package:iafootfeel/modelo/entrenador.dart';
-import 'package:iafootfeel/modelo/jornada.dart';
-import 'package:iafootfeel/modelo/pais.dart';
-import 'package:iafootfeel/modelo/partido.dart';
-import 'package:iafootfeel/modelo/player.dart';
-import 'package:iafootfeel/modelo/temporada.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
+
+import 'package:iafootfeel/dao/CRUDJugador.dart';
+import 'package:iafootfeel/modelo/player.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:open_file/open_file.dart' as open_file;
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class CompartirExcel {
-  CompartirExcel();
+
 
   ponerCabecera(Worksheet sheet) {
     //Adding cell style.
 
-    styleCabecera.backColor = '#D9E1F2';
-    styleCabecera.hAlign = HAlignType.center;
-    styleCabecera.vAlign = VAlignType.center;
-    styleCabecera.bold = true;
-    styleCabecera.wrapText = true;
-    sheet.getRangeByName('A1:GL1').cellStyle = styleCabecera;
+    styleCabecera?.backColor = '#D9E1F2';
+    styleCabecera?.hAlign = HAlignType.center;
+    styleCabecera?.vAlign = VAlignType.center;
+    styleCabecera?.bold = true;
+    styleCabecera?.wrapText = true;
+    sheet.getRangeByName('A1:GL1').cellStyle = styleCabecera!;
 
-    styleCabecera2.backColor = '#F78B09';
-    styleCabecera2.hAlign = HAlignType.center;
-    styleCabecera2.vAlign = VAlignType.center;
-    styleCabecera2.bold = true;
-    styleCabecera2.wrapText = true;
+    styleCabecera2?.backColor = '#F78B09';
+    styleCabecera2?.hAlign = HAlignType.center;
+    styleCabecera2?.vAlign = VAlignType.center;
+    styleCabecera2?.bold = true;
+    styleCabecera2?.wrapText = true;
 
     int columna = 1;
     sheet.getRangeByIndex(1, columna).text = "Firmado".toUpperCase();
@@ -152,24 +132,24 @@ class CompartirExcel {
 
   }
 
-  CellStyle styleAplazado;
-  CellStyle styleNA;
-  CellStyle styleEX;
-  CellStyle styleSIM;
-  CellStyle styleSV;
-  CellStyle styleTitular;
-  CellStyle styleSuplente;
-  CellStyle styleBlanco;
-  CellStyle styleCabecera;
-  CellStyle styleCabecera2;
+  CellStyle? styleAplazado;
+  CellStyle? styleNA;
+  CellStyle? styleEX;
+  CellStyle? styleSIM;
+  CellStyle? styleSV;
+  CellStyle? styleTitular;
+  CellStyle? styleSuplente;
+  CellStyle? styleBlanco;
+  CellStyle? styleCabecera;
+  CellStyle? styleCabecera2;
 
-  CellStyle styleSuperlativo;
-  CellStyle styleSuper;
-  CellStyle styleDestacado;
-  CellStyle styleIntermedio;
-  CellStyle styleDudoso;
-  CellStyle styleBajo;
-  CellStyle styleNAD;
+  CellStyle? styleSuperlativo;
+  CellStyle? styleSuper;
+  CellStyle? styleDestacado;
+  CellStyle? styleIntermedio;
+  CellStyle? styleDudoso;
+  CellStyle? styleBajo;
+  CellStyle? styleNAD;
 
   Future<void> generateExcel() async {
     final Workbook workbook = Workbook(0);
@@ -187,7 +167,7 @@ class CompartirExcel {
     styleBlanco = new CellStyle(workbook);
     styleEX = new CellStyle(workbook);
     styleCabecera = new CellStyle(workbook);
-    styleCabecera2 = new CellStyle(workbook);
+    styleCabecera2= new CellStyle(workbook);
 
     styleSuperlativo = new CellStyle(workbook);
     styleSuper = new CellStyle(workbook);
@@ -197,39 +177,37 @@ class CompartirExcel {
     styleBajo = new CellStyle(workbook);
     styleNAD = new CellStyle(workbook);
 
-    styleBlanco.backColor = "#FFFFFF";
-    styleAplazado.backColor = "#3383FF";
-    styleNA.backColor = "#FFE333";
-    styleSIM.backColor = "#C1C0BE";
-    styleSV.backColor = "#C38EFC";
-    styleTitular.backColor = "#6ACC70";
-    styleSuplente.backColor = "#FFA94F";
-    styleEX.backColor = "#FF4F4F";
+    styleBlanco?.backColor = "#FFFFFF";
+    styleAplazado?.backColor = "#3383FF";
+    styleNA?.backColor = "#FFE333";
+    styleSIM?.backColor = "#C1C0BE";
+    styleSV?.backColor = "#C38EFC";
+    styleTitular?.backColor = "#6ACC70";
+    styleSuplente?.backColor = "#FFA94F";
+    styleEX?.backColor = "#FF4F4F";
 
-    styleSuperlativo.backColor = "#057C15";
-    styleSuper.backColor = "#09F729";
-    styleDestacado.backColor = "#F7F309";
-    styleIntermedio.backColor = "#F78B09";
-    styleDudoso.backColor = "#FB36DD";
-    styleBajo.backColor = "#931C01";
-    styleNAD.backColor = "#6BEBFF";
+    styleSuperlativo?.backColor = "#057C15";
+    styleSuper?.backColor = "#09F729";
+    styleDestacado?.backColor = "#F7F309";
+    styleIntermedio?.backColor = "#F78B09";
+    styleDudoso?.backColor = "#FB36DD";
+    styleBajo?.backColor = "#931C01";
+    styleNAD?.backColor = "#6BEBFF";
 
-    styleBlanco.hAlign = HAlignType.center;
-    styleAplazado.hAlign = HAlignType.center;
-    styleNA.hAlign = HAlignType.center;
-    styleSIM.hAlign = HAlignType.center;
-    styleSV.hAlign = HAlignType.center;
-    styleTitular.hAlign = HAlignType.center;
-    styleSuplente.hAlign = HAlignType.center;
-    styleSuplente.hAlign = HAlignType.center;
-    styleEX.hAlign = HAlignType.center;
+    styleBlanco?.hAlign = HAlignType.center;
+    styleAplazado?.hAlign = HAlignType.center;
+    styleNA?.hAlign = HAlignType.center;
+    styleSIM?.hAlign = HAlignType.center;
+    styleSV?.hAlign = HAlignType.center;
+    styleTitular?.hAlign = HAlignType.center;
+    styleSuplente?.hAlign = HAlignType.center;
+    styleSuplente?.hAlign = HAlignType.center;
+    styleEX?.hAlign = HAlignType.center;
     sheet1.enableSheetCalculations();
     ponerCabecera(sheet1);
     int fila = 2;
-    CRUDEquipo dao = CRUDEquipo();
-    CRUDJugador daoJug = CRUDJugador();
 
-    List<Player> jugadores = await daoJug.fetchJugadores();
+    List<Player> jugadores =await CRUDJugador().fetchJugadores();
     int columna = 1;
     for (var jug in jugadores) {
       columna = 1;
@@ -338,29 +316,29 @@ class CompartirExcel {
     if (jug == null) jug = "";
     sheet1.getRangeByIndex(fila, columna).value = jug.toUpperCase();
     if (jug.toUpperCase() == "TOP") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuperlativo;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuperlativo!;
     }
     if (jug.toUpperCase() == "DESTACADO")
     {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuper;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuper!;
     }
     if (jug.toUpperCase() == "ACORDE A LA CATEGORÍA") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleIntermedio;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleIntermedio!;
     }
     if (jug.toUpperCase() == "DISCRETO") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleDudoso;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleDudoso!;
     }
     if (jug.toUpperCase() == "NO HA JUGADO") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleDestacado;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleDestacado!;
     }
   }
 
   ponerCeldaValorCaracter(Worksheet sheet1, int fila, int columna, bool jug) {
     if (jug == true) {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado!;
       sheet1.getRangeByIndex(fila, columna).value = jug;
     } else {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleBlanco;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleBlanco!;
       sheet1.getRangeByIndex(fila, columna).value = jug;
     }
   }
@@ -381,37 +359,37 @@ class CompartirExcel {
     }
     if (jug == null) {
       jug = "";
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleBlanco;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleBlanco!;
       sheet1.getRangeByIndex(fila, columna).value = "";
     } //jug=jug.replaceAll(",", ".");
     if (estado == "SV") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSV;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSV!;
       sheet1.getRangeByIndex(fila, columna).value = "SV";
     }
     if (estado == "EX") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleEX;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleEX!;
       if ((jug == null) || (jug == ""))
         sheet1.getRangeByIndex(fila, columna).value = "EX";
     }
     if (estado == "SIM") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSIM;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSIM!;
       sheet1.getRangeByIndex(fila, columna).value = "SIM";
     }
     if (estado == "A") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado!;
       sheet1.getRangeByIndex(fila, columna).value = "A";
     }
     if (estado == "NA") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleNA;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleNA!;
       sheet1.getRangeByIndex(fila, columna).value = "NA";
     }
     if (estado == "T") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleTitular;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleTitular!;
       if ((jug == null) || (jug == ""))
         sheet1.getRangeByIndex(fila, columna).value = "T";
     }
     if (estado == "S") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuplente;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuplente!;
       if ((jug == null) || (jug == ""))
         sheet1.getRangeByIndex(fila, columna).value = "S";
     }
@@ -421,22 +399,22 @@ class CompartirExcel {
   ponerCeldaValorInt(Worksheet sheet1, int fila, int columna, int jug) {
     sheet1.getRangeByIndex(fila, columna).value = jug;
     if (sheet1.getRangeByIndex(fila, columna).value == "SV") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSV;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSV!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == "SIM") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSIM;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSIM!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == "A") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleAplazado!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == "NA") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleNA;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleNA!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == "T") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleTitular;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleTitular!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == "S") {
-      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuplente;
+      sheet1.getRangeByIndex(fila, columna).cellStyle = styleSuplente!;
     }
     if (sheet1.getRangeByIndex(fila, columna).value == null) {
       sheet1.getRangeByIndex(fila, columna).value = "";

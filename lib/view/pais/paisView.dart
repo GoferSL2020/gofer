@@ -20,7 +20,7 @@ class PaisView extends StatefulWidget {
 }
 
 class _PaisViewState extends State<PaisView> {
-  List<Pais> paises;
+  late List<Pais> paises;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -78,7 +78,7 @@ class _PaisViewState extends State<PaisView> {
                     stream:  paisProvider.getDataCollectionPaises(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        paises = snapshot.data.docs
+                        paises = snapshot.data!.docs
                             .map((doc) => Pais.fromMap(doc.data(), doc.id))
                             .toList();
 

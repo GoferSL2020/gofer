@@ -1,15 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/custom_icon_icons.dart';
 import 'package:iafootfeel/dao/CRUDScout.dart';
-import 'package:iafootfeel/icon_mio_icons.dart';
-import 'package:iafootfeel/modelo/categoria.dart';
-import 'package:iafootfeel/modelo/jornada.dart';
-import 'package:iafootfeel/modelo/pais.dart';
-import 'package:iafootfeel/modelo/scout.dart';
-import 'package:iafootfeel/modelo/temporada.dart';
-import 'package:iafootfeel/userScout.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 import 'package:iafootfeel/view/scouter/scoutEquiposView.dart';
 
 class ScoutCard extends StatefulWidget {
@@ -17,7 +10,7 @@ class ScoutCard extends StatefulWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  ScoutCard({@required this.scout});
+  ScoutCard({required this.scout});
 
   final productProvider = new CRUDUserScout();
   @override

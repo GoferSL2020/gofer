@@ -4,10 +4,10 @@ import 'dart:typed_data';
 import 'package:firebase_database/firebase_database.dart';
 
 class Cantera {
-  String _equipo;
-  String _cantera;
-  String _pais;
-  String _id;
+  String _equipo="";
+  String _cantera="";
+  String _pais="";
+  String _id="";
   Cantera( this._equipo, this._pais,
       ); // Categoria(this._idCategoria, this._idCategoria, this._idPais, this._nombre,
  //     this._imagen);

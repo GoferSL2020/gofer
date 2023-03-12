@@ -32,7 +32,7 @@ class _Nivel extends State<ProcesoDireccion> {
   final _transfermark = TextEditingController();
 
   String _marca = "";
-  List<String> caract;
+  late List<String> caract;
   String caractAux = "";
   String veredicto = "";
   int _talla = 0;
@@ -76,7 +76,7 @@ class _Nivel extends State<ProcesoDireccion> {
 
   }
 
-  String gender;
+  String gender="";
 
   Widget build(BuildContext context) {
 
@@ -96,10 +96,10 @@ class _Nivel extends State<ProcesoDireccion> {
         }).toList(),
         value: _marca,
         isDense: true,
-        onChanged: (value) {
+        onChanged: (String? value) {
           setState(() {
-            //newContact.favoriteColor = newValue;
-            widget._jugador.marcaDeportiva = value;
+            //newContact.favoriteColor = newvalue!;
+            widget._jugador.marcaDeportiva = value.toString();
             widget._padre.cambio = true;
           });
         },
@@ -107,7 +107,7 @@ class _Nivel extends State<ProcesoDireccion> {
     });
 
     FormField inputTalla= new FormField(builder: (FormFieldState state) {
-      return DropdownButtonFormField(
+      return DropdownButtonFormField<int>(
         decoration: InputDecoration(
           labelText: "Talla",
         ),
@@ -122,10 +122,10 @@ class _Nivel extends State<ProcesoDireccion> {
         }).toList(),
         value: _talla,
         isDense: true,
-        onChanged: (value) {
+        onChanged: (int? value) {
           setState(() {
-            //newContact.favoriteColor = newValue;
-            widget._jugador.calzado = value;
+            //newContact.favoriteColor = newvalue!;
+            widget._jugador.calzado = value!;
             widget._padre.cambio = true;
           });
         },
@@ -142,12 +142,12 @@ class _Nivel extends State<ProcesoDireccion> {
         labelText: 'Instagram',
       ),
       onChanged: (String value) {
-        widget._jugador.instagram = value;
+        widget._jugador.instagram = value!;
         widget._padre.cambio = true;
         //_onChange(value);
       },
       /*validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -164,12 +164,12 @@ class _Nivel extends State<ProcesoDireccion> {
         labelText: 'Transfermark',
       ),
       onChanged: (String value) {
-        widget._jugador.transfermark = value;
+        widget._jugador.transfermark = value!;
         widget._padre.cambio = true;
         //_onChange(value);
       },
       /*validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
@@ -186,19 +186,19 @@ class _Nivel extends State<ProcesoDireccion> {
         labelText: 'Twitter',
       ),
       onChanged: (String value) {
-        widget._jugador.twitter = value;
+        widget._jugador.twitter = value!;
         widget._padre.cambio = true;
         //_onChange(value);
       },
       /*validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Incorrecto';
         }
         return null;
       },*/
     );
 
-    Future<DateTime> getDate() {
+    Future<DateTime?> getDate() {
       // Imagine that this function is
       // more complex and slow.
       return showDatePicker(
@@ -207,14 +207,15 @@ class _Nivel extends State<ProcesoDireccion> {
         firstDate: DateTime(1970),
         lastDate: DateTime(2050),
         locale: const Locale("es", "ES"),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext? context, Widget? child) {
           return Theme(
             data: ThemeData.dark(),
-            child: child,
+            child: child!,
           );
         },
       );
     }
+
 
     _launchInstagram() async {
       String nativeUrl = "instagram://user?username=${widget._jugador.instagram}";
@@ -255,7 +256,7 @@ class _Nivel extends State<ProcesoDireccion> {
     void callDatePickerVencimiento() async {
       var order = await getDate();
       setState(() {
-        _fechaVencimiento = DateFormat('dd/MM/yyyy').format(order);
+        _fechaVencimiento = DateFormat('dd/MM/yyyy').format(order!);
         widget._jugador.fechaVencimientoContrato = _fechaVencimiento;
         widget._padre.cambio = true;
       });
@@ -264,7 +265,7 @@ class _Nivel extends State<ProcesoDireccion> {
     void callDatePickerMarca() async {
       var order = await getDate();
       setState(() {
-        _fechaMarca = DateFormat('dd/MM/yyyy').format(order);
+        _fechaMarca = DateFormat('dd/MM/yyyy').format(order!);
         widget._jugador.fechaFinalizacionMarca = _fechaMarca;
         widget._padre.cambio = true;
       });
@@ -304,9 +305,9 @@ class _Nivel extends State<ProcesoDireccion> {
                   Radio(
                     value: "Si",
                     groupValue: widget._jugador.contratoRepresentacion,
-                    onChanged: (value) {
+                    onChanged: (String? value) {
                       setState(() {
-                        widget._jugador.contratoRepresentacion = value;
+                        widget._jugador.contratoRepresentacion = value!;
                         widget._padre.cambio = true;
                       });
                     },
@@ -319,9 +320,9 @@ class _Nivel extends State<ProcesoDireccion> {
                   Radio(
                     value: "No",
                     groupValue: widget._jugador.contratoRepresentacion,
-                    onChanged: (value) {
+                    onChanged: (String? value) {
                       setState(() {
-                        widget._jugador.contratoRepresentacion = value;
+                        widget._jugador.contratoRepresentacion = value!;
                         widget._padre.cambio = true;
                       });
                     },
@@ -342,10 +343,9 @@ class _Nivel extends State<ProcesoDireccion> {
                    "F. Vencimiento contrato:",
                   ),
                 ),
-                FlatButton(
-                  minWidth: 1,
+                TextButton(
+
                   onPressed: callDatePickerVencimiento,
-                  padding: EdgeInsets.only(left: 0.0),
                   child: Icon(
                     CustomIcon.calendar_alt,
                     color: Colors.black,
@@ -381,9 +381,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "Si",
                         groupValue: widget._jugador.contratoFederacion,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoFederacion = value;
+                            widget._jugador.contratoFederacion = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -396,9 +396,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "No",
                         groupValue: widget._jugador.contratoFederacion,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoFederacion = value;
+                            widget._jugador.contratoFederacion = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -421,9 +421,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "Si",
                         groupValue: widget._jugador.contratoProteccionDatos,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoProteccionDatos = value;
+                            widget._jugador.contratoProteccionDatos = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -436,9 +436,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "No",
                         groupValue: widget._jugador.contratoProteccionDatos,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoProteccionDatos = value;
+                            widget._jugador.contratoProteccionDatos = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -470,9 +470,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "Si",
                         groupValue: widget._jugador.servicioComunicacion,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.servicioComunicacion = value;
+                            widget._jugador.servicioComunicacion = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -485,9 +485,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "No",
                         groupValue: widget._jugador.servicioComunicacion,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.servicioComunicacion = value;
+                            widget._jugador.servicioComunicacion = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -568,9 +568,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "Si",
                         groupValue: widget._jugador.contratoMarcaDeportiva,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoMarcaDeportiva = value;
+                            widget._jugador.contratoMarcaDeportiva = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -583,9 +583,9 @@ class _Nivel extends State<ProcesoDireccion> {
                       Radio(
                         value: "No",
                         groupValue: widget._jugador.contratoMarcaDeportiva,
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           setState(() {
-                            widget._jugador.contratoMarcaDeportiva = value;
+                            widget._jugador.contratoMarcaDeportiva = value!;
                             widget._padre.cambio = true;
                           });
                         },
@@ -620,10 +620,8 @@ class _Nivel extends State<ProcesoDireccion> {
                         "F. Finalización marca:",
                       ),
                     ),
-                    FlatButton(
-                      minWidth: 1,
+                    TextButton(
                       onPressed: callDatePickerMarca,
-                      padding: EdgeInsets.only(left: 0.0),
                       child: Icon(
                         CustomIcon.calendar_alt,
                         color: Colors.black,

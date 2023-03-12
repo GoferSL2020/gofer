@@ -1,8 +1,8 @@
 
 
 class Scout {
-  String _id;
-  String _scout;
+  String _id="";
+  String _scout="";
 
   Scout( this._scout); // Categoria(this._idCategoria, this._idCategoria, this._idPais, this._nombre,
  //     this._imagen);

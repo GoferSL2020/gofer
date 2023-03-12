@@ -15,15 +15,14 @@ import 'package:iafootfeel/wigdet/abajo.dart';
 class CategoriasView extends StatefulWidget {
   final Pais pais;
   final EquipoJugador equipo;
-  final bool menu;
-  CategoriasView({@required this.pais,@required this.equipo,@required this.menu});
+  CategoriasView(this.pais, this.equipo);
 
   @override
   _CategoriasViewState createState() => new _CategoriasViewState();
 }
 
 class _CategoriasViewState extends State<CategoriasView> {
-  List<Categoria> categorias = new List<Categoria>();
+  List<Categoria> categorias = <Categoria>[];
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   void initState() {
@@ -44,7 +43,6 @@ class _CategoriasViewState extends State<CategoriasView> {
     else
       datos = await CRUDCategoria().fetchCategorias(widget.pais);
     setState(() {
-      print("DATOS:${datos.length}");
       categorias = datos;
     });
   }
@@ -94,6 +92,19 @@ class _CategoriasViewState extends State<CategoriasView> {
                   fontStyle: FontStyle.italic),
             ),
           ),
+          Container(
+            height: 20,
+            width: double.infinity,
+            color: Colors.black,
+            child: Text(
+              widget.equipo.equipo,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic),
+            ),
+          ),
           Visibility(
               visible: categorias.isNotEmpty,
               child: Flexible(
@@ -101,10 +112,9 @@ class _CategoriasViewState extends State<CategoriasView> {
                     itemCount: categorias.length,
                     itemBuilder: (buildContext, index) {
                       return CategoriaCard(
-                          paisDetails: widget.pais,
-                          equipo : widget.equipo,
-                          categoria: categorias[index],
-                          menu: widget.menu);
+                          widget.pais,
+                          categorias[index],
+                           widget.equipo);
                     }),
               )),
         ]),

@@ -24,7 +24,7 @@ class EquipoJugadorView extends StatefulWidget {
 }
 
 class _EquipoJugadorViewState extends State<EquipoJugadorView> {
-  List<EquipoJugador> equipoJugador;
+  late List<EquipoJugador> equipoJugador;
   
   @override
   void initState() {
@@ -124,7 +124,7 @@ class _EquipoJugadorViewState extends State<EquipoJugadorView> {
                 stream: productProvider.getDataCollectionEquipos(widget._pais),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    equipoJugador = snapshot.data.docs
+                    equipoJugador = snapshot.data!.docs
                         .map((doc) => EquipoJugador.fromMap(doc.data(), doc.id))
                         .toList();
                     return ListView.builder(
@@ -136,7 +136,7 @@ class _EquipoJugadorViewState extends State<EquipoJugadorView> {
                             onTap: () {
                               if(widget.menu==false)
                                   Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                  CategoriasView(pais:widget._pais,equipo:equipoJugador[index])));
+                                  CategoriasView(widget._pais,equipoJugador[index])));
                             },
                             title: Row(children: [
                               //Image.asset('assets/${snap.value['equipo'].toString()}/${snap.value['jugador'].toString()}.png', height: 25.0, width: 25.0),
@@ -180,42 +180,6 @@ class _EquipoJugadorViewState extends State<EquipoJugadorView> {
           ),
             ]),
       ),
-    );
-  }
-
-  Future<bool> _showConfirmationDialog(
-      BuildContext context, String action, EquipoJugador equipo) {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text('ATENCIÓN',style: TextStyle(fontSize: 18,decoration: TextDecoration.underline,)),
-          content:
-          Column(children: [
-            Container(height: 10,),
-            Text('¿Quieres $action el equipo\n${equipo.equipo}?'),
-            Container(height: 10,),
-            Text('Eliminar el equipo',style: TextStyle(color: Colors.red, fontSize: 18,decoration: TextDecoration.underline,)),
-            Container(height: 10,),
-          ],),
-          actions: <Widget>[
-            FlatButton(
-              child:  Text('Aceptar',style:TextStyle(fontSize: 16, color: Colors.green[900])),
-              onPressed: () {
-                Navigator.pop(context, true);
-                return true; // showDialog() returns true
-              },
-            ),
-            FlatButton(
-              child: Text('Cancelar',style:TextStyle(fontSize: 16, color: Config.colorFootFeel),),
-              onPressed: () {
-                Navigator.pop(context, false);
-                return false; // showDialog() returns false
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

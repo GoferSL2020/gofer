@@ -75,7 +75,7 @@ class IconMio {
   IconMio._();
 
   static const _kFontFam = 'IconMio';
-  static const String _kFontPkg = null;
+  static const Null _kFontPkg = null;
 
   static const IconData entrenador = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData threedee_rotation = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);

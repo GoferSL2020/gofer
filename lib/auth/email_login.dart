@@ -82,7 +82,7 @@ class _EmailLogInState extends State<EmailLogIn> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'Correo eléctronico';
                         } else if (!value.contains('@')) {
                           return 'Please enter a valid email address';
@@ -118,7 +118,7 @@ class _EmailLogInState extends State<EmailLogIn> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'Contraseñas';
                         } else if (value.length < 6) {
                           return 'Password must be at least 6 characters!';
@@ -149,7 +149,7 @@ class _EmailLogInState extends State<EmailLogIn> {
                         textColor: Colors.white,
                         splashColor: Colors.black,
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             setState(() {
                               isLoading = true;
                             });
@@ -201,7 +201,7 @@ class _EmailLogInState extends State<EmailLogIn> {
               title: Text("Error"),
               content: Text(err.toString()),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text("Ok"),
                   onPressed: () {
                     Navigator.of(context).pop();

@@ -7,13 +7,13 @@ import 'package:iafootfeel/modelo/equipoJugador.dart';
 import 'package:iafootfeel/modelo/pais.dart';
 import 'package:iafootfeel/my_flutter_app_icons.dart';
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/view/categoria/categoriasView.dart';
+
 import 'package:iafootfeel/view/equipos/editEquipoJugador.dart';
 
 class EquipoContrarioCard extends StatefulWidget {
   final EquipoJugador equipo;
   final Pais pais;
-  EquipoContrarioCard({@required this.equipo,@required this.pais});
+  EquipoContrarioCard(@required this.equipo,@required this.pais);
 
   @override
   _EquipoContrarioCardState createState() => new _EquipoContrarioCardState();
@@ -111,9 +111,9 @@ class _EquipoContrarioCardState extends State<EquipoContrarioCard> {
       ),
     );
   }
-  Future<bool> _showConfirmationDialog(
+  Future<bool?> _showConfirmationDialog(
       BuildContext context, String action, EquipoJugador equipo) {
-    return showDialog<bool>(
+    return showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -127,18 +127,16 @@ class _EquipoContrarioCardState extends State<EquipoContrarioCard> {
             Container(height: 10,),
           ],),
           actions: <Widget>[
-            FlatButton(
-              child:  Text('Aceptar',style:TextStyle(fontSize: 16, color: Colors.green[900])),
+            TextButton(
+              child:  Text('Aceptar',style:TextStyle(fontSize: 16, color: Colors.green.shade900)),
               onPressed: () {
-                Navigator.pop(context, true);
-                return true; // showDialog() returns true
+                Navigator.pop(context, true);// showDialog() returns true
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('Cancelar',style:TextStyle(fontSize: 16, color: Config.colorFootFeel),),
               onPressed: () {
-                Navigator.pop(context, false);
-                return false; // showDialog() returns false
+                Navigator.pop(context, false);// showDialog() returns false
               },
             ),
           ],

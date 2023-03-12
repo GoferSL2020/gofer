@@ -65,17 +65,15 @@ class Termino extends StatelessWidget {
 
                   child: Html(
                     data: descripcion,
-                    padding: EdgeInsets.all(8.0),
-                    defaultTextStyle: TextStyle(fontSize: 10, color: Colors.black),
-                  ),
-                ),
+                    style: {"span": Style(
+                      backgroundColor: Colors.black,
+                    )}
+                )),
                 Container(
                   margin: new EdgeInsets.only(bottom: 20.0,top: 5.0, left: 20.0, right: 20.0),
                   child: new
-                  FlatButton(
+                  TextButton(
                     onPressed: _sendingMails,
-                    color: Config.fondo,
-                    padding: EdgeInsets.all(10.0),
                     child: Row( // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(Icons.mail_outline, color: Config.mail,),

@@ -1,14 +1,12 @@
 import 'dart:typed_data';
 
 class Categoria {
-  String _id;
-  String _categoria;
-  String _pais;
-  Uint8List _imagen;
-  String key;
+  String _id="";
+  String _categoria="";
+  String _pais="";
+  String key="";
 
-  Categoria(); // Categoria(this._idCategoria, this._idCategoria, this._idPais, this._nombre,
- //     this._imagen);
+  Categoria();
 
   Categoria.fromMap(Map snapshot,String id) :
         _id = id ?? '',
@@ -21,11 +19,6 @@ class Categoria {
     };
   }
 
-  Uint8List get imagen => _imagen;
-
-  set imagen(Uint8List value) {
-    _imagen = value;
-  }
 
   String get pais => _pais;
 

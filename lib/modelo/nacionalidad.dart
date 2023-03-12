@@ -2,10 +2,11 @@ class Nacionalidad {
   String id="";
   String nacionalidad="";
 
+  Nacionalidad();
 
-  Nacionalidad({this.id, this.nacionalidad, });
 
-  Nacionalidad.fromMap(Map snapshot,String id) :
+
+  Nacionalidad.fromMap(dynamic snapshot,String id) :
         id = id ?? '',
         nacionalidad= snapshot['nacionalidad'] ?? '';
 

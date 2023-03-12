@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_restart/flutter_restart.dart';
 import 'package:iafootfeel/auth/signup.dart';
 import 'package:iafootfeel/dao/CRUDJugador.dart';
 import 'package:iafootfeel/main.dart';
@@ -16,7 +15,7 @@ import 'package:iafootfeel/modelo/FiltroJugadores.dart';
 import 'package:iafootfeel/view/nacionalidad/nacionalidadesView.dart';
 
 import 'package:iafootfeel/view/pais/paisView.dart';
-import 'package:iafootfeel/wigdet/user.dart';
+
 import 'package:iafootfeel/wigdet/compartirExcel.dart';
 
 import 'package:iafootfeel/futbol_mio_icons.dart';
@@ -25,7 +24,6 @@ import 'package:iafootfeel/wigdet/politica.dart';
 import 'package:iafootfeel/wigdet/termino.dart';
 
 import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/menu.dart';
 import 'package:iafootfeel/view/jugadores/jugadoresView.dart';
 import 'package:iafootfeel/modelo/player.dart';
 import 'package:iafootfeel/conf/config.dart';
@@ -39,9 +37,6 @@ class MenuFootFeel extends StatefulWidget {
   @override
   _MenuFootFeelState createState() => new _MenuFootFeelState();
 
-  static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_MenuFootFeelState>().restartApp();
-  }
 }
 
 class _MenuFootFeelState extends State<MenuFootFeel> {
@@ -55,30 +50,16 @@ class _MenuFootFeelState extends State<MenuFootFeel> {
 
 
 
-  List<Player> jugadoresDATA = List();
-  getBACKUP()async{
+  List<Player> jugadoresDATA = [];
+  getModificarJugadorAlgo()async{
     FirebaseFirestore _db = FirebaseFirestore.instance;
     jugadoresDATA.clear();
     jugadoresDATA=await CRUDJugador().fetchJugadores();
     for(var jug in jugadoresDATA){
-      print(jug.jugador);
-      _db.collection("jugadores11102022").add(jug.toTodoJson());
+      CRUDJugador().updateJugadorScouting(jug);
     }
   }
 
-
-  getCambioSenior()async{
-
-    FirebaseFirestore _db = FirebaseFirestore.instance;
-    jugadoresDATA.clear();
-    jugadoresDATA=await CRUDJugador().fetchJugadores();
-    for(var jug in jugadoresDATA){
-      if((jug.pais=="MARRUECOS")) {
-        print(jug.jugador);
-        await _db.collection("jugadores").doc(jug.key).update({"competecion": "Primera División"});
-      }
-  }
-  }
 
   void inicio() async {
     await BBDDService().getUsuarioIniciar();
@@ -98,22 +79,9 @@ class _MenuFootFeelState extends State<MenuFootFeel> {
     super.initState();
     //getImportar();
     //getCambioSenior();
-    //getBACKUP();
-  }
-  getImportar() async {
-    //IASCOUT
-    // Get the database for the other app.
-    ponerJugadoresScouter();
+    //getModificarJugadorAlgo();
   }
 
-  ponerJugadoresScouter() async {
-    FirebaseFirestore _db = FirebaseFirestore.instance;
-    List<Player> lista = List();
-    for (var d in lista) {
-      print(d.jugador);
-      _db.collection("jugadores").add(d.toTodoJson());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,13 +150,14 @@ class _MenuFootFeelState extends State<MenuFootFeel> {
                           child: InkWell(
                             splashColor: Colors.orange,
                             onTap: () {
+                              Pais pais=new Pais("", "", "");
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => JugadoresView(
                                           FiltroJugadores(
-                                              "", true, "", "FootFeel", "", ""),
-                                          null)));
+                                              "", true, "", "FootFeel", "", ""),pais
+                                          )));
                             },
                             child: Ink.image(
                               image: AssetImage('assets/img/azul.png'),
@@ -287,7 +256,6 @@ class MenuLateral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User result = FirebaseAuth.instance.currentUser;
     return new Drawer(
       child: Container(
         color: Colors.black,
@@ -483,9 +451,6 @@ class MenuLateral extends StatelessWidget {
     );
   }
 
-  Future<bool> _restartApp() async {
-    await FlutterRestart.restartApp();
-  }
 
   void closeApp() {
     if (Platform.isIOS) {

@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/locale/app_localization.dart';
-import 'package:iafootfeel/modelo/entrenador.dart';
 import 'package:iafootfeel/modelo/equipo.dart';
 import 'package:iafootfeel/modelo/player.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -26,8 +25,8 @@ class Config {
   static Color colorAPP = Colors.blue;
   static Color border = Colors.red;
   static Color colorMenu = Colors.red;
-  static Color mail = Colors.red; //[900]
-  static Color botones = Colors.red; //[900]
+  static Color mail = Colors.red; //.shade900
+  static Color botones = Colors.red; //.shade900
   static Color colorFootFeel = Color.fromRGBO(110, 169, 220, 1.0);
   static List<ImagenStorage> _imagenesClubes = [];
 
@@ -89,6 +88,26 @@ class Config {
     'Larga distancia',
     'Media distancia'
   ];
+
+
+  static DateTime? dateStringtodateCalendario(String stringdate)
+  {
+    print("FECAH:$stringdate");
+    DateTime? _stringdate;
+    if(stringdate==null) return DateTime.now();
+    if(stringdate=="") return DateTime.now();
+
+    List<String> validadeSplit = stringdate.split('/');
+    if(validadeSplit.length > 1)
+    {
+      int day = int.parse(validadeSplit[0].toString());
+      int month = int.parse(validadeSplit[1].toString());
+      int year = int.parse(validadeSplit[2].toString());
+      _stringdate = DateTime.utc(year, month, day);
+    }
+    return _stringdate;
+  }
+
 
   static List<String> capacidaddemarcaje = <String>['Muy buena', 'Lo superan'];
 
@@ -182,6 +201,84 @@ class Config {
     return sub;
   }
 
+  static String edadCategoriaSinLetras(String fechaNacimiento) {
+    String sub = "";
+    if (fechaNacimiento == null) return "";
+    if (fechaNacimiento == "") return "";
+    if (fechaNacimiento == "-") return "";
+    int edad;
+    var fechaDeHoy = DateTime.now();
+    //  print("YEAR:${fechaDeHoy.year}");
+    DateFormat format = DateFormat("dd/MM/yyyy");
+    var fechaNac = format.parse(fechaNacimiento);
+    // print("YEAR NAC:${fechaNac.year}");
+    edad = fechaDeHoy.year - fechaNac.year;
+
+    String edadSring="";
+    if (edad >22) return edadSring="";
+    //print("edadC:${edad}");
+    switch (edad) {
+      case 22:
+        edadSring = "Sub-23";
+        break;
+      case 21:
+        edadSring = "Sub-23";
+        break;
+      case 20:
+        edadSring = "Sub-23";
+        break;
+      case 19:
+        edadSring = "Juvenil";
+        break;
+      case 18:
+        edadSring = "Juvenil";
+        break;
+      case 17:
+        edadSring = "Juvenil";
+        break;
+      case 16:
+        edadSring = "Cadete";
+        break;
+      case 15:
+        edadSring = "Cadete";
+        break;
+      case 14:
+        edadSring = "Infantil";
+        break;
+      case 13:
+        edadSring = "Infantil";
+        break;
+      case 12:
+        edadSring = "Alevín";
+        break;
+      case 11:
+        edadSring = "Alevín";
+        break;
+      case 10:
+        edadSring = "Benjamín";
+        break;
+      case 9:
+        edadSring= "Benjamín";
+        break;
+      case 8:
+        edadSring= "Pre-Benjamín";
+        break;
+      case 7:
+        edadSring= "Pre-Benjamín";
+        break;
+      case 6:
+        edadSring= "Chupetín";
+        break;
+      case 5:
+        edadSring= "Chupetín";
+        break;
+    }
+    //  print("EDADSTRNIG:${edadSring}");
+    return edadSring;
+  }
+
+
+
   static String edadCategoria(String fechaNacimiento) {
     String sub = "";
     if (fechaNacimiento == null) return "";
@@ -257,6 +354,8 @@ class Config {
   //  print("EDADSTRNIG:${edadSring}");
     return edadSring;
   }
+
+
 
   static String edadCategoriaBBDD(String fechaNacimiento,String categoria) {
     print(fechaNacimiento);
@@ -429,11 +528,6 @@ class Config {
         "%2F${jugador.foto()}?alt=media";
   }
 
-  static String imagenEntrenador(Entrenador entrenador) {
-    return "https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/"
-        "entrenadores"
-        "%2F${entrenador.foto()}?alt=media";
-  }
 
   ///https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/entrenadores%2FBorja%20Jiménez?alt=media
   ///https://firebasestorage.googleapis.com/v0/b/iafootfeel.appspot.com/o/entrenadores%2FBorja%20Jim%C3%A9nez?alt=media&token=30f2cc35-c348-490a-817c-912761bf1d96
@@ -500,8 +594,8 @@ class Config {
   }
 
   static Color edadColorSub(String sub) {
-    if (sub.toUpperCase() == "SUB-20") return Colors.red[900];
-    if (sub.toUpperCase() == "SUB-23") return Colors.green[900];
+    if (sub.toUpperCase() == "SUB-20") return Colors.red.shade900;
+    if (sub.toUpperCase() == "SUB-23") return Colors.green.shade900;
     return Colors.black;
   }
 
@@ -509,15 +603,15 @@ class Config {
  BBDDService().getUserIAScout().color=="rojo"?Colors.red:
  BBDDService().getUserIAScout().color=="azul"?Colors.blue:Colors.blueGrey;
  static Color colorAPP =
- BBDDService().getUserIAScout().color=="rojo"?Colors.red[900]:
- BBDDService().getUserIAScout().color=="azul"?Colors.blue[900]:Colors.blueGrey[900];
+ BBDDService().getUserIAScout().color=="rojo"?Colors.red.shade900:
+ BBDDService().getUserIAScout().color=="azul"?Colors.blue.shade900:Colors.blueGrey.shade900;
  static Color border =
- BBDDService().getUserIAScout().color=="rojo"?Colors.red[900]:
- BBDDService().getUserIAScout().color=="azul"?Colors.blue[900]:Colors.blueGrey[900];
+ BBDDService().getUserIAScout().color=="rojo"?Colors.red.shade900:
+ BBDDService().getUserIAScout().color=="azul"?Colors.blue.shade900:Colors.blueGrey.shade900;
  static Color colorMenu =
  BBDDService().getUserIAScout().color=="rojo"?Colors.red:
  BBDDService().getUserIAScout().color=="azul"?Colors.blue:Colors.blueGrey;
- static Color mail  =Colors.red[900];//[900]
+ static Color mail  =Colors.red.shade900;//.shade900
 */
 
   static String icono = "assets/img/iconotitulo.png";
@@ -526,20 +620,7 @@ class Config {
 
   static int jornadas = 30;
 
-  static MaterialColor swatchify(MaterialColor color, int value) {
-    return MaterialColor(color[value].hashCode, <int, Color>{
-      50: color[value],
-      100: color[value],
-      200: color[value],
-      300: color[value],
-      400: color[value],
-      500: color[value],
-      600: color[value],
-      700: color[value],
-      800: color[value],
-      900: color[value],
-    });
-  }
+
 
   static MaterialColor generateMaterialColor(Color color2) {
     return MaterialColor(color.value, {
@@ -557,33 +638,8 @@ class Config {
     });
   }
 
-  static void noHayPalabras(BuildContext context, String deque) {
-    showDialog(
-        context: context,
-        builder: (ctxt) => new AlertDialog(
-              title: Text(
-                "${AppLocalization.of(context).no_hay} ${traducir(deque, context)}\n"
-                "de menos de ${Config.letrasPalabra + 1} ${AppLocalization.of(context).letras}",
-                style:
-                    TextStyle(color: Config.mail, fontWeight: FontWeight.bold),
-              ),
-            ));
-  }
 
-  static String traducir(String deque, BuildContext context) {
-    if (deque == "objetos") return AppLocalization.of(context).objectos;
-    if (deque == "cuerpo") return AppLocalization.of(context).palabras_cuerpo;
-    if (deque == "nombres") return AppLocalization.of(context).nombres;
-    if (deque == "alimentos") return AppLocalization.of(context).alimentos;
-    if (deque == "animales") return AppLocalization.of(context).animales;
-    if (deque == "profesiones") return AppLocalization.of(context).profesiones;
-    if (deque == "paises") return AppLocalization.of(context).paises;
-    if (deque == "verbos") return AppLocalization.of(context).verbos;
-    if (deque == "adjetivos") return AppLocalization.of(context).adjetivos;
-    if (deque == "verbos") return AppLocalization.of(context).verbos;
-    if (deque == "deportes") return AppLocalization.of(context).deportes;
-    if (deque == "colores") return AppLocalization.of(context).colores;
-  }
+
 
   static Color colorFromHex(String hexColor) {
     final hexCode = hexColor.replaceAll('#', '');
@@ -612,6 +668,6 @@ class Config {
 }
 
 class ImagenStorage {
-  String club;
+  String club="";
   dynamic imagen;
 }

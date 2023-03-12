@@ -8,12 +8,9 @@ import 'package:iafootfeel/service/BBDDService.dart';
 
 class CRUDPais extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference ref;
+  late CollectionReference ref;
 
-  CRUDPais() {
-  }
-
-  List<Pais> paises;
+  late List<Pais> paises;
 
 
   Future<List<Pais>> fetchPaises() async {
@@ -38,13 +35,13 @@ class CRUDPais extends ChangeNotifier {
     return ref.snapshots();
   }
 
-  Future<Pais> getEquipoById(String id) async {
+ /* Future<Pais> getEquipoById(String id) async {
     var doc = await ref.doc(id).get();
     return  Pais.fromMap(doc.data(), doc.id) ;
-  }
+  }*/
 
-  Future<String> getEquipoByNombre(String pais) async {
-      String doc;
+  Future<String?> getEquipoByNombre(String pais) async {
+      String doc="";
       //temporadas/BuJNv17ghCPGnq37P2ev/paises/QqjzloEo6PI7sHfsffk2/categorias/rAeKFLQSry7l1x0WVW01/equipos/yuShjetPqtJA6TI1ovwT
       await _db.collection("paises").where("pais", isEqualTo: pais).get()
           .then((value) {

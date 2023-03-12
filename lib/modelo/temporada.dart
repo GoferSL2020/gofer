@@ -1,10 +1,10 @@
 
 class Temporada {
-  String id;
-  String temporada;
-  int anio;
+  String id="";
+  String temporada="";
+  int anio=0;
 
-  Temporada({this.id, this.temporada, this.anio});
+  Temporada(this.id, this.temporada, this.anio);
 
   Temporada.fromMap(Map snapshot,String id) :
         id = id ?? '',

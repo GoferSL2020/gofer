@@ -1,19 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:iafootfeel/conf/config.dart';
 import 'package:iafootfeel/dao/CRUDCategoria.dart';
-import 'package:iafootfeel/dao/CRUDPartido.dart';
 import 'package:iafootfeel/dao/CRUDScout.dart';
 import 'package:iafootfeel/modelo/categoria.dart';
-import 'package:iafootfeel/modelo/jornada.dart';
-import 'package:iafootfeel/modelo/pais.dart';
-import 'package:iafootfeel/modelo/partido.dart';
-import 'package:iafootfeel/modelo/temporada.dart';
-import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/userScout.dart';
-import 'package:iafootfeel/view/scouter/scoutCard.dart';
+import 'package:iafootfeel/modelo/userScout.dart';
 import 'package:iafootfeel/view/scouter/scoutEquiposView.dart';
 import 'package:iafootfeel/wigdet/abajo.dart';
 
@@ -28,7 +20,7 @@ class _ScouterViewState extends State<ScouterView> {
   FirebaseDatabase _database = FirebaseDatabase.instance;
   String nodeName = "Users";
   List<UserScout> scoutList = <UserScout>[];
-  List<Categoria> categorias = List();
+  List<Categoria> categorias = [];
   Categoria _categoriaAux = new Categoria();
 
 
@@ -189,12 +181,6 @@ class _ScouterViewState extends State<ScouterView> {
          ),
       ),
     );
-  }
 
-    _childAdded(Event event) {
-      //print(event.snapshot.value);
-      setState(() {
-        scoutList.add(UserScout.fromSnapshot(event.snapshot));
-      });
 }
 }
