@@ -3,7 +3,6 @@ import 'package:gls/conf/config.dart';
 import 'package:flutter/material.dart';
 
 import 'email_login.dart';
-import 'email_signup.dart';
 
 class SignUp extends StatelessWidget {
   @override
@@ -44,7 +43,7 @@ class SignUp extends StatelessWidget {
                           fontSize: 20,
                           fontFamily:'Roboto')),
                 ),
-                Container(
+                /*Container(
                   width: 250,
                   height: 65,
                   padding: EdgeInsets.all(10),
@@ -67,7 +66,7 @@ class SignUp extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 Container(
                   width: 250,
                   height: 65,

@@ -28,7 +28,7 @@ class _EmailPasswordState extends State<EmailPassword> {
           )
         ],
           backgroundColor:Colors.black,
-          title: Text("FootFeel - Password",
+          title: Text("GSL - Password",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

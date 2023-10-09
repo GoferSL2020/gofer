@@ -1,9 +1,3 @@
-
-import 'dart:convert';
-import 'dart:io';
-import 'dart:io';
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +5,6 @@ import 'package:gls/view/menuGLS.dart';
 import 'package:gls/auth/signup.dart';
 import 'package:gls/conf/config.dart';
 
-import 'package:gls/service/UserService.dart';
-
-import 'package:gls/wigdet/splash.dart';
 
 bool login=false;
 //@dart=2.9
