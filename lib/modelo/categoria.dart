@@ -1,29 +1,18 @@
-import 'dart:typed_data';
-
 class Categoria {
-  String _id="";
-  String _categoria="";
-  String _pais="";
-  String key="";
+  String _id = "";
+  String _categoria = "";
+  String key = "";
 
   Categoria();
 
-  Categoria.fromMap(Map snapshot,String id) :
-        _id = id ?? '',
+  Categoria.fromMap(Map snapshot, String id)
+      : _id = id ?? '',
         _categoria = snapshot['categoria'] ?? '';
 
   toJson() {
     return {
       "categoria": _categoria,
-
     };
-  }
-
-
-  String get pais => _pais;
-
-  set pais(String value) {
-    _pais = value;
   }
 
   String get categoria => _categoria;

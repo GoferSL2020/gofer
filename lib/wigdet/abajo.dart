@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/modelo/temporada.dart';
-import 'package:iafootfeel/view/menuFootFeel.dart';
+import 'package:gls/conf/config.dart';
+import 'package:gls/view/menuGLS.dart';
 class Abajo extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: Colors.black,
+      color: Config.fondo,
       shape: CircularNotchedRectangle(),
       notchMargin: 4.0,
       child: new Row(
@@ -18,13 +17,13 @@ class Abajo extends StatelessWidget {
         children: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.home,
-              color: Colors.white,
+              Icons.home_outlined,
+              color: Config.letras,
             ),
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => MenuFootFeel(),
+                builder: (BuildContext context) => MenuGLS(),
               ));
             },
           ),

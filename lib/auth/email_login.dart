@@ -1,10 +1,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:iafootfeel/auth/email_password.dart';
-import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/icon_mio_icons.dart';
-import 'package:iafootfeel/view/menuFootFeel.dart';
+import 'package:gls/auth/email_password.dart';
+import 'package:gls/conf/config.dart';
+
+import 'package:gls/service/UserService.dart';
+import 'package:gls/view/menuGLS.dart';
 class EmailLogIn extends StatefulWidget {
   @override
   _EmailLogInState createState() => _EmailLogInState();
@@ -20,7 +21,7 @@ class _EmailLogInState extends State<EmailLogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( backgroundColor:Colors.black,
+    return Scaffold( backgroundColor:Config.colorCard,
         appBar:new  AppBar(actions: <Widget>[
           IconButton(
             icon: new Image.asset(Config.icono),onPressed: () {
@@ -32,51 +33,45 @@ class _EmailLogInState extends State<EmailLogIn> {
           )
         ],
 
-          title: Text("FootFeel - Login",
+          title: Text("GLS - Login",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
+                fontSize: 18,
+                color: Config.letras,
               )),
           elevation: 0,
           centerTitle: true,
+          backgroundColor:Config.fondo,
         ),
         body: Form(
             key: _formKey,
             child: SingleChildScrollView(
                 child: Column(children: <Widget>[
-                  Container(color: Colors.black,
-                      padding: EdgeInsets.only(top:30.0),
-                      child: Image.asset(Config.icono,)
+                  Container(color: Config.colorCard,
+                      padding: EdgeInsets.only(left:20,top:30.0,right: 20),
+                      child: Image.asset(Config.icono, width: 200, height: 200,)
                   ),
+
                   Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text("FootFeel",
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
-                            fontSize: 40,
-                            fontFamily:'Roboto')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 5),
+                    padding: EdgeInsets.only(top:25.0, left:10, right: 30, bottom: 5),
                     child: TextFormField(
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Config.fondo,
                       ),
                       controller: emailController,
                       decoration: InputDecoration(
-                        icon: Icon(IconMio.mail,color: Colors.white,size: 20,),
+                        icon: Icon(Icons.mail,color: Config.fondo,size: 20,),
                         hintStyle: TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         labelStyle: new TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
                         labelText: "Correo eléctronico",
                       ),
@@ -95,24 +90,24 @@ class _EmailLogInState extends State<EmailLogIn> {
                     padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 0),
                     child: TextFormField(
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Config.fondo,
                       ),
 
                       obscureText: true,
                       controller: passwordController,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.vpn_key_sharp,color: Colors.white,size: 20,),
+                        icon: Icon(Icons.vpn_key_sharp,color: Config.fondo,size: 20,),
                         hintStyle: TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         labelStyle: new TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
                         labelText: "Password",
                       ),
@@ -140,14 +135,14 @@ class _EmailLogInState extends State<EmailLogIn> {
                         shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
                           side: BorderSide(
                             width: 1,
-                            color: Colors.white,
+                            color: Config.fondo,
                             style: BorderStyle.solid,
                           ),
                         ),
                         child: Text("Enviar"),
-                        color: Colors.blue.shade600,
-                        textColor: Colors.white,
-                        splashColor: Colors.black,
+                        color:  Config.letras,
+                        textColor: Config.fondo,
+                        splashColor: Config.fondo,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
@@ -182,14 +177,14 @@ class _EmailLogInState extends State<EmailLogIn> {
         .signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
         .then((result) async {
+       await UserService().getUsuarioIniciar();
        setState(() {
         isLoading = false;
-
       });
        Navigator.of(context).pop();
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MenuFootFeel()));
+          MaterialPageRoute(builder: (context) => MenuGLS()));
     }).catchError((err) {
       setState(() {
         isLoading =false;

@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "651389934981",
-    "project_id": "iafootfeel",
-    "storage_bucket": "iafootfeel.appspot.com"
+    "project_number": "529471770138",
+    "project_id": "gofer-gls",
+    "storage_bucket": "gofer-gls.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:651389934981:android:38f0d53198f5ef4110b8ec",
+        "mobilesdk_app_id": "1:529471770138:android:958fa513660387260dcba3",
         "android_client_info": {
-          "package_name": "com.iadvanced.iafootfeel"
+          "package_name": "com.gofer.gls"
         }
       },
       "oauth_client": [
         {
-          "client_id": "651389934981-k2297lhuf98cnfi0fcpg3p8vgs7k3ldi.apps.googleusercontent.com",
+          "client_id": "529471770138-m2mrpnn9m1oas0tho23sqq4c3s8j70eb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCgvZ5iiSLa2-3TX-rQEXmmKQ_Ml9sUnu4"
+          "current_key": "AIzaSyC-cPO11e-_uLY7I0k5_ueE-KHaTykHj0Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "651389934981-k2297lhuf98cnfi0fcpg3p8vgs7k3ldi.apps.googleusercontent.com",
+              "client_id": "529471770138-m2mrpnn9m1oas0tho23sqq4c3s8j70eb.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "651389934981-785dvt0ulkm7viforsnito8e79gtvq68.apps.googleusercontent.com",
+              "client_id": "529471770138-09gktd9lbvo1q1b06qnkoeh7d8tsa3u6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.iadvanced.iafootfeel"
+                "bundle_id": "com.gofer.gls"
               }
             }
           ]

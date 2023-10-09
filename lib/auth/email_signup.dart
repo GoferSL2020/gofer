@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:iafootfeel/service/BBDDService.dart';
-import 'package:iafootfeel/conf/config.dart';
-import 'package:iafootfeel/icon_mio_icons.dart';
-import 'package:iafootfeel/view/menuFootFeel.dart';
+
+import 'package:gls/service/UserService.dart';
+import 'package:gls/conf/config.dart';
+import 'package:gls/view/menuGLS.dart';
 
 
 
@@ -19,139 +19,73 @@ class _EmailSignUpState extends State<EmailSignUp> {
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  DatabaseReference dbRef =
-      FirebaseDatabase.instance.reference().child("Users");
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController apellidoController = TextEditingController();
+  TextEditingController lugarController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  String language="";
-  String color='gris';
-  List<String> languages = <String>['es-ES'];
-  List<String> colores = <String>['azul','rojo','gris'];
-  List<String> _puestos = <String>['FootFeel','Agenda FootFeel','Marketing'];
-  late List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentPuesto="";
-  @override
 
   @override
   void initState(){
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentPuesto= _dropDownMenuItems[0].value!;
-
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems(){
-    List<DropdownMenuItem<String>> items = [];
-    for (String item in _puestos){
-      items.add(new DropdownMenuItem(
-        value: item,
-        child: new Text(
-            item,
-            style: TextStyle(
-              fontSize:12,
-            )
-        ),
-      ));
-    }
-    return items;
-  }
 
-  void changedDropDownItem(String selected){
-    setState(() {
-      _currentPuesto = selected;
-    });
-  }
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor:Colors.black,
+    return Scaffold(
         appBar:new  AppBar(actions: <Widget>[
           IconButton(
             icon: new Image.asset(Config.icono),onPressed: () {
-            //subirNube();
-            //var a = singOut();
-            //if (a != null) {
-            //}
           },
           )
         ],
 
-          title: Text("FootFeel - Sign up",
+          title: Text("GLS - Sign up",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
+                fontSize: 16,
+                color: Config.letras,
               )),
           elevation: 0,
           centerTitle: true,
+          backgroundColor:Config.fondo,
         ),
         body: Form(
             key: _formKey,
             child: SingleChildScrollView(
                 child: Column(children: <Widget>[
-                  Container(color: Colors.black,
-                      padding: EdgeInsets.only(top:30.0),
-                      child: Image.asset(Config.icono)
+                  Container(
+                      padding: EdgeInsets.only(left:20,top:30.0,right: 20),
+                      child:Image.asset(Config.icono, width: 200, height: 200,)
                   ),
                   //#6ea9dc
-                  Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text("FootFeel",
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
-                            fontSize: 40,
-                            fontFamily:'Roboto')),
-                  ),
-                  Row(children: [
-                    Padding(
-                        padding: EdgeInsets.only(top:0.0, left:20, right: 30, bottom: 5),
-                        child:Text("Puesto:",
-                            style: TextStyle(
-                            fontSize:20, color:Colors.white))
-                    ),
-                    Container(color:Colors.white,height: 30,
-                      padding: EdgeInsets.only(top:0.0, left:30, right: 20, bottom: 0),
-                      child:DropdownButton(
-                        dropdownColor: Colors.white,
-                        focusColor: Colors.white,
-                        value: _currentPuesto,
-                        items: _dropDownMenuItems,
-                        onChanged: (String? value) {
-                        setState(() {
-                            _currentPuesto = value!;
-                        });
-                        },
-                      ),
-                      ),
-
-                      ]),
+                  
                       Padding(
                       padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
                       child: TextFormField(
 
                       style: TextStyle(
-                      color: Colors.white,
+                      color: Config.fondo,
                       ),controller: nameController,
                       decoration: InputDecoration(
-                      icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                      icon: Icon(Icons.map_outlined,color: Config.fondo,size: 20,),
                       hintStyle: TextStyle(
-                      color: Colors.white
+                      color: Config.fondo
                       ),
                       labelStyle: new TextStyle(
-                      color: Colors.white
+                      color: Config.fondo
                       ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
-                    labelText: "Nombre",
+                    labelText: "Oficina",
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Nombre';
+                      return 'Oficina';
                     }
                     return null;
                   },
@@ -160,30 +94,29 @@ class _EmailSignUpState extends State<EmailSignUp> {
                   Padding(
                     padding: EdgeInsets.only(top:20.0, left:10, right: 30, bottom: 5),
                     child: TextFormField(
-
                       style: TextStyle(
-                        color: Colors.white,
-                      ),controller: apellidoController,
+                        color: Config.fondo,
+                      ),controller: lugarController,
                       decoration: InputDecoration(
-                        icon: Icon(IconMio.person,color: Colors.white,size: 20,),
+                        icon: Icon(Icons.map_outlined,color: Config.fondo,size: 20,),
                         hintStyle: TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         labelStyle: new TextStyle(
-                            color: Colors.white
+                            color: Config.fondo
                         ),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Config.fondo),
                         ),
-                        labelText: "Apellido",
+                        labelText: "lugar",
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Apellido';
+                          return 'lugar';
                         }
                         return null;
                       },
@@ -193,22 +126,22 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 5),
                 child: TextFormField(
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Config.fondo,
                   ),
                   controller: emailController,
                   decoration: InputDecoration(
-                    icon: Icon(IconMio.mail,color: Colors.white,size: 20,),
+                    icon: Icon(Icons.mail,color: Config.fondo,size: 20,),
                     hintStyle: TextStyle(
-                        color: Colors.white
+                        color: Config.fondo
                     ),
                     labelStyle: new TextStyle(
-                        color: Colors.white
+                        color: Config.fondo
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
                     labelText: "Correo eléctronico",
                   ),
@@ -227,24 +160,24 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 padding: EdgeInsets.only(top:5.0, left:10, right: 30, bottom: 0),
                 child: TextFormField(
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Config.fondo,
                   ),
 
                   obscureText: true,
                   controller: passwordController,
                   decoration: InputDecoration(
-                    icon: Icon(Icons.vpn_key_sharp,color: Colors.white,size: 20,),
+                    icon: Icon(Icons.vpn_key_sharp,color: Config.fondo,size: 20,),
                     hintStyle: TextStyle(
-                        color: Colors.white
+                        color: Config.fondo
                     ),
                     labelStyle: new TextStyle(
-                        color: Colors.white
+                        color: Config.fondo
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Config.fondo),
                     ),
                     labelText: "Password",
                   ),
@@ -272,14 +205,14 @@ class _EmailSignUpState extends State<EmailSignUp> {
                     shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
                       side: BorderSide(
                         width: 1,
-                        color: Colors.white,
+                        color: Config.letras,
                         style: BorderStyle.solid,
                       ),
                     ),
                     child: Text("Enviar"),
-                    color: Colors.blue.shade600,
-                    textColor: Colors.white,
-                    splashColor: Colors.black,
+                    color:  Config.fondo,
+                    textColor: Config.letras,
+                    splashColor: Config.fondo,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
@@ -301,42 +234,6 @@ class _EmailSignUpState extends State<EmailSignUp> {
   }
 
 
-
-  List<DropdownMenuItem<String>> getLanguageDropDownMenuItems() {
-    var items = <DropdownMenuItem<String>>[];
-    for (dynamic type in languages) {
-      items.add(
-          DropdownMenuItem(value: type as String, child: Text(type as String)));
-    }
-    return items;
-  }
-
-  void changedLanguageDropDownItem(String selectedType) {
-    setState(() {
-      language = selectedType;
-    });
-  }
-
-
-
-  List<DropdownMenuItem<String>> getColorDropDownMenuItems() {
-    var items = <DropdownMenuItem<String>>[];
-    for (dynamic type in colores) {
-      items.add(
-          DropdownMenuItem(value: type as String, child: Text(type as String)));
-    }
-    return items;
-  }
-
-  void changedColorDropDownItem(String selectedType) {
-    setState(() {
-      color = selectedType;
-    });
-  }
-
-
-
-
   Future<void> registerToFb() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -344,11 +241,11 @@ class _EmailSignUpState extends State<EmailSignUp> {
         email: emailController.text,
         password: passwordController.text,
       ).then((value) => putUsuario(value.user!.uid));
-      BBDDService().getUsuarioIniciar();
+      await UserService().getUsuarioIniciar();
       Navigator.of(context).pop();
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MenuFootFeel()));
+          MaterialPageRoute(builder: (context) => MenuGLS()));
     } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,
@@ -369,22 +266,20 @@ class _EmailSignUpState extends State<EmailSignUp> {
     }
   }
 
-  putUsuario(String uid){
+  putUsuario(String uid) async{
     final firestoreInstance = FirebaseFirestore.instance;
     firestoreInstance.collection("users").doc(uid).set({
       'nombre': nameController.text.toUpperCase(), // John Doe
-      'apellido': apellidoController.text.toUpperCase(), // Stokes and Sons
-      'puesto': _currentPuesto,
+      'lugar': lugarController.text.toUpperCase(), // Stokes and Sons
     }).then((value){
     });
-    BBDDService().getUsuarioIniciar();
   }
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
-    apellidoController.dispose();
+    lugarController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }

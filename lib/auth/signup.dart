@@ -1,7 +1,6 @@
-import 'package:iafootfeel/conf/config.dart';
+import 'package:gls/conf/config.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import 'email_login.dart';
 import 'email_signup.dart';
@@ -9,7 +8,7 @@ import 'email_signup.dart';
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black,
+    return Scaffold(backgroundColor:Config.colorCard,
         appBar:new  AppBar(actions: <Widget>[
           IconButton(
             icon: new Image.asset(Config.icono),onPressed: () {
@@ -20,12 +19,12 @@ class SignUp extends StatelessWidget {
           },
           )
         ],
-          backgroundColor:Colors.black,
-          title: Text("",
+          backgroundColor:Config.fondo,
+          title: Text("GLS - General Logistics Systems",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
+                fontSize: 16,
+                color: Config.letras,
               )),
           elevation: 0,
           centerTitle: true,
@@ -33,19 +32,19 @@ class SignUp extends StatelessWidget {
         body:   SingleChildScrollView(
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
-                Container(color: Colors.black,
-                  padding: EdgeInsets.only(top:40.0),
-                  child: Image.asset(Config.icono,scale:1)
+                Container(
+                    padding: EdgeInsets.only(left:20,top:30.0,right: 20),
+                  child: Image.asset(Config.icono, width: 200, height: 200,)
                 ),
                 Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text("FootFeel",
+                  padding: EdgeInsets.only(top:25.0,bottom: 30),
+                  child: Text("General Logistics Systems",
                       style: TextStyle(
-                          fontWeight: FontWeight.normal,color: Color.fromRGBO(110,169,220,1.0),
-                          fontSize: 35,
+                          fontWeight: FontWeight.bold,color: Config.fondo,
+                          fontSize: 20,
                           fontFamily:'Roboto')),
                 ),
-                /*Container(
+                Container(
                   width: 250,
                   height: 65,
                   padding: EdgeInsets.all(10),
@@ -53,13 +52,13 @@ class SignUp extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
                       side: BorderSide(
                         width: 1,
-                        color: Colors.white,
+                        color: Config.fondo,
                         style: BorderStyle.solid,
                       ),
                     ),
                     child: Text("Regístrate con su email"),
-                    color: Colors.blue.shade600,
-                    textColor: Colors.white,
+                    color:  Config.letras,
+                    textColor: Config.fondo,
                     splashColor: Colors.black,
                     onPressed: () {
                       Navigator.push(
@@ -68,7 +67,7 @@ class SignUp extends StatelessWidget {
                       );
                     },
                   ),
-                ),*/
+                ),
                 Container(
                   width: 250,
                   height: 65,
@@ -77,13 +76,14 @@ class SignUp extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0),
                         side: BorderSide(
                           width: 1,
-                          color: Colors.white,
+                          color: Config.letras,
                           style: BorderStyle.solid,
                         ),
                       ),
                       child: Text("Login"),
-                      color: Colors.black,
-                      textColor: Colors.white,
+                      color:  Config.fondo,
+                      textColor: Config.letras,
+                      splashColor: Colors.black,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -102,53 +102,11 @@ class SignUp extends StatelessWidget {
                     child: Text("Al crear su cuenta, acepta los Término y Condiciones y "
                         "la Política de Privacida de inadvanced.",textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 9,
-                            color: Colors.grey)),
+                            fontSize: 10,
+                            color: Colors.black)),
                     )),
 
-              /*Center(
-               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 40.0, right:10),
-                        child: GestureDetector(
-                            child: Text("Términos y condiciones",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue)),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Termino()),
-                              );
-                            })),
-                   Padding(
-                       padding:  EdgeInsets.only(bottom: 40.0),
-                       child: GestureDetector(
-                           child: Text("|",
-                               style: TextStyle(
-                                   fontSize: 10,
-                                   color: Colors.blue)),
-                           )),
-                    Padding(
-                        padding:  EdgeInsets.only(bottom: 40.0, left:10),
-                        child: GestureDetector(
-                            child: Text("Política de Privacidad",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue)),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Politica()),
-                              );
-                            })),
 
-                ],)
-           ),*/
             ],)),
         ]),
     ));

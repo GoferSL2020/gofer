@@ -63,7 +63,7 @@ class SplashScreenState extends State<SplashScreen>
               Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
                 child: new Image.asset(
-                  'assets/img/iconotitulo.png',
+                  'assets/img/logo.png',
                   height: 100.0,
                   fit: BoxFit.scaleDown,
                 ),
@@ -74,11 +74,11 @@ class SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Image.asset(
-                'assets/img/icono.png',
+                'assets/img/logo.png',
                 width: animation.value * 250,
                 height: animation.value * 250,
               ),
-              new Text("powered By InAdvanced",
+              new Text("powered By GLS-Gofer",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,

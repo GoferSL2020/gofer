@@ -1,5 +1,5 @@
-name: iafootfeel
-description: InAdvanced FootFeel
+name: gls
+description: GLS-Gofer
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -29,53 +29,39 @@ dependencies:
     sdk: flutter
 
   #BBDDD
-
-
   cupertino_icons: ^1.0.5
-  firebase_core: ^2.7.1
-  cloud_firestore: ^4.4.4
-  firebase_auth: ^4.2.10
-  firebase_storage: ^11.0.15
-  firebase_database: ^10.0.15
-  firebase_storage_web: ^3.3.24
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.2
+  firebase_auth: ^4.6.3
+  firebase_storage: ^11.2.4
+  firebase_database: ^10.2.3
+  firebase_storage_web: ^3.6.4
   flutter_signin_button: ^2.0.0
-  flutter_image_compress: ^1.1.3
- # provider: ^6.0.5
+  flutter_image_compress: ^2.0.3
   flutter_html: ^2.2.1
-  image_picker: ^0.8.7
-  path_provider: ^2.0.13
-  url_launcher: ^6.1.10
-  open_file: ^3.2.1
-  syncfusion_flutter_xlsio: ^20.4.53-beta
-  permission_handler: ^10.2.0
-  #image_picker_platform_interface: ^2.6.3
-  #flutter_html: ^2.2.1
-  #open_file: ^3.2.1
-  image_gallery_saver: ^1.7.1
-  #  avatar_glow: ^2.0.2
-  toggle_switch: ^2.0.1
-  #image_picker: ^0.8.6+4
-  #http: ^0.13.5
-  #splashscreen: ^1.3.5
-  ##shared_preferences: ^0.5.12+4
+  image_picker: ^1.0.0
+  path_provider: ^2.0.15
+  url_launcher: ^6.1.11
+  open_file: ^3.3.2
+  permission_handler: ^10.4.1
+
+  image_gallery_saver: ^2.0.3
+  toggle_switch: ^2.1.0
+
   #flutter_launcher_icons: ^0.12.0
-  #image: ^4.0.15
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
 
-  #flutter_image_compress: ^1.1.3
-  fluttertoast: ^8.2.1
-  #fluttericon: ^2.0.0
-
-
-flutter_icons:
-  image_path: "assets/img/iconotitulo.png"
-  android: true
-  ios: true
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "assets/img/logo.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -88,34 +74,12 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  fonts:
-    - family:  MyFlutterApp
-      fonts:
-        - asset: fonts/MyFlutterApp.ttf
-    - family:  CustomIcon
-      fonts:
-        - asset: fonts/CustomIcon.ttf
-    - family:  IconMio
-      fonts:
-        - asset: fonts/IconMio.ttf
-    - family:  FutbolMio
-      fonts:
-        - asset: fonts/FutbolMio.ttf
-
 
   assets:
-    - assets/img/ia_logotipo.png
-    - assets/img/trans.png
-    - assets/img/ok.png
-    - assets/img/false.png
-    - assets/img/fondo.png
+    - assets/img/logo.png
+    - assets/img/logo2.png
+    - assets/img/logoGLS.png
     - assets/img/icono.png
-    - assets/img/iconotitulo.png
-    - assets/img/marron.png
-    - assets/img/gris.png
-    - assets/img/azul.png
-    - assets/img/logogrande.png
-    - assets/img/scouter.png
 
 
   # To add assets to your application, add an assets section, like this:

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:iafootfeel/dao/CRUDCategoria.dart';
-import 'package:iafootfeel/modelo/categoria.dart';
-import 'package:iafootfeel/modelo/pais.dart';
-import 'package:iafootfeel/modelo/temporada.dart';
-
+import 'package:gls/dao/CRUDCategoria.dart';
+import 'package:gls/modelo/categoria.dart';
 
 class ModifyCategoria extends StatefulWidget {
-  final Pais pais;
-  final Temporada temporada;
+
   final Categoria categoria;
 
-  ModifyCategoria(@required this.temporada,@required this.pais,@required this.categoria);
+  ModifyCategoria(@required this.categoria);
 
   @override
   _ModifyCategoriaState createState() => _ModifyCategoriaState();
@@ -26,7 +22,6 @@ class _ModifyCategoriaState extends State<ModifyCategoria> {
 
   @override
   void initState() {
-    temporada =  widget.temporada.temporada.toUpperCase();
     // TODO: implement initState
     super.initState();
   }
